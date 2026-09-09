@@ -163,43 +163,17 @@ html {
   scroll-behavior: smooth;
 }
 
-/* The loading splash (.app-loading, in index.html) and body's own base
-   background render before Blazor boots — before .dr-theme-scope exists
-   anywhere in the DOM. Every other light-mode rule in this file is scoped
-   under html[data-theme="light"] .dr-theme-scope for exactly that reason
-   (it only exists once a page's Razor content has rendered), but that
-   means the pre-boot screen has no wrapper to hang off yet, so these
-   overrides are gated on html[data-theme="light"] alone instead. The
-   inline blocking <script> in index.html's <head> sets the data-theme
-   attribute before first paint, so it's already correct by the time any
-   of this renders. */
+/* body's base background is set before .dr-theme-scope exists in the DOM -
+   BaseLayout.astro wraps the homepage's content in .dr-theme-scope, but
+   <body> itself sits outside that wrapper. Every other light-mode rule in
+   this file is scoped under html[data-theme="light"] .dr-theme-scope for
+   that reason, but body-level styling has no wrapper to hang off, so this
+   is gated on html[data-theme="light"] alone instead. BaseLayout's inline
+   blocking <script> sets the data-theme attribute before first paint, so
+   it's already correct by the time this renders. */
 html[data-theme="light"],
 html[data-theme="light"] body {
   background-color: #f5f1e8;
-}
-
-html[data-theme="light"] .loading-progress circle {
-  stroke: #d8d0bd;
-}
-
-html[data-theme="light"] .loading-progress circle:first-child {
-  stroke: rgba(15, 122, 99, 0.18);
-}
-
-html[data-theme="light"] .loading-progress circle:last-child {
-  stroke: #0f7a63;
-}
-
-html[data-theme="light"] .loading-progress-text {
-  color: #2c3e50;
-}
-
-html[data-theme="light"] .app-loading__eyebrow {
-  color: #0f7a63;
-}
-
-html[data-theme="light"] .app-loading::before {
-  border-color: rgba(15, 122, 99, 0.22);
 }
 
 /* Keyboard focus ring — teal accent, only shown for keyboard users (not on
@@ -251,33 +225,6 @@ section.light {
 }
 
 /* Background Images */
-section img.background,
-section img.background2,
-section img.background-music {
-  width: 100vmax;
-  height: 100%;
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  pointer-events: none;
-  object-fit: cover;
-  object-position: 0 15%;
-  will-change: transform;
-}
-
-section img.background {
-  animation: parallaxMove 0.3s ease-out;
-}
-
-section img.background2 {
-  backdrop-filter: blur(50px);
-}
-
-section img.background-music {
-  backdrop-filter: blur(5px);
-}
 
 /* ============================================================================
    3. TYPOGRAPHY
@@ -459,30 +406,6 @@ a:hover {
    These classes predate the current section-based architecture. Kept for any
    older components that may still reference them.
    ============================================================================ */
-
-.portfolio-container {
-  display: flex;
-  flex-direction: row;
-  padding-top: 3rem;
-}
-
-@media screen and (max-width: 420px) {
-  .portfolio-container {
-    flex-direction: column;
-  }
-}
-
-.portfolio-hero {
-  max-width: 40%;
-  align-self: center;
-}
-
-@media screen and (max-width: 420px) {
-  .portfolio-hero {
-    max-width: 100%;
-    align-self: center;
-  }
-}
 
 .container {
   margin: 20px auto;
@@ -981,14 +904,6 @@ a:hover {
   z-index: 1;
 }
 
-.nav-cta__arrow {
-  position: relative;
-  z-index: 1;
-  font-size: 0.8em;
-  transition: transform 0.2s ease;
-  display: inline-block;
-}
-
 .nav-cta:hover .nav-cta__arrow {
   transform: translate(2px, -2px);
 }
@@ -1310,92 +1225,9 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
    6. COMPONENTS: Cards & Glassmorphism
    ============================================================================ */
 
-.custom-card,
-.custom-card2 {
-  position: relative;
-  min-height: 250px;
-  height: 290px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 15px 45px;
-  margin: 10px 10px;
-  background: rgba(250, 250, 250, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-}
-
-.custom-card {
-  width: 100%;
-}
-
-.custom-card2 {
-  width: 70vw;
-}
-
-.custom-card:hover {
-  background: rgba(250, 250, 250, 0.9);
-  transform: translateY(-8px);
-  box-shadow: 0 16px 48px rgba(26, 176, 156, 0.15);
-  border-color: rgba(26, 176, 156, 0.3);
-}
-
-.custom-card3 {
-  background-image: linear-gradient(120deg, rgba(250, 250, 250, 0.4), rgba(150, 150, 150, 0.9));
-  width: 65%;
-  padding: 4rem;
-  margin: 3rem auto;
-  text-align: center;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  transition: box-shadow 0.4s ease-in-out, background-color 0.4s ease-in-out;
-}
-
-.custom-card3:hover {
-  box-shadow: rgba(0, 0, 0, 1, 0.35) 0px 54px 55px, rgba(0, 0, 10, 0.22) 0px -12px 30px, rgba(0, 0, 50, 0.22) 0px 4px 6px, rgba(0, 0, 10, 0.27) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  background-color: rgba(250, 250, 255, 0.2);
-}
-
 /* Badge Containers */
-.language-badges,
-.tech-badges {
-  text-align: center;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  background: rgba(250, 250, 250, 0.3);
-  backdrop-filter: blur(5px);
-  width: 65%;
-  padding: 20px;
-}
 
 /* Container Styles */
-.home__container,
-.technical-skills__container {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-}
-
-.home__container {
-  margin-top: 20px;
-}
-
-.custom-portfolio__container,
-.custom-experience__container {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-}
 
 /* ============================================================================
    7. EXPERIENCE — split panel
@@ -1821,82 +1653,9 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
    8. COMPONENTS: Todo List
    ============================================================================ */
 
-.todo-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  animation: slideIn 0.5s ease-out;
-}
-
-.todo-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.todo-item {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  margin: 0.5rem 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease-in-out;
-  animation: fadeInUp 0.6s ease-out;
-  animation-fill-mode: both;
-}
-
-.todo-item:nth-child(1) { animation-delay: 0.05s; }
-.todo-item:nth-child(2) { animation-delay: 0.1s; }
-.todo-item:nth-child(3) { animation-delay: 0.15s; }
-.todo-item:nth-child(4) { animation-delay: 0.2s; }
-.todo-item:nth-child(5) { animation-delay: 0.25s; }
-.todo-item:nth-child(6) { animation-delay: 0.3s; }
-.todo-item:nth-child(7) { animation-delay: 0.35s; }
-.todo-item:nth-child(8) { animation-delay: 0.4s; }
-
-.todo-item:hover {
-  background: rgba(255, 255, 255, 0.5);
-  transform: translateX(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.todo-checkbox {
-  width: 20px;
-  height: 20px;
-  margin-right: 1rem;
-  cursor: pointer;
-  accent-color: var(--accent);
-}
-
-.todo-label {
-  flex: 1;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #2c3e50;
-  user-select: none;
-  transition: all 0.3s ease;
-}
-
-.todo-label.completed {
-  text-decoration: line-through;
-  opacity: 0.6;
-  color: #999;
-}
-
 /* ============================================================================
    9. DECORATIVE & UTILITY
    ============================================================================ */
-
-.background-overlay {
-  background: linear-gradient(135deg, rgba(50, 0, 80, 0.3), rgba(0, 0, 50, 0.3));
-  animation: moveGradient 30s ease-in-out infinite;
-  mix-blend-mode: overlay;
-  backdrop-filter: blur(2px);
-}
 
 /* Scroll-triggered reveal animations */
 [data-scroll="in"] {
@@ -1912,10 +1671,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 }
 
 /* Glow effect on hover for interactive elements */
-.nav-link:hover,
-.custom-chip:hover,
-.todo-item:hover,
-.carousel-card:hover {
+.nav-link:hover {
   filter: drop-shadow(0 0 12px rgba(26, 176, 156, 0.3));
 }
 
@@ -1923,98 +1679,10 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
    10. ERROR UI & LOADING
    ============================================================================ */
 
-#blazor-error-ui {
-  background: lightyellow;
-  bottom: 0;
-  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
-  display: none;
-  left: 0;
-  padding: 0.6rem 1.25rem 0.7rem 1.25rem;
-  position: fixed;
-  width: 100%;
-  z-index: 1000;
-}
-
-#blazor-error-ui .dismiss {
-  cursor: pointer;
-  position: absolute;
-  right: 0.75rem;
-  top: 0.5rem;
-}
-
-.app-loading {
-  position: relative;
-  width: 8rem;
-  margin: 20vh auto 0 auto;
-}
-
-.app-loading::before {
-  content: "";
-  position: absolute;
-  inset: -1.15rem;
-  border: 1px solid rgba(var(--accent-rgb), 0.22);
-  transform: rotate(45deg);
-  animation: appLoadingSpin 14s linear infinite;
-  pointer-events: none;
-}
-
 @keyframes appLoadingSpin {
   to {
     transform: rotate(405deg);
   }
-}
-
-.loading-progress {
-  position: relative;
-  display: block;
-  width: 8rem;
-  height: 8rem;
-  filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.35));
-}
-
-.loading-progress circle {
-  fill: none;
-  stroke: #1a252f;
-  stroke-width: 0.5rem;
-  transform-origin: 50% 50%;
-  transform: rotate(-90deg);
-}
-
-.loading-progress circle:first-child {
-  stroke: rgba(var(--accent-rgb), 0.18);
-}
-
-.loading-progress circle:last-child {
-  stroke: var(--accent);
-  stroke-linecap: round;
-  stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
-  transition: stroke-dasharray 0.15s ease-in-out;
-}
-
-.loading-progress-text {
-  position: absolute;
-  inset: 3.1rem 0 auto 0;
-  text-align: center;
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--text);
-  letter-spacing: 0.04em;
-}
-
-.loading-progress-text:after {
-  content: var(--blazor-load-percentage-text, "Loading");
-}
-
-.app-loading__eyebrow {
-  display: block;
-  text-align: center;
-  margin-top: 2rem;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
-  color: var(--accent);
-  animation: appLoadingPulse 1.8s ease-in-out infinite;
 }
 
 @keyframes appLoadingPulse {
@@ -2184,102 +1852,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   }
 }
 
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes bounceOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes backInDown {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes backOutDown {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes rotateIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes rotateOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
 /* Animation classes for components */
-.bounceIn {
-  opacity: 0;
-  animation-delay: 0.5s;
-  animation-duration: 0.5s;
-  animation-name: bounceIn;
-  animation-fill-mode: forwards;
-}
-
-.bounceOut {
-  animation-duration: 0.5s;
-  animation-name: bounceOut;
-  animation-fill-mode: forwards;
-}
-
-.backInDown {
-  opacity: 0;
-  animation-delay: 0.5s;
-  animation-duration: 0.5s;
-  animation-name: backInDown;
-  animation-fill-mode: forwards;
-}
-
-.backOutDown {
-  animation-duration: 0.5s;
-  animation-name: backOutDown;
-  animation-fill-mode: forwards;
-}
-
-.rotateIn {
-  opacity: 0;
-  animation-delay: 0.5s;
-  animation-duration: 0.5s;
-  animation-name: rotateIn;
-  animation-fill-mode: forwards;
-}
-
-.rotateOut {
-  animation-duration: 0.5s;
-  animation-name: rotateOut;
-  animation-fill-mode: forwards;
-}
 
 /* ============================================================================
    12. HERO SECTION
@@ -2470,9 +2043,6 @@ html[data-theme="light"] .dr-theme-scope .music-section-label,
 html[data-theme="light"] .dr-theme-scope .music-album__role,
 html[data-theme="light"] .dr-theme-scope .music-photo__caption,
 html[data-theme="light"] .dr-theme-scope .nav-dropdown-label,
-html[data-theme="light"] .dr-theme-scope .about-skills__label,
-html[data-theme="light"] .dr-theme-scope .arborkin-stat__label,
-html[data-theme="light"] .dr-theme-scope .arborkin-live-badge,
 html[data-theme="light"] .dr-theme-scope .wd-case__fact-label {
   color: rgba(var(--accent-rgb), 0.85);
 }
@@ -2497,27 +2067,8 @@ html[data-theme="light"] .dr-theme-scope .contact-dialog__close {
   color: rgba(var(--text-rgb), 0.85);
 }
 
-html[data-theme="light"] .dr-theme-scope .arborkin-tagline,
-html[data-theme="light"] .dr-theme-scope .arborkin-problem-card p,
-html[data-theme="light"] .dr-theme-scope .webdesign-projects__note,
 html[data-theme="light"] .dr-theme-scope .contact-dialog__fallback,
 html[data-theme="light"] .dr-theme-scope .wd-case__ba-caption {
-  color: rgba(var(--text-rgb), 0.85);
-}
-
-/* .arborkin-*-shot figcaption: same hardcoded-dark-background bug the
-   Phase 3F pass fixed for .wd-case__*__figcaption (see the comment further
-   down this file) but never extended to ArborKin's own, earlier-built
-   figcaption styles — background stayed pinned to near-black
-   (rgba(10, 26, 46, ...)) while the text color correctly flipped to dark
-   navy in light mode, producing dark text on a dark panel (near-zero
-   contrast, worse than a plain low-alpha miss). Swapping the background to
-   --surface-rgb makes it theme-aware the same way .wd-case__shot figcaption
-   already is; the text alpha bump then behaves exactly like every other
-   caption on the page. */
-html[data-theme="light"] .dr-theme-scope .arborkin-hero-shot figcaption,
-html[data-theme="light"] .dr-theme-scope .arborkin-shot figcaption {
-  background: rgba(var(--surface-rgb), 0.6);
   color: rgba(var(--text-rgb), 0.85);
 }
 
@@ -2581,10 +2132,6 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
    already used for .nav-cta__arrow / .site-footer__cta-arrow, just moving
    right instead of diagonally since these sit inline in a button, not next
    to a "go somewhere else" external-link glyph. */
-.hero-btn__arrow {
-  display: inline-block;
-  transition: transform 0.2s ease;
-}
 
 .hero-btn:hover .hero-btn__arrow {
   transform: translateX(3px);
@@ -2913,25 +2460,6 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   margin-top: 1.75rem;
 }
 
-.about-skills__label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(var(--text-rgb), 0.35);
-  margin: 0 0 1.25rem 0;
-}
-
-.about-skills__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-}
-
 .about-skill-chip {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.78rem;
@@ -3097,323 +2625,17 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
    14. ARBORKIN CASE STUDY
    ============================================================================ */
 
-.arborkin-section {
-  background: linear-gradient(170deg, #071320 0%, #0a1a2e 50%, #0b1e30 100%);
-  padding: 7rem 0 6rem;
-  position: relative;
-  overflow: hidden;
-  color: white;
-  border-top: 1px solid rgba(var(--accent-rgb), 0.08);
-}
-
-.arborkin-container {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 4rem;
-}
-
 /* Header */
-.arborkin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-  margin-bottom: 3.5rem;
-}
-
-.arborkin-title {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-size: clamp(2.8rem, 5vw, 4.5rem) !important;
-  font-weight: 300 !important;
-  color: var(--text) !important;
-  letter-spacing: -1.5px !important;
-  margin: 0 0 1rem 0 !important;
-  padding-bottom: 0 !important;
-  text-align: left !important;
-  line-height: 1 !important;
-}
-
-.arborkin-title::after {
-  display: none !important;
-}
-
-.arborkin-tagline {
-  font-size: 1rem;
-  font-weight: 300;
-  color: rgba(var(--text-rgb), 0.55);
-  line-height: 1.7;
-  max-width: 540px;
-  margin: 0 0 1.75rem 0;
-}
-
-.arborkin-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.arborkin-chip {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--accent);
-  border: 1px solid rgba(var(--accent-rgb), 0.3);
-  padding: 0.3rem 0.75rem;
-  border-radius: 2px;
-  background: rgba(var(--accent-rgb), 0.05);
-  letter-spacing: 0.04em;
-}
-
-.arborkin-header__links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.75rem;
-  flex-shrink: 0;
-  padding-top: 2.5rem;
-}
-
-.arborkin-gh-link {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #0a1628 !important;
-  background: var(--accent);
-  border: 2px solid var(--accent);
-  padding: 0.65rem 1.5rem;
-  border-radius: 2px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.arborkin-gh-link:hover {
-  background: #16a085;
-  border-color: #16a085;
-  color: #0a1628 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.3);
-}
-
-.arborkin-live-badge {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: rgba(var(--text-rgb), 0.35);
-  letter-spacing: 0.08em;
-}
 
 /* Hero screenshot */
-.arborkin-hero-shot {
-  margin: 0 0 4rem 0;
-  padding: 0;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(var(--accent-rgb), 0.12);
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
-}
-
-.arborkin-hero-shot img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.arborkin-hero-shot figcaption {
-  background: rgba(10, 26, 46, 0.95);
-  padding: 0.9rem 1.5rem;
-  font-size: 0.82rem;
-  color: rgba(var(--text-rgb), 0.45);
-  font-style: italic;
-  border-top: 1px solid rgba(var(--accent-rgb), 0.1);
-}
 
 /* Problem cards */
-.arborkin-problems-label {
-  margin-bottom: 1.5rem;
-}
-
-.arborkin-problems {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 4rem;
-}
-
-.arborkin-problem-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(var(--accent-rgb), 0.12);
-  border-radius: 4px;
-  padding: 2rem 1.75rem;
-  transition: border-color 0.3s ease, background 0.3s ease;
-}
-
-.arborkin-problem-card:hover {
-  border-color: rgba(var(--accent-rgb), 0.3);
-  background: rgba(var(--accent-rgb), 0.04);
-}
-
-.arborkin-problem-card__num {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--accent);
-  letter-spacing: 0.2em;
-  display: block;
-  margin-bottom: 0.75rem;
-}
-
-.arborkin-problem-card h3 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: var(--text);
-  margin: 0 0 0.75rem 0;
-}
-
-.arborkin-problem-card p {
-  font-size: 0.88rem !important;
-  color: rgba(var(--text-rgb), 0.55);
-  line-height: 1.75;
-  margin: 0;
-}
-
-.arborkin-problem-card code {
-  font-family: var(--mono);
-  font-size: 0.82em;
-  color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.1);
-  padding: 0.1em 0.35em;
-  border-radius: 2px;
-}
-
-.arborkin-problem-card strong {
-  color: rgba(var(--text-rgb), 0.85);
-  font-weight: 600;
-}
 
 /* Screenshot strip */
-.arborkin-shots {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-  margin-bottom: 4rem;
-}
-
-.arborkin-shot {
-  margin: 0;
-  padding: 0;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid rgba(var(--accent-rgb), 0.1);
-  transition: border-color 0.3s ease, transform 0.3s ease;
-}
-
-.arborkin-shot:hover {
-  border-color: rgba(var(--accent-rgb), 0.25);
-  transform: translateY(-4px);
-}
-
-.arborkin-shot img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  object-position: top;
-  display: block;
-}
-
-.arborkin-shot figcaption {
-  padding: 0.7rem 1rem;
-  font-size: 0.75rem;
-  color: rgba(var(--text-rgb), 0.4);
-  font-style: italic;
-  background: rgba(10, 26, 46, 0.8);
-  border-top: 1px solid rgba(var(--accent-rgb), 0.08);
-}
 
 /* Stats row */
-.arborkin-stats {
-  display: flex;
-  gap: 0;
-  border: 1px solid rgba(var(--accent-rgb), 0.12);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.arborkin-stat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.75rem 1rem;
-  border-right: 1px solid rgba(var(--accent-rgb), 0.12);
-  transition: background 0.3s ease;
-}
-
-.arborkin-stat:last-child {
-  border-right: none;
-}
-
-.arborkin-stat:hover {
-  background: rgba(var(--accent-rgb), 0.04);
-}
-
-.arborkin-stat__value {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 2.2rem;
-  font-weight: 300;
-  color: var(--accent);
-  line-height: 1;
-  margin-bottom: 0.4rem;
-}
-
-.arborkin-stat__label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(var(--text-rgb), 0.35);
-  text-align: center;
-}
 
 /* ArborKin responsive */
-@media (max-width: 900px) {
-  .arborkin-container {
-    padding: 0 2rem;
-  }
-
-  .arborkin-header {
-    flex-direction: column;
-  }
-
-  .arborkin-header__links {
-    align-items: flex-start;
-    padding-top: 0;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .arborkin-problems {
-    grid-template-columns: 1fr;
-  }
-
-  .arborkin-shots {
-    grid-template-columns: 1fr;
-  }
-
-  .arborkin-shot img {
-    height: 220px;
-  }
-
-  .arborkin-stats {
-    flex-wrap: wrap;
-  }
-
-  .arborkin-stat {
-    flex: 1 1 calc(33% - 1px);
-    border-bottom: 1px solid rgba(var(--accent-rgb), 0.12);
-  }
-}
 
 /* Web design project case-study page (/webdesign/{slug}) — same visual
    language as the ArborKin case study above, generalized for JSON-driven
@@ -4146,50 +3368,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   filter: brightness(1.02) saturate(0.78);
 }
 
-/* .webdesign-link:hover hardcodes #16a085 (the static --teal-dark brand
-   var) as a "darken on hover" step for dark mode's bright #1abc9c accent.
-   In light mode --accent is already #0f7a63 (calibrated for AA on cream) -
-   #16a085 is actually lighter than that, so hovering would move *toward*
-   worse contrast instead of away from it. Darkened further instead. */
-html[data-theme="light"] .dr-theme-scope .webdesign-link:hover {
-  color: #0d6854 !important;
-}
-
 /* Web Design tools section */
-.webdesign-tools {
-  background: #07111f;
-  padding: 5rem 0;
-  border-top: 1px solid rgba(var(--accent-rgb), 0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.webdesign-tools__container {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 4rem;
-}
-
-.webdesign-tools__heading {
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-size: clamp(2rem, 4vw, 3rem) !important;
-  font-weight: 300 !important;
-  color: var(--text) !important;
-  letter-spacing: -1px !important;
-  margin: 0 0 2rem 0 !important;
-  padding-bottom: 0 !important;
-  text-align: left !important;
-}
-
-.webdesign-tools__heading::after {
-  display: none !important;
-}
-
-.webdesign-tools__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-}
 
 /* Web Design projects section */
 .webdesign-projects {
@@ -4219,15 +3398,6 @@ html[data-theme="light"] .dr-theme-scope .webdesign-link:hover {
 
 .webdesign-projects__heading::after {
   display: none !important;
-}
-
-.webdesign-projects__note {
-  font-size: 0.875rem !important;
-  color: rgba(var(--text-rgb), 0.35);
-  max-width: 560px;
-  line-height: 1.8;
-  margin-top: 3.5rem !important;
-  font-family: 'Montserrat', sans-serif;
 }
 
 /* Project cards */
@@ -4345,53 +3515,6 @@ html[data-theme="light"] .dr-theme-scope .webdesign-link:hover {
   color: rgba(var(--accent-rgb), 0.3);
   font-size: 0.7em;
   top: 0.25em;
-}
-
-.wd-project__links {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 0.5rem;
-  align-items: center;
-}
-
-.wd-project__link {
-  position: relative;
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  color: rgba(var(--accent-rgb), 0.55) !important;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.wd-project__link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 100%;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.wd-project__link:hover {
-  color: var(--accent) !important;
-}
-
-.wd-project__link:hover::after {
-  transform: scaleX(1);
-}
-
-.wd-project__link--gh {
-  color: rgba(var(--text-rgb), 0.25) !important;
-}
-
-.wd-project__link--gh:hover {
-  color: rgba(var(--text-rgb), 0.7) !important;
 }
 
 .wd-project__wip {
@@ -4639,17 +3762,6 @@ html[data-theme="light"] .dr-theme-scope .webdesign-link:hover {
   }
 }
 
-.webdesign-link {
-  color: var(--accent) !important;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: rgba(var(--accent-rgb), 0.4);
-}
-
-.webdesign-link:hover {
-  color: #16a085 !important;
-}
-
 /* Subpage responsive */
 @media (max-width: 820px) {
   .subpage-hero__content {
@@ -4668,7 +3780,6 @@ html[data-theme="light"] .dr-theme-scope .webdesign-link:hover {
   .consulting-services__container,
   .consulting-cta__container,
   .services-faq__container,
-  .webdesign-tools__container,
   .webdesign-projects__container {
     padding: 0 2rem;
   }
@@ -5299,35 +4410,6 @@ a.music-album__title--link:hover {
   }
 }
 
-/* index.html's static hero pre-paint plays these same entrance animations once on its
-   own copy of the hero; when Blazor mounts its own fresh .hero-section afterward, that's
-   a brand-new DOM element, so without this override every one of these would play a
-   *second* time — the whole hero visibly fading/sliding in again, which reads exactly
-   like the page reloading even though it's just Blazor's normal first render underneath.
-   html.static-preview-shown is set by the toggle script in index.html the moment the
-   static preview is revealed, and stays set through the real render.
-
-   Tried shrinking animation-duration to ~0 first (1ms) instead of this — measured via a
-   frame-by-frame computed-style log that it still let one real frame paint at the
-   animation's *from* state (opacity:0, translateY(-30px)) for ~70-80ms on Blazor's fresh
-   element before resolving, which is exactly long enough to read as a flash/flicker, not
-   long enough to look intentional. `animation: none` removes the animation outright, so
-   the element just renders at its normal (non-animated) computed style from the very first
-   frame — opacity/transform default to 1/none with no animation present, which is the same
-   as the animation's own end state, so visually identical to a "completed" animation with
-   zero risk of the from-state ever painting. */
-html.static-preview-shown .hero-grid-bg,
-html.static-preview-shown .hero-section::before,
-html.static-preview-shown .hero-section::after,
-html.static-preview-shown .hero-eyebrow,
-html.static-preview-shown .hero-section h1,
-html.static-preview-shown .hero-divider,
-html.static-preview-shown .hero-subtitle,
-html.static-preview-shown .hero-cta,
-html.static-preview-shown .hero-portrait,
-html.static-preview-shown .hero-scroll {
-  animation: none !important;
-}
 .hero-content {
   position: relative;
   z-index: 2;
@@ -5374,22 +4456,6 @@ html.static-preview-shown .hero-scroll {
 }
 
 /* ArborKin — Mondrian full-bleed, subtle */
-.arborkin-section::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: var(--art-deco-1);
-  background-size: cover;
-  background-position: center;
-  mix-blend-mode: var(--art-deco-blend);
-  opacity: 0.08;
-  pointer-events: none;
-  z-index: 0;
-}
-.arborkin-container {
-  position: relative;
-  z-index: 1;
-}
 
 /* Shared mixin pattern — sections that need overflow: hidden added */
 .casual-section,
@@ -5457,25 +4523,6 @@ html.static-preview-shown .hero-scroll {
    ============================================================================ */
 
 /* Arch columns on the right side of the tools strip */
-.webdesign-tools::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 55%;
-  height: 100%;
-  background-image: var(--art-deco-2);
-  background-size: auto 130%;
-  background-position: right center;
-  background-repeat: no-repeat;
-  mix-blend-mode: var(--art-deco-blend);
-  opacity: 0.16;
-  pointer-events: none;
-}
-.webdesign-tools__container {
-  position: relative;
-  z-index: 1;
-}
 
 /* Mondrian grid across the projects section, slightly stronger */
 .webdesign-projects::before {
@@ -5958,11 +5005,6 @@ html[data-theme="light"] .dr-theme-scope .site-footer__social img {
    theme-adjusted) accent token in light mode instead. */
 html[data-theme="light"] .dr-theme-scope .site-footer__cta:hover {
   color: var(--accent);
-}
-
-.site-footer__cta-arrow {
-  font-size: 0.85em;
-  transition: transform 0.2s ease;
 }
 
 .site-footer__cta:hover .site-footer__cta-arrow {

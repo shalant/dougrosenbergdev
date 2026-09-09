@@ -89,7 +89,8 @@ public/                # Static passthrough (fonts, robots.txt, llms.txt, _heade
 
 ## Git Workflow
 
-- Current practice: commits go directly to `master` (no feature-branch/PR requirement is enforced — there's no pre-push hook in this repo, unlike `PortfolioNov25`). Follow existing practice unless Doug asks for branch protection to be added.
+- **Feature branches only, as of 2026-09-09** — new work (features, fixes, chores) goes on its own branch, not straight to `master`. `master`'s earliest commits predate this rule and were made directly to it; that history stands, but don't repeat the pattern going forward. There's no pre-push hook enforcing this yet (unlike `PortfolioNov25`) — it's a process rule, not a technical block.
+- **No commits between 8:30am and 5:00pm on weekdays, absolutely no exceptions.** This is a hard scheduling constraint, not a style preference — if work finishes inside that window, wait and commit after 5pm (or before 8:30am, or anytime on a weekend) rather than committing immediately. Applies to every commit regardless of branch, urgency, or how small the change is.
 - **Commit message style actually in use here:** an imperative summary line, then a body explaining *why* the change was made and what was verified (build passed, tests run, manual checks done) — see recent commits (`git log`) for the pattern. This is more detailed than a one-line `[Category]` prefix convention; keep matching it rather than switching to a terser style.
 - Before opening/expecting a PR: there is no enforced "docs must update in the same branch" hook here, but it's still good practice — if a change affects something documented in `PORT_TODO.md` or `DESIGN_NOTES.md`, update that doc in the same commit rather than leaving it stale.
 

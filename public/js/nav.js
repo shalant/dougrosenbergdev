@@ -1,6 +1,6 @@
 // Nav bar behavior (scroll state, active-link highlighting, mobile toggle, hash scrolling).
-// Loaded once in index.html and driven from Header.razor via JS interop — Blazor tells us
-// when it actually rendered instead of us guessing with setTimeout.
+// Loaded once from BaseLayout.astro, which calls DrNav.init() from its own inline <script>
+// placed at the end of <body>.
 window.DrNav = (function () {
     let initialized = false;
     let hashSettleObserver = null;
@@ -86,9 +86,8 @@ window.DrNav = (function () {
     let scrolled = false;
     let scrollTicking = false;
 
-    // Fires once per page — mirrors GA4's own built-in 90%-depth scroll event, but at 75%
-    // so it triggers for readers who didn't quite hit the bottom. Reset per SPA navigation
-    // via resetScroll75(), called from Header.razor's OnLocationChanged.
+    // Fires once per page load — mirrors GA4's own built-in 90%-depth scroll event, but
+    // at 75% so it triggers for readers who didn't quite hit the bottom.
     let scroll75Fired = false;
 
     function checkScroll75() {
@@ -100,10 +99,6 @@ window.DrNav = (function () {
             scroll75Fired = true;
             if (typeof gtag === 'function') gtag('event', 'scroll_75');
         }
-    }
-
-    function resetScroll75() {
-        scroll75Fired = false;
     }
 
     function handleScroll() {
@@ -128,8 +123,8 @@ window.DrNav = (function () {
 
         window.addEventListener('scroll', onScroll, { passive: true });
 
-        // Delegated on document so this keeps working across Blazor SPA navigation,
-        // which swaps in brand-new #navToggle/#navItems/.nav-link elements each time.
+        // Delegated on document rather than bound to #navToggle/#navItems directly,
+        // so it doesn't matter if those elements get re-rendered later.
         document.addEventListener('click', (e) => {
             const toggle = e.target.closest('#navToggle');
             if (toggle) {
@@ -166,5 +161,5 @@ window.DrNav = (function () {
         });
     }
 
-    return { init, highlightActive, scrollToHash: scrollToHashAndSettle, resetScroll75 };
+    return { init, highlightActive, scrollToHash: scrollToHashAndSettle };
 })();

@@ -9,7 +9,7 @@
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Hand-placed static images/icons/fonts under public/ - not content-hashed, so
+# Hand-placed static images/icons under public/ - not content-hashed, so
 # a shorter cache with revalidation instead of "immutable".
 /images/*
   Cache-Control: public, max-age=604800
@@ -19,6 +19,13 @@
   Cache-Control: public, max-age=604800
 /js/*
   Cache-Control: public, max-age=604800
+
+# Self-hosted fonts (src/styles/global.css's @font-face rules) - filenames
+# don't change automatically like /_astro/*, but a real font swap is rare
+# enough (and low-stakes enough) to treat like dougrosenbergmusic's site did:
+# immutable for a year rather than the shorter images/icons treatment above.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
 
 # HTML pages: no long caching - always revalidate so content edits show up
 # immediately (this is a small personal/portfolio site, not a high-traffic

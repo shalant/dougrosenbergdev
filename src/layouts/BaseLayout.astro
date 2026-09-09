@@ -97,18 +97,6 @@ const arborKinLd = {
 
   <link rel="canonical" href={canonicalURL} />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Preload + swap-in-on-load instead of a plain <link rel="stylesheet"> - the plain
-       version is render-blocking (Lighthouse flagged ~1.9s of render-blocking resources
-       here); this fetches the CSS without blocking first paint and swaps it in once ready.
-       font-display=swap in the URL already means the fallback font paints immediately
-       regardless, so this only removes the blocking-fetch cost, not layout stability. -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@200;400;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@200;400;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
-  <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@200;400;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-  </noscript>
   <link rel="icon" type="image/svg+xml" sizes="any" href="/logos/favicon.svg" />
   <link rel="apple-touch-icon" href="/logos/drdev-logo.png" />
 

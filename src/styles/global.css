@@ -8,10 +8,38 @@
    1. IMPORTS & DESIGN SYSTEM
    ============================================================================ */
 
-/* Google Fonts is loaded as a <link> in index.html <head>, not an @import
-   here - @import serializes the fetch behind this file finishing download
-   first; a <link> lets the browser discover and fetch it in parallel with
-   everything else from the start of the page load. */
+/* Fonts are self-hosted (public/fonts/) rather than fetched from Google Fonts -
+   removes the fonts.googleapis.com/fonts.gstatic.com round trips (DNS + connect
+   + two blocking requests) entirely. Each family below is a variable font, so
+   one file covers every weight actually used in this codebase - re-check every
+   .astro file under src for new font-weight usage before assuming an existing
+   file covers a new one.
+
+   To refresh: fetch e.g.
+   https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;800
+   with a Chrome user-agent (`curl -A "Mozilla/5.0 ... Chrome/120.0.0.0 ..."`),
+   take the "latin" subset block's woff2 URL, and download. */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 300 400;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/montserrat.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
+}
 
 /* Static brand colors (unaffected by theme) */
 :root {

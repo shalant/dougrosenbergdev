@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import TechChip from '../../components/TechChip.astro';
+import ProjectMediaFrame from '../../components/ProjectMediaFrame.astro';
+import webDesign from '../../data/webdesign.json';
+
+// Hand-curated for the hero ring: which of each project's images best represent
+// it (best-first), plus each project's overall quality rank (1 = strongest) for
+// ordering which projects get a *second* card once every project has its best
+// one in. Ported verbatim from WebDesignPage.razor's RingCuration array - update
+// by eye when project images change, same as the Blazor version. BackendTools'
+// RingCurationService can still generate a suggested ordering; it's pasted in
+// by hand here rather than written automatically, same rule as before.
+const RING_CARD_COUNT = 12;
+const RING_CURATION: { slug: string; projectRank: number; imageIndexesBestFirst: number[] }[] = [
+  { slug: 'guacamayo-band', projectRank: 1, imageIndexesBestFirst: [0, 3, 2] },
+  { slug: 'arborkin', projectRank: 2, imageIndexesBestFirst: [1, 2, 3] },
+  { slug: 'dougrosenberg-music-v2', projectRank: 3, imageIndexesBestFirst: [0, 1] },
+  { slug: 'hardware-etc', projectRank: 4, imageIndexesBestFirst: [0, 2] },
+  { slug: 'sonus-construction', projectRank: 5, imageIndexesBestFirst: [1] },
+  { slug: 'dougrosenberg-music', projectRank: 6, imageIndexesBestFirst: [3] },
+  { slug: 'haxbyte', projectRank: 7, imageIndexesBestFirst: [0] },
+  { slug: 'gigsync', projectRank: 8, imageIndexesBestFirst: [0] },
+];
+
+// Breadth-first, round-robin: round 0 takes every curated project's best image
+// (in project-quality order), round 1 takes the second-best from whichever
+// projects have one, and so on - the ring always has full breadth before it
+// goes deeper into any single project.
+function selectRingImages(count: number): string[] {
+  const bySlug = new Map(webDesign.projects.map((p) => [p.slug, p]));
+  const pools = RING_CURATION
+    .filter((c) => bySlug.has(c.slug))
+    .sort((a, b) => a.projectRank - b.projectRank)
+    .map((c) => c.imageIndexesBestFirst.map((i) => bySlug.get(c.slug)!.images[i]));
+
+  const picks: string[] = [];
+  for (let round = 0; picks.length < count; round++) {
+    let addedAny = false;
+    for (const pool of pools) {
+      if (picks.length >= count) break;
+      if (round < pool.length) {
+        picks.push(pool[round]);
+        addedAny = true;
+      }
+    }
+    if (!addedAny) break;
+  }
+  return picks;
+}
+
+const ringImages = selectRingImages(RING_CARD_COUNT);
+---
+
+<BaseLayout
+  title="Web Design & Case Studies — Douglas Rosenberg"
+  description={webDesign.subheadline}
+>
+  <Header />
+
+  <section class="wd2-hero">
+    <div class="wd2-hero__ring" id="wd2HeroRing"></div>
+    <div class="wd2-hero__scrim"></div>
+    <div class="wd2-hero__glass">
+      <span class="section-eyebrow">// web design</span>
+      <h1 class="wd2-hero__title">{webDesign.headline}</h1>
+      <p class="wd2-hero__sub">{webDesign.subheadline}</p>
+      <button type="button" class="hero-btn hero-btn--primary wd2-hero__cta" id="openContactDialog">
+        get in touch
+      </button>
+    </div>
+  </section>
+
+  <dialog id="contactDialog" class="contact-dialog">
+    <button type="button" class="contact-dialog__close" aria-label="Close" id="closeContactDialog">&times;</button>
+    <h3 class="contact-dialog__title">Let's talk</h3>
+    <div class="contact-dialog__options">
+      <div class="contact-dialog__option">
+        <h4>Quick note</h4>
+        <p>Just want to say hi or ask something small.</p>
+        <a class="hero-btn hero-btn--ghost" id="quickNoteLink"
+           href="mailto:doug.rosenberg@gmail.com?subject=Hey%20Doug">send a note</a>
+      </div>
+      <div class="contact-dialog__option">
+        <h4>Tell me about your project</h4>
+        <p>Give me the details up front so I can reply with something useful.</p>
+        <a class="hero-btn hero-btn--primary" id="projectInquiryLink"
+           href="mailto:doug.rosenberg@gmail.com?subject=Website%20project&amp;body=Hi%20Doug%2C%0D%0A%0D%0AHere%27s%20a%20bit%20about%20what%20I%27m%20thinking%3A%0D%0A%0D%0AWhat%20it%27s%20for%3A%20%0D%0ARough%20timeline%3A%20%0D%0ABudget%20range%20%28if%20you%20have%20one%20in%20mind%29%3A%20">
+          start here
+        </a>
+      </div>
+    </div>
+    <p class="contact-dialog__fallback">
+      mailto link not opening? copy:
+      <button type="button" class="contact-dialog__copy" id="copyEmailBtn">
+        doug.rosenberg@gmail.com
+      </button>
+    </p>
+  </dialog>
+
+  <section class="webdesign-projects">
+    <div class="webdesign-projects__container">
+      <span class="section-eyebrow">// selected work</span>
+      <h2 class="webdesign-projects__heading">Live Sites</h2>
+
+      <div class="wd-projects-grid" id="wdProjectsGrid">
+
+        {webDesign.projects.map((project) => (
+          <a href={`/webdesign/${project.slug}`} class="wd-project">
+            <ProjectMediaFrame alt={`${project.name} website`} images={project.images} />
+            <div class="wd-project__meta">
+              <span class="wd-project__num">{project.number}</span>
+              <span class="about-skill-chip">{project.platform}</span>
+              {project.status && <span class="wd-project__wip">{project.status}</span>}
+            </div>
+            <h3 class="wd-project__name">{project.name}</h3>
+            <p class="wd-project__industry">{project.industry}</p>
+            <ul class="wd-project__bullets">
+              {project.bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+            <span class="wd-project__cta">view case study</span>
+          </a>
+        ))}
+
+        <article class="wd-project wd-project--static">
+          <div class="wd-project__meta">
+            <span class="wd-project__num">09</span>
+            <span class="about-skill-chip">Blazor Server</span>
+            <span class="wd-project__wip">in progress</span>
+          </div>
+          <h3 class="wd-project__name">coming soon: BizMachina</h3>
+          <p class="wd-project__industry">Demo business ERP system</p>
+          <ul class="wd-project__bullets">
+            <li>Custom Blazor Server, DB, cheap deployment, AI document consumption</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="wd2-tools">
+    <div class="wd2-tools__container">
+      <span class="section-eyebrow">// toolkit</span>
+      <div class="wd2-tools__chips">
+        {webDesign.tools.map((tool) => <TechChip name={tool} />)}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+
+  <script is:inline src="/js/ring.js"></script>
+  <script type="application/json" id="ringImagesData" set:html={JSON.stringify(ringImages)} />
+  <script is:inline>
+    (function () {
+      var data = JSON.parse(document.getElementById('ringImagesData').textContent);
+      DrRing.init('wd2HeroRing', data);
+    })();
+  </script>
+</BaseLayout>
+
+<script>
+  const dialog = document.getElementById('contactDialog') as HTMLDialogElement | null;
+
+  document.getElementById('openContactDialog')?.addEventListener('click', () => {
+    if (typeof gtag === 'function') gtag('event', 'contact_dialog_open');
+    dialog?.showModal();
+  });
+  document.getElementById('closeContactDialog')?.addEventListener('click', () => dialog?.close());
+  document.getElementById('quickNoteLink')?.addEventListener('click', () => {
+    if (typeof gtag === 'function') gtag('event', 'contact_option_select', { option: 'quick_note' });
+  });
+  document.getElementById('projectInquiryLink')?.addEventListener('click', () => {
+    if (typeof gtag === 'function') gtag('event', 'contact_option_select', { option: 'project_inquiry' });
+  });
+  document.getElementById('copyEmailBtn')?.addEventListener('click', (e) => {
+    if (typeof gtag === 'function') gtag('event', 'contact_email_copied');
+    const btn = e.currentTarget as HTMLButtonElement;
+    navigator.clipboard.writeText('doug.rosenberg@gmail.com').then(() => {
+      btn.textContent = 'copied!';
+      setTimeout(() => { btn.textContent = 'doug.rosenberg@gmail.com'; }, 1500);
+    });
+  });
+
+  // Hover-intent crossfade activation for every ProjectMediaFrame on this page,
+  // delegated once instead of N per-card listeners. Only starts the crossfade
+  // after the pointer rests on a card for a beat (200ms), so skimming across
+  // several cards doesn't set all of them animating at once.
+  let hoverTimer: ReturnType<typeof setTimeout> | null = null;
+  const grid = document.getElementById('wdProjectsGrid');
+
+  grid?.addEventListener('mouseover', (e) => {
+    const frame = (e.target as HTMLElement).closest<HTMLElement>('[data-media-frame]');
+    if (!frame || frame.contains(e.relatedTarget as Node)) return;
+    if (hoverTimer) clearTimeout(hoverTimer);
+    hoverTimer = setTimeout(() => {
+      frame.querySelector('.wd-project__frame-stage')?.classList.add('is-active');
+    }, 200);
+  });
+
+  grid?.addEventListener('mouseout', (e) => {
+    const frame = (e.target as HTMLElement).closest<HTMLElement>('[data-media-frame]');
+    if (!frame || frame.contains(e.relatedTarget as Node)) return;
+    if (hoverTimer) clearTimeout(hoverTimer);
+    frame.querySelector('.wd-project__frame-stage')?.classList.remove('is-active');
+  });
+</script>

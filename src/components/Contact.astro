@@ -1,0 +1,49 @@
+---
+import SectionDivider from './SectionDivider.astro';
+import siteProperties from '../data/siteproperties.json';
+
+const props = siteProperties;
+---
+
+<section class="contact-section reveal-on-scroll" id="contact">
+  <div class="contact-container">
+    <span class="section-eyebrow">// let's build something</span>
+    <h2 class="contact-heading">Get In Touch</h2>
+    <SectionDivider />
+    <div class="contact-glass">
+      <p class="contact-sub">
+        Whether you have a project in mind, need a consultation,
+        or just want to connect &mdash; I'd love to hear from you.
+      </p>
+      <div class="contact-actions">
+        <a href={`mailto:${props.email}`} class="hero-btn hero-btn--primary">
+          Send a message
+        </a>
+        {props.linkedIn && (
+          <a href={`https://www.linkedin.com/in/${props.linkedIn}`}
+             class="hero-btn hero-btn--ghost"
+             target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+        )}
+      </div>
+      <div class="contact-socials">
+        <a href={`mailto:${props.email}`} class="contact-social" title="Email" aria-label="Email">
+          <img src="/images/socials/envelope.svg" alt="Email" />
+        </a>
+        {props.gitHub && (
+          <a href={`https://github.com/${props.gitHub}`}
+             class="contact-social" target="_blank" rel="noopener" aria-label="GitHub">
+            <img src="/images/socials/github.svg" alt="GitHub" />
+          </a>
+        )}
+        {props.linkedIn && (
+          <a href={`https://www.linkedin.com/in/${props.linkedIn}`}
+             class="contact-social" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <img src="/images/socials/linkedin.svg" alt="LinkedIn" />
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

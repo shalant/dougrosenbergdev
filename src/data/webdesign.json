@@ -1,0 +1,571 @@
+{
+  "headline": "UI/UX Design & Web Development",
+  "subheadline": "Design-led development from wireframe to pixel-perfect production, with real UX thinking behind every screen.",
+  "tools": [
+    "Figma",
+    "Canva",
+    "Squarespace",
+    "Blazor",
+    "Angular",
+    "Astro",
+    "Bootstrap",
+    "CSS / Animations",
+    "MudBlazor",
+    "Claude",
+    "DALL-E",
+    "Gemini",
+    "Copilot"
+  ],
+  "projects": [
+    {
+      "slug": "guacamayo-band",
+      "number": "01",
+      "name": "Guacamayo",
+      "industry": "Chicago funky Latin groove band — Doug's own band site",
+      "platform": "Astro",
+      "status": "live",
+      "siteLabel": "shalant.github.io/guacamayo-band",
+      "externalUrl": "https://shalant.github.io/guacamayo-band/",
+      "gitHubUrl": "https://github.com/shalant/guacamayo-band",
+      "images": [
+        "/images/webdesign/guacamayo-hero.jpg",
+        "/images/webdesign/guacamayo-2.jpg",
+        "/images/webdesign/guacamayo-3.jpg",
+        "/images/webdesign/guacamayo-4.jpg",
+        "/images/webdesign/guacamayo-5.jpg"
+      ],
+      "imageCaptions": [
+        "Hero — the band's real show-flyer art pinned as a full-bleed backdrop, with the real logo and lineup",
+        "About — bio and lineup, credited exactly as printed on the show flyer",
+        "About wrap-up into Music — a real YouTube IFrame Player API integration with a custom track list",
+        "Shows — split-flap date tiles that flip in once per gig; data fetched live from GigSync at build time",
+        "Press kit and Book section — downloadable logo/flyer assets and a direct booking email"
+      ],
+      "stack": [
+        "Astro",
+        "Tailwind v4",
+        "GigSync API",
+        "YouTube IFrame Player API"
+      ],
+      "bullets": [
+        "A real band's own site, built around the flyer and logo art it already had rather than an invented visual identity",
+        "Shows section pulls real gig dates live from GigSync (project 08) at build time — one personal project feeding another",
+        "Split-flap date tiles, a slow Ken Burns backdrop drift, and a real hamburger mobile nav, tuned against actual contrast/measurement checks"
+      ],
+      "tagline": "A real, currently-gigging band's own site — built around the flyer art they already had, with a Shows section pulling live gig dates from a second personal project, GigSync.",
+      "approach": [
+        "Guacamayo is a real Chicago Latin/funk band (\"Funky Latin Groove\") that Doug plays saxophone in — this is the band's own site, not client work. The band already had a professional visual identity — a logo and show-flyer art from designer/drummer Javier Saume Mazzei — so the entire build treats that flyer as the design system to sample from (palette, lettering, the macaw imagery) instead of inventing a new one from scratch.",
+        "The Shows section doubles as a live integration test for GigSync (project 08 on this page): at build time it fetches this band's real gig data straight from the GigSync API, falling back to placeholder dates only if the fetch fails, times out, or comes back empty. That link surfaced a real bug — a gig with an unparseable source date crashed the entire homepage build — fixed by filtering out invalid records before they reach the page, the same \"one bad record can't break the build\" resilience already used for a full fetch failure.",
+        "A handful of small, deliberate interaction details separate this from a generic AI-styled band site: date tiles that flip once via a real IntersectionObserver instead of looping forever, a slow Ken Burns drift on the backdrop, and a hamburger-driven mobile nav that replaced an earlier horizontal-scroll workaround once it stopped holding up under direct measurement. Nav tile text colors were chosen from an actual computed-contrast check against WCAG AA, not eyeballed."
+      ],
+      "highlights": [
+        {
+          "title": "Live Data From a Second Project",
+          "description": "The Shows section fetches this band's real gig dates from GigSync's API at build time, with a graceful placeholder fallback if the fetch fails, times out, or returns nothing."
+        },
+        {
+          "title": "One Bad Record, Not a Broken Build",
+          "description": "An unparseable date coming out of GigSync once crashed the entire homepage build via an invalid Intl.DateTimeFormat call. Fixed by filtering bad records out before render, instead of trusting every upstream record to be well-formed."
+        },
+        {
+          "title": "The Band's Own Art, Not an Invented Identity",
+          "description": "Every color, font pairing, and motif is sampled directly from the band's real show flyer and logo — a deliberate choice made after exploring and rejecting more than a dozen invented-palette directions first."
+        }
+      ],
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Astro"
+        },
+        {
+          "label": "Data source",
+          "value": "GigSync (live API)"
+        },
+        {
+          "label": "Role",
+          "value": "Design & build"
+        }
+      ]
+    },
+    {
+      "slug": "dougrosenberg-music-v2",
+      "number": "02",
+      "name": "dougrosenberg.com — V2",
+      "industry": "Musician/composer personal site — from-scratch Astro rebuild",
+      "platform": "Astro",
+      "status": "prototype",
+      "siteLabel": "shalant.github.io/dougrosenbergmusic",
+      "externalUrl": "https://shalant.github.io/dougrosenbergmusic/",
+      "gitHubUrl": "https://github.com/shalant/dougrosenbergmusic",
+      "images": [
+        "/images/webdesign/dougrosenbergmusic-v2-hero.jpg",
+        "/images/webdesign/dougrosenbergmusic-v2-2.jpg",
+        "/images/webdesign/dougrosenbergmusic-v2-3.jpg",
+        "/images/webdesign/dougrosenbergmusic-v2-4.jpg",
+        "/images/webdesign/dougrosenbergmusic-v2-5.jpg",
+        "/images/webdesign/dougrosenbergmusic-v2-proto-tv-leadsheet.jpg",
+        "/images/webdesign/dougrosenbergmusic-v2-proto-shape-antenna.jpg",
+        "/images/webdesign/dougrosenbergmusic-v2-proto-graded-expand.jpg"
+      ],
+      "imageCaptions": [
+        "Hero — corner \"staff\" nav (five scroll-tracked note-blobs) and an \"ON AIR\" pulsing pill in place of a waveform",
+        "Recordings — the four real releases: Better Than TV, Goran Ivanovic Group, Underwater, Folk Tales",
+        "About and Performance — bio, instrument tags, and animated counters for Chicago venues, national/international shows, and artists performed with",
+        "Sheet Music Library — a searchable practice-piece catalog built for private students",
+        "Photo gallery leading into the Booking & Contact section",
+        "Prototype — Tabletop Set + Lead Sheet: the hero photo framed in a retro TV console, nav relabeled with lead-sheet section names (Intro/A/B/C/Coda)",
+        "Prototype — Shape + Antenna: the same tabletop frame with an added antenna accent",
+        "Prototype — Graded Hero + Expanding Nav: a full-bleed graded photo with an expanding nav pill instead of the console frame"
+      ],
+      "stack": [
+        "Astro"
+      ],
+      "bullets": [
+        "A from-scratch Astro rebuild of the live Blazor site (dougrosenberg.com) — an exploration project, not a migration",
+        "Corner \"staff\" nav instead of a top bar — five scroll-tracked note-blobs that collapse to a hamburger dropdown below 860px",
+        "Three additional hero prototypes (tabletop TV frame, antenna variant, full-bleed graded) explore a \"Better Than TV\" album-title brand concept before one gets chosen"
+      ],
+      "tagline": "An Astro-from-scratch exploration of the live dougrosenberg.com — chasing custom, considered design and a specific brand concept instead of generic musician-site defaults.",
+      "approach": [
+        "This is a deliberate rebuild-as-craft-exercise, not a \"the live site needs this\" project — two honest reasons drove it: wanting to work in Astro again after enjoying it on Haxbyte, and wanting to move further away from the typical AI-generated-site look. That second goal got written down as a concrete, checkable list rather than a vibe: no centered-hero-plus-two-buttons, no glassmorphism/gradient-mesh as the default \"premium\" treatment, no default system-ui/Inter-everywhere type, no every-card-the-same-rounded-corner treatment, no perfectly safe symmetric spacing.",
+        "The nav is the clearest expression of that list: instead of a conventional top bar, a corner \"staff\" element holds five colored note-blobs, one per section, scroll-tracked so the current section's note glows while the rest dim. Below 860px, where hover-to-reveal doesn't work and the nav is meant to stay secondary to the scroll anyway, it collapses to a small hamburger toggle instead of trying to force the desktop treatment onto a touch screen.",
+        "A second, still-open layer sits on top of that base system: the debut album Better Than TV lends its wry, unpretentious voice to small details already live — an \"ON AIR\" pulsing-dot pill standing in for a waveform, a \"CH +\" scroll cue instead of a plain arrow. Three additional hero prototypes push that concept further before anything gets locked in: a retro tabletop-TV frame around the hero photo with lead-sheet-style section labels (Intro/A/B/C/Coda), the same frame with an antenna accent, and a full-bleed graded photo with an expanding nav pill instead of the console frame."
+      ],
+      "highlights": [
+        {
+          "title": "AI-Tells, Named and Checked Against",
+          "description": "The thing to avoid was written down as a specific, checkable list — centered hero + two buttons, glassmorphism/gradient-mesh, default system-ui type, uniform rounded-corner cards, safe symmetric spacing — rather than a vague \"make it less generic\" instruction that's impossible to verify against."
+        },
+        {
+          "title": "Corner Staff Nav, Not a Top Bar",
+          "description": "Five scroll-tracked note-blobs in the corner replace a conventional nav bar, glowing to show the current section. It collapses to a hamburger dropdown below 860px rather than forcing a hover-dependent desktop pattern onto touch."
+        },
+        {
+          "title": "Three Competing Hero Directions, Live",
+          "description": "Rather than mocking up alternatives offline, three full prototype pages (/preview-tv-leadsheet, /preview-shape-antenna, /preview-graded-expand) are deployed alongside the real index, so directions can be compared in a real browser before one is chosen."
+        }
+      ],
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Astro"
+        },
+        {
+          "label": "Status",
+          "value": "prototype, not yet live"
+        },
+        {
+          "label": "Role",
+          "value": "Design & build"
+        }
+      ],
+      "relatedBlogPostSlug": "rebuilding-musician-site-blazor-to-astro",
+      "relatedBlogPostLabel": "Read the rebuild write-up"
+    },
+    {
+      "slug": "dougrosenberg-music",
+      "number": "03",
+      "name": "dougrosenberg.com",
+      "industry": "Composer & musician — personal artist site",
+      "platform": "Blazor WASM",
+      "status": "in progress",
+      "siteLabel": "dougrosenberg.com",
+      "externalUrl": "https://www.dougrosenberg.com",
+      "gitHubUrl": "https://github.com/shalant/newMusicWebsiteJan26",
+      "images": [
+        "/images/webdesign/dougrosenberg-hero.jpg",
+        "/images/webdesign/dougrosenberg-2.jpg",
+        "/images/webdesign/dougrosenberg-3.jpg",
+        "/images/webdesign/dougrosenberg-4.jpg",
+        "/images/webdesign/dougrosenberg-5.jpg"
+      ],
+      "imageCaptions": [
+        "Homepage hero — full-bleed portrait with grain texture and glow accents",
+        "About section — Chicago Tribune quote in a glass panel over the hero photo",
+        "Performance Experience — animated counters (6 Chicago venues, 14 national/international, 34 artists) with venue lists",
+        "Albums section — cover art, description, and purchase links for both releases",
+        "The six-theme switcher panel (Dark, Night, Warm, Clean, Ocean, Forest) — live, persisted to localStorage"
+      ],
+      "bullets": [
+        "Custom Blazor WebAssembly build — same stack as this portfolio — replacing the previous site",
+        "Searchable sheet music library, album showcase with purchase links, and responsive photo gallery with lightbox",
+        "Six switchable color themes persisted in localStorage; scroll-spy navigation and animated counters"
+      ],
+      "tagline": "A working musician's site built the way a real product gets built — searchable catalog, live theme switching, and interactions a page builder can't give a single-artist brand.",
+      "approach": [
+        "This is a personal artist site, built on the same Blazor WebAssembly stack as this portfolio, replacing a previous version. The goal was a site that does what a page-builder template can't: real search over a growing catalog, and a brand presentation that can flex per release without a redesign.",
+        "Musicians live and die by two things online — selling the music and being found by other players who want the sheet music. Both got dedicated, searchable sections rather than a flat page of links.",
+        "The six switchable color themes exist because an artist's visual identity shifts by album, tour, or season — the site needed to keep up with that without a rebuild every time."
+      ],
+      "highlights": [
+        {
+          "title": "Six Themes, Zero Reload",
+          "description": "A full color-theme switcher persisted in localStorage — the site can match a new release's visual identity in one click, no redeploy required."
+        },
+        {
+          "title": "Searchable Sheet Music Library",
+          "description": "Real search and filtering over a sheet-music catalog, built for other musicians looking for a specific chart — not a static PDF dump."
+        },
+        {
+          "title": "Album Showcase With Purchase Links",
+          "description": "Album art gallery wired directly to purchase links, plus a responsive photo gallery with lightbox for press and promo shots."
+        }
+      ],
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Blazor WebAssembly"
+        },
+        {
+          "label": "Industry",
+          "value": "Musician / composer"
+        },
+        {
+          "label": "Role",
+          "value": "Design & full-stack build"
+        }
+      ],
+      "relatedBlogPostSlug": "rebuilding-musician-site-blazor-to-astro",
+      "relatedBlogPostLabel": "Read why this is being rebuilt in Astro"
+    },
+    {
+      "slug": "arborkin",
+      "number": "04",
+      "name": "ArborKin",
+      "industry": "Private, multi-user family tree app — solo full-stack build",
+      "platform": "Blazor Server",
+      "status": "live · invite-only",
+      "siteLabel": null,
+      "externalUrl": null,
+      "gitHubUrl": "https://github.com/shalant/FamilyTree",
+      "images": [
+        "/images/arborkin/arborkin-login.webp",
+        "/images/arborkin/familytree-hero.webp",
+        "/images/arborkin/familytree-detaildrawer.webp",
+        "/images/arborkin/familytree-hero__dark.webp",
+        "/images/arborkin/familytree-edit.webp"
+      ],
+      "imageCaptions": [
+        "Sign-in — Google SSO or email/password, invite-only",
+        "The tree canvas. Focus person is centered; ancestors flow upward, descendants downward. The Y-axis is a real birth-year timeline — generation gaps render proportionally.",
+        "Detail drawer — vitals, bio & photos without leaving the canvas",
+        "Dark mode — single CSS variable swap, persisted to localStorage",
+        "Edit form — relationship pickers with full autocomplete"
+      ],
+      "stack": [
+        ".NET 10",
+        "C# 13",
+        "Blazor Server",
+        "EF Core",
+        "MudBlazor",
+        "Azure App Service",
+        "Azure SQL",
+        "Blob Storage"
+      ],
+      "bullets": [
+        "JS-free tree layout — every node's pixel position computed server-side in C#, no post-render flicker",
+        "Custom drag-state ownership bridging JS gestures and Blazor persistence",
+        "~8k lines of C#, 12 EF migrations, shipped to Azure and used by real people"
+      ],
+      "tagline": "A private, multi-user family tree app — built solo, shipped to Azure, used by real people. Full stack from data model to layout algorithm to auth system.",
+      "approach": [
+        "ArborKin is a private, invite-only family tree app — not a portfolio demo, a real product with real users adding real relatives. The brief was self-imposed: build something with the same architectural discipline as client work, end to end, alone.",
+        "The core design problem was the tree canvas itself: laying out generations so the visual hierarchy is instantly readable, without a JS layout library doing the work. Every node's pixel position is computed in C# before the browser ever paints — the Y-axis is a real birth-year timeline, so generation gaps render proportionally instead of as evenly-spaced rows.",
+        "Beyond layout, most of the hard problems were about Blazor Server's specific constraints — SignalR round-trip latency on uploads, re-renders fighting client-side drag state — solved by being deliberate about which layer (C#, JS interop, or the browser itself) owns which piece of behavior."
+      ],
+      "highlights": [
+        {
+          "title": "JS-Free Tree Layout",
+          "description": "Every node's pixel position is computed in C# before anything renders. No getBoundingClientRect, no post-render step, no flicker. The SVG connector layer uses the same pre-calculated coordinates — always aligned on first paint."
+        },
+        {
+          "title": "Blazor Upload Latency",
+          "description": "Photos were taking five minutes. Root cause: every byte travels over SignalR to the server before reaching Azure Blob Storage. Fix: Canvas API compression in the browser first — a 12 MB phone photo becomes ~400 KB before Blazor ever touches it. Minutes to seconds."
+        },
+        {
+          "title": "Drag State Ownership",
+          "description": "Blazor re-renders reset dragged element positions mid-gesture. Solution: JS owns the gesture (mousemove updates style.left/top directly), and on mouseup calls a [JSInvokable] method. Blazor stores the result, persists it to localStorage, and restores it on next mount — no conflicts."
+        }
+      ],
+      "facts": [
+        {
+          "label": "lines of C#",
+          "value": "~8k"
+        },
+        {
+          "label": "EF migrations",
+          "value": "12"
+        },
+        {
+          "label": "xUnit tests",
+          "value": "11"
+        },
+        {
+          "label": "Azure services",
+          "value": "3"
+        },
+        {
+          "label": "full-stack build",
+          "value": "solo"
+        }
+      ],
+      "relatedBlogPostSlug": "building-family-tree-blazor",
+      "relatedBlogPostLabel": "Read the technical deep dive"
+    },
+    {
+      "slug": "sonus-construction",
+      "number": "05",
+      "name": "Sonus Construction Group",
+      "industry": "General contractor — multi-family value-add renovation",
+      "platform": "Squarespace",
+      "status": null,
+      "siteLabel": "sonusconstruction.com",
+      "externalUrl": "https://www.sonusconstruction.com/",
+      "gitHubUrl": null,
+      "images": [
+        "/images/webdesign/sonusconstruction-hero.jpg",
+        "/images/webdesign/sonusconstruction-2.jpg",
+        "/images/webdesign/sonusconstruction-3.jpg",
+        "/images/webdesign/sonusconstruction-4.jpg",
+        "/images/webdesign/sonusconstruction-5.jpg"
+      ],
+      "imageCaptions": [
+        "Homepage hero — full-bleed project photography with the editorial one-pager framing",
+        "\"We think like owners\" — the brand positioning stated directly, paired with a renovated unit photo",
+        "\"We source high quality materials at the source\" — glass-panel text treatment over photography",
+        "\"International Procurement / Bulk Purchasing / Made to Order\" — italic overlay on a furnished unit shot",
+        "\"Our Process Drives Success\" — the process section given the same visual weight as the portfolio, per the case study's core positioning"
+      ],
+      "bullets": [
+        "Minimalist editorial aesthetic with high-quality project photography driving the narrative",
+        "Structured around the \"we think like owners\" brand positioning, built for investor and developer audiences",
+        "Clear hierarchy across services, process, and material sourcing sections"
+      ],
+      "tagline": "An editorial-style site for a general contractor whose real audience is investors and developers vetting a partner, not homeowners browsing a portfolio.",
+      "approach": [
+        "Sonus works multi-family value-add renovation — the people reading this site are doing diligence on a construction partner, not shopping for a remodel. That shifted the design away from typical contractor-site conventions (big hero CTA, testimonial carousel) toward something closer to an editorial one-pager.",
+        "The \"we think like owners\" positioning isn't just a headline — it shaped the information architecture directly. Process and material sourcing get the same visual weight as the project portfolio, because that's what a developer actually checks before signing.",
+        "High-quality project photography does most of the persuasive work; the layout stays minimal and gets out of its way."
+      ],
+      "highlights": [
+        {
+          "title": "Editorial, Not Corporate",
+          "description": "A minimalist layout lets real project photography carry the narrative instead of stock-photo boilerplate or a generic contractor template."
+        },
+        {
+          "title": "Brand Positioning Baked Into Structure",
+          "description": "\"We think like owners\" shows up in the page order itself — process and material sourcing sit alongside the portfolio, not buried below it."
+        },
+        {
+          "title": "Investor-Grade Hierarchy",
+          "description": "Services, process, and sourcing are each cleanly separated so a developer doing diligence isn't hunting for the section that matters to them."
+        }
+      ],
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Squarespace"
+        },
+        {
+          "label": "Industry",
+          "value": "General contractor"
+        },
+        {
+          "label": "Role",
+          "value": "Design & build"
+        }
+      ]
+    },
+    {
+      "slug": "haxbyte",
+      "number": "06",
+      "name": "Haxbyte",
+      "industry": "Personal build-in-public engineering blog",
+      "platform": "Astro",
+      "status": null,
+      "siteLabel": "haxbyte.com",
+      "externalUrl": "https://www.haxbyte.com",
+      "gitHubUrl": null,
+      "images": [
+        "/images/webdesign/haxbyte-hero.jpg",
+        "/images/webdesign/haxbyte-2.jpg",
+        "/images/webdesign/haxbyte-3.jpg",
+        "/images/webdesign/haxbyte-4.jpg",
+        "/images/webdesign/haxbyte-5.jpg"
+      ],
+      "imageCaptions": [
+        "Homepage hero — hand-drawn wave dividers instead of stock UI chrome",
+        "Recent build logs, and the four-step build methodology laid out on the homepage",
+        "About page — the case for enterprise discipline at small-project scale",
+        "The Haxbyte Approach — clean code, mobile-first, performance, accessibility, scalable architecture, security",
+        "Blog index — build logs and technical notes"
+      ],
+      "bullets": [
+        "A build-in-public dev journal — lightweight Astro build with a working light/dark theme toggle",
+        "Makes the case for enterprise-grade discipline (WCAG 2.1 AA, sub-2-second loads, no bloat) on small, fast-moving projects",
+        "Documents a four-step build methodology — scope it in writing, build the thin slice, load it like it's real, ship then write it up"
+      ],
+      "tagline": "A personal build-log site making the case that enterprise engineering discipline — clean code, real performance budgets, accessibility as a baseline — belongs on small, fast-moving projects too, not just Fortune 10 platforms.",
+      "approach": [
+        "Haxbyte exists because of a gap noticed after years building enterprise ERPs and platforms for Fortune 10 companies, then building two Squarespace sites for small businesses on the side: small business owners don't need enterprise complexity, but they shouldn't have to settle for generic, slow, or fragile sites either. Haxbyte is the write-up of applying that same engineering discipline at a smaller, faster-moving scale.",
+        "The site itself doubles as the case study — a fast, mobile-first Astro build with a hand-drawn accent motif, a working light/dark theme toggle, and the build methodology documented right on the homepage instead of buried in an About page.",
+        "Each build log walks through a real project decision — performance work chasing sub-2-second loads, accessibility built in at a WCAG 2.1 AA baseline, architecture that scales without forcing a rewrite — rather than abstract advice."
+      ],
+      "highlights": [
+        {
+          "title": "Enterprise Discipline, Small-Project Scale",
+          "description": "The core thesis of the site: clean code, mobile-first design, sub-2-second performance budgets, and WCAG 2.1 AA accessibility, applied to sites that don't have an enterprise budget or timeline."
+        },
+        {
+          "title": "A Documented Build Methodology",
+          "description": "A four-step process laid out on the homepage — scope it in writing, build the thin slice, load it like it's real, ship then write it up — that the build logs themselves follow."
+        },
+        {
+          "title": "Fast, Accessible Astro Build",
+          "description": "The site itself is the proof: a lightweight Astro build with a working light/dark theme toggle and a hand-drawn wave-line accent motif instead of stock UI chrome."
+        }
+      ],
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Astro"
+        },
+        {
+          "label": "Role",
+          "value": "Design & build"
+        },
+        {
+          "label": "Focus",
+          "value": "Build-in-public dev journal"
+        }
+      ]
+    },
+    {
+      "slug": "hardware-etc",
+      "number": "07",
+      "name": "Hardware Etc LLC",
+      "industry": "Bulk materials supplier — multi-family residential",
+      "platform": "Squarespace",
+      "status": null,
+      "siteLabel": "hardwareetc.net",
+      "externalUrl": "https://www.hardwareetc.net/",
+      "gitHubUrl": null,
+      "images": [
+        "/images/webdesign/hardwareetc-hero.jpg",
+        "/images/webdesign/hardwareetc-2.jpg",
+        "/images/webdesign/hardwareetc-3.jpg",
+        "/images/webdesign/hardwareetc-4.jpg",
+        "/images/webdesign/hardwareetc-5.jpg"
+      ],
+      "imageCaptions": [
+        "Homepage hero — real interior photography over the split dark/product layout",
+        "Mission statement paired with an in-unit kitchen photo, establishing the multi-family audience immediately",
+        "Value props (source direct, bulk purchasing, quick-ship, private label) laid over supporting photography",
+        "Products page intro — sets up the full materials catalog",
+        "Product category grid, including the private-label cabinet line as its own standalone catalog section"
+      ],
+      "bullets": [
+        "Clean, professional layout communicating product quality and quick-ship availability to developer clients",
+        "Organized services and private-label cabinet catalog for high-volume procurement audiences",
+        "Responsive build optimized for both desktop spec-review and mobile field use"
+      ],
+      "beforeImage": "/images/webdesign/hardwareetc-before.jpg",
+      "beforeCaption": "hardwareetc.net, captured December 2021 — a single unstyled placeholder page: default browser typography, no layout, no branding beyond a plain wordmark.",
+      "beforeSourceUrl": "https://web.archive.org/web/20211206204438/http://hardwareetc.net/",
+      "tagline": "A bulk-materials supplier's site built to read as credible to spec-writers doing desktop diligence, and fast to use for crews checking specs on-site.",
+      "approach": [
+        "Hardware Etc sells into multi-family residential construction — a market where the buyer is often a developer or GC comparing suppliers before ever placing a call. The site's job is to close that credibility gap before the first email.",
+        "The build centers on two audiences that use the site differently: spec-writers doing careful desktop research, and field crews pulling up a spec sheet on a phone mid-install. Layout, navigation, and image weight were tuned for both without picking a favorite.",
+        "The private-label cabinet catalog needed to read as a real product line, not an afterthought — it's organized and photographed as its own section, structured for high-volume procurement browsing rather than a one-off consumer purchase."
+      ],
+      "highlights": [
+        {
+          "title": "Two Audiences, One Site",
+          "description": "Desktop spec-review and mobile field use get equal design priority — the same information hierarchy has to work seated at a laptop and standing on a job site."
+        },
+        {
+          "title": "Private-Label Catalog Structure",
+          "description": "The cabinet line is organized and presented as a standalone product catalog, built for procurement audiences comparing options at volume."
+        },
+        {
+          "title": "Trust Signals for Developer Clients",
+          "description": "Layout and copy choices — quick-ship messaging, clear service breakdowns — are aimed squarely at a B2B buyer evaluating suppliers, not a walk-in retail customer."
+        }
+      ],
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Squarespace"
+        },
+        {
+          "label": "Industry",
+          "value": "Bulk materials supplier"
+        },
+        {
+          "label": "Role",
+          "value": "Design & build"
+        }
+      ]
+    },
+    {
+      "slug": "gigsync",
+      "number": "08",
+      "name": "GigSync",
+      "industry": "Booking automation for gigging musicians",
+      "platform": "Cloudflare Workers",
+      "status": "live",
+      "siteLabel": "gigsync-backend.doug-rosenberg.workers.dev",
+      "externalUrl": "https://gigsync-backend.doug-rosenberg.workers.dev/",
+      "gitHubUrl": null,
+      "images": [
+        "/images/webdesign/gigsync-hero.jpg"
+      ],
+      "imageCaptions": [
+        "Landing page — the three-step pitch: forward the booking email, Claude reads it, the site's calendar updates itself"
+      ],
+      "stack": [
+        "Cloudflare Workers",
+        "Claude API"
+      ],
+      "bullets": [
+        "Forward a gig-booking email and it's parsed and added to the client's calendar automatically — no login, no manual entry",
+        "Claude extracts date, time, venue, and address from messy real-world confirmation emails, flagging anything that doesn't parse cleanly instead of guessing",
+        "Each client gets a dedicated forwarding address; a lightweight admin view shows everything that's landed for them"
+      ],
+      "tagline": "A gig-calendar app for musicians that runs entirely on forwarded email — no login, no data entry, no one to pay to keep it updated.",
+      "approach": [
+        "Musicians already get their booking info the same way every time: an email from the venue or booker with the date, time, and pay buried in prose. GigSync's whole premise is that this email is already the source of truth, so the product should read it instead of asking anyone to re-type it into a form.",
+        "The build is deliberately small — a Cloudflare Worker that receives the forwarded email, hands the text to Claude to extract structured gig data, and writes it to a calendar that shows up on the musician's own site. No accounts, no dashboard to log into, nothing to maintain beyond forwarding an email.",
+        "Real-world confirmation emails are messy and sometimes wrong — dates get mistyped, details get left out. Rather than silently guessing, GigSync surfaces what it couldn't resolve as a note on the entry, so a bad date shows up as a flag to check, not a silent miss on the calendar."
+      ],
+      "highlights": [
+        {
+          "title": "Email Is the Interface",
+          "description": "No login, no form, no app to open. The entire input surface is forwarding an email to a dedicated address — the workflow a musician already has, not a new one to learn."
+        },
+        {
+          "title": "Claude Extracts, Doesn't Guess",
+          "description": "Date, time, venue, and address are pulled from unstructured, inconsistent real-world text. When something doesn't parse cleanly — an impossible date, a missing detail — it's flagged in the entry's notes instead of silently dropped or invented."
+        },
+        {
+          "title": "Built to Grow by Request",
+          "description": "Shipped intentionally small — one workflow, done well — with more features planned as actual musicians using it ask for them, rather than building out speculative scope up front."
+        }
+      ],
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Cloudflare Workers"
+        },
+        {
+          "label": "AI",
+          "value": "Claude (email parsing)"
+        },
+        {
+          "label": "Role",
+          "value": "Design & build"
+        }
+      ]
+    }
+  ]
+}

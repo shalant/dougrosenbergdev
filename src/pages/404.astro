@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found — Douglas Rosenberg" description="Sorry, there's nothing at this address." themeScoped={false}>
+  <div class="dr-theme-scope">
+    <section class="notfound-section">
+      <div class="notfound-container">
+        <div class="notfound-content">
+          <div class="notfound-code">404</div>
+          <h1>Page Not Found</h1>
+          <p class="notfound-subtitle">Sorry, there's nothing at this address.</p>
+
+          <div class="notfound-suggestions">
+            <p>Here are some places to try:</p>
+            <nav class="notfound-nav">
+              <ul>
+                <li><a href="/">&larr; Back to Home</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/#experience">Experience</a></li>
+                <li><a href="/#technicalskills">Skills</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="mailto:doug.rosenberg@gmail.com">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <div class="notfound-art">
+          <svg viewBox="0 0 200 200" class="notfound-hexagon">
+            <defs>
+              <linearGradient id="hexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#1abc9c;stop-opacity:0.3" />
+                <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:0.3" />
+              </linearGradient>
+            </defs>
+            <polygon points="100,10 190,50 190,150 100,190 10,150 10,50" fill="url(#hexGradient)" stroke="#1abc9c" stroke-width="2" opacity="0.6"/>
+            <text x="100" y="140" font-size="80" font-weight="bold" text-anchor="middle" fill="#1abc9c" opacity="0.4">?</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .notfound-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .notfound-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(var(--accent-rgb), 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .notfound-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1000px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    align-items: center;
+  }
+
+  .notfound-content {
+    text-align: left;
+  }
+
+  .notfound-code {
+    font-size: 6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--navy) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .notfound-content h1 {
+    font-size: 2.5rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    background: none;
+    background-image: none;
+    background-clip: border-box;
+    -webkit-background-clip: border-box;
+    -webkit-text-fill-color: var(--text);
+    text-shadow: none;
+  }
+
+  .notfound-subtitle {
+    font-size: 1.1rem;
+    color: rgba(var(--text-rgb), 0.7);
+    margin-bottom: 2rem;
+  }
+
+  html[data-theme="light"] .notfound-subtitle {
+    color: rgba(var(--text-rgb), 0.85);
+  }
+
+  .notfound-suggestions {
+    background: rgba(var(--surface-rgb), 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+
+  .notfound-suggestions p {
+    color: rgba(var(--text-rgb), 0.8);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  html[data-theme="light"] .notfound-suggestions p {
+    color: rgba(var(--text-rgb), 0.85);
+  }
+
+  .notfound-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .notfound-nav li {
+    margin: 0;
+  }
+
+  .notfound-nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .notfound-nav a:hover {
+    color: var(--text);
+    text-decoration: underline;
+    transform: translateX(4px);
+  }
+
+  .notfound-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+  }
+
+  .notfound-hexagon {
+    width: 300px;
+    height: 300px;
+    animation: notfound-float 6s ease-in-out infinite;
+  }
+
+  @media (max-width: 768px) {
+    .notfound-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .notfound-content {
+      text-align: center;
+    }
+
+    .notfound-art {
+      order: -1;
+    }
+
+    .notfound-hexagon {
+      width: 180px;
+      height: 180px;
+    }
+  }
+</style>

@@ -1,0 +1,522 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import posts from '../../data/blog-posts.json';
+
+export function getStaticPaths() {
+  return posts.map((post: any) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const postUrl = `https://dougrosenbergdev.com/blog/${post.id}`;
+
+// Build-time TOC extraction + heading-id injection - ported from BlogPostDetail.razor's
+// regex pair, just run once at build instead of per-request (content is static per post).
+type Heading = { level: number; text: string; id: string };
+
+function slugify(text: string) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function extractHeadings(html: string): Heading[] {
+  const headings: Heading[] = [];
+  const re = /<(h[2-3])(?:\s+id=["']([^"']*)["'])?[^>]*>([^<]+)<\/h[2-3]>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(html))) {
+    const level = match[1].toLowerCase() === 'h2' ? 2 : 3;
+    const text = match[3].trim();
+    const id = match[2] || slugify(text);
+    headings.push({ level, text, id });
+  }
+  return headings;
+}
+
+function addHeadingIds(html: string): string {
+  return html.replace(
+    /<(h[2-3])(?:\s+id=["']([^"']*)["'])?([^>]*)>([^<]+)(<\/h[2-3]>)/gi,
+    (_m, tag, existingId, attrs, text, closeTag) => {
+      const id = existingId || slugify(text);
+      return `<${tag} id="${id}"${attrs}>${text}${closeTag}`;
+    }
+  );
+}
+
+function getRelatedPosts(current: any) {
+  return posts
+    .filter((p: any) => p.id !== current.id)
+    .map((p: any) => {
+      let score = 0;
+      const currentTags = current.tags ?? [];
+      score += (p.tags ?? []).filter((t: string) => currentTags.includes(t)).length * 3;
+      const titleWords = current.title.split(' ').filter(Boolean);
+      score += titleWords.filter((w: string) => p.title.toLowerCase().includes(w.toLowerCase())).length;
+      return { post: p, score };
+    })
+    .filter(({ post: p, score }: any) => score > 0)
+    .sort((a: any, b: any) => b.score - a.score)
+    .map(({ post: p }: any) => p)
+    .slice(0, 3);
+}
+
+const headings = extractHeadings(post.content);
+const contentWithIds = addHeadingIds(post.content);
+const relatedPosts = getRelatedPosts(post);
+
+const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(`${post.title} - Doug Rosenberg Dev`)}&via=dougrosenbergdev`;
+const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`;
+
+const dateFmt = (d: string) => new Date(d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const dateFmtShort = (d: string) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+const blogPostingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  description: post.excerpt,
+  datePublished: post.date,
+  url: postUrl,
+  keywords: post.tags,
+  author: { '@type': 'Person', name: 'Douglas Rosenberg', url: 'https://dougrosenbergdev.com' },
+};
+---
+
+<BaseLayout
+  title={`${post.title} — Douglas Rosenberg`}
+  description={post.excerpt}
+  ogImage={post.images?.[0]}
+>
+  <Fragment slot="head">
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content={post.date} />
+    <script type="application/ld+json" set:html={JSON.stringify(blogPostingLd)} />
+  </Fragment>
+
+  <Header />
+
+  <section class="blog-post-page-section">
+    <div class="blog-post-page-container">
+      <a href="/blog" class="wd-case__back">&larr; all posts</a>
+
+      <article class="blog-post-detail blog-post-detail--page">
+        <header class="blog-post-detail__header">
+          <div class="blog-post-detail__title-row">
+            <div>
+              <h1>{post.title}</h1>
+              <div class="blog-post-detail__meta">
+                <time>{dateFmt(post.date)}</time>
+                <span class="blog-post-detail__reading-time">{post.readingTimeMinutes} min read</span>
+              </div>
+            </div>
+            <div class="blog-post-detail__share">
+              <a href={twitterShareUrl} target="_blank" rel="noopener" class="share-btn twitter" title="Share on Twitter">&#120143;</a>
+              <a href={linkedInShareUrl} target="_blank" rel="noopener" class="share-btn linkedin" title="Share on LinkedIn">in</a>
+            </div>
+          </div>
+        </header>
+
+        {post.tags?.length > 0 && (
+          <div class="blog-post-detail__tags">
+            {post.tags.map((tag: string) => <span class="blog-post-detail__tag">{tag}</span>)}
+          </div>
+        )}
+
+        {headings.length > 0 && (
+          <nav class="blog-post-detail__toc">
+            <div class="toc-title">Table of Contents</div>
+            <ul class="toc-list">
+              {headings.map((h) => (
+                <li class="toc-item" style={`margin-left: ${(h.level - 2) * 1.5}rem`}>
+                  <a href={`#${h.id}`} class="toc-link">{h.text}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        {post.images?.length > 0 && (
+          <div class="blog-post-detail__images">
+            {post.images.map((img: string) => <img src={img} alt={post.title} class="blog-post-detail__image" />)}
+          </div>
+        )}
+
+        <div class="blog-post-detail__content" set:html={contentWithIds} />
+
+        {relatedPosts.length > 0 && (
+          <div class="blog-post-detail__related">
+            <h3>Related Posts</h3>
+            <ul class="related-posts-list">
+              {relatedPosts.map((related: any) => (
+                <li class="related-post-item">
+                  <a href={`/blog/${related.id}`} class="related-post-link">{related.title}</a>
+                  <span class="related-post-meta">{dateFmtShort(related.date)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </article>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-post-page-section {
+    padding: 4rem 0;
+    background: var(--art-deco-1) center / cover no-repeat fixed;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post-page-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--surface-rgb), 0.65);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .blog-post-page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .blog-post-detail--page {
+    background: var(--bg);
+    border-radius: 12px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .blog-post-detail {
+    padding: 3rem;
+  }
+
+  .blog-post-detail__header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(var(--text-rgb), 0.12);
+  }
+
+  .blog-post-detail__title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .blog-post-detail__header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.75rem 0;
+    line-height: 1.3;
+    background: none;
+    background-image: none;
+    background-clip: border-box;
+    -webkit-background-clip: border-box;
+    -webkit-text-fill-color: var(--text);
+    text-shadow: none;
+  }
+
+  .blog-post-detail__share {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  .share-btn.twitter {
+    background: rgba(29, 155, 240, 0.1);
+    color: #1d9bf0;
+    border-color: rgba(29, 155, 240, 0.2);
+  }
+
+  .share-btn.twitter:hover {
+    background: rgba(29, 155, 240, 0.2);
+    border-color: rgba(29, 155, 240, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .share-btn.linkedin {
+    background: rgba(0, 119, 181, 0.1);
+    color: #0077b5;
+    border-color: rgba(0, 119, 181, 0.2);
+  }
+
+  .share-btn.linkedin:hover {
+    background: rgba(0, 119, 181, 0.2);
+    border-color: rgba(0, 119, 181, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .blog-post-detail__meta {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .blog-post-detail__header time {
+    color: rgba(var(--text-rgb), 0.5);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .blog-post-detail__reading-time {
+    color: var(--accent);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  .blog-post-detail__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .blog-post-detail__tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(var(--accent-rgb), 0.1);
+    color: var(--accent);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .blog-post-detail__images {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .blog-post-detail__image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .blog-post-detail__content {
+    line-height: 1.8;
+    color: rgba(var(--text-rgb), 0.85);
+    font-size: 1rem;
+  }
+
+  .blog-post-detail__content :global(p) {
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-post-detail__content :global(h2) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 2rem 0 1rem 0;
+  }
+
+  .blog-post-detail__content :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 1.5rem 0 0.75rem 0;
+  }
+
+  .blog-post-detail__content :global(ul),
+  .blog-post-detail__content :global(ol) {
+    margin: 1.25rem 0;
+    padding-left: 2rem;
+  }
+
+  .blog-post-detail__content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-post-detail__content :global(code) {
+    background: rgba(var(--text-rgb), 0.08);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--text);
+  }
+
+  .blog-post-detail__content :global(pre) {
+    background: rgba(var(--text-rgb), 0.06);
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1.25rem 0;
+  }
+
+  .blog-post-detail__content :global(pre code) {
+    background: none;
+    padding: 0;
+    color: var(--text);
+  }
+
+  .blog-post-detail__content :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .blog-post-detail__content :global(table) {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .blog-post-detail__content :global(strong) {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .blog-post-detail__content :global(em) {
+    font-style: italic;
+  }
+
+  .blog-post-detail__content :global(a) {
+    color: var(--accent);
+    text-decoration: none;
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 0% 1px;
+    transition: background-size 0.3s ease;
+  }
+
+  .blog-post-detail__content :global(a:hover) {
+    background-size: 100% 1px;
+  }
+
+  .blog-post-detail__toc {
+    background: rgba(var(--text-rgb), 0.04);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border-radius: 4px;
+  }
+
+  .toc-title {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc-item {
+    margin: 0;
+  }
+
+  .toc-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 0.35rem 0;
+  }
+
+  .toc-link:hover {
+    color: var(--text);
+    text-decoration: underline;
+    padding-left: 0.25rem;
+  }
+
+  .blog-post-detail__related {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(var(--text-rgb), 0.12);
+  }
+
+  .blog-post-detail__related h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .related-posts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .related-post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+  }
+
+  .related-post-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    flex: 1;
+  }
+
+  .related-post-link:hover {
+    color: var(--text);
+    text-decoration: underline;
+  }
+
+  .related-post-meta {
+    color: rgba(var(--text-rgb), 0.5);
+    font-size: 0.85rem;
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .blog-post-page-section {
+      background-attachment: scroll;
+    }
+
+    .blog-post-detail {
+      padding: 1.5rem;
+    }
+
+    .blog-post-detail__header h1 {
+      font-size: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,114 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+
+// Aliases map to a local brand icon in public/icons/tech/ (mostly Devicon SVGs).
+// Names with no official mark fall through to a text-only chip.
+const ICON_MAP: Record<string, string> = {
+  "c#": "csharp.svg",
+  csharp: "csharp.svg",
+  javascript: "javascript.svg",
+  js: "javascript.svg",
+  typescript: "typescript.svg",
+  ts: "typescript.svg",
+  sql: "sqlserver.svg",
+  "ms sql server": "sqlserver.svg",
+  "sql server": "sql-server.webp",
+  mssql: "sqlserver.svg",
+  html: "html5.svg",
+  html5: "html5.svg",
+  "html / css": "html5.svg",
+  css: "css3.svg",
+  css3: "css3.svg",
+  ".net": "dotnet.svg",
+  ".net 10": "dotnet.svg",
+  dotnet: "dotnet.svg",
+  "microsoft dotnet": "dotnet.svg",
+  "asp.net": "aspnet.svg",
+  aspnet: "aspnet.svg",
+  blazor: "blazor.svg",
+  angular: "angular.svg",
+  react: "react.svg",
+  "node.js": "nodejs.svg",
+  node: "nodejs.svg",
+  nodejs: "nodejs.svg",
+  bootstrap: "bootstrap.svg",
+  azure: "azure.svg",
+  aws: "aws.svg",
+  "amazon web services": "aws.svg",
+  docker: "docker.svg",
+  linux: "linux.svg",
+  "digital ocean": "digitalocean.svg",
+  "github actions": "github-actions.svg",
+  digitalocean: "digitalocean.svg",
+  figma: "figma.svg",
+  claude: "claude-logo.webp",
+  gemini: "gemini.svg",
+  "google gemini": "gemini.svg",
+  copilot: "copilot.svg",
+  "github copilot": "copilot.svg",
+  astro: "astro.svg",
+  gitlab: "gitlab.svg",
+  mudblazor: "mudblazor.svg",
+  syncfusion: "syncfusion.svg",
+  devexpress: "devexpress.png",
+  squarespace: "squarespace.svg",
+  canva: "canva-logo.webp",
+  "dev express reporting": "devexpress.png",
+  "entity framework": "entityframework.svg",
+  "entity framework core": "entityframework.svg",
+  "ef core": "entityframework.svg",
+  macos: "apple.svg",
+  "mac os": "apple.svg",
+  "dall-e": "dalle.svg",
+  dalle: "dalle.svg",
+  cloudflare: "cloudflare.svg",
+  "google analytics": "googleanalytics.svg",
+  googleanalytics: "googleanalytics.svg",
+  ga4: "googleanalytics.svg",
+  meta: "meta.svg",
+  "meta pixel": "meta.svg",
+  "meta conversions api": "meta.svg",
+  "meta capi": "meta.svg",
+  "facebook pixel": "meta.svg",
+};
+
+// Full wordmarks (logo + name baked together) render just the logo, no duplicate text label.
+const WORDMARK_ICONS = new Set(["syncfusion.svg", "devexpress.png"]);
+// DevExpress's mark has near-black ink that disappears on the dark background.
+const NEEDS_LIGHT_BACKING = new Set(["devexpress.png"]);
+// Syncfusion's wordmark is forced fully white, invisible against a light background.
+const NEEDS_DARK_BACKING = new Set(["syncfusion.svg"]);
+// Apple/Copilot ship no official color mark - tint with the site accent via CSS mask instead.
+const NEEDS_TINT = new Set(["apple.svg", "copilot.svg"]);
+
+const iconFile = ICON_MAP[name.trim().toLowerCase()] ?? null;
+const isWordmark = iconFile !== null && WORDMARK_ICONS.has(iconFile);
+const needsLightBacking = iconFile !== null && NEEDS_LIGHT_BACKING.has(iconFile);
+const needsDarkBacking = iconFile !== null && NEEDS_DARK_BACKING.has(iconFile);
+const needsTint = iconFile !== null && NEEDS_TINT.has(iconFile);
+---
+
+<span class:list={["tech-chip", { "tech-chip--wordmark": isWordmark }]}>
+  {iconFile && isWordmark ? (
+    <span class:list={["tech-chip__logo-wrap", { "tech-chip__logo-wrap--light": needsLightBacking, "tech-chip__logo-wrap--dark": needsDarkBacking }]}>
+      <img src={`/icons/tech/${iconFile}`} alt={name} class="tech-chip__logo" loading="lazy" />
+    </span>
+  ) : (
+    <>
+      {iconFile && needsTint ? (
+        <span class="tech-chip__icon tech-chip__icon--tint" style={{ maskImage: `url('/icons/tech/${iconFile}')`, WebkitMaskImage: `url('/icons/tech/${iconFile}')` }} aria-hidden="true"></span>
+      ) : iconFile && needsDarkBacking ? (
+        <span class="tech-chip__icon-wrap tech-chip__icon-wrap--dark">
+          <img src={`/icons/tech/${iconFile}`} alt="" class="tech-chip__icon" loading="lazy" aria-hidden="true" />
+        </span>
+      ) : iconFile ? (
+        <img src={`/icons/tech/${iconFile}`} alt="" class="tech-chip__icon" loading="lazy" aria-hidden="true" />
+      ) : null}
+      <span class="tech-chip__label">{name}</span>
+    </>
+  )}
+</span>

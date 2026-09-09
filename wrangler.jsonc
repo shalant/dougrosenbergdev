@@ -1,0 +1,27 @@
+{
+	// Cloudflare Workers config - static-assets-only for now (no "main" worker script;
+	// the current contact links are just mailto:, no API endpoint exists yet). Same
+	// pattern as dougrosenbergmusic's site/wrangler.jsonc, minus the worker/email pieces
+	// until a real contact-form backend is a real requirement (see DESIGN_NOTES.md's
+	// fast-follow list).
+	//
+	// In the Cloudflare dashboard (Workers & Pages -> Create -> connect this GitHub
+	// repo, once one exists): root directory "." (this file lives at repo root, unlike
+	// the reference project's "site" subfolder - this repo has nothing else in it),
+	// build command "npm run build", deploy command "npx wrangler deploy" (default,
+	// picks up this file).
+	"name": "dougrosenbergdev",
+	"compatibility_date": "2026-09-08",
+	"routes": [
+		{ "pattern": "dougrosenbergdev.com", "custom_domain": true }
+	],
+	"assets": {
+		"directory": "./dist",
+		// Without this, unmatched routes get a bare 404 with an empty body instead of
+		// the built dist/404.html - Workers static assets defaults to "none", unlike
+		// classic Pages which served 404.html automatically.
+		// NOTE: no custom 404.astro exists yet in this project - add one before this
+		// setting does anything useful (see PORT_TODO.md).
+		"not_found_handling": "404-page"
+	}
+}

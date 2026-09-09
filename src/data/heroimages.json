@@ -1,0 +1,42 @@
+[
+  {
+    "name": "home",
+    "src": "/images/DrCorporateHacker.webp",
+    "alt": "Handsome man with glasses"
+  },
+  {
+    "name": "about",
+    "src": "/images/motion-background.jpg",
+    "alt": "gray abstract background"
+  },
+  {
+    "name": "portfolio",
+    "src": "/images/design-desk.webp",
+    "alt": "desktop with books and laptop"
+  },
+  {
+    "name": "technical skills",
+    "src": "/images/DrPortraitV5.webp",
+    "alt": "desktop with books and laptop"
+  },
+  {
+    "name": "experience",
+    "src": "/images/artDecoBackground1.webp",
+    "alt": "desktop with books and laptop"
+  },
+  {
+    "name": "casual",
+    "src": "/images/DrCyberPunk.webp",
+    "alt": "Doug as a Cyber Punk"
+  },
+  {
+    "name": "music",
+    "src": "/images/dougRosenbergBetterThanTv.jpg",
+    "alt": "Doug Rosenberg Better Than TV"
+  },
+  {
+    "name": "consulting",
+    "src": "/images/DrComputerConsultant2.webp",
+    "alt": "Doug Rosenberg Consulting"
+  }
+]

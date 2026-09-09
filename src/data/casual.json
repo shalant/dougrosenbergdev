@@ -1,0 +1,10 @@
+{
+  "description": "I'm a devoted father of two — my kids are the best thing I've ever built. Outside the keyboard I try to stay in motion: long rides on the lakefront, competitive badminton on Tuesday nights, and whatever LEGO set the kids convinced me we absolutely needed. Cooking is how I decompress; there's something satisfying about a recipe that actually works on the first try.",
+  "detailOrQuote": "The kids are more impressive than anything in my GitHub.",
+  "hobbies": [
+    { "name": "Cycling", "detail": "Lakefront path, fixed gear, all weather" },
+    { "name": "Cooking", "detail": "Weeknight dinners and weekend experiments" },
+    { "name": "Badminton", "detail": "Park district league, Tuesday nights" },
+    { "name": "Legos", "detail": "Technically for the kids" }
+  ]
+}

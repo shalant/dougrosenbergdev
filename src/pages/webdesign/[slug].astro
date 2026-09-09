@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import webDesign from '../../data/webdesign.json';
+
+export function getStaticPaths() {
+  return webDesign.projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<BaseLayout
+  title={`${project.name} — Web Design Case Study | Douglas Rosenberg`}
+  description={project.tagline}
+  ogImage={project.images[0]}
+>
+  <Header />
+
+  <section class="subpage-hero" id="wd-case-hero">
+    <div class="subpage-hero__grid-bg"></div>
+    <div class="subpage-hero__content subpage-hero__content--centered">
+      <span class="section-eyebrow">// case study</span>
+      <h1 class="subpage-hero__title subpage-hero__title--centered">{project.name}</h1>
+      <p class="subpage-hero__sub subpage-hero__sub--centered">{project.tagline}</p>
+    </div>
+  </section>
+
+  <section class="wd-case">
+    <div class="wd-case__container">
+      <a href="/webdesign" class="wd-case__back">&larr; all web design work</a>
+
+      <div class="wd-case__facts">
+        {project.facts.map((fact) => (
+          <div class="wd-case__fact">
+            <span class="wd-case__fact-value">{fact.value}</span>
+            <span class="wd-case__fact-label">{fact.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {project.images.length > 0 && (
+        <figure class="wd-case__hero-shot">
+          <img src={project.images[0]} alt={`${project.name} — primary screenshot`} loading="lazy" />
+          {project.imageCaptions?.[0] && <figcaption>{project.imageCaptions[0]}</figcaption>}
+        </figure>
+      )}
+
+      {project.beforeImage && (
+        <div class="wd-case__before-after">
+          <div class="wd-case__ba-shot wd-case__ba-shot--before">
+            <span class="wd-case__ba-badge">Before</span>
+            <img src={project.beforeImage} alt={`${project.name} before`} loading="lazy" />
+          </div>
+          <div class="wd-case__ba-shot wd-case__ba-shot--after">
+            <span class="wd-case__ba-badge">After</span>
+            <img src={project.images[0]} alt={`${project.name} after`} loading="lazy" />
+          </div>
+          {project.beforeCaption && (
+            <p class="wd-case__ba-caption">
+              {project.beforeCaption}{' '}
+              {project.beforeSourceUrl && (
+                <a href={project.beforeSourceUrl} target="_blank" rel="noopener noreferrer">View archived snapshot</a>
+              )}
+            </p>
+          )}
+        </div>
+      )}
+
+      {project.stack && project.stack.length > 0 && (
+        <div class="wd-case__stack">
+          {project.stack.map((tech: string) => <span class="about-skill-chip">{tech}</span>)}
+        </div>
+      )}
+
+      <div class="wd-case__approach">
+        {project.approach.map((paragraph: string) => <p>{paragraph}</p>)}
+      </div>
+
+      {project.highlights.length > 0 && (
+        <>
+          <div class="wd-case__highlights-label">
+            <span class="section-eyebrow">// design &amp; build highlights</span>
+          </div>
+          <div class="wd-case__highlights">
+            {project.highlights.map((highlight: { title: string; description: string }, i: number) => (
+              <div class="wd-case__highlight-card">
+                <span class="wd-case__highlight-num">{String(i + 1).padStart(2, '0')}</span>
+                <h3>{highlight.title}</h3>
+                <p>{highlight.description}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {project.images.length > 1 && (
+        <div class="wd-case__shots">
+          {project.images.slice(1).map((img: string, i: number) => {
+            const caption = project.imageCaptions?.[i + 1];
+            return (
+              <figure class="wd-case__shot">
+                <img src={img} alt={`${project.name} additional screenshot`} loading="lazy" />
+                {caption && <figcaption>{caption}</figcaption>}
+              </figure>
+            );
+          })}
+        </div>
+      )}
+
+      <div class="wd-case__cta">
+        {project.externalUrl && (
+          <a href={project.externalUrl} target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn--primary">
+            Visit {project.siteLabel}
+          </a>
+        )}
+        {project.gitHubUrl && (
+          <a href={project.gitHubUrl} target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn--ghost">
+            View on GitHub
+          </a>
+        )}
+        {project.relatedBlogPostSlug && (
+          <a href={`/blog/${project.relatedBlogPostSlug}`} class="hero-btn hero-btn--ghost">
+            {project.relatedBlogPostLabel ?? 'Read the write-up'}
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

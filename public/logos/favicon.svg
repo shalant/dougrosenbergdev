@@ -1,0 +1,38 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="favicon-title">
+  <title id="favicon-title">DR Codeworks</title>
+  <defs>
+    <linearGradient id="hexGradFav" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a5f" />
+      <stop offset="100%" stop-color="#1ABC9C" />
+    </linearGradient>
+    <filter id="hexGlowFav" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur" />
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.1
+                0 0 0 0 0.74
+                0 0 0 0 0.61
+                0 0 0 0.4 0"
+        result="coloredGlow" />
+      <feMerge>
+        <feMergeNode in="coloredGlow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Hexagon mark centered -->
+  <g transform="translate(128, 128)" filter="url(#hexGlowFav)">
+    <polygon
+        points="0,-125 108,-62 108,62 0,125 -108,62 -108,-62"
+        fill="url(#hexGradFav)"
+    />
+    <text
+      x="0" y="30"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      fill="#FFFFFF"
+      font-family="Montserrat, system-ui, sans-serif"
+      font-size="140"
+      font-weight="700"
+      letter-spacing="0.02em">dr</text>
+  </g>
+</svg>

@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import services from '../data/services.json';
+
+const personOfferLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Douglas Rosenberg',
+  url: 'https://dougrosenbergdev.com',
+  makesOffer: services.offerings.map((svc) => ({
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: svc.title,
+      description: svc.description,
+    },
+    priceSpecification: {
+      '@type': 'PriceSpecification',
+      minPrice: svc.minPrice,
+      maxPrice: svc.maxPrice,
+      priceCurrency: 'USD',
+      unitText: svc.priceUnit,
+    },
+  })),
+};
+
+const faqLd = services.faqs.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: services.faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+} : null;
+---
+
+<BaseLayout
+  title="Services — Douglas Rosenberg | Custom Web & ERP Development"
+  description={services.subheadline}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(personOfferLd)} />
+    {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
+  </Fragment>
+
+  <Header />
+
+  <section class="subpage-hero" id="services-hero">
+    <div class="subpage-hero__grid-bg"></div>
+    <div class="subpage-hero__content">
+      <div class="subpage-hero__text">
+        <span class="section-eyebrow">// services</span>
+        <h1 class="subpage-hero__title">{services.headline}</h1>
+        <p class="subpage-hero__sub">{services.subheadline}</p>
+        <a href="mailto:doug.rosenberg@gmail.com" class="hero-btn hero-btn--primary">
+          {services.cta}
+        </a>
+      </div>
+      <div class="subpage-hero__img">
+        <img src="/images/DrPortraitV5.webp" alt="Doug Rosenberg" />
+      </div>
+    </div>
+  </section>
+
+  <section class="consulting-services">
+    <div class="consulting-services__container">
+      <span class="section-eyebrow">// offerings</span>
+      <h2 class="consulting-services__heading">What I Offer</h2>
+      <div class="consulting-services__grid">
+        {services.offerings.map((svc) => (
+          <div class="consulting-service-card">
+            <span class="consulting-service-card__icon">{svc.icon}</span>
+            <h3>{svc.title}</h3>
+            <p>{svc.description}</p>
+            <ul class="service-card__includes">
+              {svc.includes.map((item) => <li>{item}</li>)}
+            </ul>
+            <div class="service-card__pricing">
+              <span class="service-card__price">{svc.priceRange}</span>
+              <span class="service-card__engagement">{svc.engagement}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {services.faqs.length > 0 && (
+    <section class="services-faq">
+      <div class="services-faq__container">
+        <span class="section-eyebrow">// faq</span>
+        <h2 class="services-faq__heading">Common Questions</h2>
+        <div class="services-faq__list">
+          {services.faqs.map((faq) => (
+            <div class="services-faq__item">
+              <h3>{faq.question}</h3>
+              <p>{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="consulting-cta">
+    <div class="consulting-cta__container">
+      <p class="consulting-cta__tagline">Every engagement is scoped individually &mdash; reach out and let's talk about what you need.</p>
+      <a href="mailto:doug.rosenberg@gmail.com" class="hero-btn hero-btn--primary">
+        {services.cta}
+      </a>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

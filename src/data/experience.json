@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Full-stack .NET software engineer",
+    "titleOLD": "Friar One, a custom ERP for the Franciscan Friars",
+    "company": "Friars ERP",
+    "description": "Built several modules, composed entire service layer",
+    "url": "https://friars.us",
+    "icons": "C#, Blazor, ASP.NET, Syncfusion, SQL, Azure",
+    "image": "/images/franciscan-friars-badge.webp",
+    "detailImage": "/images/franciscan-friars-full.webp",
+    "startDate": "2025-02-01",
+    "bulletpoints": [
+      "Developed a custom SQL data-masking tool to generate sanitized development databases, establishing a standardized, secure pipeline for internal and external contributors to interface with complex ERP data without risk.",
+      "Orchestrated a seamless Salesforce integration to synchronize and reconcile disparate ERP and CRM records, ensuring data integrity and cross-platform consistency across the enterprise ecosystem.",
+      "Spearheaded development of 10 dynamic features—including a directory card layout with cascading filters and a dual-mode prayer wall interface—delivering intuitive user experiences and robust admin functionality. Composed with Blazor, C# .NET 10, MS SQL Server, and Syncfusion controls.",
+      "Engineered 2 CI/CD pipelines using GitHub Enterprise Actions and YAML (IaC) to automate the deployment of 10 production Blazor applications and a custom SharePoint site.",
+      "Elevated backend performance by architecting a scalable service layer, laying the foundation for a future API ecosystem.",
+      "Designed and deployed 50 insightful reports using DevExpress Reporting, enabling data-driven decisions powered by a centralized SQL Server data store.",
+      "Reengineered a unified Data Grid solution to streamline data visualization across 50+ database tables, enhancing consistency and maintainability."
+    ]
+  },
+  {
+    "title": "Front-end software engineer",
+    "titleOLD": "Developed 4 applications, mainly front-end and design.",
+    "company": "Tackle.ai",
+    "description": "Orchestrated end-to-end UI/UX design for four distinct applications, transforming initial requirements into sleek, user-friendly interfaces using Figma, .NET Blazor, Syncfusion controls, and custom CSS",
+    "url": "https://tackle.ai",
+    "icons": "Figma, Blazor, ASP.NET, Syncfusion, CSS",
+    "image": "/images/Tackle_Ai_SUA_logo.webp",
+    "startDate": "2024-07-01",
+    "endDate": "2024-12-01",
+    "bulletpoints": [
+      "Orchestrated end-to-end UI/UX design for four distinct applications, transforming initial requirements into sleek, user-friendly interfaces using Figma, .NET Blazor, Syncfusion controls, and custom CSS",
+      "Secured high-impact project win with a Fortune 10 client by integrating proprietary LLMs for document processing—teamed up seamlessly with Python engineers and infrastructure leads to deliver a polished solution powered by .NET Blazor, SQL Server, KeyCloak, and Syncfusion",
+      "Reimagined the Customer Portal experience from the ground up—empowered users to upload and process hundreds of thousands of files through secure, proprietary LLMs in a visually compelling dashboard built with .NET Blazor and Syncfusion",
+      "Built Admin Portal from scratch—partnered closely with PMs to uncover client onboarding flows and defined backend data requirements, crafting a scalable interface with .NET Blazor, SQL Server, KeyCloak, and Syncfusion"
+    ]
+  },
+  {
+    "title": "Full-stack .NET software engineer",
+    "company": "TC Industries",
+    "description": "Engineered a robust, enterprise-grade ERP system for a global manufacturing firm—leveraged .NET Blazor, MudBlazor, SQL Server, and Azure to modernize operations from end to end",
+    "url": "https://tcindustries.com/",
+    "icons": "Blazor, ASP.NET, MudBlazor, SQL, Azure",
+    "image": "/images/Tc-logo-small.webp",
+    "startDate": "2023-10-01",
+    "endDate": "2024-03-01",
+    "bulletpoints": [
+      "Engineered a robust, enterprise-grade ERP system for a global manufacturing firm—leveraged .NET Blazor, MudBlazor, SQL Server, and Azure to modernize operations from end to end",
+      "Led critical architecture sessions and captured technical insights through thorough documentation with Subject Matter Experts—bridging business needs with scalable design",
+      "Built seven foundational layers—from Database to Web interface—ensuring seamless integration across DB, Repository, Domain, Domain Services, API, and UI",
+      "Maintained and debugged four legacy systems while simultaneously developing a new platform to handle essential business processes—ensuring zero disruption during transformation"
+    ]
+  },
+  {
+    "title": "Junior Angular/.NET software engineer",
+    "company": "Shift",
+    "description": "Contributed to the ongoing evolution of BridgestoneMarketing.com—a complex B2B platform—by enhancing features across Angular frontend, three ASP.NET servers, SQL database, and Kendo UI components",
+    "url": "https://bridgestonemarketing.com",
+    "icons": "Angular, ASP.NET, Kendo UI, SQL",
+    "image": "/images/cropped-SHIFTLogo_4-C.png",
+    "startDate": "2023-03-01",
+    "endDate": "2023-10-01",
+    "bulletpoints": [
+      "Contributed to the ongoing evolution of BridgestoneMarketing.com—a complex B2B platform—by enhancing features across Angular frontend, three ASP.NET servers, SQL database, and Kendo UI components",
+      "Engineered middleware to dynamically translate inventory content into French, adapting based on user profiles—boosting global accessibility and user relevance",
+      "Delivered high-volume feature enhancements and bug fixes with speed and precision—ensuring platform stability and continuous improvement",
+      "Managed seamless code deployments across local, staging, and production environments using TFS and Azure DevOps—upholding release integrity",
+      "Executed key security initiatives leveraging Microsoft 365, AlertLogic, and Xamin—fortifying system resilience and data protection"
+    ]
+  }
+]

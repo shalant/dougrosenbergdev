@@ -1,0 +1,25 @@
+---
+import SectionDivider from './SectionDivider.astro';
+import aboutMe from '../data/aboutme.json';
+---
+
+<section class="about-section reveal-on-scroll" id="about">
+  <div class="about-container">
+    <div class="about-header">
+      <span class="section-eyebrow">// about me</span>
+      <h2 class="about-heading">Who I Am</h2>
+      <SectionDivider />
+    </div>
+
+    <div class="about-body">
+      <div class="about-bio">
+        <p class="about-description">{aboutMe.description}</p>
+        <a href="/resume/DouglasRosenbergResumeAugust26.pdf" class="hero-btn hero-btn--ghost about-resume-btn" download target="_blank" rel="noopener">
+          Download r&eacute;sum&eacute;
+        </a>
+      </div>
+    </div>
+
+    <blockquote class="about-quote">{aboutMe.detailOrQuote}</blockquote>
+  </div>
+</section>

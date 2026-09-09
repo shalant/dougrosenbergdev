@@ -1,0 +1,74 @@
+---
+interface Props {
+  images: string[];
+  alt: string;
+  videoUrl?: string;
+}
+
+const { images, alt, videoUrl } = Astro.props;
+
+// Each image owns a complete keyframe rule spanning the full shared cycle - no
+// animation-delay involved. Ported 1:1 from ProjectMediaFrame.razor's C# keyframe
+// generator (ties into .wd-project__frame-img styling in global.css).
+function keyframeName(count: number, i: number) {
+  return `wd-xfade-${count}-${i}`;
+}
+
+function buildKeyframeRule(count: number, i: number) {
+  const hold = 100 / count;
+  const overlap = Math.round(hold * 0.5 * 100) / 100;
+  const name = keyframeName(count, i);
+  const fmt = (n: number) => Math.round(n * 100) / 100;
+
+  if (i === 0) {
+    const fadeOutStart = fmt(hold - overlap);
+    const wrapStart = fmt(100 - overlap);
+    return `@keyframes ${name} { 0%, ${fadeOutStart}% { opacity: 1; } ${fmt(hold)}% { opacity: 0; } ${wrapStart}% { opacity: 0; } 100% { opacity: 1; } }`;
+  }
+
+  const start = fmt(i * hold);
+  const fadeInBegin = fmt(start - overlap);
+  const end = fmt((i + 1) * hold);
+  const fadeOutBegin = fmt(end - overlap);
+  return `@keyframes ${name} { 0%, ${fadeInBegin}% { opacity: 0; } ${start}% { opacity: 1; } ${fadeOutBegin}% { opacity: 1; } ${end}% { opacity: 0; } 100% { opacity: 0; } }`;
+}
+
+const allKeyframesCss = images.length > 1
+  ? images.map((_, i) => buildKeyframeRule(images.length, i)).join('\n')
+  : '';
+
+const cornerNames = ['tl', 'tr', 'br', 'bl'];
+---
+
+<div class="wd-project__frame" data-media-frame style={`--wd-frame-cycle:${images.length * 1.4}s`}>
+  <div class="wd-project__frame-stage">
+    {videoUrl ? (
+      <video class="wd-project__frame-video" src={videoUrl} poster={images[0]} muted loop playsinline preload="metadata" />
+    ) : (
+      <>
+        {images.length > 1 && <style set:html={allKeyframesCss} />}
+        {images.map((img, i) => (
+          <img
+            class="wd-project__frame-img"
+            src={img}
+            alt={alt}
+            style={images.length > 1 ? `animation-name:${keyframeName(images.length, i)}` : undefined}
+            loading="lazy"
+          />
+        ))}
+      </>
+    )}
+  </div>
+  {!videoUrl && images.length > 1 && (
+    <>
+      <span class="wd-project__count-chip" aria-hidden="true">1/{images.length}</span>
+      {cornerNames.map((corner) => (
+        <div class={`wd-project__corner wd-project__corner--${corner}`} aria-hidden="true">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M1 8 L1 1 L8 1" />
+          </svg>
+        </div>
+      ))}
+    </>
+  )}
+</div>

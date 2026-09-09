@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Previous Portfolio - Doug Rosenberg Dev"
+  description="Doug Rosenberg's earlier Angular-based portfolio site, kept online as an archive."
+  themeScoped={false}
+>
+  <section class="archive-container">
+    <div class="archive-header">
+      <h1>Previous Portfolio</h1>
+      <p class="archive-subtitle">My earlier Angular-based portfolio site</p>
+      <a href="/" class="btn-back">&larr; Back to current portfolio</a>
+    </div>
+
+    <div class="archive-frame">
+      <iframe src="/archive/dist/portfolio/index.html" title="Previous Portfolio Archive"></iframe>
+    </div>
+  </section>
+</BaseLayout>

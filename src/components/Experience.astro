@@ -1,0 +1,95 @@
+---
+import SectionDivider from './SectionDivider.astro';
+import TechChip from './TechChip.astro';
+import experiences from '../data/experience.json';
+---
+
+<section class="experience-section reveal-on-scroll" id="experience">
+  <div class="experience-container">
+
+    <div class="experience-header">
+      <span class="section-eyebrow">// experience</span>
+      <h2 class="experience-heading">Where I've Worked</h2>
+      <SectionDivider />
+    </div>
+
+    <div class="experience-layout">
+
+      <div class="experience-list" role="tablist" id="experienceList">
+        {experiences.map((exp: any, idx: number) => (
+          <button
+            class:list={["experience-list__item", { active: idx === 0 }]}
+            role="tab"
+            aria-selected={idx === 0}
+            aria-label={exp.title}
+            data-index={idx}
+          >
+            <span class="experience-list__num">{String(idx + 1).padStart(2, '0')}</span>
+            <span class="experience-list__logo-wrap">
+              <img src={exp.image} alt={exp.title} class="experience-list__logo" loading="lazy" />
+            </span>
+            <span class="experience-list__title">{exp.title}</span>
+          </button>
+        ))}
+      </div>
+
+      {experiences.map((exp: any, idx: number) => {
+        const numStr = String(idx + 1).padStart(2, '0');
+        const detailImage = exp.detailImage ?? exp.image;
+        const chips = exp.icons.split(',');
+        return (
+          <div class="experience-detail" role="tabpanel" data-index={idx} hidden={idx !== 0}>
+            <div class="experience-detail__num-bg" aria-hidden="true">{numStr}</div>
+
+            <div class:list={["experience-detail__logo-wrap", { "experience-detail__logo-wrap--wide": !!exp.detailImage }]}>
+              <img src={detailImage} alt={exp.title} class="experience-detail__logo" loading="lazy" />
+            </div>
+
+            <h3 class="experience-detail__title">{exp.title}</h3>
+            <p class="experience-detail__meta">
+              <span class="experience-detail__company">{exp.company}</span>
+            </p>
+            <div class="experience-detail__divider"></div>
+
+            <ul class="experience-detail__bullets">
+              {exp.bulletpoints.map((bullet: string) => <li>{bullet}</li>)}
+            </ul>
+
+            <div class="experience-detail__footer">
+              <div class="experience-detail__chips">
+                {chips.map((chip: string) => <TechChip name={chip.trim()} />)}
+              </div>
+              {exp.url && exp.url.startsWith('http') && (
+                <a href={exp.url} target="_blank" rel="noopener noreferrer" class="experience-detail__link" aria-label={`Visit ${exp.company} website`}>
+                  Visit {exp.company}
+                </a>
+              )}
+            </div>
+          </div>
+        );
+      })}
+
+    </div>
+  </div>
+</section>
+
+<script>
+  const list = document.getElementById('experienceList');
+  if (list) {
+    list.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLElement>('.experience-list__item');
+      if (!btn) return;
+      const index = btn.dataset.index;
+
+      list.querySelectorAll('.experience-list__item').forEach((item) => {
+        const isActive = item === btn;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-selected', String(isActive));
+      });
+
+      document.querySelectorAll<HTMLElement>('.experience-detail').forEach((panel) => {
+        panel.hidden = panel.dataset.index !== index;
+      });
+    });
+  }
+</script>

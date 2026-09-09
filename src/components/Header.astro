@@ -1,0 +1,183 @@
+---
+---
+<header class="navbar-wrapper" id="navbar">
+  <div class="navbar-content">
+
+    <div class="logo-section">
+      <a href="/#home" aria-label="DR Codeworks, back to top" title="DR Codeworks">
+        <svg width="300" height="110" viewBox="0 0 300 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DR Codeworks">
+          <defs>
+            <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1e3a5f" />
+              <stop offset="100%" stop-color="#1ABC9C" />
+            </linearGradient>
+            <filter id="hexGlow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+              <feColorMatrix in="blur" type="matrix"
+                values="0 0 0 0 0.1
+                        0 0 0 0 0.74
+                        0 0 0 0 0.61
+                        0 0 0 0.5 0"
+                result="coloredGlow" />
+              <feMerge>
+                <feMergeNode in="coloredGlow" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <g transform="translate(14, 11)" filter="url(#hexGlow)">
+            <polygon points="38,0 76,22 76,66 38,88 0,66 0,22" fill="url(#hexGrad)" />
+            <text x="38" y="48" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF"
+                  font-family="Montserrat, system-ui, sans-serif" font-size="28" font-weight="700"
+                  letter-spacing="0.02em">dr</text>
+          </g>
+
+          <text x="108" y="65" fill="var(--text)"
+                font-family="Montserrat, system-ui, sans-serif" font-size="26" font-weight="300"
+                letter-spacing="0.07em">codeworks</text>
+        </svg>
+      </a>
+    </div>
+
+    <nav>
+      <ul class="nav-items" id="navItems">
+
+        <li>
+          <a class="nav-link nav-link--page" href="/webdesign">
+            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <line x1="7" y1="13" x2="7" y2="7"/>
+              <line x1="7" y1="7" x2="3" y2="3"/>
+              <line x1="7" y1="7" x2="11" y2="3"/>
+            </svg>
+            web design
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-link nav-link--page" href="/services">
+            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="1.5" y="4.5" width="11" height="7.5" rx="1"/>
+              <path d="M5 4.5V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5"/>
+              <line x1="1.5" y1="7.5" x2="12.5" y2="7.5"/>
+            </svg>
+            services
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-link nav-link--page" href="/consulting">
+            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1.5 2.5 H12.5 V9 H5.5 L3 11.5 V9 H1.5 Z"/>
+            </svg>
+            consulting
+          </a>
+        </li>
+
+        <li class="nav-divider" role="separator" aria-hidden="true"></li>
+
+        <li class="nav-has-dropdown">
+          <button class="nav-link nav-link--page" type="button">
+            <svg class="nav-icon" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <circle cx="3" cy="7" r="1.3"/>
+              <circle cx="7" cy="7" r="1.3"/>
+              <circle cx="11" cy="7" r="1.3"/>
+            </svg>
+            more
+            <span class="nav-caret">&#9662;</span>
+          </button>
+          <div class="nav-dropdown">
+            <div class="nav-dropdown-group">
+              <span class="nav-dropdown-label">on this page</span>
+              <a class="nav-link nav-link--page nav-dropdown-item" href="/#about">
+                <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                  <path d="M2 13 L2 7.5 A5 5 0 0 0 12 7.5 L12 13"/>
+                </svg>
+                about
+              </a>
+              <a class="nav-link nav-link--page nav-dropdown-item" href="/#experience">
+                <svg class="nav-icon" viewBox="0 0 14 14" fill="currentColor" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
+                  <circle cx="3" cy="4"  r="1.3" stroke="none"/>
+                  <line x1="6.5" y1="4"  x2="12" y2="4"/>
+                  <circle cx="3" cy="8"  r="1.3" stroke="none"/>
+                  <line x1="6.5" y1="8"  x2="10" y2="8"/>
+                  <circle cx="3" cy="12" r="1.3" stroke="none"/>
+                  <line x1="6.5" y1="12" x2="11" y2="12"/>
+                </svg>
+                experience
+              </a>
+              <a class="nav-link nav-link--page nav-dropdown-item" href="/#technicalskills">
+                <svg class="nav-icon" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+                  <rect x="1.5" y="1.5" width="4.5" height="4.5" rx="0.5"/>
+                  <rect x="8"   y="1.5" width="4.5" height="4.5" rx="0.5"/>
+                  <rect x="1.5" y="8"   width="4.5" height="4.5" rx="0.5"/>
+                  <rect x="8"   y="8"   width="4.5" height="4.5" rx="0.5"/>
+                </svg>
+                skills
+              </a>
+              <a class="nav-link nav-link--page nav-dropdown-item" href="/#contact">
+                <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="1.5" y="2.5" width="11" height="9" rx="1"/>
+                  <path d="M1.8 3.2 L7 7.3 L12.2 3.2"/>
+                </svg>
+                contact
+              </a>
+            </div>
+            <div class="nav-dropdown-divider"></div>
+            <div class="nav-dropdown-group">
+              <span class="nav-dropdown-label">elsewhere</span>
+              <a class="nav-link nav-link--page nav-dropdown-item" href="/resume/DouglasRosenbergResumeAugust26.pdf" download target="_blank" rel="noopener">
+                <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 1.5v7.5M3.5 6l3.5 3.5L10.5 6"/>
+                  <path d="M1.5 12.5h11"/>
+                </svg>
+                r&eacute;sum&eacute;
+              </a>
+              <a class="nav-link nav-link--page nav-dropdown-item" href="/blog">
+                <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                  <path d="M7 1 L7 13 M1 3 L7 3 M7 3 L13 3 M1 8 L7 8 M7 8 L13 8"/>
+                </svg>
+                blog
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-cta-mobile-item">
+          <a href="mailto:doug.rosenberg@gmail.com" class="nav-link nav-link--cta" aria-label="Contact Doug Rosenberg">
+            get in touch
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+
+    <a href="mailto:doug.rosenberg@gmail.com" class="nav-cta" aria-label="Contact Doug Rosenberg">
+      <span class="nav-cta__text">get in touch</span>
+    </a>
+
+    <button class="theme-toggle" aria-label="Switch between light and dark theme" id="themeToggle">
+      <svg class="nav-icon theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="7" cy="7" r="2.75" />
+        <line x1="7" y1="0.75" x2="7" y2="2.25" />
+        <line x1="7" y1="11.75" x2="7" y2="13.25" />
+        <line x1="0.75" y1="7" x2="2.25" y2="7" />
+        <line x1="11.75" y1="7" x2="13.25" y2="7" />
+        <line x1="2.55" y1="2.55" x2="3.6" y2="3.6" />
+        <line x1="10.4" y1="10.4" x2="11.45" y2="11.45" />
+        <line x1="2.55" y1="11.45" x2="3.6" y2="10.4" />
+        <line x1="10.4" y1="3.6" x2="11.45" y2="2.55" />
+      </svg>
+      <svg class="nav-icon theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12.25 7.46A5.25 5.25 0 1 1 6.54 1.75 4.08 4.08 0 0 0 12.25 7.46Z" />
+      </svg>
+    </button>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+  </div>
+</header>
+
+<div class="nav-scrim" id="navScrim"></div>

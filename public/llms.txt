@@ -1,0 +1,29 @@
+# Douglas Rosenberg
+
+> Full-stack .NET software engineer specializing in Blazor, ERP systems, and enterprise integrations. Currently building an ERP system for a global nonprofit (Franciscan Friars); prior work includes Fortune 10 LLM-document-processing tooling and manufacturing ERP systems.
+
+Blazor-focused .NET developer who turns sprawling enterprise systems into software people actually enjoy using. Available for freelance and consulting engagements only — not currently seeking full-time employment or recruiter outreach.
+
+## Background
+- Current: Full-stack .NET engineer, Friars ERP (Franciscan Friars) — secure data-masking pipeline, Salesforce/ERP sync, 50 custom reports serving 500+ staff
+- Prior: Tackle.ai (LLM-powered document processing for a Fortune 10 client), TC Industries (enterprise manufacturing ERP), Shift (Angular/.NET on BridgestoneMarketing.com)
+- Core stack: C#, .NET, Blazor, ASP.NET, SQL Server, Azure, Syncfusion, Figma, Angular, Docker
+
+## Pages
+- [Services](https://dougrosenbergdev.com/services): Engagement types and rates — custom web/app development, ERP & business systems consulting, AI-assisted development/modernization, ongoing support.
+- [Consulting](https://dougrosenbergdev.com/consulting): IT support and web/app development for small businesses — affordable support, cloud setup and backup, custom sites, ongoing maintenance.
+- [Web Design](https://dougrosenbergdev.com/webdesign): Portfolio and case studies.
+- [Blog](https://dougrosenbergdev.com/blog): Technical writing on Blazor, .NET, and software architecture.
+- [Résumé (PDF)](https://dougrosenbergdev.com/resume/DouglasRosenbergResumeAugust26.pdf)
+
+## Blog posts
+- [Rebuilding My Own Musician Site: From a Blazor Template to a Verified Astro Build](https://dougrosenbergdev.com/blog/rebuilding-musician-site-blazor-to-astro) (2026-09-07): Migrating dougrosenberg.com from a stock Blazor template to Astro on Cloudflare — a verified image-optimization pass, real Lighthouse/E2E checks, and an honest list of what's still open.
+- [Why GEO Doesn't Work in a Blazor WASM SPA](https://dougrosenbergdev.com/blog/blazor-wasm-geo-audit) (2026-09-04): Auditing a client-rendered SPA's crawlability for AI answer engines — what survives a plain HTTP GET, what a robots.txt mistake was blocking, and what prerendering fixes.
+- [Building a Family Tree App with Blazor](https://dougrosenbergdev.com/blog/building-family-tree-blazor) (2026-08-09): Technical deep-dive into ArborKin — tree layout without JavaScript, drag-state ownership, and direct-to-Blob photo uploads.
+- [Hello World: Welcome to My Blog](https://dougrosenbergdev.com/blog/hello-world) (2026-07-21): Introductory post.
+- [Building a Modern Portfolio with Blazor](https://dougrosenbergdev.com/blog/building-portfolio) (2026-07-15): Why this portfolio is built on Blazor WebAssembly.
+
+## Contact
+- Email: doug.rosenberg@gmail.com
+- LinkedIn: https://www.linkedin.com/in/douglasrosenberg
+- GitHub: https://github.com/shalant

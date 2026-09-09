@@ -1,0 +1,151 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  themeScoped?: boolean;
+}
+
+const {
+  title = 'Douglas Rosenberg — Full-Stack .NET Developer | Blazor & ERP Systems',
+  description = 'Full-stack .NET software engineer specializing in Blazor, ERP systems, and UX-forward design. See my work with ArborKin, Friars ERP, and more.',
+  ogImage = '/images/DrCorporateHacker.webp',
+  themeScoped = true,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Douglas Rosenberg',
+  title: 'Full-Stack .NET Software Engineer',
+  description: 'Full-stack .NET developer specializing in Blazor, ERP systems, and UX-forward design',
+  url: 'https://dougrosenbergdev.com',
+  email: 'doug.rosenberg@gmail.com',
+  image: 'https://dougrosenbergdev.com/images/DrCorporateHacker.webp',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Chicago',
+    addressRegion: 'IL',
+    addressCountry: 'US',
+  },
+  sameAs: [
+    'https://github.com/shalant',
+    'https://www.linkedin.com/in/douglasrosenberg',
+  ],
+  jobTitle: 'Software Engineer',
+  knowsAbout: ['.NET 10', 'C# 13', 'Blazor', 'ASP.NET', 'Entity Framework Core', 'Azure', 'SQL Server', 'ERP Systems'],
+};
+
+const webSiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Douglas Rosenberg — Full-Stack .NET Developer',
+  url: 'https://dougrosenbergdev.com',
+  description: 'Portfolio and case studies showcasing full-stack .NET development expertise in Blazor, ERP systems, and UX design',
+  creator: { '@type': 'Person', name: 'Douglas Rosenberg' },
+};
+
+const arborKinLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'ArborKin',
+  applicationCategory: 'FamilyTree/Genealogy',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', url: 'https://www.arborkin.com' },
+  description: 'A private, multi-user family tree application built with Blazor Server and Azure SQL',
+  creator: { '@type': 'Person', name: 'Douglas Rosenberg' },
+};
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="author" content="Douglas Rosenberg" />
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3H1NB9ES0L"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-3H1NB9ES0L');
+  </script>
+
+  <!-- Sets data-theme on <html> before first paint - must run before CSS-driven paint,
+       so it's a blocking script here rather than deferred like everything else. -->
+  <script is:inline src="/js/theme.js"></script>
+  <script is:inline>DrTheme.apply(DrTheme.resolve());</script>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImageURL} />
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={canonicalURL} />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={ogImageURL} />
+
+  <link rel="canonical" href={canonicalURL} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Preload + swap-in-on-load instead of a plain <link rel="stylesheet"> - the plain
+       version is render-blocking (Lighthouse flagged ~1.9s of render-blocking resources
+       here); this fetches the CSS without blocking first paint and swaps it in once ready.
+       font-display=swap in the URL already means the fallback font paints immediately
+       regardless, so this only removes the blocking-fetch cost, not layout stability. -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@200;400;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@200;400;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@200;400;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  </noscript>
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/logos/favicon.svg" />
+  <link rel="apple-touch-icon" href="/logos/drdev-logo.png" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(webSiteLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(arborKinLd)} />
+
+  <slot name="head" />
+</head>
+<body>
+  <!-- global.css's own :root/[data-theme] comment claims subpages aren't theme-scoped,
+       but that's stale - every page in the source Blazor app (Index, Services, Consulting,
+       WebDesignPage/Detail, BlogPosts/Archive/Detail) actually wraps its content in
+       dr-theme-scope; only the legacy /archive iframe page doesn't. Matched here. -->
+  {themeScoped ? (
+    <div class="dr-theme-scope">
+      <slot />
+    </div>
+  ) : (
+    <slot />
+  )}
+
+  <script is:inline src="/js/nav.js"></script>
+  <script is:inline src="/js/scrollReveal.js"></script>
+
+  <script is:inline>
+    DrNav.init();
+    DrNav.scrollToHash();
+    DrNav.highlightActive();
+    DrScrollReveal.init();
+
+    document.getElementById('themeToggle')?.addEventListener('click', () => DrTheme.toggle());
+
+    document.getElementById('footerBackToTop')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

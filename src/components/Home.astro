@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import siteProperties from '../data/siteproperties.json';
+import aboutMe from '../data/aboutme.json';
+import heroImages from '../data/heroimages.json';
+// Imported from src/assets (not the public/images/ path in heroimages.json) so Astro's
+// build-time image service can generate a real responsive srcset - Lighthouse flagged the
+// portrait at 77% wasted bytes (served 840x1260, displayed as small as 227x340 on mobile).
+import heroPortrait from '../assets/images/DrCorporateHacker.webp';
+
+const hero = heroImages.find((img: { name: string }) => img.name === 'home') ?? heroImages[0];
+
+// One real, current sentence instead of a generic tagline - aboutme.json's
+// detailOrQuote leads with what he's actually building right now. Take just
+// the first sentence and drop the leading emoji (content-level AI-tell, not
+// a layout one - see DESIGN_NOTES.md; not rewriting the data here, just not
+// carrying the emoji glyph into the hero's most prominent line).
+const firstSentence = aboutMe.detailOrQuote.split(/(?<=\.)\s+/)[0];
+const currentlyBuilding = firstSentence.replace(/^[^\p{L}]+/u, '').trim();
+---
+
+<section class="hero-section" id="home">
+  <div class="hero-grid-bg"></div>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-name">{siteProperties.name}</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-subtitle">{currentlyBuilding}</p>
+    </div>
+
+    <div class="hero-portrait">
+      <Image
+        src={heroPortrait}
+        alt={hero.alt}
+        class="hero-portrait__img"
+        widths={[227, 420, 630, 840]}
+        sizes="(max-width: 700px) 60vw, 420px"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  </div>
+
+  <a href="#about" class="hero-scroll" aria-label="Scroll down">
+    <img src="/images/down-arrow.svg" alt="scroll down" />
+  </a>
+</section>

@@ -1,0 +1,63 @@
+---
+import siteProperties from '../data/siteproperties.json';
+
+const property = siteProperties;
+const year = new Date().getFullYear();
+
+const socials = [
+  { key: 'email', href: property.email ? `mailto:${property.email}` : null, icon: 'envelope', label: 'Email' },
+  { key: 'gitHub', href: property.gitHub ? `https://github.com/${property.gitHub}` : null, icon: 'github', label: 'GitHub' },
+  { key: 'linkedIn', href: property.linkedIn ? `https://linkedin.com/in/${property.linkedIn}` : null, icon: 'linkedin', label: 'LinkedIn' },
+  { key: 'devDotTo', href: property.devDotTo ? `https://dev.to/${property.devDotTo}` : null, icon: 'devdotto', label: 'Dev.to' },
+  { key: 'medium', href: property.medium ? `https://medium.com/@${property.medium}` : null, icon: 'medium', label: 'Medium' },
+  { key: 'twitter', href: property.twitter ? `https://twitter.com/${property.twitter}` : null, icon: 'twitter', label: 'Twitter / X' },
+  { key: 'youTube', href: property.youTube ? `https://youtube.com/${property.youTube}` : null, icon: 'youtube', label: 'YouTube' },
+  { key: 'instagram', href: property.instagram ? `https://instagram.com/${property.instagram}` : null, icon: 'instagram', label: 'Instagram' },
+  { key: 'music', href: property.music || null, icon: 'music-note', label: 'Music' },
+].filter((s) => s.href);
+---
+
+<footer class="site-footer">
+
+  <div class="site-footer__deco"></div>
+
+  <div class="site-footer__inner">
+
+    <div class="site-footer__left">
+      <span class="site-footer__name">// {property.name}</span>
+      <span class="site-footer__title">{property.title}</span>
+      <span class="site-footer__copy">&copy; {year} &nbsp;&middot;&nbsp; built with Astro</span>
+    </div>
+
+    <div class="site-footer__right">
+
+      <div class="site-footer__socials">
+        {socials.map((s) => (
+          <a href={s.href!} target={s.key === 'email' ? undefined : '_blank'} rel={s.key === 'email' ? undefined : 'noopener noreferrer'} class="site-footer__social" aria-label={s.label}>
+            <img src={`/images/socials/${s.icon}.svg`} alt={s.label} />
+          </a>
+        ))}
+        <a href="https://haxbyte.com" target="_blank" rel="noopener noreferrer" class="site-footer__social" aria-label="Haxbyte">
+          <img src="/images/socials/haxbyte.svg" alt="Haxbyte" />
+        </a>
+      </div>
+
+      <div class="site-footer__actions">
+        {property.email && (
+          <a href={`mailto:${property.email}`} class="site-footer__cta">
+            <span>get in touch</span>
+          </a>
+        )}
+
+        <a href="#" class="site-footer__top" aria-label="Back to top" id="footerBackToTop">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="2,9.5 7,4.5 12,9.5"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</footer>

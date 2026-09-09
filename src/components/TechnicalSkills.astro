@@ -1,0 +1,36 @@
+---
+import SectionDivider from './SectionDivider.astro';
+import TechChip from './TechChip.astro';
+
+const categories = [
+  { label: 'Languages', chips: ['C#', 'JavaScript', 'TypeScript', 'SQL', 'HTML / CSS'] },
+  { label: 'Frameworks & UI', chips: ['.NET 10', 'Blazor', '.NET MAUI (Blazor Hybrid)', 'Angular', 'React', 'Astro', 'Node.js', 'MudBlazor', 'Bootstrap'] },
+  { label: 'Cloud & Infrastructure', chips: ['Azure', 'AWS', 'Docker', 'Linux', 'macOS', 'Github Actions', 'Digital Ocean', 'SQL Server', 'Cloudflare'] },
+  { label: 'Tooling & Design', chips: ['Figma', 'Squarespace', 'GitLab', 'Entity Framework', 'Syncfusion', 'DevExpress'] },
+  { label: 'Marketing & Analytics', chips: ['Google Analytics', 'Meta Pixel', 'Meta Conversions API'] },
+  { label: 'AI Tools', chips: ['Claude', 'Gemini', 'Copilot'] },
+];
+---
+
+<section class="skills-section reveal-on-scroll" id="technicalskills">
+  <div class="skills-container">
+
+    <div class="skills-header">
+      <span class="section-eyebrow">// technical skills</span>
+      <h2 class="skills-heading">What I Build With</h2>
+      <SectionDivider />
+    </div>
+
+    <div class="skills-grid">
+      {categories.map((cat) => (
+        <div class="skills-category">
+          <span class="skills-category__label">{cat.label}</span>
+          <div class="skills-category__chips reveal-on-scroll">
+            {cat.chips.map((chip) => <TechChip name={chip} />)}
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

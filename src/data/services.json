@@ -1,0 +1,89 @@
+{
+  "headline": "How I Can Help",
+  "subheadline": "From custom web builds to enterprise systems work — practical software help scoped to what your business actually needs.",
+  "cta": "Get a Free Quote",
+  "offerings": [
+    {
+      "title": "Custom Web & App Development",
+      "description": "Design-led websites and web applications that convert — from marketing sites to full custom internal tools. Built with Blazor, Angular, or Astro depending on what the project actually calls for.",
+      "includes": [
+        "Marketing sites & landing pages",
+        "Custom web applications",
+        "UI/UX design in Figma before a line of code",
+        "Responsive, accessible builds"
+      ],
+      "engagement": "Project-based, scoped after a free discovery call.",
+      "priceRange": "$750 – $3,000 per project",
+      "minPrice": 750,
+      "maxPrice": 3000,
+      "priceUnit": "per project",
+      "icon": "🖥️"
+    },
+    {
+      "title": "ERP & Business Systems Consulting",
+      "description": "Full-stack development and integration work for organizations running on complex systems — data pipelines, CRM/ERP sync, secure internal tools, and the reporting people actually rely on.",
+      "includes": [
+        "ERP/CRM integrations (Salesforce, custom systems)",
+        "Secure data pipelines & dev environments",
+        "Custom reporting & admin tooling",
+        "CI/CD pipeline setup"
+      ],
+      "engagement": "Hourly or retainer, depending on scope and duration.",
+      "priceRange": "$125 – $175 / hr",
+      "minPrice": 125,
+      "maxPrice": 175,
+      "priceUnit": "per hour",
+      "icon": "🔧"
+    },
+    {
+      "title": "AI-Assisted Development & Modernization",
+      "description": "Bringing AI-assisted workflows into existing codebases — faster iteration, better documentation, safer refactors — without sacrificing code quality or understanding of what's actually being shipped.",
+      "includes": [
+        "Legacy codebase modernization",
+        "AI-assisted development workflow setup",
+        "Code review & technical audits",
+        "Documentation & knowledge transfer"
+      ],
+      "engagement": "Project-based or ongoing partnership.",
+      "priceRange": "$100 – $150 / hr",
+      "minPrice": 100,
+      "maxPrice": 150,
+      "priceUnit": "per hour",
+      "icon": "🤖"
+    },
+    {
+      "title": "Ongoing Support & Maintenance",
+      "description": "Keeping your systems updated, patched, and running smoothly — so you're not firefighting when something breaks.",
+      "includes": [
+        "Regular updates & security patches",
+        "Bug fixes & small enhancements",
+        "Uptime & performance monitoring",
+        "Direct access, no ticket queue"
+      ],
+      "engagement": "Monthly retainer.",
+      "priceRange": "$300 – $800 / month",
+      "minPrice": 300,
+      "maxPrice": 800,
+      "priceUnit": "per month",
+      "icon": "⚙️"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What does it cost to hire you for a web development project?",
+      "answer": "It depends on the type of engagement. Custom web/app development projects typically run $750–$3,000, priced per project after scoping. ERP and business systems consulting runs $125–$175/hr. AI-assisted development and codebase modernization runs $100–$150/hr. Ongoing support and maintenance is a $300–$800/month retainer."
+    },
+    {
+      "question": "How does an engagement actually start?",
+      "answer": "With a free discovery call to scope what you actually need. From there it's priced project-based, hourly, or as a monthly retainer, whichever fits the work — not a fixed package pushed onto every client."
+    },
+    {
+      "question": "What kind of projects do you take on?",
+      "answer": "Design-led marketing sites and custom web applications (built in Blazor, Angular, or Astro depending on what the project calls for), ERP/CRM integrations and secure data pipelines, AI-assisted legacy codebase modernization, and ongoing maintenance for systems already in production."
+    },
+    {
+      "question": "Do you offer support after a project ships?",
+      "answer": "Yes — ongoing support and maintenance is available as a monthly retainer, covering regular updates and security patches, bug fixes and small enhancements, and uptime/performance monitoring, with direct access rather than a ticket queue."
+    }
+  ]
+}

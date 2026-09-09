@@ -1,0 +1,28 @@
+{
+  "headline": "Technology Made Simple for Small Business",
+  "subheadline": "We take the stress out of IT so you can focus on running and growing your business. Affordable, reliable solutions — tailored to fit your needs.",
+  "tagline": "Your neighborhood IT partner — big solutions, small business focus.",
+  "cta": "Get Your Free Consultation",
+  "services": [
+    {
+      "title": "Affordable IT Support",
+      "description": "Reliable help when you need it, without costly overhead. We handle the technical side so you can stay focused on your business.",
+      "icon": "⚙️"
+    },
+    {
+      "title": "Cloud Setup & Backup",
+      "description": "Protect your business from everyday threats with simple, effective cloud solutions. Your data stays safe and accessible.",
+      "icon": "☁️"
+    },
+    {
+      "title": "Website & App Development",
+      "description": "Build a professional online presence that attracts and retains customers. From landing pages to full custom applications.",
+      "icon": "🖥️"
+    },
+    {
+      "title": "Ongoing Maintenance",
+      "description": "We keep your systems updated, patched, and running smoothly — so you can focus on growth, not firefighting.",
+      "icon": "🔧"
+    }
+  ]
+}

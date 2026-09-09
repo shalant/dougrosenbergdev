@@ -1,0 +1,257 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import posts from '../../data/blog-posts.json';
+
+type YearGroup = { year: number; months: { month: number; posts: any[] }[] };
+
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+const byYear = new Map<number, Map<number, any[]>>();
+for (const post of posts) {
+  const d = new Date(post.date);
+  const y = d.getFullYear();
+  const m = d.getMonth();
+  if (!byYear.has(y)) byYear.set(y, new Map());
+  const months = byYear.get(y)!;
+  if (!months.has(m)) months.set(m, []);
+  months.get(m)!.push(post);
+}
+
+const grouped: YearGroup[] = [...byYear.entries()]
+  .sort((a, b) => b[0] - a[0])
+  .map(([year, months]) => ({
+    year,
+    months: [...months.entries()]
+      .sort((a, b) => b[0] - a[0])
+      .map(([month, posts]) => ({
+        month,
+        posts: posts.sort((a, b) => +new Date(b.date) - +new Date(a.date)),
+      })),
+  }));
+
+const dateShort = (d: string) => new Date(d).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: '2-digit' });
+---
+
+<BaseLayout title="Blog Archive — Douglas Rosenberg" description="Browse posts by date">
+  <Header />
+
+  <section class="subpage-hero" id="archive-hero">
+    <div class="subpage-hero__grid-bg"></div>
+    <div class="subpage-hero__content">
+      <div class="subpage-hero__text">
+        <span class="section-eyebrow">// archive</span>
+        <h1 class="subpage-hero__title">Blog Archive</h1>
+        <p class="subpage-hero__sub">Browse posts by date</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="archive-section">
+    <div class="archive-container">
+      {grouped.length === 0 ? (
+        <div class="alert alert-info">No blog posts yet. Check back soon!</div>
+      ) : (
+        <div class="archive-timeline">
+          {grouped.map((yearGroup) => (
+            <div class="archive-year">
+              <h2 class="archive-year__title">{yearGroup.year}</h2>
+              <div class="archive-months">
+                {yearGroup.months.map((monthGroup) => (
+                  <div class="archive-month">
+                    <h3 class="archive-month__title">
+                      {monthNames[monthGroup.month]}
+                      <span class="archive-month__count">({monthGroup.posts.length})</span>
+                    </h3>
+                    <ul class="archive-posts">
+                      {monthGroup.posts.map((post: any) => (
+                        <li class="archive-post">
+                          <div class="archive-post__date">{dateShort(post.date)}</div>
+                          <a href={`/blog/${post.id}`} class="archive-post__link">{post.title}</a>
+                          <span class="archive-post__reading-time">{post.readingTimeMinutes} min</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div class="archive-footer">
+        <a href="/blog" class="archive-back-link">&larr; Back to Blog</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  #archive-hero {
+    min-height: 0;
+  }
+
+  .archive-section {
+    padding: 4rem 0;
+    background: var(--art-deco-1) center / cover no-repeat fixed;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .archive-section {
+      background-attachment: scroll;
+    }
+  }
+
+  .archive-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--surface-rgb), 0.65);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .archive-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .archive-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .archive-year {
+    border-left: 3px solid var(--accent);
+    padding-left: 2rem;
+    position: relative;
+  }
+
+  .archive-year::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    border: 3px solid var(--bg);
+  }
+
+  .archive-year__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 2rem 0;
+  }
+
+  .archive-months {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .archive-month {
+    background: rgba(var(--text-rgb), 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(var(--accent-rgb), 0.25);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .archive-month:hover {
+    background: rgba(var(--text-rgb), 0.08);
+    border-color: rgba(var(--accent-rgb), 0.4);
+  }
+
+  .archive-month__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .archive-month__count {
+    font-size: 0.85rem;
+    color: rgba(var(--text-rgb), 0.5);
+    font-weight: 400;
+  }
+
+  .archive-posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .archive-post {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .archive-post__date {
+    color: rgba(var(--text-rgb), 0.5);
+    font-size: 0.8rem;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  .archive-post__link {
+    color: var(--accent);
+    text-decoration: none;
+    flex: 1;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .archive-post__link:hover {
+    color: var(--text);
+    text-decoration: underline;
+  }
+
+  .archive-post__reading-time {
+    color: rgba(var(--text-rgb), 0.4);
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .archive-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(var(--accent-rgb), 0.1);
+  }
+
+  .archive-back-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .archive-back-link:hover {
+    color: var(--text);
+  }
+</style>

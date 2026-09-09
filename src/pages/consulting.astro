@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import consulting from '../data/consulting.json';
+---
+
+<BaseLayout
+  title="IT Consulting & Support — Douglas Rosenberg"
+  description={consulting.subheadline}
+>
+  <Header />
+
+  <section class="subpage-hero" id="consulting-hero">
+    <div class="subpage-hero__grid-bg"></div>
+    <div class="subpage-hero__content">
+      <div class="subpage-hero__text">
+        <span class="section-eyebrow">// consulting</span>
+        <h1 class="subpage-hero__title">{consulting.headline}</h1>
+        <p class="subpage-hero__sub">{consulting.subheadline}</p>
+        <a href="mailto:doug.rosenberg@gmail.com" class="hero-btn hero-btn--primary">
+          {consulting.cta}
+        </a>
+      </div>
+      <div class="subpage-hero__img">
+        <img src="/images/DrComputerConsultant2.webp" alt="Doug Rosenberg — IT Consultant" />
+      </div>
+    </div>
+  </section>
+
+  <section class="consulting-services">
+    <div class="consulting-services__container">
+      <span class="section-eyebrow">// services</span>
+      <h2 class="consulting-services__heading">What I Can Do For You</h2>
+      <div class="consulting-services__grid">
+        {consulting.services.map((svc) => (
+          <div class="consulting-service-card">
+            <span class="consulting-service-card__icon">{svc.icon}</span>
+            <h3>{svc.title}</h3>
+            <p>{svc.description}</p>
+          </div>
+        ))}
+        <a href="https://haxbyte.com" target="_blank" rel="noopener noreferrer" class="consulting-service-card consulting-service-card--haxbyte">
+          <span class="consulting-service-card__icon">&lt;/&gt;</span>
+          <h3>Haxbyte</h3>
+          <p>This work is delivered under Haxbyte, a dedicated web design &amp; consulting studio. <span class="consulting-service-card__link">haxbyte.com</span></p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="consulting-cta">
+    <div class="consulting-cta__container">
+      <p class="consulting-cta__tagline">{consulting.tagline}</p>
+      <a href="mailto:doug.rosenberg@gmail.com" class="hero-btn hero-btn--primary">
+        {consulting.cta}
+      </a>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

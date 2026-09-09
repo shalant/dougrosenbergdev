@@ -1,0 +1,64 @@
+---
+import SectionDivider from './SectionDivider.astro';
+import casual from '../data/casual.json';
+
+// Line icons drawn in the same stroke language as the nav glyphs. Matched on
+// the hobby name; anything unrecognized falls back to a simple spark mark.
+function hobbyIcon(name: string): string {
+  const glyphs: Record<string, string> = {
+    cycling:
+      '<circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/>' +
+      '<path d="M5.5 17 L9.5 8 H14.5"/><path d="M9.5 8 L15 17"/>' +
+      '<path d="M14 8 L17 8"/><circle cx="9.5" cy="8" r="0.5" fill="currentColor"/>',
+    cooking:
+      '<path d="M7 13.5 a5 5 0 0 1 -1.5 -8.4 a3.6 3.6 0 0 1 6.5 -1.6 a3.6 3.6 0 0 1 6.5 1.6 a5 5 0 0 1 -1.5 8.4 Z"/>' +
+      '<path d="M7 13.5 H17 V18 a1.2 1.2 0 0 1 -1.2 1.2 H8.2 A1.2 1.2 0 0 1 7 18 Z"/>' +
+      '<path d="M9.6 13.5 V19.2"/><path d="M14.4 13.5 V19.2"/>',
+    badminton:
+      '<circle cx="12" cy="17.5" r="2.6"/>' +
+      '<path d="M9.7 16.2 L7 6"/><path d="M12 14.9 V4"/><path d="M14.3 16.2 L17 6"/>' +
+      '<path d="M7 6 a6 6 0 0 1 10 0"/>',
+    legos:
+      '<rect x="4.5" y="9.5" width="15" height="8.5" rx="1"/>' +
+      '<path d="M8 9.5 V7.6 a1.6 1.6 0 0 1 3.2 0 V9.5"/>' +
+      '<path d="M12.8 9.5 V7.6 a1.6 1.6 0 0 1 3.2 0 V9.5"/>',
+    lego:
+      '<rect x="4.5" y="9.5" width="15" height="8.5" rx="1"/>' +
+      '<path d="M8 9.5 V7.6 a1.6 1.6 0 0 1 3.2 0 V9.5"/>' +
+      '<path d="M12.8 9.5 V7.6 a1.6 1.6 0 0 1 3.2 0 V9.5"/>',
+  };
+  const glyph = glyphs[name.trim().toLowerCase()] ??
+    '<path d="M12 3 L13.6 10.4 L21 12 L13.6 13.6 L12 21 L10.4 13.6 L3 12 L10.4 10.4 Z"/>';
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${glyph}</svg>`;
+}
+---
+
+<section class="casual-section reveal-on-scroll" id="casual">
+  <div class="casual-container">
+
+    <div class="casual-header">
+      <span class="section-eyebrow">// life outside code</span>
+      <h2 class="casual-heading">When I'm Not Coding</h2>
+      <SectionDivider />
+    </div>
+
+    <div class="casual-body">
+      <p class="casual-description">{casual.description}</p>
+
+      <ul class="casual-hobbies">
+        {casual.hobbies.map((hobby: { name: string; detail?: string }) => (
+          <li class="casual-hobby">
+            <span class="casual-hobby__icon" aria-hidden="true" set:html={hobbyIcon(hobby.name)} />
+            <span class="casual-hobby__text">
+              <span class="casual-hobby__name">{hobby.name}</span>
+              {hobby.detail && <span class="casual-hobby__detail">{hobby.detail}</span>}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      {casual.detailOrQuote && <blockquote class="casual-quote">{casual.detailOrQuote}</blockquote>}
+    </div>
+
+  </div>
+</section>

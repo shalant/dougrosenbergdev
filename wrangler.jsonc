@@ -12,11 +12,12 @@
 	// picks up this file).
 	"name": "dougrosenbergdev",
 	"compatibility_date": "2026-09-08",
-	// "routes" (custom domain attachment) is deliberately omitted for now - dougrosenbergdev.com
-	// isn't a Cloudflare zone yet, and wrangler deploy fails outright ("Could not find zone for
-	// `dougrosenbergdev.com`") if a route references a domain that isn't proxied by Cloudflare.
-	// Re-add once the domain cutover (see PORT_TODO.md) is done:
-	// "routes": [{ "pattern": "dougrosenbergdev.com", "custom_domain": true }],
+	// dougrosenbergdev.com is now a Cloudflare zone (domain cutover completed 2026-09-08 -
+	// see PORT_TODO.md) with the conflicting GitHub Pages A-records/CNAME removed, so the
+	// custom domain route can attach.
+	"routes": [
+		{ "pattern": "dougrosenbergdev.com", "custom_domain": true }
+	],
 	"assets": {
 		"directory": "./dist",
 		// Without this, unmatched routes get a bare 404 with an empty body instead of

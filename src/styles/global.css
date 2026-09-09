@@ -5644,6 +5644,101 @@ html.static-preview-shown .hero-scroll {
   flex-wrap: wrap;
 }
 
+.contact-form-wrap {
+  max-width: 420px;
+  margin: 2.5rem auto 0;
+  text-align: left;
+}
+
+.contact-form-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: center;
+  margin: 0 0 1.5rem;
+}
+
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.contact-field label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(var(--text-rgb), 0.55);
+}
+
+/* Same visual language as .blog-search-input, this site's one other real
+   form control - kept consistent rather than inventing a second input style. */
+.contact-field input,
+.contact-field textarea {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: rgba(var(--text-rgb), 0.05);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  border-radius: 8px;
+  padding: 0.65rem 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.contact-field textarea {
+  resize: vertical;
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+  outline: none;
+  background: rgba(var(--text-rgb), 0.08);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+}
+
+.contact-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-submit {
+  display: block;
+  width: 100%;
+  text-align: center;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.contact-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.contact-form-status {
+  min-height: 1.3em;
+  margin: 0.9rem 0 0;
+  font-size: 0.85rem;
+  text-align: center;
+  color: rgba(var(--text-rgb), 0.55);
+}
+
+.contact-form-status--success {
+  color: var(--accent);
+}
+
+.contact-form-status--error {
+  color: #c0392b;
+}
+
 .contact-socials {
   display: flex;
   gap: 1.25rem;

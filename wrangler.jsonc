@@ -1,9 +1,7 @@
 {
-	// Cloudflare Workers config - static-assets-only for now (no "main" worker script;
-	// the current contact links are just mailto:, no API endpoint exists yet). Same
-	// pattern as dougrosenbergmusic's site/wrangler.jsonc, minus the worker/email pieces
-	// until a real contact-form backend is a real requirement (see DESIGN_NOTES.md's
-	// fast-follow list).
+	// Cloudflare Workers config. Same pattern as dougrosenbergmusic's
+	// site/wrangler.jsonc: a real "main" worker script (src/worker.js) handles
+	// POST /api/contact, falling back to the assets binding for everything else.
 	//
 	// In the Cloudflare dashboard (Workers & Pages -> Create -> connect this GitHub
 	// repo, once one exists): root directory "." (this file lives at repo root, unlike
@@ -11,12 +9,25 @@
 	// build command "npm run build", deploy command "npx wrangler deploy" (default,
 	// picks up this file).
 	"name": "dougrosenbergdev",
+	"main": "./src/worker.js",
 	"compatibility_date": "2026-09-08",
 	// dougrosenbergdev.com is now a Cloudflare zone (domain cutover completed 2026-09-08 -
 	// see PORT_TODO.md) with the conflicting GitHub Pages A-records/CNAME removed, so the
 	// custom domain route can attach.
 	"routes": [
 		{ "pattern": "dougrosenbergdev.com", "custom_domain": true }
+	],
+	// Lets the Worker send contact-form email via Cloudflare's native Workers
+	// send_email binding - no third-party account/API key needed. Requires
+	// Email Routing enabled on the dougrosenbergdev.com zone, and
+	// destination_address verified as a "Destination Address" in this
+	// Cloudflare account's Email Routing settings (one-time email confirmation)
+	// before sends will succeed - see src/worker.js.
+	"send_email": [
+		{
+			"name": "CONTACT_EMAIL",
+			"destination_address": "doug.rosenberg@gmail.com"
+		}
 	],
 	"assets": {
 		"directory": "./dist",

@@ -70,6 +70,19 @@ const arborKinLd = {
   <meta name="description" content={description} />
   <meta name="author" content="Douglas Rosenberg" />
 
+  <!-- These fonts and the hero's background texture are only discoverable by the browser
+       once global.css has downloaded and parsed (they're referenced via @font-face src /
+       background-image, not directly in markup) - without preloading, they start fetching
+       only *after* the CSS finishes, in series instead of in parallel with it. Preloading
+       the dark variant only (art-deco background) since that's the default theme every
+       first-time visitor sees (see theme.js). -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/cormorant-garamond.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/montserrat.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono.woff2" crossorigin />
+  <link rel="preload" as="image" href="/images/artDecoBackground1.webp" />
+
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://www.google-analytics.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3H1NB9ES0L"></script>
   <script is:inline>
     window.dataLayer = window.dataLayer || [];

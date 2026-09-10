@@ -1901,16 +1901,6 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   flex: 1;
 }
 
-.hero-eyebrow {
-  font-family: var(--mono);
-  font-size: 0.875rem;
-  color: var(--accent);
-  letter-spacing: 0.2em;
-  display: block;
-  margin-bottom: 1.25rem;
-  animation: fadeInDown 0.6s ease-out both;
-}
-
 .hero-section h1 {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 300;

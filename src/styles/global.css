@@ -3347,15 +3347,23 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero {
   background: var(--bg);
 }
 
+/* The 0.35/0.82 this originally shipped with was a near-white wash strong
+   enough to crush the ring images to near-invisibility - fine as a subtle
+   vignette against the dark-theme scrim (5,17,31 - much lower luminance
+   than white), but a 255,255,255 overlay at those same alphas reads as
+   almost solid white well before the outer edge. Eased off so the ring
+   stays legible at every position in the rotation, not just dead center. */
 html[data-theme="light"] .dr-theme-scope .wd2-hero__scrim {
-  background: radial-gradient(ellipse at center, rgba(var(--surface-rgb), 0.35) 0%, rgba(var(--surface-rgb), 0.82) 75%);
+  background: radial-gradient(ellipse at center, rgba(var(--surface-rgb), 0.1) 0%, rgba(var(--surface-rgb), 0.42) 75%);
 }
 
 /* Ring images were saturated for a moody dark-cinema feel; that same
    treatment reads as muddy once the scrim around them goes light, so
-   brighten a step further in light mode only. */
+   brighten a step further in light mode only. Contrast pushed up too -
+   without it, the now-lighter scrim above left the thumbnails flat and
+   pale instead of reading as distinct cards. */
 html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
-  filter: brightness(1.02) saturate(0.78);
+  filter: brightness(1.02) saturate(0.85) contrast(1.15);
 }
 
 /* Web Design tools section */

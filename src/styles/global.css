@@ -1095,7 +1095,17 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
     top: 100%;
     left: 0;
     right: 0;
-    background: rgba(var(--surface-rgb), 0.32);
+    /* Was rgba(--surface-rgb, 0.32) relying almost entirely on the blur
+       below for legibility - found via real-device testing that
+       backdrop-filter doesn't reliably render here (confirmed in both
+       headless and a real GPU-backed Chrome window), leaving hero text
+       showing straight through at full sharpness and overlapping the menu
+       labels. Raised to near-opaque using the same --surface-nav-rgb token
+       .navbar-wrapper itself uses, so this reads correctly whether or not
+       the blur actually applies - a frosted-glass bonus where it works,
+       a solid dropdown where it doesn't, instead of a menu that's only
+       legible in the best case. */
+    background: rgba(var(--surface-nav-rgb), 0.94);
     backdrop-filter: blur(30px) saturate(180%);
     -webkit-backdrop-filter: blur(30px) saturate(180%);
     padding: 0.4rem 0 0.6rem;

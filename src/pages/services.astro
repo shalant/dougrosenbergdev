@@ -55,9 +55,9 @@ const faqLd = services.faqs.length > 0 ? {
         <span class="section-eyebrow">// services</span>
         <h1 class="subpage-hero__title">{services.headline}</h1>
         <p class="subpage-hero__sub">{services.subheadline}</p>
-        <a href="mailto:doug.rosenberg@gmail.com" class="hero-btn hero-btn--primary">
+        <button type="button" class="hero-btn hero-btn--primary" data-contact-trigger>
           {services.cta}
-        </a>
+        </button>
       </div>
       <div class="subpage-hero__img">
         <img src="/images/DrPortraitV5.webp" alt="Doug Rosenberg" />
@@ -108,9 +108,9 @@ const faqLd = services.faqs.length > 0 ? {
   <section class="consulting-cta">
     <div class="consulting-cta__container">
       <p class="consulting-cta__tagline">Every engagement is scoped individually &mdash; reach out and let's talk about what you need.</p>
-      <a href="mailto:doug.rosenberg@gmail.com" class="hero-btn hero-btn--primary">
+      <button type="button" class="hero-btn hero-btn--primary" data-contact-trigger>
         {services.cta}
-      </a>
+      </button>
     </div>
   </section>
 

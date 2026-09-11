@@ -1,5 +1,6 @@
 ---
 import SectionDivider from './SectionDivider.astro';
+import ContactForm from './ContactForm.astro';
 import siteProperties from '../data/siteproperties.json';
 
 const props = siteProperties;
@@ -15,48 +16,17 @@ const props = siteProperties;
         Whether you have a project in mind, need a consultation,
         or just want to connect &mdash; I'd love to hear from you.
       </p>
-      <div class="contact-actions">
-        <a href={`mailto:${props.email}`} class="hero-btn hero-btn--primary">
-          Send a message
-        </a>
-        {props.linkedIn && (
+      {props.linkedIn && (
+        <div class="contact-actions">
           <a href={`https://www.linkedin.com/in/${props.linkedIn}`}
              class="hero-btn hero-btn--ghost"
              target="_blank" rel="noopener noreferrer">
             LinkedIn
           </a>
-        )}
-      </div>
-      <div class="contact-form-wrap">
-        <p class="contact-form-label">Or send a message directly</p>
-        <form id="contact-form" class="contact-form" novalidate>
-          <div class="contact-field">
-            <label for="contact-name">Name</label>
-            <input type="text" id="contact-name" name="name" required maxlength="200" autocomplete="name" />
-          </div>
-          <div class="contact-field">
-            <label for="contact-email">Email</label>
-            <input type="email" id="contact-email" name="email" required maxlength="200" autocomplete="email" />
-          </div>
-          <div class="contact-field">
-            <label for="contact-message">Message</label>
-            <textarea id="contact-message" name="message" required maxlength="5000" rows="5"></textarea>
-          </div>
-          <!-- Honeypot: hidden from real visitors via off-screen positioning
-               (not `hidden`/display:none - some bots skip fields detected via
-               those too crudely), invisible and unreachable by tab/keyboard. -->
-          <div class="contact-field contact-honeypot" aria-hidden="true">
-            <label for="contact-website">Website</label>
-            <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" />
-          </div>
-          <button type="submit" class="hero-btn hero-btn--primary contact-submit">Send Message</button>
-          <p id="contact-form-status" class="contact-form-status" role="status"></p>
-        </form>
-      </div>
+        </div>
+      )}
+      <ContactForm />
       <div class="contact-socials">
-        <a href={`mailto:${props.email}`} class="contact-social" title="Email" aria-label="Email">
-          <img src="/images/socials/envelope.svg" alt="Email" />
-        </a>
         {props.gitHub && (
           <a href={`https://github.com/${props.gitHub}`}
              class="contact-social" target="_blank" rel="noopener" aria-label="GitHub">
@@ -73,59 +43,3 @@ const props = siteProperties;
     </div>
   </div>
 </section>
-
-<script>
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const status = document.getElementById('contact-form-status') as HTMLParagraphElement | null;
-
-  if (form && status) {
-    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      status.textContent = '';
-      status.className = 'contact-form-status';
-
-      const formData = new FormData(form);
-      const payload = {
-        name: String(formData.get('name') ?? '').trim(),
-        email: String(formData.get('email') ?? '').trim(),
-        message: String(formData.get('message') ?? '').trim(),
-        website: String(formData.get('website') ?? ''),
-      };
-
-      if (!payload.name || !payload.email || !payload.message) {
-        status.textContent = 'Please fill in your name, email, and message.';
-        status.classList.add('contact-form-status--error');
-        return;
-      }
-
-      submitButton.disabled = true;
-      submitButton.textContent = 'Sending...';
-
-      try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        const result = await response.json();
-
-        if (response.ok) {
-          status.textContent = "Message sent — thanks! I'll reply within a few days.";
-          status.classList.add('contact-form-status--success');
-          form.reset();
-        } else {
-          status.textContent = result.error || 'Something went wrong. Please email directly instead.';
-          status.classList.add('contact-form-status--error');
-        }
-      } catch {
-        status.textContent = 'Something went wrong. Please email directly instead.';
-        status.classList.add('contact-form-status--error');
-      } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Send Message';
-      }
-    });
-  }
-</script>

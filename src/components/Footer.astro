@@ -5,7 +5,6 @@ const property = siteProperties;
 const year = new Date().getFullYear();
 
 const socials = [
-  { key: 'email', href: property.email ? `mailto:${property.email}` : null, icon: 'envelope', label: 'Email' },
   { key: 'gitHub', href: property.gitHub ? `https://github.com/${property.gitHub}` : null, icon: 'github', label: 'GitHub' },
   { key: 'linkedIn', href: property.linkedIn ? `https://linkedin.com/in/${property.linkedIn}` : null, icon: 'linkedin', label: 'LinkedIn' },
   { key: 'devDotTo', href: property.devDotTo ? `https://dev.to/${property.devDotTo}` : null, icon: 'devdotto', label: 'Dev.to' },
@@ -43,11 +42,9 @@ const socials = [
       </div>
 
       <div class="site-footer__actions">
-        {property.email && (
-          <a href={`mailto:${property.email}`} class="site-footer__cta">
-            <span>get in touch</span>
-          </a>
-        )}
+        <button type="button" class="site-footer__cta" data-contact-trigger>
+          <span>get in touch</span>
+        </button>
 
         <a href="#" class="site-footer__top" aria-label="Back to top" id="footerBackToTop">
           <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"

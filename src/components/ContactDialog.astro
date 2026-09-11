@@ -1,0 +1,14 @@
+---
+// Mounted once by Header.astro, so it exists on every page Header renders on
+// (every page except 404.astro, which deliberately has no nav chrome and
+// links straight to the homepage's #contact section instead). Any element
+// anywhere on the page can open it via `data-contact-trigger` - see
+// public/js/contactDialog.js for the delegated open/close wiring.
+import ContactForm from './ContactForm.astro';
+---
+
+<dialog id="contactDialog" class="contact-dialog">
+  <button type="button" class="contact-dialog__close" aria-label="Close" id="closeContactDialog">&times;</button>
+  <h3 class="contact-dialog__title">Let's talk</h3>
+  <ContactForm idPrefix="dialog-" />
+</dialog>

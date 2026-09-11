@@ -18,9 +18,9 @@ import consulting from '../data/consulting.json';
         <span class="section-eyebrow">// consulting</span>
         <h1 class="subpage-hero__title">{consulting.headline}</h1>
         <p class="subpage-hero__sub">{consulting.subheadline}</p>
-        <a href="mailto:doug.rosenberg@gmail.com" class="hero-btn hero-btn--primary">
+        <button type="button" class="hero-btn hero-btn--primary" data-contact-trigger>
           {consulting.cta}
-        </a>
+        </button>
       </div>
       <div class="subpage-hero__img">
         <img src="/images/DrComputerConsultant2.webp" alt="Doug Rosenberg — IT Consultant" />
@@ -52,9 +52,9 @@ import consulting from '../data/consulting.json';
   <section class="consulting-cta">
     <div class="consulting-cta__container">
       <p class="consulting-cta__tagline">{consulting.tagline}</p>
-      <a href="mailto:doug.rosenberg@gmail.com" class="hero-btn hero-btn--primary">
+      <button type="button" class="hero-btn hero-btn--primary" data-contact-trigger>
         {consulting.cta}
-      </a>
+      </button>
     </div>
   </section>
 

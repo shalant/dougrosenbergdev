@@ -860,7 +860,10 @@ a:hover {
   }
 }
 
-/* Contact CTA */
+/* Contact CTA - now a <button> (opens the contact dialog) rather than an
+   <a href="mailto:">, so background/font/cursor need the same explicit
+   reset .nav-has-dropdown > button.nav-link already uses for the same
+   reason, since a bare <button> otherwise keeps the browser's own chrome. */
 .nav-cta {
   display: flex;
   align-items: center;
@@ -870,6 +873,8 @@ a:hover {
   letter-spacing: 0.12em;
   color: var(--accent) !important;
   text-decoration: none;
+  background: none;
+  cursor: pointer;
   border: 1px solid rgba(var(--accent-rgb), 0.35);
   padding: 0.45rem 1.1rem 0.45rem 1.25rem;
   border-radius: 2px;
@@ -1208,6 +1213,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
     letter-spacing: 0.14em;
     text-transform: uppercase;
     text-shadow: none;
+    cursor: pointer;
   }
 
   .nav-link--cta:hover {
@@ -2057,7 +2063,6 @@ html[data-theme="light"] .dr-theme-scope .contact-dialog__close {
   color: rgba(var(--text-rgb), 0.85);
 }
 
-html[data-theme="light"] .dr-theme-scope .contact-dialog__fallback,
 html[data-theme="light"] .dr-theme-scope .wd-case__ba-caption {
   color: rgba(var(--text-rgb), 0.85);
 }
@@ -4687,16 +4692,6 @@ a.music-album__title--link:hover {
   text-align: left;
 }
 
-.contact-form-label {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  text-align: center;
-  margin: 0 0 1.5rem;
-}
-
 .contact-field {
   display: flex;
   flex-direction: column;
@@ -5376,60 +5371,10 @@ html[data-theme="light"] .dr-theme-scope .site-footer__cta:hover {
   text-align: center;
 }
 
-.contact-dialog__options {
-  display: flex;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-}
-
-.contact-dialog__option {
-  flex: 1 1 240px;
-  padding: 1.5rem;
-  border: 1px solid rgba(var(--text-rgb), 0.14);
-  border-radius: 12px;
-  text-align: center;
-}
-
-.contact-dialog__option h4 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem;
-}
-
-.contact-dialog__option p {
-  font-size: 0.85rem;
-  color: rgba(var(--text-rgb), 0.65);
-  line-height: 1.5;
-  margin: 0 0 1.25rem;
-}
-
-.contact-dialog__option .hero-btn {
-  padding: 0.65rem 1.5rem;
-  font-size: 0.75rem;
-}
-
-.contact-dialog__fallback {
-  margin: 1.5rem 0 0;
-  text-align: center;
-  font-size: 0.8rem;
-  color: rgba(var(--text-rgb), 0.55);
-}
-
-.contact-dialog__copy {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  font-family: var(--mono);
-  color: rgba(var(--text-rgb), 0.8);
-  text-decoration: underline dotted;
-  cursor: pointer;
-}
-
-.contact-dialog__copy:hover {
-  color: var(--accent);
-}
+/* ContactForm.astro (imported by ContactDialog.astro) renders straight into
+   the dialog with no extra wrapper needed here - its own .contact-form
+   styling (defined further up, shared with the homepage's inline use of the
+   same component) already reads fine inside .contact-dialog's 640px panel. */
 
 @media (max-width: 820px) {
   /* Narrowing the glass card to peek the ring out around its edges (the

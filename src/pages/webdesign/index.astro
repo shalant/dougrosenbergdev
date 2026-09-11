@@ -67,38 +67,18 @@ const ringImages = selectRingImages(RING_CARD_COUNT);
       <span class="section-eyebrow">// web design</span>
       <h1 class="wd2-hero__title">{webDesign.headline}</h1>
       <p class="wd2-hero__sub">{webDesign.subheadline}</p>
-      <button type="button" class="hero-btn hero-btn--primary wd2-hero__cta" id="openContactDialog">
+      <button type="button" class="hero-btn hero-btn--primary wd2-hero__cta" id="openContactDialog" data-contact-trigger>
         get in touch
       </button>
     </div>
   </section>
 
-  <dialog id="contactDialog" class="contact-dialog">
-    <button type="button" class="contact-dialog__close" aria-label="Close" id="closeContactDialog">&times;</button>
-    <h3 class="contact-dialog__title">Let's talk</h3>
-    <div class="contact-dialog__options">
-      <div class="contact-dialog__option">
-        <h4>Quick note</h4>
-        <p>Just want to say hi or ask something small.</p>
-        <a class="hero-btn hero-btn--ghost" id="quickNoteLink"
-           href="mailto:doug.rosenberg@gmail.com?subject=Hey%20Doug">send a note</a>
-      </div>
-      <div class="contact-dialog__option">
-        <h4>Tell me about your project</h4>
-        <p>Give me the details up front so I can reply with something useful.</p>
-        <a class="hero-btn hero-btn--primary" id="projectInquiryLink"
-           href="mailto:doug.rosenberg@gmail.com?subject=Website%20project&amp;body=Hi%20Doug%2C%0D%0A%0D%0AHere%27s%20a%20bit%20about%20what%20I%27m%20thinking%3A%0D%0A%0D%0AWhat%20it%27s%20for%3A%20%0D%0ARough%20timeline%3A%20%0D%0ABudget%20range%20%28if%20you%20have%20one%20in%20mind%29%3A%20">
-          start here
-        </a>
-      </div>
-    </div>
-    <p class="contact-dialog__fallback">
-      mailto link not opening? copy:
-      <button type="button" class="contact-dialog__copy" id="copyEmailBtn">
-        doug.rosenberg@gmail.com
-      </button>
-    </p>
-  </dialog>
+  <!-- The contact dialog itself lives in Header.astro (ContactDialog.astro),
+       mounted once globally so every page shares one form/instance instead
+       of each page carrying its own copy - see public/js/contactDialog.js
+       for the open/close wiring this button's data-contact-trigger hooks
+       into. This page used to own a bespoke two-path (quick note / project
+       inquiry) mailto dialog here; collapsed into the shared form. -->
 
   <section class="webdesign-projects">
     <div class="webdesign-projects__container">
@@ -163,27 +143,10 @@ const ringImages = selectRingImages(RING_CARD_COUNT);
 </BaseLayout>
 
 <script>
-  const dialog = document.getElementById('contactDialog') as HTMLDialogElement | null;
-
-  document.getElementById('openContactDialog')?.addEventListener('click', () => {
-    if (typeof gtag === 'function') gtag('event', 'contact_dialog_open');
-    dialog?.showModal();
-  });
-  document.getElementById('closeContactDialog')?.addEventListener('click', () => dialog?.close());
-  document.getElementById('quickNoteLink')?.addEventListener('click', () => {
-    if (typeof gtag === 'function') gtag('event', 'contact_option_select', { option: 'quick_note' });
-  });
-  document.getElementById('projectInquiryLink')?.addEventListener('click', () => {
-    if (typeof gtag === 'function') gtag('event', 'contact_option_select', { option: 'project_inquiry' });
-  });
-  document.getElementById('copyEmailBtn')?.addEventListener('click', (e) => {
-    if (typeof gtag === 'function') gtag('event', 'contact_email_copied');
-    const btn = e.currentTarget as HTMLButtonElement;
-    navigator.clipboard.writeText('doug.rosenberg@gmail.com').then(() => {
-      btn.textContent = 'copied!';
-      setTimeout(() => { btn.textContent = 'doug.rosenberg@gmail.com'; }, 1500);
-    });
-  });
+  // Contact dialog open/close is handled globally by DrContactDialog (see
+  // public/js/contactDialog.js) via this page's #openContactDialog button
+  // carrying data-contact-trigger - nothing page-specific needed here now
+  // that the dialog itself lives in Header.astro instead of on this page.
 
   // Hover-intent crossfade activation for every ProjectMediaFrame on this page,
   // delegated once instead of N per-card listeners. Only starts the crossfade

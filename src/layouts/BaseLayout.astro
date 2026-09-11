@@ -134,12 +134,14 @@ const arborKinLd = {
 
   <script is:inline src="/js/nav.js"></script>
   <script is:inline src="/js/scrollReveal.js"></script>
+  <script is:inline src="/js/contactDialog.js"></script>
 
   <script is:inline>
     DrNav.init();
     DrNav.scrollToHash();
     DrNav.highlightActive();
     DrScrollReveal.init();
+    DrContactDialog.init();
 
     document.getElementById('themeToggle')?.addEventListener('click', () => DrTheme.toggle());
 

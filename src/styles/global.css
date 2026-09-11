@@ -26,6 +26,26 @@
   font-display: swap;
   src: url('/fonts/cormorant-garamond.woff2') format('woff2');
 }
+/* Same file, second @font-face under a different name reserved for the
+   homepage hero <h1> only (the page's Largest Contentful Paint element,
+   confirmed via a real Lighthouse run against the live Cloudflare edge,
+   2026-09-10). font-display: swap (above) prevents invisible text, but
+   Chrome's LCP timestamp still tracks the *font-swap repaint* for text
+   elements - so under Lighthouse's simulated mobile throttling, a slow
+   fetch of this file pushed the measured LCP to ~4.3s even though real
+   users never saw blank text. font-display: optional here means: if this
+   file isn't already available within ~100ms (e.g. from the preload tag
+   in BaseLayout.astro, or a warm cache), the hero name renders in the
+   Georgia/serif fallback and never swaps later for that page load - no
+   late repaint, no late LCP candidate. Every other heading sitewide keeps
+   using the swap-based 'Cormorant Garamond' above and is unaffected. */
+@font-face {
+  font-family: 'Cormorant Garamond LCP';
+  font-style: normal;
+  font-weight: 300 400;
+  font-display: optional;
+  src: url('/fonts/cormorant-garamond.woff2') format('woff2');
+}
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
@@ -1908,7 +1928,13 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 }
 
 .hero-section h1 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  /* Deliberately skips straight from the optional-display face to the
+     system fallback - NOT chained through the swap-display 'Cormorant
+     Garamond' in between. Falling through to a second *web* font in the
+     family list re-triggers that face's own (swap) loading timeline for
+     the same underlying file, which measured worse in practice (LCP got
+     substantially slower, not better) than going straight to Georgia. */
+  font-family: 'Cormorant Garamond LCP', Georgia, serif;
   font-weight: 300;
   font-size: clamp(4.5rem, 8.5vw, 10rem);
   line-height: 0.9;

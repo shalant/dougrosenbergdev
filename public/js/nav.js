@@ -141,12 +141,18 @@ window.DrNav = (function () {
                 document.body.classList.toggle('nav-open', !!open);
                 return;
             }
-            // Only <a> nav links close the mobile menu on tap. The "more" dropdown
-            // trigger is a <button> (no href — its items are already always-expanded
-            // below it at mobile widths via the @media(max-width:820px) block in
-            // app.css), so it must NOT match here or tapping it would just close the
-            // whole menu instead of doing nothing/toggling.
-            const link = e.target.closest('a.nav-link, a.nav-link--page, a.nav-link--archive, a.nav-cta');
+            // <a> nav links close the mobile menu on tap, plus the two "get in
+            // touch" CTAs specifically even though they're <button>s now (they
+            // open the contact dialog, which should never be left stacked behind
+            // an open hamburger menu). The "more" dropdown trigger is also a
+            // <button> (no href — its items are already always-expanded below it
+            // at mobile widths via the @media(max-width:820px) block in app.css),
+            // so it must NOT match here or tapping it would just close the whole
+            // menu instead of doing nothing/toggling - hence naming the CTA
+            // buttons explicitly rather than matching every button.nav-link.
+            const link = e.target.closest(
+                'a.nav-link, a.nav-link--page, a.nav-link--archive, a.nav-cta, button.nav-link--cta, button.nav-cta'
+            );
             if (link) {
                 document.getElementById('navItems')?.classList.remove('active');
                 document.getElementById('navToggle')?.classList.remove('open');

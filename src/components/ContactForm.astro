@@ -1,0 +1,99 @@
+---
+// Header.astro mounts a copy of this form inside the shared ContactDialog on
+// every page - including the homepage, which also renders this component
+// inline in its own Contact section. idPrefix keeps ids/labels distinct
+// between those two simultaneous instances (duplicate ids would otherwise
+// make label `for` association ambiguous and querySelector('#contact-form')
+// unreliable). The submit handler below is id-agnostic on purpose so both
+// instances work regardless of prefix.
+interface Props {
+  idPrefix?: string;
+}
+const { idPrefix = '' } = Astro.props;
+---
+
+<div class="contact-form-wrap">
+  <form id={`${idPrefix}contact-form`} class="contact-form" novalidate>
+    <div class="contact-field">
+      <label for={`${idPrefix}contact-name`}>Name</label>
+      <input type="text" id={`${idPrefix}contact-name`} name="name" required maxlength="200" autocomplete="name" />
+    </div>
+    <div class="contact-field">
+      <label for={`${idPrefix}contact-email`}>Email</label>
+      <input type="email" id={`${idPrefix}contact-email`} name="email" required maxlength="200" autocomplete="email" />
+    </div>
+    <div class="contact-field">
+      <label for={`${idPrefix}contact-message`}>Message</label>
+      <textarea id={`${idPrefix}contact-message`} name="message" required maxlength="5000" rows="5"></textarea>
+    </div>
+    <!-- Honeypot: hidden from real visitors via off-screen positioning
+         (not `hidden`/display:none - some bots skip fields detected via
+         those too crudely), invisible and unreachable by tab/keyboard. -->
+    <div class="contact-field contact-honeypot" aria-hidden="true">
+      <label for={`${idPrefix}contact-website`}>Website</label>
+      <input type="text" id={`${idPrefix}contact-website`} name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    <button type="submit" class="hero-btn hero-btn--primary contact-submit">Send Message</button>
+    <p class="contact-form-status" role="status"></p>
+  </form>
+</div>
+
+<script>
+  // Delegated on document, and scoped by class rather than id, so this
+  // fires correctly for either ContactForm instance that can be present on
+  // a page at once (homepage's inline section + the header-mounted dialog).
+  document.addEventListener('submit', async (event) => {
+    const form = event.target as HTMLElement;
+    if (!(form instanceof HTMLFormElement) || !form.classList.contains('contact-form')) return;
+    event.preventDefault();
+
+    const status = form.querySelector<HTMLParagraphElement>('.contact-form-status');
+    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (!status || !submitButton) return;
+
+    status.textContent = '';
+    status.className = 'contact-form-status';
+
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get('name') ?? '').trim(),
+      email: String(formData.get('email') ?? '').trim(),
+      message: String(formData.get('message') ?? '').trim(),
+      website: String(formData.get('website') ?? ''),
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      status.textContent = 'Please fill in your name, email, and message.';
+      status.classList.add('contact-form-status--error');
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+
+      if (response.ok) {
+        status.textContent = "Message sent — thanks! I'll reply within a few days.";
+        status.classList.add('contact-form-status--success');
+        form.reset();
+        if (typeof gtag === 'function') gtag('event', 'contact_form_submit');
+      } else {
+        status.textContent = result.error || 'Something went wrong. Please try again.';
+        status.classList.add('contact-form-status--error');
+      }
+    } catch {
+      status.textContent = 'Something went wrong. Please try again.';
+      status.classList.add('contact-form-status--error');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Send Message';
+    }
+  });
+</script>

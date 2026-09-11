@@ -1,4 +1,5 @@
 ---
+import ContactDialog from './ContactDialog.astro';
 ---
 <header class="navbar-wrapper" id="navbar">
   <div class="navbar-content">
@@ -144,17 +145,17 @@
         </li>
 
         <li class="nav-cta-mobile-item">
-          <a href="mailto:doug.rosenberg@gmail.com" class="nav-link nav-link--cta" aria-label="Contact Doug Rosenberg">
+          <button type="button" class="nav-link nav-link--cta" data-contact-trigger aria-label="Contact Doug Rosenberg">
             get in touch
-          </a>
+          </button>
         </li>
 
       </ul>
     </nav>
 
-    <a href="mailto:doug.rosenberg@gmail.com" class="nav-cta" aria-label="Contact Doug Rosenberg">
+    <button type="button" class="nav-cta" data-contact-trigger aria-label="Contact Doug Rosenberg">
       <span class="nav-cta__text">get in touch</span>
-    </a>
+    </button>
 
     <button class="theme-toggle" aria-label="Switch between light and dark theme" id="themeToggle">
       <svg class="nav-icon theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
@@ -181,3 +182,5 @@
 </header>
 
 <div class="nav-scrim" id="navScrim"></div>
+
+<ContactDialog />

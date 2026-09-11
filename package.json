@@ -10,7 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "indexnow": "node scripts/indexnow-ping.mjs",
+    "deploy": "npx wrangler deploy && npm run indexnow"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

@@ -90,29 +90,33 @@
     {
       "slug": "dougrosenberg-music-v2",
       "number": "02",
-      "name": "dougrosenberg.com — V2",
+      "name": "dougrosenberg.com",
       "industry": "Musician/composer personal site — from-scratch Astro rebuild",
       "platform": "Astro",
-      "status": "prototype",
-      "siteLabel": "shalant.github.io/dougrosenbergmusic",
-      "externalUrl": "https://shalant.github.io/dougrosenbergmusic/",
+      "status": "live",
+      "siteLabel": "dougrosenberg.com",
+      "externalUrl": "https://www.dougrosenberg.com",
       "gitHubUrl": "https://github.com/shalant/dougrosenbergmusic",
       "images": [
-        "/images/webdesign/dougrosenbergmusic-v2-hero.jpg",
+        "/images/webdesign/dougrosenbergmusic-hero-mobile.jpg",
+        "/images/webdesign/dougrosenbergmusic-hero-live.jpg",
         "/images/webdesign/dougrosenbergmusic-v2-2.jpg",
         "/images/webdesign/dougrosenbergmusic-v2-3.jpg",
         "/images/webdesign/dougrosenbergmusic-v2-4.jpg",
         "/images/webdesign/dougrosenbergmusic-v2-5.jpg",
+        "/images/webdesign/dougrosenbergmusic-v2-hero.jpg",
         "/images/webdesign/dougrosenbergmusic-v2-proto-tv-leadsheet.jpg",
         "/images/webdesign/dougrosenbergmusic-v2-proto-shape-antenna.jpg",
         "/images/webdesign/dougrosenbergmusic-v2-proto-graded-expand.jpg"
       ],
       "imageCaptions": [
-        "Hero — corner \"staff\" nav (five scroll-tracked note-blobs) and an \"ON AIR\" pulsing pill in place of a waveform",
+        "Mobile hero — the corner nav collapses to a single hamburger circle and the pitch condenses to fit above the fold",
+        "Desktop hero, live on dougrosenberg.com — corner nav (code, music, bio, awards, contact) and a terminal-style \"> listen now\" prompt in place of a waveform",
         "Recordings — the four real releases: Better Than TV, Goran Ivanovic Group, Underwater, Folk Tales",
         "About and Performance — bio, instrument tags, and animated counters for Chicago venues, national/international shows, and artists performed with",
         "Sheet Music Library — a searchable practice-piece catalog built for private students",
         "Photo gallery leading into the Booking & Contact section",
+        "An earlier pass at the corner-nav hero, before the \"listen now\" prompt and saxophone hover tooltips shipped",
         "Prototype — Tabletop Set + Lead Sheet: the hero photo framed in a retro TV console, nav relabeled with lead-sheet section names (Intro/A/B/C/Coda)",
         "Prototype — Shape + Antenna: the same tabletop frame with an added antenna accent",
         "Prototype — Graded Hero + Expanding Nav: a full-bleed graded photo with an expanding nav pill instead of the console frame"
@@ -125,11 +129,11 @@
         "Corner \"staff\" nav instead of a top bar — five scroll-tracked note-blobs that collapse to a hamburger dropdown below 860px",
         "Three additional hero prototypes (tabletop TV frame, antenna variant, full-bleed graded) explore a \"Better Than TV\" album-title brand concept before one gets chosen"
       ],
-      "tagline": "An Astro-from-scratch exploration of the live dougrosenberg.com — chasing custom, considered design and a specific brand concept instead of generic musician-site defaults.",
+      "tagline": "A from-scratch Astro rebuild of the live dougrosenberg.com, deployed to Cloudflare Workers — custom, considered design and a specific brand concept instead of generic musician-site defaults.",
       "approach": [
-        "This is a deliberate rebuild-as-craft-exercise, not a \"the live site needs this\" project — two honest reasons drove it: wanting to work in Astro again after enjoying it on Haxbyte, and wanting to move further away from the typical AI-generated-site look. That second goal got written down as a concrete, checkable list rather than a vibe: no centered-hero-plus-two-buttons, no glassmorphism/gradient-mesh as the default \"premium\" treatment, no default system-ui/Inter-everywhere type, no every-card-the-same-rounded-corner treatment, no perfectly safe symmetric spacing.",
-        "The nav is the clearest expression of that list: instead of a conventional top bar, a corner \"staff\" element holds five colored note-blobs, one per section, scroll-tracked so the current section's note glows while the rest dim. Below 860px, where hover-to-reveal doesn't work and the nav is meant to stay secondary to the scroll anyway, it collapses to a small hamburger toggle instead of trying to force the desktop treatment onto a touch screen.",
-        "A second, still-open layer sits on top of that base system: the debut album Better Than TV lends its wry, unpretentious voice to small details already live — an \"ON AIR\" pulsing-dot pill standing in for a waveform, a \"CH +\" scroll cue instead of a plain arrow. Three additional hero prototypes push that concept further before anything gets locked in: a retro tabletop-TV frame around the hero photo with lead-sheet-style section labels (Intro/A/B/C/Coda), the same frame with an antenna accent, and a full-bleed graded photo with an expanding nav pill instead of the console frame."
+        "This started as a deliberate rebuild-as-craft-exercise, not a \"the live site needs this\" project — two honest reasons drove it: wanting to work in Astro again after enjoying it on Haxbyte, and wanting to move further away from the typical AI-generated-site look. That second goal got written down as a concrete, checkable list rather than a vibe: no centered-hero-plus-two-buttons, no glassmorphism/gradient-mesh as the default \"premium\" treatment, no default system-ui/Inter-everywhere type, no every-card-the-same-rounded-corner treatment, no perfectly safe symmetric spacing. It has since replaced the previous Blazor build as the live site.",
+        "The nav is the clearest expression of that list: instead of a conventional top bar, a corner element holds five colored icons, one per section, scroll-tracked so the current section glows while the rest dim. Below 860px, where hover-to-reveal doesn't work and the nav is meant to stay secondary to the scroll anyway, it collapses to a single hamburger circle instead of trying to force the desktop treatment onto a touch screen.",
+        "A second layer sits on top of that base system: the debut album Better Than TV lends its wry, unpretentious voice to small details — a terminal-style \"> listen now\" prompt standing in for a waveform or play button, and hover tooltips over the hero saxophone photo that surface real track and album names (Goran Ivanovic Group, Underwater). Three additional hero prototypes explored further before this direction was locked in: a retro tabletop-TV frame around the hero photo with lead-sheet-style section labels (Intro/A/B/C/Coda), the same frame with an antenna accent, and a full-bleed graded photo with an expanding nav pill instead of the console frame."
       ],
       "highlights": [
         {
@@ -137,12 +141,12 @@
           "description": "The thing to avoid was written down as a specific, checkable list — centered hero + two buttons, glassmorphism/gradient-mesh, default system-ui type, uniform rounded-corner cards, safe symmetric spacing — rather than a vague \"make it less generic\" instruction that's impossible to verify against."
         },
         {
-          "title": "Corner Staff Nav, Not a Top Bar",
-          "description": "Five scroll-tracked note-blobs in the corner replace a conventional nav bar, glowing to show the current section. It collapses to a hamburger dropdown below 860px rather than forcing a hover-dependent desktop pattern onto touch."
+          "title": "Corner Nav, Not a Top Bar",
+          "description": "Five scroll-tracked icons in the corner replace a conventional nav bar, glowing to show the current section. It collapses to a single hamburger circle below 860px rather than forcing a hover-dependent desktop pattern onto touch."
         },
         {
-          "title": "Three Competing Hero Directions, Live",
-          "description": "Rather than mocking up alternatives offline, three full prototype pages (/preview-tv-leadsheet, /preview-shape-antenna, /preview-graded-expand) are deployed alongside the real index, so directions can be compared in a real browser before one is chosen."
+          "title": "Three Competing Hero Directions, Explored Live",
+          "description": "Rather than mocking up alternatives offline, three full prototype pages (/preview-tv-leadsheet, /preview-shape-antenna, /preview-graded-expand) were deployed alongside the real index, so directions could be compared in a real browser before one was chosen."
         }
       ],
       "facts": [
@@ -152,7 +156,7 @@
         },
         {
           "label": "Status",
-          "value": "prototype, not yet live"
+          "value": "live production site"
         },
         {
           "label": "Role",
@@ -165,12 +169,12 @@
     {
       "slug": "dougrosenberg-music",
       "number": "03",
-      "name": "dougrosenberg.com",
+      "name": "dougrosenberg.com (v1)",
       "industry": "Composer & musician — personal artist site",
       "platform": "Blazor WASM",
-      "status": "in progress",
-      "siteLabel": "dougrosenberg.com",
-      "externalUrl": "https://www.dougrosenberg.com",
+      "status": "retired",
+      "siteLabel": "dougrosenberg.com (previous version)",
+      "externalUrl": null,
       "gitHubUrl": "https://github.com/shalant/newMusicWebsiteJan26",
       "images": [
         "/images/webdesign/dougrosenberg-hero.jpg",
@@ -223,10 +227,14 @@
         {
           "label": "Role",
           "value": "Design & full-stack build"
+        },
+        {
+          "label": "Status",
+          "value": "retired, superseded by the Astro rebuild"
         }
       ],
       "relatedBlogPostSlug": "rebuilding-musician-site-blazor-to-astro",
-      "relatedBlogPostLabel": "Read why this is being rebuilt in Astro"
+      "relatedBlogPostLabel": "Read why it was rebuilt in Astro"
     },
     {
       "slug": "arborkin",

@@ -24,5 +24,23 @@
       "description": "We keep your systems updated, patched, and running smoothly — so you can focus on growth, not firefighting.",
       "icon": "🔧"
     }
+  ],
+  "faqs": [
+    {
+      "question": "How is this different from using a website builder like Wix or Squarespace?",
+      "answer": "A builder gets a small business online fast, and that's sometimes the right call — I've built on Squarespace myself for clients where it fit (see Sonus Construction Group and Hardware Etc in the Web Design portfolio). The difference shows up when you need something a template can't do: real custom functionality, integration with other business systems, or a site that has to hold up under real traffic and real security scrutiny — enterprise-grade engineering practices applied at small-business scale and budget, not enterprise price."
+    },
+    {
+      "question": "I'm a small business owner, not a big company — can I actually afford this?",
+      "answer": "Yes — that's specifically who this is for. Engagements are scoped to what the project actually needs, starting around $750 for a project-based custom site. A free discovery call comes first so you're not paying to find out if it's a fit."
+    },
+    {
+      "question": "What if I just need my current site fixed or maintained, not rebuilt?",
+      "answer": "That's the ongoing support & maintenance tier — a monthly retainer covering updates, security patches, small enhancements, and uptime monitoring, with direct access instead of a ticket queue. No need to rebuild something that mostly works."
+    },
+    {
+      "question": "Do you work with businesses outside Chicago?",
+      "answer": "Yes — the work is remote-friendly. Chicago-based, but engagements are handled over video calls and async communication regardless of where the business is located."
+    }
   ]
 }

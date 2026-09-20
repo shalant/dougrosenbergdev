@@ -4,7 +4,7 @@ Working notes for the visual differentiation pass on this port, per feedback tha
 
 ## Subject & audience
 
-Doug Rosenberg: full-stack developer (.NET/Blazor, Angular, React) who also plays in a working band (Guacamayo). Site's job right now is to earn trust from **freelance/small-business clients** evaluating him for real project work — not to farm recruiter attention (that's deliberately deferred). So the design should read as evidence-driven craftsman work, not a generic "hire me" SaaS template.
+Doug Rosenberg: full-stack developer (.NET/Blazor, Angular, React) who also plays in a working band (Guacamayo). Site's job is to earn trust from **freelance/small-business clients** evaluating him for real project work; recruiter attention showing up as a side effect is fine and no longer being deliberately suppressed (see `PORT_TODO.md`'s superseded recruiter-visibility constraint, 2026-09-16). So the design should read as evidence-driven craftsman work, not a generic "hire me" SaaS template.
 
 ## Concrete finding: the current hero is the textbook tell
 

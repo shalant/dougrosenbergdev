@@ -2,13 +2,21 @@
 
 Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the visual-differentiation pass, and `../PortfolioNov25/.claude/plans/jiggly-hugging-kernighan.md`-derived plan for the original phased roadmap this follows.
 
-## Constraint: keep recruiter visibility low (2026-09-08)
+## Constraint: keep recruiter visibility low — SUPERSEDED (2026-09-16)
 
-Doug wants this site to keep reading as "available for freelance/consulting" rather than "open to full-time roles" — a standing goal (stay quiet for recruiters until ~March 2027) that got re-confirmed after he noticed quality recruiter outreach picking up, likely traceable to the *live* site's `llms.txt`/`Person` schema plus a recent robots.txt fix (see the live site's `blog/blazor-wasm-geo-audit` post) and/or GitHub activity, not this port specifically (this site isn't deployed yet).
+**Status as of 2026-09-16: this constraint is lifted.** Original goal (2026-09-08): keep the site reading as "available for freelance/consulting" rather than "open to full-time roles," staying quiet for recruiters until ~March 2027, after Doug noticed quality recruiter outreach picking up and wanted to suppress it.
 
-Applied here: `public/llms.txt`'s opening line now says "freelance and consulting engagements only — not currently seeking full-time employment or recruiter outreach." Deliberately did **not** add named recruiter-sourcing bots to `robots.txt` — most sourcing tools don't self-identify with a documented UA or respect robots.txt at all, so blocking would be false confidence, not a real fix. The `Person`/`WebSite` JSON-LD in `BaseLayout.astro` was left as-is (already generic, not recruiter-coded).
+Doug's revised read (2026-09-16), after reviewing GA4 traffic and getting ~5 cold recruiter reachouts including one real interview: he doesn't think the site itself is reliably driving that (could be seasonal, could be coincidence with the refactor) and doesn't want to find out by suppressing signal. More importantly, corporate recruiter interest showing up as a side effect of SMB-facing visibility work is upside, not a problem to solve — his actual target audience remains SMB web-dev clients, not full-time-role recruiters, but there's no more reason to actively discourage the latter.
 
-**Whenever this eventually deploys**, carry this framing forward and don't let it regress. **Separately unresolved**: the *live* site (`PortfolioNov25`, still on GitHub Pages) is what's actually driving outreach today - Doug hasn't yet said whether he wants an equivalent fix pushed there now for immediate effect, versus waiting for this port to go live.
+**What changed as a result:**
+- `public/llms.txt`'s opening line dropped the "not currently seeking full-time employment or recruiter outreach" disclaimer.
+- `BaseLayout.astro`'s default meta description and `Person`/`WebSite` JSON-LD now name small-business/SMB web work explicitly (previously enterprise/ERP-only framing) — this is a genuine SEO/GEO push, not just an undo.
+- `DESIGN_NOTES.md`'s "not to farm recruiter attention" framing note was softened to match.
+- No `robots.txt` changes — that reasoning (most recruiter-sourcing tools don't self-identify or respect robots.txt) still holds and was never about this constraint specifically.
+
+**Still true, not affected by this reversal:** the *live* site (`PortfolioNov25`, GitHub Pages) is a separate codebase and wasn't touched here. If Doug wants equivalent framing changes pushed there, that's a separate ask.
+
+**If this constraint gets reinstated later**, revert the llms.txt/BaseLayout/DESIGN_NOTES changes listed above — they're the concrete places the old framing lived.
 
 ## SEO / GEO / traffic impact of this refactor (2026-09-08)
 

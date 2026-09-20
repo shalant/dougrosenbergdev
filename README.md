@@ -1,6 +1,8 @@
 # dougrosenbergdev.com
 
-Douglas Rosenberg's portfolio site — an [Astro](https://astro.build) static build deployed as a [Cloudflare Worker](https://developers.cloudflare.com/workers/). This is a port of a previous Blazor WebAssembly version of the same site (see [`PORT_TODO.md`](./PORT_TODO.md) for why, and what changed).
+Douglas Rosenberg's portfolio site — an [Astro](https://astro.build) static build deployed as a [Cloudflare Worker](https://developers.cloudflare.com/workers/): full-stack .NET/Blazor and ERP systems work, plus custom web development for small businesses under [Haxbyte](https://haxbyte.com). This is a port of a previous Blazor WebAssembly version of the same site (see [`PORT_TODO.md`](./PORT_TODO.md) for why, and what changed).
+
+See the [write-up](https://dougrosenbergdev.com/blog/rebuilding-musician-site-blazor-to-astro) on a related musician-site rebuild, and the [GEO audit](https://dougrosenbergdev.com/blog/blazor-wasm-geo-audit) that helped motivate moving this site off client-rendered Blazor in the first place.
 
 ## Stack
 
@@ -51,7 +53,11 @@ CI (`.github/workflows/e2e.yml`, `lighthouse.yml`) runs both on every PR and on 
 
 ## Deployment
 
-Deploys to Cloudflare Workers via `wrangler.jsonc`, serving `dougrosenbergdev.com` as a custom domain route. See [`PORT_TODO.md`](./PORT_TODO.md) for current deploy status — as of this writing the repo isn't yet connected to Cloudflare's dashboard/GitHub integration.
+Live on Cloudflare Workers via `wrangler.jsonc`, serving [dougrosenbergdev.com](https://dougrosenbergdev.com) as a custom domain route (migrated off GitHub Pages 2026-09-10). See [`PORT_TODO.md`](./PORT_TODO.md) for current status.
+
+## Site links
+
+[Services](https://dougrosenbergdev.com/services) · [Consulting](https://dougrosenbergdev.com/consulting) · [Web Design Portfolio](https://dougrosenbergdev.com/webdesign) · [Blog](https://dougrosenbergdev.com/blog)
 
 ## More docs
 

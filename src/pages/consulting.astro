@@ -3,12 +3,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import consulting from '../data/consulting.json';
+
+const consultingOfferLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Douglas Rosenberg',
+  url: 'https://dougrosenbergdev.com',
+  makesOffer: consulting.services.map((svc: { title: string; description: string }) => ({
+    '@type': 'Offer',
+    itemOffered: { '@type': 'Service', name: svc.title, description: svc.description },
+    areaServed: { '@type': 'Country', name: 'United States' },
+  })),
+};
+
+const faqLd = consulting.faqs?.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: consulting.faqs.map((faq: { question: string; answer: string }) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+} : null;
 ---
 
 <BaseLayout
   title="IT Consulting & Support — Douglas Rosenberg"
   description={consulting.subheadline}
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(consultingOfferLd)} />
+    {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
+  </Fragment>
+
   <Header />
 
   <section class="subpage-hero" id="consulting-hero">
@@ -48,6 +75,23 @@ import consulting from '../data/consulting.json';
       </div>
     </div>
   </section>
+
+  {consulting.faqs?.length > 0 && (
+    <section class="services-faq">
+      <div class="services-faq__container">
+        <span class="section-eyebrow">// faq</span>
+        <h2 class="services-faq__heading">Common Questions</h2>
+        <div class="services-faq__list">
+          {consulting.faqs.map((faq: { question: string; answer: string }) => (
+            <div class="services-faq__item">
+              <h3>{faq.question}</h3>
+              <p>{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <section class="consulting-cta">
     <div class="consulting-cta__container">

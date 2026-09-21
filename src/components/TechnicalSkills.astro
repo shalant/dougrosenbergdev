@@ -1,6 +1,7 @@
 ---
 import SectionDivider from './SectionDivider.astro';
 import TechChip from './TechChip.astro';
+import siteProperties from '../data/siteproperties.json';
 
 const categories = [
   { label: 'Languages', chips: ['C#', 'JavaScript', 'TypeScript', 'SQL', 'HTML / CSS'] },
@@ -10,6 +11,32 @@ const categories = [
   { label: 'Marketing & Analytics', chips: ['Google Analytics', 'Meta Pixel', 'Meta Conversions API'] },
   { label: 'AI Tools', chips: ['Claude', 'Gemini', 'Copilot'] },
 ];
+
+// Fetched at build time (not per-request - this is a static site), so a GitHub
+// API rate limit or network hiccup during build shouldn't fail the whole site -
+// caught and the stat row just doesn't render that deploy. Real numbers over
+// invented ones: commit count comes from the commit-search API (total_count),
+// not a plain user-object field.
+let githubStats: { commits: number; repos: number; yearsActive: number } | null = null;
+try {
+  const username = siteProperties.gitHub;
+  const [userRes, commitsRes] = await Promise.all([
+    fetch(`https://api.github.com/users/${username}`),
+    fetch(`https://api.github.com/search/commits?q=author:${username}`, {
+      headers: { Accept: 'application/vnd.github+json' },
+    }),
+  ]);
+  if (userRes.ok && commitsRes.ok) {
+    const user = await userRes.json();
+    const commits = await commitsRes.json();
+    const yearsActive = Math.floor(
+      (Date.now() - new Date(user.created_at).getTime()) / (365.25 * 24 * 60 * 60 * 1000)
+    );
+    githubStats = { commits: commits.total_count, repos: user.public_repos, yearsActive };
+  }
+} catch {
+  // Network/rate-limit failure during build - leave githubStats null.
+}
 ---
 
 <section class="skills-section reveal-on-scroll" id="technicalskills">
@@ -31,6 +58,26 @@ const categories = [
         </div>
       ))}
     </div>
+
+    {githubStats && (
+      <div class="skills-stats">
+        <span class="skills-stats__label">// on github</span>
+        <div class="skills-stats__row">
+          <div class="skills-stat">
+            <span class="skills-stat__value">{githubStats.commits.toLocaleString()}+</span>
+            <span class="skills-stat__label">commits</span>
+          </div>
+          <div class="skills-stat">
+            <span class="skills-stat__value">{githubStats.repos}</span>
+            <span class="skills-stat__label">repositories</span>
+          </div>
+          <div class="skills-stat">
+            <span class="skills-stat__value">{githubStats.yearsActive}</span>
+            <span class="skills-stat__label">years active</span>
+          </div>
+        </div>
+      </div>
+    )}
 
   </div>
 </section>

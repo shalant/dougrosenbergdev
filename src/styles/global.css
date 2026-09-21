@@ -441,7 +441,7 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(var(--surface-nav-rgb), 0.74);
+  background: rgba(var(--surface-nav-rgb), 0.84);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   border-bottom: 1px solid rgba(var(--accent-rgb), 0.2);
@@ -1296,7 +1296,12 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   grid-template-columns: 280px 1fr;
   gap: 0;
   min-height: 520px;
-  align-items: start;
+  /* stretch (grid's default), not start - the list is only as tall as its
+     4 short entries while the detail panel's content varies (some job
+     descriptions run much longer than others), so start left the list's
+     border-right divider ending mid-page next to detail content that kept
+     going well past it. Stretch keeps the divider running the full height
+     of whichever column is taller. */
 }
 
 /* --- Left: selector list --- */
@@ -3956,9 +3961,63 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   gap: 0.5rem;
 }
 
+.skills-stats__label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: rgba(var(--accent-rgb), 0.5);
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.skills-stats__row {
+  display: flex;
+  border: 1px solid rgba(var(--accent-rgb), 0.12);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skills-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.4rem 1rem;
+  border-right: 1px solid rgba(var(--accent-rgb), 0.12);
+}
+
+.skills-stat:last-child {
+  border-right: none;
+}
+
+.skills-stat__value {
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.skills-stat .skills-stat__label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(var(--text-rgb), 0.5);
+}
+
 @media (max-width: 768px) {
   .skills-container { padding: 0 2rem; }
   .skills-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .skills-stats__row { flex-direction: column; }
+  .skills-stat {
+    border-right: none;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.12);
+  }
+  .skills-stat:last-child { border-bottom: none; }
 }
 
 /* ============================================================================
@@ -4344,7 +4403,14 @@ a.music-album__title--link:hover {
   border-color: rgba(var(--accent-rgb), 0.3);
 }
 
-@media (max-width: 860px) {
+/* 1050px (was 860px) - .music-photo is a fixed 400px column, not a
+   fraction, so above 860px the text column (prose + the 3-col discography
+   grid) was left with whatever's leftover: at a ~950px "tablet" viewport
+   that's only ~320-400px for real song titles/artist names/roles, which
+   wrapped and mis-stacked into an illegible mess well before the layout
+   was meant to give up on two columns. Stack earlier instead, before the
+   fixed-width photo column can starve the text column. */
+@media (max-width: 1050px) {
   .music-container { padding: 0 2rem; }
   .music-body {
     grid-template-columns: 1fr;
@@ -4697,13 +4763,6 @@ a.music-album__title--link:hover {
   margin: 0 auto 2.5rem !important;
 }
 
-.contact-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 .contact-form-wrap {
   max-width: 420px;
   margin: 2.5rem auto 0;
@@ -4787,46 +4846,6 @@ a.music-album__title--link:hover {
 
 .contact-form-status--error {
   color: #c0392b;
-}
-
-.contact-socials {
-  display: flex;
-  gap: 1.25rem;
-  justify-content: center;
-  margin-top: 2rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid rgba(var(--accent-rgb), 0.12);
-}
-
-.contact-social {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background: rgba(var(--accent-rgb), 0.07);
-  border: 1px solid rgba(var(--accent-rgb), 0.12);
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.contact-social img {
-  width: 1.05rem;
-  height: 1.05rem;
-  object-fit: contain;
-  filter: invert(1) brightness(0.9);
-  opacity: 0.75;
-  transition: opacity 0.2s ease;
-}
-
-.contact-social:hover {
-  background: rgba(var(--accent-rgb), 0.16);
-  border-color: rgba(var(--accent-rgb), 0.4);
-  transform: translateY(-2px);
-}
-
-.contact-social:hover img {
-  opacity: 1;
 }
 
 @media (max-width: 768px) {

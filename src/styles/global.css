@@ -441,7 +441,7 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(var(--surface-nav-rgb), 0.74);
+  background: rgba(var(--surface-nav-rgb), 0.84);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   border-bottom: 1px solid rgba(var(--accent-rgb), 0.2);
@@ -4697,13 +4697,6 @@ a.music-album__title--link:hover {
   margin: 0 auto 2.5rem !important;
 }
 
-.contact-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 .contact-form-wrap {
   max-width: 420px;
   margin: 2.5rem auto 0;
@@ -4787,46 +4780,6 @@ a.music-album__title--link:hover {
 
 .contact-form-status--error {
   color: #c0392b;
-}
-
-.contact-socials {
-  display: flex;
-  gap: 1.25rem;
-  justify-content: center;
-  margin-top: 2rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid rgba(var(--accent-rgb), 0.12);
-}
-
-.contact-social {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background: rgba(var(--accent-rgb), 0.07);
-  border: 1px solid rgba(var(--accent-rgb), 0.12);
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.contact-social img {
-  width: 1.05rem;
-  height: 1.05rem;
-  object-fit: contain;
-  filter: invert(1) brightness(0.9);
-  opacity: 0.75;
-  transition: opacity 0.2s ease;
-}
-
-.contact-social:hover {
-  background: rgba(var(--accent-rgb), 0.16);
-  border-color: rgba(var(--accent-rgb), 0.4);
-  transform: translateY(-2px);
-}
-
-.contact-social:hover img {
-  opacity: 1;
 }
 
 @media (max-width: 768px) {

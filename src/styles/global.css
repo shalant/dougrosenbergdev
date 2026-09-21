@@ -1296,7 +1296,12 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   grid-template-columns: 280px 1fr;
   gap: 0;
   min-height: 520px;
-  align-items: start;
+  /* stretch (grid's default), not start - the list is only as tall as its
+     4 short entries while the detail panel's content varies (some job
+     descriptions run much longer than others), so start left the list's
+     border-right divider ending mid-page next to detail content that kept
+     going well past it. Stretch keeps the divider running the full height
+     of whichever column is taller. */
 }
 
 /* --- Left: selector list --- */
@@ -4344,7 +4349,14 @@ a.music-album__title--link:hover {
   border-color: rgba(var(--accent-rgb), 0.3);
 }
 
-@media (max-width: 860px) {
+/* 1050px (was 860px) - .music-photo is a fixed 400px column, not a
+   fraction, so above 860px the text column (prose + the 3-col discography
+   grid) was left with whatever's leftover: at a ~950px "tablet" viewport
+   that's only ~320-400px for real song titles/artist names/roles, which
+   wrapped and mis-stacked into an illegible mess well before the layout
+   was meant to give up on two columns. Stack earlier instead, before the
+   fixed-width photo column can starve the text column. */
+@media (max-width: 1050px) {
   .music-container { padding: 0 2rem; }
   .music-body {
     grid-template-columns: 1fr;

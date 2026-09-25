@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" width="800" height="460" font-family="Montserrat, -apple-system, Segoe UI, sans-serif" role="img" aria-labelledby="diagTitle diagDesc">
+  <title id="diagTitle">One process, two data boundaries</title>
+  <desc id="diagDesc">A single ASP.NET Core process contains two separate database contexts, Public Intake and Personal ERP, with a build-time architecture test enforcing that neither side's code can reference the other's data context.</desc>
+
+  <rect x="0" y="0" width="800" height="460" rx="16" fill="#2c3e50" />
+
+  <text x="400" y="46" text-anchor="middle" fill="#eef2f7" font-size="20" font-weight="700">customer-intake-backend — one process, two data boundaries</text>
+
+  <rect x="40" y="72" width="720" height="330" rx="12" fill="none" stroke="rgba(238,242,247,0.35)" stroke-width="1.5" stroke-dasharray="6 6" />
+  <text x="60" y="98" fill="rgba(238,242,247,0.55)" font-size="12" letter-spacing="1" font-weight="600">ASP.NET CORE PROCESS</text>
+
+  <!-- Public Intake box -->
+  <rect x="72" y="120" width="290" height="252" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.4)" stroke-width="1.5" />
+  <text x="217" y="156" text-anchor="middle" fill="#eef2f7" font-size="18" font-weight="700">Public Intake</text>
+  <text x="217" y="180" text-anchor="middle" fill="rgba(238,242,247,0.65)" font-size="13">Components.Pages</text>
+
+  <!-- db cylinder -->
+  <g transform="translate(217,225)">
+    <ellipse cx="0" cy="-28" rx="46" ry="12" fill="none" stroke="#1abc9c" stroke-width="2" />
+    <path d="M -46 -28 L -46 28 A 46 12 0 0 0 46 28 L 46 -28" fill="none" stroke="#1abc9c" stroke-width="2" />
+    <ellipse cx="0" cy="28" rx="46" ry="12" fill="none" stroke="#1abc9c" stroke-width="2" />
+  </g>
+  <text x="217" y="292" text-anchor="middle" fill="#eef2f7" font-size="13" font-weight="600">CustomerIntakeDbContext</text>
+  <text x="217" y="314" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">Leads · Companies · Notes</text>
+  <text x="217" y="352" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">public, rate-limited, CORS-restricted</text>
+
+  <!-- Personal ERP box -->
+  <rect x="438" y="120" width="290" height="252" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.4)" stroke-width="1.5" />
+  <text x="583" y="156" text-anchor="middle" fill="#eef2f7" font-size="18" font-weight="700">Personal ERP</text>
+  <text x="583" y="180" text-anchor="middle" fill="rgba(238,242,247,0.65)" font-size="13">PersonalErp namespace</text>
+
+  <g transform="translate(583,225)">
+    <ellipse cx="0" cy="-28" rx="46" ry="12" fill="none" stroke="#1abc9c" stroke-width="2" />
+    <path d="M -46 -28 L -46 28 A 46 12 0 0 0 46 28 L 46 -28" fill="none" stroke="#1abc9c" stroke-width="2" />
+    <ellipse cx="0" cy="28" rx="46" ry="12" fill="none" stroke="#1abc9c" stroke-width="2" />
+  </g>
+  <text x="583" y="292" text-anchor="middle" fill="#eef2f7" font-size="13" font-weight="600">PersonalErpDbContext</text>
+  <text x="583" y="314" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">ClientLead · Person · Organization</text>
+  <text x="583" y="352" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">private, own login-gated pages</text>
+
+  <!-- blocked cross-reference indicator -->
+  <line x1="362" y1="246" x2="438" y2="246" stroke="rgba(238,242,247,0.5)" stroke-width="1.5" stroke-dasharray="4 5" />
+  <g transform="translate(400,246)">
+    <circle r="13" fill="#2c3e50" stroke="rgba(238,242,247,0.6)" stroke-width="1.5" />
+    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#eef2f7" stroke-width="2" />
+    <line x1="-6" y1="6" x2="6" y2="-6" stroke="#eef2f7" stroke-width="2" />
+  </g>
+
+  <!-- badge -->
+  <rect x="272" y="408" width="256" height="34" rx="17" fill="rgba(26,188,156,0.15)" stroke="#1abc9c" stroke-width="1.5" />
+  <text x="400" y="430" text-anchor="middle" fill="#1abc9c" font-size="13" font-weight="700">Architecture test — enforced on every build</text>
+</svg>

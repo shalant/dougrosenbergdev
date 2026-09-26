@@ -6,6 +6,7 @@ import posts from '../../data/blog-posts.json';
 
 const allTags = [...new Set(posts.flatMap((p: any) => p.tags ?? []))].sort();
 const featured = posts.filter((p: any) => p.featured).sort((a: any, b: any) => +new Date(b.date) - +new Date(a.date)).slice(0, 3);
+const featuredIds = new Set(featured.map((p: any) => p.id));
 const sorted = [...posts].sort((a: any, b: any) => +new Date(b.date) - +new Date(a.date));
 
 const dateFmt = (d: string) => new Date(d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -78,6 +79,8 @@ const dateFmtShort = (d: string) => new Date(d).toLocaleDateString('en-US', { mo
                 data-title={post.title.toLowerCase()}
                 data-excerpt={post.excerpt.toLowerCase()}
                 data-tags={(post.tags ?? []).join('|')}
+                data-featured={featuredIds.has(post.id) ? 'true' : 'false'}
+                hidden={featuredIds.has(post.id)}
               >
                 <div class="blog-post-card__content">
                   <h3 class="blog-post-card__title">{post.title}</h3>
@@ -116,19 +119,25 @@ const dateFmtShort = (d: string) => new Date(d).toLocaleDateString('en-US', { mo
 
   function applyFilter() {
     const query = (searchInput?.value ?? '').trim().toLowerCase();
+    const searching = !!(query || activeTag);
     let visibleCount = 0;
 
     for (const card of cards) {
       const matchesQuery = !query || card.dataset.title!.includes(query) || card.dataset.excerpt!.includes(query);
       const tags = (card.dataset.tags ?? '').split('|');
       const matchesTag = !activeTag || tags.includes(activeTag);
-      const visible = matchesQuery && matchesTag;
+      // Featured posts start hidden here (they already have a card above) -
+      // only searchable/shown in the grid once the user is actually
+      // searching/filtering, so a search term matching a featured post's
+      // title/excerpt still finds it instead of reporting no results.
+      const isFeaturedDup = card.dataset.featured === 'true';
+      const visible = matchesQuery && matchesTag && (searching || !isFeaturedDup);
       card.hidden = !visible;
       if (visible) visibleCount++;
     }
 
     if (noMatch) noMatch.hidden = visibleCount > 0;
-    if (featuredSection) featuredSection.hidden = !!(query || activeTag);
+    if (featuredSection) featuredSection.hidden = searching;
   }
 
   searchInput?.addEventListener('input', applyFilter);

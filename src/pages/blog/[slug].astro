@@ -66,7 +66,6 @@ const headings = extractHeadings(post.content);
 const contentWithIds = addHeadingIds(post.content);
 const relatedPosts = getRelatedPosts(post);
 
-const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(`${post.title} - Doug Rosenberg Dev`)}&via=dougrosenbergdev`;
 const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`;
 
 const dateFmt = (d: string) => new Date(d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -129,7 +128,6 @@ const faqLd = post.faqs?.length > 0 ? {
               </div>
             </div>
             <div class="blog-post-detail__share">
-              <a href={twitterShareUrl} target="_blank" rel="noopener" class="share-btn twitter" title="Share on Twitter">&#120143;</a>
               <a href={linkedInShareUrl} target="_blank" rel="noopener" class="share-btn linkedin" title="Share on LinkedIn">in</a>
             </div>
           </div>
@@ -262,18 +260,6 @@ const faqLd = post.faqs?.length > 0 ? {
     text-decoration: none;
     transition: all 0.3s ease;
     border: 1px solid transparent;
-  }
-
-  .share-btn.twitter {
-    background: rgba(29, 155, 240, 0.1);
-    color: #1d9bf0;
-    border-color: rgba(29, 155, 240, 0.2);
-  }
-
-  .share-btn.twitter:hover {
-    background: rgba(29, 155, 240, 0.2);
-    border-color: rgba(29, 155, 240, 0.4);
-    transform: translateY(-2px);
   }
 
   .share-btn.linkedin {

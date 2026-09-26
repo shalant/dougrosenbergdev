@@ -5074,14 +5074,13 @@ html[data-theme="light"] .dr-theme-scope .site-footer__cta:hover {
     padding: 2rem 1.25rem 1.75rem;
   }
 
+  /* Right-align (not flex-start) so the socials/CTA block sits at the far
+     edge of the full-width row instead of stacking flush against the left
+     column above it - stacked-but-both-flush-left read as if the layout
+     had given up on the row's width entirely. */
   .site-footer__right {
-    align-items: flex-start;
+    align-items: flex-end;
     width: 100%;
-  }
-
-  .site-footer__actions {
-    width: 100%;
-    justify-content: flex-start;
   }
 }
 

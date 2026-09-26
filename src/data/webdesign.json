@@ -191,13 +191,13 @@
         "The six-theme switcher panel (Dark, Night, Warm, Clean, Ocean, Forest) — live, persisted to localStorage"
       ],
       "bullets": [
-        "Custom Blazor WebAssembly build — same stack as this portfolio — replacing the previous site",
+        "Custom Blazor WebAssembly build, replacing the previous site",
         "Searchable sheet music library, album showcase with purchase links, and responsive photo gallery with lightbox",
         "Six switchable color themes persisted in localStorage; scroll-spy navigation and animated counters"
       ],
       "tagline": "A working musician's site built the way a real product gets built — searchable catalog, live theme switching, and interactions a page builder can't give a single-artist brand.",
       "approach": [
-        "This is a personal artist site, built on the same Blazor WebAssembly stack as this portfolio, replacing a previous version. The goal was a site that does what a page-builder template can't: real search over a growing catalog, and a brand presentation that can flex per release without a redesign.",
+        "This is a personal artist site, built on a custom Blazor WebAssembly stack, replacing a previous version. The goal was a site that does what a page-builder template can't: real search over a growing catalog, and a brand presentation that can flex per release without a redesign.",
         "Musicians live and die by two things online — selling the music and being found by other players who want the sheet music. Both got dedicated, searchable sections rather than a flat page of links.",
         "The six switchable color themes exist because an artist's visual identity shifts by album, tour, or season — the site needed to keep up with that without a rebuild every time."
       ],

@@ -673,13 +673,11 @@ a:hover {
   color: var(--accent);
 }
 
-/* "More" dropdown — groups the destination pages (web design/services/
-   consulting/blog) behind one trigger so the nav doesn't read as "busy" at
-   tablet widths (roomy desktop row above 1200px, clean hamburger below
-   960px — was 820px, but that left an 820-960px dead zone where the row
-   didn't actually fit; see the ≤960px rule's own comment for the full
-   story). The trigger is a <button>, not an <a> — it has nothing of its
-   own to navigate to, it just reveals the items below it. */
+/* "More" dropdown — desktop/tablet only (hidden below 960px, see that rule
+   below): groups in-page anchor links behind one hover/focus trigger so the
+   main row doesn't read as "busy." The trigger is a <button>, not an <a> —
+   it has nothing of its own to navigate to, it just reveals the items below
+   it. */
 .nav-has-dropdown {
   position: relative;
 }
@@ -729,9 +727,10 @@ a:hover {
   display: flex;
 }
 
-/* Two labeled columns instead of one flat 8-item list: "on this page"
-   (homepage anchors) vs "elsewhere" (résumé/blog — actual separate
-   destinations). Real hierarchy instead of one undifferentiated stack. */
+/* One labeled column: in-page anchors on the current page. Résumé and blog
+   used to live here too as an "elsewhere" second column, but both are real
+   destinations, not homepage-scoped - résumé moved to the footer, blog
+   became its own top-level nav item, both promoted out of this menu. */
 .nav-dropdown-group {
   display: flex;
   flex-direction: column;
@@ -784,79 +783,16 @@ a:hover {
 }
 
 /* 960px — matches the nav collapse breakpoint below (see its comment for why
-   this moved from 820px). */
+   this moved from 820px). Dropped entirely below this width rather than
+   rendered inline: with résumé/blog promoted out (see .nav-dropdown-group's
+   comment above), all that was left in here on mobile was four homepage
+   anchor links stacked as a fourth menu tier under "more" - and those
+   anchors point at sections already reachable by scrolling the same page,
+   so the whole trigger+group was pure depth with no real destination of its
+   own on a phone. Still a real hover/focus dropdown above 960px. */
 @media (max-width: 960px) {
-  /* "more" itself is a real trigger only above this breakpoint (hover/focus
-     reveals the dropdown there) — below it, .nav-dropdown is always expanded
-     inline (below), so the trigger becomes a plain section caption instead of
-     a clickable-looking pill: smaller, muted, uppercase, icon/caret dropped,
-     not interactive. Was a full-height nav-link row identical to every real
-     link above it, which read as one more tappable item that (on mobile) did
-     nothing. */
-  .nav-has-dropdown > button.nav-link {
-    padding: 0.3rem 1.5rem 0.15rem;
-    font-size: 0.68rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(var(--text-rgb), 0.4) !important;
-    background: none;
-    pointer-events: none;
-  }
-
-  .nav-has-dropdown > button.nav-link .nav-icon {
+  .nav-has-dropdown {
     display: none;
-  }
-
-  /* Grouped as one tinted, rounded block (was a left-border + 2.5rem indent
-     on each item) — reads as a distinct secondary section against the glass
-     sheet instead of just another run of list items. */
-  .nav-dropdown {
-    display: flex;
-    flex-direction: column;
-    position: static;
-    background: rgba(var(--text-rgb), 0.06);
-    backdrop-filter: none;
-    border: none;
-    padding: 0.3rem 0;
-    margin: 0.15rem 0.75rem 0;
-    min-width: 0;
-    border-radius: 8px;
-    z-index: auto;
-  }
-
-  /* Groups stack vertically here (the desktop rule's side-by-side row makes
-     no sense in a narrow sheet), so the divider between them rotates from a
-     vertical bar to a horizontal one. */
-  .nav-dropdown-group {
-    min-width: 0;
-  }
-
-  .nav-dropdown-divider {
-    width: auto;
-    height: 1px;
-    align-self: stretch;
-    margin: 0.3rem 1.25rem;
-  }
-
-  .nav-has-dropdown:hover .nav-caret {
-    transform: none;
-  }
-
-  .nav-caret {
-    display: none;
-  }
-
-  .nav-dropdown-item {
-    padding: 0.4rem 1.25rem;
-    font-size: 0.82rem;
-    color: rgba(var(--text-rgb), 0.65) !important;
-    border-left: none;
-    margin-left: 0;
-  }
-
-  .nav-dropdown-item:hover {
-    color: var(--accent) !important;
-    background: none;
   }
 }
 
@@ -1961,9 +1897,39 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   color: rgba(var(--text-rgb), 0.55);
   letter-spacing: 0.04em;
   line-height: 1.7;
-  margin: 0 0 2.5rem 0;
+  margin: 0 0 1.5rem 0;
   max-width: 460px;
   animation: fadeInUp 0.8s ease-out 0.45s both;
+}
+
+/* One quiet inline link, not a bordered/pill button - the hero used to carry
+   a two-button CTA pair with an arrow suffix and that was deliberately
+   removed as a template tell (see DESIGN_NOTES.md). This is the "at most
+   one understated inline link" it left room for, styled like the animated-
+   underline text links used elsewhere (e.g. blog post body copy) rather
+   than reintroducing button chrome. */
+.hero-inline-cta {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0% 1px;
+  transition: background-size 0.3s ease;
+  animation: fadeInUp 0.8s ease-out 0.55s both;
+}
+
+.hero-inline-cta:hover {
+  background-size: 100% 1px;
 }
 
 /* 0.55 alpha (measured ~2.9:1 on navy-on-cream) reads as intentionally
@@ -2542,9 +2508,22 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
 }
 
 /* Wordmark vendor logos (Syncfusion, DevExpress) render as the logo alone,
-   no separate text label since the name is already baked into the mark. */
+   no separate text label since the name is already baked into the mark.
+   No outer border/background here (unlike every other chip) - each mark
+   already gets its own light/dark plate below for contrast, and stacking
+   the plain chip's teal-tinted box around that plate read as a box nested
+   inside a box, breaking the row's rhythm against the plain icon+text
+   chips next to it. The plate itself is the whole chip now. */
 .tech-chip--wordmark {
-  padding: 0.4rem 0.9rem;
+  padding: 0;
+  border-color: transparent;
+  background: none;
+}
+
+.tech-chip--wordmark:hover {
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
 }
 
 .tech-chip__logo-wrap {
@@ -5074,14 +5053,13 @@ html[data-theme="light"] .dr-theme-scope .site-footer__cta:hover {
     padding: 2rem 1.25rem 1.75rem;
   }
 
+  /* Right-align (not flex-start) so the socials/CTA block sits at the far
+     edge of the full-width row instead of stacking flush against the left
+     column above it - stacked-but-both-flush-left read as if the layout
+     had given up on the row's width entirely. */
   .site-footer__right {
-    align-items: flex-start;
+    align-items: flex-end;
     width: 100%;
-  }
-
-  .site-footer__actions {
-    width: 100%;
-    justify-content: flex-start;
   }
 }
 

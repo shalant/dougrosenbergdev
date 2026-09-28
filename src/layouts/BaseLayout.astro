@@ -91,14 +91,31 @@ const arborKinLd = {
     // Consent Mode v2 defaults, set before 'js'/'config' so GA4 never collects
     // ahead of a real choice. No ad tags run on this site, so ad_storage/
     // ad_user_data/ad_personalization stay denied permanently - only
-    // analytics_storage is ever granted, and only via consent.js's banner
-    // (or a prior visit's stored choice, read here synchronously).
+    // analytics_storage is ever conditional.
+    //
+    // Region-scoped: this is a static site with no server-side geo lookup, so
+    // "EEA/UK/CH" is approximated by browser timezone (Europe/* also catches
+    // a handful of non-EEA countries like Russia/Turkey - over-including a
+    // few extra visitors into "ask first" is a safe tradeoff, not a
+    // compliance risk, but this is a best-effort heuristic, not a legal
+    // guarantee). Everywhere else defaults to granted, since defaulting to
+    // denied for all traffic broke session/user stitching for the ~everyone
+    // who never clicks a cold cookie banner (see PORT_TODO.md).
+    var isEuRegion = /^Europe\//.test(Intl.DateTimeFormat().resolvedOptions().timeZone);
     gtag('consent', 'default', {
       ad_storage: 'denied',
       ad_user_data: 'denied',
       ad_personalization: 'denied',
-      analytics_storage: localStorage.getItem('dr-consent') === 'granted' ? 'granted' : 'denied',
+      analytics_storage: 'granted',
     });
+    if (isEuRegion) {
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: localStorage.getItem('dr-consent') === 'granted' ? 'granted' : 'denied',
+      });
+    }
     gtag('js', new Date());
     gtag('config', 'G-3H1NB9ES0L');
   </script>

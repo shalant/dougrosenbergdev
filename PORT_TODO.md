@@ -18,6 +18,8 @@ Doug's revised read (2026-09-16), after reviewing GA4 traffic and getting ~5 col
 
 **If this constraint gets reinstated later**, revert the llms.txt/BaseLayout/DESIGN_NOTES changes listed above — they're the concrete places the old framing lived.
 
+**Correction (2026-09-28), found during an SEO/GEO audit:** the 2026-09-16 SMB push above only reached `BaseLayout.astro`'s meta `description` and JSON-LD `description` fields — two artifacts that carry more weight than either got were still leading with enterprise/Blazor-only framing: the homepage's actual `<title>` tag (`BaseLayout.astro`'s default `title` prop, used unmodified on `/` since it passes no override) and `llms.txt`'s opening blockquote/summary paragraph, the top-line text an AI answer engine reads first. Fixed both to lead with SMB framing, matching the description's wording/order instead of contradicting it. `llms.txt`'s "Also open to freelance/consulting engagements and full-time opportunities" line was left as-is — that's the already-intentional 2026-09-16 stance, not stale copy.
+
 ## SEO / GEO / traffic impact of this refactor (2026-09-08)
 
 Net assessment: **structurally positive, if the eventual deploy is done carefully** - the port fixes exactly the crawlability gap the live site's own `blazor-wasm-geo-audit` blog post identified, while preserving everything that matters for ranking continuity.

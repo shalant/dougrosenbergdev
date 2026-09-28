@@ -31,7 +31,7 @@ The same SEO/GEO audit also reviewed GA4's setup and found it firing uncondition
 
 **Still gated on Google's dashboard, not code — flagged, not done here:**
 - ~~Marking `contact_form_submit` (the one custom event, fired from `ContactForm.astro`) as a GA4 key event/conversion.~~ - done 2026-09-28. Took longer than expected: Doug's own IP is excluded from the property's data filters, so his first test submissions never reached reporting at all (confirmed via the Network tab: the `/g/collect` beacon fired correctly with the right event name and a real persistent `cid`, so the site-side code was never the problem). Also found GA4 no longer has a standalone "Key events" screen for this property - it's merged into Events' "Create an event" wizard, which defaults to a "Create without code" trigger-based flow (wrong tool - that's for deriving a new event from an existing auto-collected one) instead of "Create with code" (right one, for an event your own code already sends by name, no trigger needed). Registered with "Create with code" + "Mark as key event" on + no default dollar value (a lead isn't a $1 transaction).
-- Confirming Enhanced Measurement is actually enabled on the property (scroll/outbound-click/file-download auto-tracking) - still open, not checked yet.
+- ~~Confirming Enhanced Measurement is actually enabled on the property (scroll/outbound-click/file-download auto-tracking).~~ - confirmed on 2026-09-28.
 
 ### Region-scoped consent default (2026-09-28 correction)
 

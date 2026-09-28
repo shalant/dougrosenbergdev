@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ConsentBanner from '../components/ConsentBanner.astro';
 
 interface Props {
   title?: string;
@@ -87,6 +88,17 @@ const arborKinLd = {
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
+    // Consent Mode v2 defaults, set before 'js'/'config' so GA4 never collects
+    // ahead of a real choice. No ad tags run on this site, so ad_storage/
+    // ad_user_data/ad_personalization stay denied permanently - only
+    // analytics_storage is ever granted, and only via consent.js's banner
+    // (or a prior visit's stored choice, read here synchronously).
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: localStorage.getItem('dr-consent') === 'granted' ? 'granted' : 'denied',
+    });
     gtag('js', new Date());
     gtag('config', 'G-3H1NB9ES0L');
   </script>
@@ -132,9 +144,12 @@ const arborKinLd = {
     <slot />
   )}
 
+  <ConsentBanner />
+
   <script is:inline src="/js/nav.js"></script>
   <script is:inline src="/js/scrollReveal.js"></script>
   <script is:inline src="/js/contactDialog.js"></script>
+  <script is:inline src="/js/consent.js"></script>
 
   <script is:inline>
     DrNav.init();
@@ -142,6 +157,7 @@ const arborKinLd = {
     DrNav.highlightActive();
     DrScrollReveal.init();
     DrContactDialog.init();
+    DrConsent.init();
 
     document.getElementById('themeToggle')?.addEventListener('click', () => DrTheme.toggle());
 

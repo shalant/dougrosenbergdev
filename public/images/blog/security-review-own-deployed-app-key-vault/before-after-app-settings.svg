@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" font-family="Montserrat, -apple-system, Segoe UI, sans-serif" role="img" aria-labelledby="baTitle baDesc">
+  <title id="baTitle">App Settings before and after the Key Vault migration</title>
+  <desc id="baDesc">Before, secret values sat as plaintext in the app's settings, visible to anyone who could open that Portal blade. After, the settings hold only references, and the values live in the vault behind a read-only role.</desc>
+
+  <rect x="0" y="0" width="800" height="380" rx="16" fill="#2c3e50" />
+  <text x="400" y="46" text-anchor="middle" fill="#eef2f7" font-size="20" font-weight="700">Where the secrets live</text>
+
+  <!-- Before -->
+  <rect x="40" y="76" width="340" height="250" rx="10" fill="#1a252f" stroke="rgba(238,242,247,0.3)" stroke-width="1.5" />
+  <text x="210" y="106" text-anchor="middle" fill="rgba(238,242,247,0.6)" font-size="12" letter-spacing="1" font-weight="600">BEFORE</text>
+  <text x="210" y="132" text-anchor="middle" fill="#eef2f7" font-size="17" font-weight="700">Plaintext in App Settings</text>
+  <rect x="60" y="152" width="300" height="34" rx="6" fill="rgba(238,242,247,0.06)" />
+  <text x="72" y="174" fill="rgba(238,242,247,0.7)" font-size="12">Connection string</text>
+  <text x="348" y="174" text-anchor="end" fill="#e8b4a8" font-size="12" font-family="monospace">Server=…;Password=••••</text>
+  <rect x="60" y="194" width="300" height="34" rx="6" fill="rgba(238,242,247,0.06)" />
+  <text x="72" y="216" fill="rgba(238,242,247,0.7)" font-size="12">Admin password</text>
+  <text x="348" y="216" text-anchor="end" fill="#e8b4a8" font-size="12" font-family="monospace">the actual value</text>
+  <text x="210" y="262" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">Anyone who can open the blade</text>
+  <text x="210" y="280" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">can click "show value"</text>
+  <text x="210" y="308" text-anchor="middle" fill="#e8b4a8" font-size="12" font-weight="700">Plaintext in the Portal, readable by any owner</text>
+
+  <!-- arrow -->
+  <line x1="388" y1="200" x2="412" y2="200" stroke="#1abc9c" stroke-width="2" />
+  <polygon points="412,194 424,200 412,206" fill="#1abc9c" />
+
+  <!-- After -->
+  <rect x="430" y="76" width="330" height="250" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.5)" stroke-width="1.5" />
+  <text x="595" y="106" text-anchor="middle" fill="#1abc9c" font-size="12" letter-spacing="1" font-weight="600">AFTER</text>
+  <text x="595" y="132" text-anchor="middle" fill="#eef2f7" font-size="17" font-weight="700">References into Key Vault</text>
+  <rect x="448" y="152" width="294" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="460" y="174" fill="rgba(238,242,247,0.7)" font-size="12">Connection string</text>
+  <text x="730" y="174" text-anchor="end" fill="#1abc9c" font-size="12" font-family="monospace">@Microsoft.KeyVault(…)</text>
+  <rect x="448" y="194" width="294" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="460" y="216" fill="rgba(238,242,247,0.7)" font-size="12">Admin password</text>
+  <text x="730" y="216" text-anchor="end" fill="#1abc9c" font-size="12" font-family="monospace">@Microsoft.KeyVault(…)</text>
+  <text x="595" y="262" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">Values live in the vault, read through</text>
+  <text x="595" y="280" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">a read-only role on a managed identity</text>
+  <text x="595" y="308" text-anchor="middle" fill="#1abc9c" font-size="12" font-weight="700">Rotate by adding a new secret version</text>
+
+  <rect x="264" y="342" width="272" height="26" rx="13" fill="rgba(26,188,156,0.15)" stroke="#1abc9c" stroke-width="1.5" />
+  <text x="400" y="360" text-anchor="middle" fill="#1abc9c" font-size="12" font-weight="700">Same app, same code, no plaintext</text>
+</svg>

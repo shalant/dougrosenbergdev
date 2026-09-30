@@ -14,6 +14,7 @@ import aboutMe from '../data/aboutme.json';
     <div class="about-body">
       <div class="about-bio">
         <p class="about-description">{aboutMe.description}</p>
+        <p class="about-answer">{aboutMe.answer}</p>
         <a href="/resume/DouglasRosenbergResumeAugust26.pdf" class="hero-btn hero-btn--ghost about-resume-btn" download target="_blank" rel="noopener">
           Download r&eacute;sum&eacute;
         </a>
@@ -23,3 +24,16 @@ import aboutMe from '../data/aboutme.json';
     <blockquote class="about-quote">{aboutMe.detailOrQuote}</blockquote>
   </div>
 </section>
+
+<style>
+  /* Plain-language answer block for AI/answer engines and skimmers: kept in
+     body type on purpose so it reads as information, not a second pull-quote
+     next to the italic tagline above it. */
+  .about-answer {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 1.5rem 0 0;
+    color: rgba(var(--text-rgb), 0.82);
+  }
+</style>

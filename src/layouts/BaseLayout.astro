@@ -10,7 +10,7 @@ interface Props {
 }
 
 const {
-  title = 'Douglas Rosenberg — Full-Stack .NET Developer | Web & ERP Development',
+  title = 'Doug Rosenberg — Full-Stack .NET Developer | Web & ERP Development',
   description = 'Full-stack .NET developer building custom websites and web apps for small businesses, plus Blazor/ERP work for larger organizations. See ArborKin and more.',
   ogImage = '/images/DrCorporateHacker.webp',
   themeScoped = true,
@@ -23,7 +23,8 @@ const personLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   '@id': 'https://dougrosenbergdev.com/#person',
-  name: 'Douglas Rosenberg',
+  name: 'Doug Rosenberg',
+  alternateName: 'Douglas Rosenberg',
   title: 'Full-Stack .NET Software Engineer',
   description: 'Full-stack .NET developer building custom websites and web apps for small businesses, and Blazor/ERP systems for larger organizations',
   url: 'https://dougrosenbergdev.com',
@@ -38,6 +39,9 @@ const personLd = {
   sameAs: [
     'https://github.com/shalant',
     'https://www.linkedin.com/in/douglasrosenberg',
+    'https://dougrosenberg.com/',
+    'https://youtube.com/@dougrosenberg2361',
+    'https://instagram.com/shalantdoro',
   ],
   jobTitle: 'Software Engineer',
   knowsAbout: ['.NET 10', 'C# 13', 'Blazor', 'ASP.NET', 'Entity Framework Core', 'Azure', 'SQL Server', 'ERP Systems'],
@@ -46,7 +50,7 @@ const personLd = {
 const webSiteLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Douglas Rosenberg — Full-Stack .NET Developer',
+  name: 'Doug Rosenberg — Full-Stack .NET Developer',
   url: 'https://dougrosenbergdev.com',
   description: 'Portfolio and case studies showcasing custom web development for small businesses, alongside full-stack .NET/Blazor/ERP systems work',
   creator: { '@id': 'https://dougrosenbergdev.com/#person' },
@@ -70,7 +74,7 @@ const arborKinLd = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="author" content="Douglas Rosenberg" />
+  <meta name="author" content="Doug Rosenberg" />
 
   <!-- These fonts and the hero's background texture are only discoverable by the browser
        once global.css has downloaded and parsed (they're referenced via @font-face src /

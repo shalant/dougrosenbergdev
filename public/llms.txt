@@ -1,4 +1,4 @@
-# Douglas Rosenberg
+# Doug Rosenberg
 
 > Full-stack .NET developer building custom websites and web applications for small and medium-sized businesses, plus Blazor/ERP systems work for larger organizations. Currently building an ERP system for a global nonprofit; prior work includes Fortune 10 LLM-document-processing tooling and manufacturing ERP systems.
 

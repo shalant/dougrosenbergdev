@@ -1,6 +1,6 @@
 # dougrosenbergdev.com
 
-Douglas Rosenberg's portfolio site — an [Astro](https://astro.build) static build deployed as a [Cloudflare Worker](https://developers.cloudflare.com/workers/): full-stack .NET/Blazor and ERP systems work, plus custom web development for small businesses under [Haxbyte](https://haxbyte.com). This is a port of a previous Blazor WebAssembly version of the same site (see [`PORT_TODO.md`](./PORT_TODO.md) for why, and what changed).
+Doug Rosenberg's portfolio site — an [Astro](https://astro.build) static build deployed as a [Cloudflare Worker](https://developers.cloudflare.com/workers/): full-stack .NET/Blazor and ERP systems work, plus custom web development for small businesses under [Haxbyte](https://haxbyte.com). This is a port of a previous Blazor WebAssembly version of the same site (see [`PORT_TODO.md`](./PORT_TODO.md) for why, and what changed).
 
 See the [write-up](https://dougrosenbergdev.com/blog/rebuilding-musician-site-blazor-to-astro) on a related musician-site rebuild, and the [GEO audit](https://dougrosenbergdev.com/blog/blazor-wasm-geo-audit) that helped motivate moving this site off client-rendered Blazor in the first place.
 

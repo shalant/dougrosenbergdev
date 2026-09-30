@@ -169,14 +169,11 @@ export default {
 			return handleContact(request, env);
 		}
 
-		// A real HTTP 301 instead of astro.config.mjs's old static-output
-		// meta-refresh page - that approach was a workaround for having no
-		// server at build time, but this Worker *is* a server, so it can do
-		// the redirect properly. /previous has essentially no real backlinks,
-		// so this was low-stakes either way, but a genuine 301 is a stronger
-		// signal than "noindex + canonical + meta-refresh" if that changes.
-		if (url.pathname === "/previous" || url.pathname === "/previous/") {
-			return Response.redirect(new URL("/archive", url.origin), 301);
+		// The old-portfolio /archive page (an iframe of an Angular build that was
+		// never ported over) was retired; /previous and /archive both go home with
+		// a real 301 so any old links or indexed URLs consolidate on the homepage.
+		if (["/previous", "/previous/", "/archive", "/archive/"].includes(url.pathname)) {
+			return Response.redirect(new URL("/", url.origin), 301);
 		}
 
 		return env.ASSETS.fetch(request);

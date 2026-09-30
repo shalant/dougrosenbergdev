@@ -67,8 +67,8 @@ Net assessment: **structurally positive, if the eventual deploy is done carefull
 
 - One canonical `Person` node now has `"@id": "https://dougrosenbergdev.com/#person"` (`BaseLayout.astro`); `WebSite.creator`, `SoftwareApplication.creator`, `BlogPosting.author`/`publisher` and the `/services/` `Person` all reference that id, so crawlers/LLMs resolve every mention to one entity.
 - Sitemap now emits `lastmod` for blog posts only (from `dateModified ?? date`, in `astro.config.mjs`) - other pages have no tracked modification date and deliberately get none.
-- `public/llms.txt`: added the three newest posts and switched links to the canonical trailing-slash URLs (the slash-less forms 307). Note it still names past employers/clients in the Background section, which the blog posts have since anonymized - Doug's call whether to align them.
-- Known, unfixed: `/archive/` iframes `/archive/dist/portfolio/index.html`, which isn't in the build, so `scripts/check-links.mjs` reports it broken (also on `master`).
+- `public/llms.txt`: added the three newest posts and switched links to the canonical trailing-slash URLs (the slash-less forms 307). Employer names (Friars ERP/Franciscan Friars, Tackle.ai, TC Industries, Shift/Bridgestone) were scrubbed from it too, matching the anonymized blog post. Deliberately *not* scrubbed (Doug's call, 2026-09-30): the homepage Experience section (`src/data/experience.json` - names, logos, links) and the linked résumé PDF, which are for human visitors; revisit if the goal becomes keeping names out of page HTML entirely.
+- `/archive/` retired (2026-09-30): it iframed `/archive/dist/portfolio/index.html`, an old Angular build that was never ported, so the page was broken (and failed `check-links.mjs`). `src/pages/archive.astro` removed; `src/worker.js` now 301s `/previous` and `/archive` to `/`. **Future idea:** restore it properly by putting the old build's static files under `public/archive/` and re-adding the page - needs the old build output. (Dead `.archive-*` CSS in `global.css` section 16 left in place.)
 
 ## Done
 

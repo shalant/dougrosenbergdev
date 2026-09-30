@@ -1,8 +1,8 @@
 # Douglas Rosenberg
 
-> Full-stack .NET software engineer specializing in Blazor, ERP systems, and enterprise integrations. Currently building an ERP system for a global nonprofit (Franciscan Friars); prior work includes Fortune 10 LLM-document-processing tooling and manufacturing ERP systems.
+> Full-stack .NET developer building custom websites and web applications for small and medium-sized businesses, plus Blazor/ERP systems work for larger organizations. Currently building an ERP system for a global nonprofit (Franciscan Friars); prior work includes Fortune 10 LLM-document-processing tooling and manufacturing ERP systems.
 
-Blazor-focused .NET developer who turns sprawling enterprise systems into software people actually enjoy using. Primary focus: custom websites and web applications for small and medium-sized businesses, bringing enterprise-grade engineering discipline (security, performance, accessibility) to SMB budgets and timelines. Also open to freelance/consulting engagements and full-time opportunities.
+Brings enterprise-grade engineering discipline (security, performance, accessibility) — honed building sprawling ERP systems — to SMB budgets and timelines. Primary focus: custom websites and web applications for small and medium-sized businesses. Also open to freelance/consulting engagements and full-time opportunities.
 
 ## Background
 - Current: Full-stack .NET engineer, Friars ERP (Franciscan Friars) — secure data-masking pipeline, Salesforce/ERP sync, 50 custom reports serving 500+ staff

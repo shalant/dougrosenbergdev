@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" font-family="Montserrat, -apple-system, Segoe UI, sans-serif" role="img" aria-labelledby="flowTitle flowDesc">
+  <title id="flowTitle">How the web app reads a secret without storing a credential</title>
+  <desc id="flowDesc">The web app's settings hold only a Key Vault reference. At startup, App Service uses the app's managed identity, which holds a read-only role on the vault, to fetch the real value and hand it to the app as an ordinary setting.</desc>
+
+  <rect x="0" y="0" width="800" height="420" rx="16" fill="#2c3e50" />
+  <text x="400" y="46" text-anchor="middle" fill="#eef2f7" font-size="20" font-weight="700">Reading a secret with no stored credential</text>
+
+  <!-- Web app -->
+  <rect x="40" y="96" width="210" height="190" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.4)" stroke-width="1.5" />
+  <text x="145" y="130" text-anchor="middle" fill="#eef2f7" font-size="17" font-weight="700">Web App</text>
+  <text x="145" y="152" text-anchor="middle" fill="rgba(238,242,247,0.6)" font-size="12">App Service settings</text>
+  <rect x="58" y="172" width="174" height="60" rx="6" fill="rgba(26,188,156,0.12)" stroke="#1abc9c" stroke-width="1.2" />
+  <text x="145" y="197" text-anchor="middle" fill="#1abc9c" font-size="11" font-weight="600">@Microsoft.KeyVault(</text>
+  <text x="145" y="214" text-anchor="middle" fill="#1abc9c" font-size="11" font-weight="600">SecretUri=…)</text>
+  <text x="145" y="264" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">a pointer, not the value</text>
+
+  <!-- Managed identity -->
+  <rect x="295" y="96" width="210" height="190" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.4)" stroke-width="1.5" />
+  <text x="400" y="130" text-anchor="middle" fill="#eef2f7" font-size="17" font-weight="700">Managed Identity</text>
+  <text x="400" y="152" text-anchor="middle" fill="rgba(238,242,247,0.6)" font-size="12">system-assigned</text>
+  <g transform="translate(400,206)">
+    <circle r="26" fill="none" stroke="#1abc9c" stroke-width="2" />
+    <circle cx="0" cy="-6" r="7" fill="none" stroke="#1abc9c" stroke-width="2" />
+    <path d="M -13 14 Q 0 0 13 14" fill="none" stroke="#1abc9c" stroke-width="2" />
+  </g>
+  <text x="400" y="264" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">role: Secrets User (read-only)</text>
+
+  <!-- Key Vault -->
+  <rect x="550" y="96" width="210" height="190" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.4)" stroke-width="1.5" />
+  <text x="655" y="130" text-anchor="middle" fill="#eef2f7" font-size="17" font-weight="700">Key Vault</text>
+  <text x="655" y="152" text-anchor="middle" fill="rgba(238,242,247,0.6)" font-size="12">RBAC, purge protection on</text>
+  <g transform="translate(655,206)">
+    <rect x="-24" y="-8" width="48" height="34" rx="5" fill="none" stroke="#1abc9c" stroke-width="2" />
+    <path d="M -14 -8 L -14 -20 A 14 14 0 0 1 14 -20 L 14 -8" fill="none" stroke="#1abc9c" stroke-width="2" />
+    <circle cx="0" cy="9" r="4" fill="#1abc9c" />
+  </g>
+  <text x="655" y="264" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="12">connection strings · credentials</text>
+
+  <!-- arrows -->
+  <line x1="250" y1="190" x2="292" y2="190" stroke="#1abc9c" stroke-width="2" />
+  <polygon points="292,184 304,190 292,196" fill="#1abc9c" />
+  <line x1="505" y1="190" x2="547" y2="190" stroke="#1abc9c" stroke-width="2" />
+  <polygon points="547,184 559,190 547,196" fill="#1abc9c" />
+  <text x="272" y="176" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="10">1</text>
+  <text x="527" y="176" text-anchor="middle" fill="rgba(238,242,247,0.55)" font-size="10">2</text>
+
+  <!-- steps -->
+  <text x="40" y="326" fill="rgba(238,242,247,0.7)" font-size="12.5">1  At startup, App Service sees a reference and asks the app's identity to resolve it.</text>
+  <text x="40" y="348" fill="rgba(238,242,247,0.7)" font-size="12.5">2  The identity proves who it is to Entra, and the vault returns the value.</text>
+  <text x="40" y="370" fill="rgba(238,242,247,0.7)" font-size="12.5">3  The app receives it as an ordinary setting. No password to fetch a password.</text>
+
+  <rect x="264" y="384" width="272" height="26" rx="13" fill="rgba(26,188,156,0.15)" stroke="#1abc9c" stroke-width="1.5" />
+  <text x="400" y="402" text-anchor="middle" fill="#1abc9c" font-size="12" font-weight="700">No secret stored in the app or the repo</text>
+</svg>

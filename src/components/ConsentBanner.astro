@@ -1,0 +1,70 @@
+---
+// Mounted once from BaseLayout.astro (not Header.astro) so it renders on
+// every page including 404.astro, which has no <Header>. Hidden by default
+// via the `hidden` attribute; public/js/consent.js only reveals it when
+// localStorage has no stored choice yet — see that file for the GA4
+// Consent Mode wiring (the actual gtag('consent', ...) calls live there and
+// in BaseLayout.astro's head script, not here).
+---
+
+<div id="consentBanner" class="consent-banner" role="dialog" aria-live="polite" aria-label="Cookie consent" hidden>
+  <p class="consent-banner__text">
+    This site uses Google Analytics to understand traffic. No data is collected until you accept.
+  </p>
+  <div class="consent-banner__actions">
+    <button type="button" id="consentDecline" class="consent-banner__decline">Decline</button>
+    <button type="button" id="consentAccept" class="hero-btn hero-btn--ghost consent-banner__accept">Accept</button>
+  </div>
+</div>
+
+<style>
+  .consent-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem 1.5rem;
+    padding: 1rem 1.5rem;
+    background: rgba(var(--surface-nav-rgb), 0.96);
+    border-top: 1px solid rgba(var(--text-rgb), 0.12);
+  }
+
+  .consent-banner__text {
+    margin: 0;
+    max-width: 46rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .consent-banner__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .consent-banner__decline {
+    background: transparent;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(var(--text-rgb), 0.6);
+    cursor: pointer;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .consent-banner__decline:hover {
+    color: var(--text);
+  }
+
+  .consent-banner__accept {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.75rem;
+  }
+</style>

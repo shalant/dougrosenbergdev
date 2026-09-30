@@ -31,6 +31,11 @@
 	],
 	"assets": {
 		"directory": "./dist",
+		// src/worker.js falls back to env.ASSETS.fetch() for anything the assets
+		// layer didn't already serve itself (i.e. every unmatched URL). Without this
+		// binding env.ASSETS is undefined, the fallback throws, and unknown paths
+		// return Cloudflare error 1101 (HTTP 500) instead of the 404 page.
+		"binding": "ASSETS",
 		// Without this, unmatched routes get a bare 404 with an empty body instead of
 		// the built dist/404.html - Workers static assets defaults to "none", unlike
 		// classic Pages which served 404.html automatically.

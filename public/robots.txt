@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 
 # Sitemaps
-Sitemap: https://dougrosenbergdev.com/sitemap.xml
+Sitemap: https://dougrosenbergdev.com/sitemap-index.xml

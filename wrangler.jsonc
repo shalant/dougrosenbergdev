@@ -39,8 +39,7 @@
 		// Without this, unmatched routes get a bare 404 with an empty body instead of
 		// the built dist/404.html - Workers static assets defaults to "none", unlike
 		// classic Pages which served 404.html automatically.
-		// NOTE: no custom 404.astro exists yet in this project - add one before this
-		// setting does anything useful (see PORT_TODO.md).
+		// src/pages/404.astro is what this serves.
 		"not_found_handling": "404-page"
 	}
 }

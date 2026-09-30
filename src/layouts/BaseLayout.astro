@@ -22,6 +22,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
 const personLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': 'https://dougrosenbergdev.com/#person',
   name: 'Douglas Rosenberg',
   title: 'Full-Stack .NET Software Engineer',
   description: 'Full-stack .NET developer building custom websites and web apps for small businesses, and Blazor/ERP systems for larger organizations',
@@ -48,7 +49,7 @@ const webSiteLd = {
   name: 'Douglas Rosenberg — Full-Stack .NET Developer',
   url: 'https://dougrosenbergdev.com',
   description: 'Portfolio and case studies showcasing custom web development for small businesses, alongside full-stack .NET/Blazor/ERP systems work',
-  creator: { '@type': 'Person', name: 'Douglas Rosenberg' },
+  creator: { '@id': 'https://dougrosenbergdev.com/#person' },
 };
 
 const arborKinLd = {
@@ -58,7 +59,7 @@ const arborKinLd = {
   applicationCategory: 'FamilyTree/Genealogy',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', url: 'https://www.arborkin.com' },
   description: 'A private, multi-user family tree application built with Blazor Server and Azure SQL',
-  creator: { '@type': 'Person', name: 'Douglas Rosenberg' },
+  creator: { '@id': 'https://dougrosenbergdev.com/#person' },
 };
 ---
 

@@ -10,19 +10,22 @@ Brings enterprise-grade engineering discipline (security, performance, accessibi
 - Core stack: C#, .NET, Blazor, ASP.NET, SQL Server, Azure, Syncfusion, Figma, Angular, Docker
 
 ## Pages
-- [Services](https://dougrosenbergdev.com/services): Engagement types and rates — custom web/app development, ERP & business systems consulting, AI-assisted development/modernization, ongoing support.
-- [Consulting](https://dougrosenbergdev.com/consulting): IT support and web/app development for small businesses — affordable support, cloud setup and backup, custom sites, ongoing maintenance.
-- [Web Design](https://dougrosenbergdev.com/webdesign): Portfolio and case studies.
-- [Blog](https://dougrosenbergdev.com/blog): Technical writing on Blazor, .NET, and software architecture.
+- [Services](https://dougrosenbergdev.com/services/): Engagement types and rates — custom web/app development, ERP & business systems consulting, AI-assisted development/modernization, ongoing support.
+- [Consulting](https://dougrosenbergdev.com/consulting/): IT support and web/app development for small businesses — affordable support, cloud setup and backup, custom sites, ongoing maintenance.
+- [Web Design](https://dougrosenbergdev.com/webdesign/): Portfolio and case studies.
+- [Blog](https://dougrosenbergdev.com/blog/): Technical writing on Blazor, .NET, and software architecture.
 - [Résumé (PDF)](https://dougrosenbergdev.com/resume/DouglasRosenbergResumeAugust26.pdf)
 
 ## Blog posts
-- [Enterprise Engineering Discipline, Small-Business Budget: How I Approach SMB Web Development](https://dougrosenbergdev.com/blog/enterprise-discipline-smb-web-development) (2026-09-16): Why enterprise ERP engineering habits — verified security, performance, and accessibility — translate to small-business web projects, backed by real client work (Sonus Construction Group, Hardware Etc) and shipped products (ArborKin).
-- [Rebuilding My Own Musician Site: From a Blazor Template to a Verified Astro Build](https://dougrosenbergdev.com/blog/rebuilding-musician-site-blazor-to-astro) (2026-09-07): Migrating dougrosenberg.com from a stock Blazor template to Astro on Cloudflare — a verified image-optimization pass, real Lighthouse/E2E checks, and an honest list of what's still open.
-- [Why GEO Doesn't Work in a Blazor WASM SPA](https://dougrosenbergdev.com/blog/blazor-wasm-geo-audit) (2026-09-04): Auditing a client-rendered SPA's crawlability for AI answer engines — what survives a plain HTTP GET, what a robots.txt mistake was blocking, and what prerendering fixes.
-- [Building a Family Tree App with Blazor](https://dougrosenbergdev.com/blog/building-family-tree-blazor) (2026-08-09): Technical deep-dive into ArborKin — tree layout without JavaScript, drag-state ownership, and direct-to-Blob photo uploads.
-- [Hello World: Welcome to My Blog](https://dougrosenbergdev.com/blog/hello-world) (2026-07-21): Introductory post.
-- [Building a Modern Portfolio with Blazor](https://dougrosenbergdev.com/blog/building-portfolio) (2026-07-15): Why this portfolio is built on Blazor WebAssembly.
+- [What Security Headers Do Musician Website Builders Actually Ship?](https://dougrosenbergdev.com/blog/security-headers-musician-platforms/) (2026-09-29): Checks the security headers (CSP, HSTS, X-Frame-Options and more) that Bandzoogle, Squarespace, Wix and WordPress.com actually return, with the caveats on what that does and doesn't show.
+- [I Security-Reviewed My Own Deployed App: Cheap Wins, a Key Vault Migration, and What I Chose Not to Fix](https://dougrosenbergdev.com/blog/security-review-own-deployed-app-key-vault/) (2026-09-28): Auditing a live .NET app on Azure: dependency alerts, secret scanning, testing a login lockout, and moving secrets into Key Vault via Managed Identity.
+- [One App, Two Audiences: Building a Customer Intake Backend with a Personal ERP Inside It](https://dougrosenbergdev.com/blog/customer-intake-backend-personal-erp/) (2026-09-24): A public lead-intake system and a private personal ERP in one app, and how the data boundary between them is enforced and tested.
+- [Enterprise Engineering Discipline, Small-Business Budget: How I Approach SMB Web Development](https://dougrosenbergdev.com/blog/enterprise-discipline-smb-web-development/) (2026-09-16): Why enterprise ERP engineering habits — verified security, performance, and accessibility — translate to small-business web projects, backed by real client work (Sonus Construction Group, Hardware Etc) and shipped products (ArborKin).
+- [Rebuilding My Own Musician Site: From a Blazor Template to a Verified Astro Build](https://dougrosenbergdev.com/blog/rebuilding-musician-site-blazor-to-astro/) (2026-09-07): Migrating dougrosenberg.com from a stock Blazor template to Astro on Cloudflare — a verified image-optimization pass, real Lighthouse/E2E checks, and an honest list of what's still open.
+- [Why GEO Doesn't Work in a Blazor WASM SPA](https://dougrosenbergdev.com/blog/blazor-wasm-geo-audit/) (2026-09-04): Auditing a client-rendered SPA's crawlability for AI answer engines — what survives a plain HTTP GET, what a robots.txt mistake was blocking, and what prerendering fixes.
+- [Building a Family Tree App with Blazor](https://dougrosenbergdev.com/blog/building-family-tree-blazor/) (2026-08-09): Technical deep-dive into ArborKin — tree layout without JavaScript, drag-state ownership, and direct-to-Blob photo uploads.
+- [Hello World: Welcome to My Blog](https://dougrosenbergdev.com/blog/hello-world/) (2026-07-21): Introductory post.
+- [Building a Modern Portfolio with Blazor](https://dougrosenbergdev.com/blog/building-portfolio/) (2026-07-15): Why this portfolio is built on Blazor WebAssembly.
 
 ## Contact
 - Email: doug.rosenberg@gmail.com

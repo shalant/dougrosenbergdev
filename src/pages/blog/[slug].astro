@@ -80,8 +80,8 @@ const blogPostingLd = {
   mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
   image: post.images?.[0] ? `https://dougrosenbergdev.com${post.images[0]}` : 'https://dougrosenbergdev.com/images/DrCorporateHacker.webp',
   keywords: post.tags,
-  author: { '@type': 'Person', name: 'Douglas Rosenberg', url: 'https://dougrosenbergdev.com' },
-  publisher: { '@type': 'Person', name: 'Douglas Rosenberg', url: 'https://dougrosenbergdev.com' },
+  author: { '@id': 'https://dougrosenbergdev.com/#person', name: 'Douglas Rosenberg' },
+  publisher: { '@id': 'https://dougrosenbergdev.com/#person', name: 'Douglas Rosenberg' },
 };
 
 // Optional per-post FAQ content (see services.astro for the same pattern) - mainly

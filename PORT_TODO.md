@@ -63,6 +63,13 @@ Net assessment: **structurally positive, if the eventual deploy is done carefull
 3. **The host migration itself is a real operational event** (GitHub Pages → Cloudflare Workers) even though the domain name doesn't change - different IPs/response headers. Now actually happened (2026-09-10: GitHub Pages unpublished on `PortfolioNov25`, Cloudflare confirmed serving the real domain) - noted here as a record that it went smoothly, not as a remaining risk.
 4. ~~**`/previous` → `/archive` is a meta-refresh redirect, not a true HTTP 301**~~ - fixed 2026-09-10. Astro's static `redirects` config was a workaround for having no server at build time, but this site *does* have one - `src/worker.js` sits in front of every request already - so it now does `Response.redirect(new URL("/archive", url.origin), 301)` for `/previous`/`/previous/` before falling through to `env.ASSETS.fetch()`, and `astro.config.mjs`'s now-redundant `redirects` block was removed (confirmed `dist/previous/` no longer gets generated at all). Verified for real with `npx wrangler dev` (the only way to exercise `worker.js` locally - `astro dev`/`preview`/`http-server` all bypass it and serve static files directly) - real `HTTP/1.1 301` with the right `Location` header. Also noticed `/archive` and `/webdesign` both 307-redirect to their trailing-slash form on the *live* production site too (Cloudflare's static-assets directory normalization) - pre-existing platform behavior, not something this change touched or broke.
 
+## GEO/AEO pass (2026-09-29)
+
+- One canonical `Person` node now has `"@id": "https://dougrosenbergdev.com/#person"` (`BaseLayout.astro`); `WebSite.creator`, `SoftwareApplication.creator`, `BlogPosting.author`/`publisher` and the `/services/` `Person` all reference that id, so crawlers/LLMs resolve every mention to one entity.
+- Sitemap now emits `lastmod` for blog posts only (from `dateModified ?? date`, in `astro.config.mjs`) - other pages have no tracked modification date and deliberately get none.
+- `public/llms.txt`: added the three newest posts and switched links to the canonical trailing-slash URLs (the slash-less forms 307). Note it still names past employers/clients in the Background section, which the blog posts have since anonymized - Doug's call whether to align them.
+- Known, unfixed: `/archive/` iframes `/archive/dist/portfolio/index.html`, which isn't in the build, so `scripts/check-links.mjs` reports it broken (also on `master`).
+
 ## Done
 
 - All 9 routes ported and verified in-browser: `/`, `/services`, `/consulting`, `/archive` (+ `/previous` redirect), `/webdesign` (3D ring + contact dialog), 8× `/webdesign/[slug]`, `/blog`, `/blog/archive`, 5× `/blog/[slug]`.

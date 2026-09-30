@@ -1,0 +1,60 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Security header comparison across four musician website platforms">
+  <style>
+    .bg { fill: #1a252f; }
+    .grid-line { stroke: rgba(26,188,156,0.15); stroke-width: 1; }
+    .header-text { font-family: Montserrat, system-ui, sans-serif; font-size: 13px; fill: #eaf6f3; font-weight: 600; }
+    .row-label { font-family: Montserrat, system-ui, sans-serif; font-size: 13px; fill: #eaf6f3; font-weight: 600; text-anchor: end; }
+    .check { fill: #1abc9c; font-size: 16px; font-family: Montserrat, system-ui, sans-serif; text-anchor: middle; font-weight: 700; }
+    .cross { fill: #6b7a85; font-size: 16px; font-family: Montserrat, system-ui, sans-serif; text-anchor: middle; font-weight: 700; }
+    .caption { font-family: Montserrat, system-ui, sans-serif; font-size: 11px; fill: rgba(234,246,243,0.55); }
+    .partial { fill: #16a085; font-size: 10px; font-family: Montserrat, system-ui, sans-serif; text-anchor: middle; }
+  </style>
+  <rect class="bg" width="720" height="320" rx="8"/>
+
+  <!-- Column headers -->
+  <text x="235" y="34" class="header-text" text-anchor="middle">CSP</text>
+  <text x="335" y="34" class="header-text" text-anchor="middle">X-Frame-Options</text>
+  <text x="450" y="34" class="header-text" text-anchor="middle">X-Content-Type-Options</text>
+  <text x="580" y="34" class="header-text" text-anchor="middle">Referrer-Policy</text>
+  <text x="670" y="34" class="header-text" text-anchor="middle">HSTS</text>
+
+  <!-- Row 1: Bandzoogle -->
+  <line x1="20" y1="52" x2="700" y2="52" class="grid-line"/>
+  <text x="150" y="80" class="row-label">Bandzoogle</text>
+  <text x="235" y="82" class="check">✓</text>
+  <text x="235" y="94" class="partial" text-anchor="middle">frame-ancestors only</text>
+  <text x="335" y="82" class="check">✓</text>
+  <text x="450" y="82" class="check">✓</text>
+  <text x="580" y="82" class="check">✓</text>
+  <text x="670" y="82" class="check">✓</text>
+
+  <!-- Row 2: Squarespace -->
+  <line x1="20" y1="112" x2="700" y2="112" class="grid-line"/>
+  <text x="150" y="140" class="row-label">Squarespace</text>
+  <text x="235" y="142" class="cross">✕</text>
+  <text x="335" y="142" class="cross">✕</text>
+  <text x="450" y="142" class="check">✓</text>
+  <text x="580" y="142" class="cross">✕</text>
+  <text x="670" y="142" class="check">✓</text>
+
+  <!-- Row 3: Wix -->
+  <line x1="20" y1="172" x2="700" y2="172" class="grid-line"/>
+  <text x="150" y="200" class="row-label">Wix</text>
+  <text x="235" y="202" class="cross">✕</text>
+  <text x="335" y="202" class="cross">✕</text>
+  <text x="450" y="202" class="check">✓</text>
+  <text x="580" y="202" class="check">✓</text>
+  <text x="670" y="202" class="check">✓</text>
+
+  <!-- Row 4: WordPress.com -->
+  <line x1="20" y1="232" x2="700" y2="232" class="grid-line"/>
+  <text x="150" y="260" class="row-label">WordPress.com</text>
+  <text x="235" y="262" class="cross">✕</text>
+  <text x="335" y="262" class="cross">✕</text>
+  <text x="450" y="262" class="cross">✕</text>
+  <text x="580" y="262" class="cross">✕</text>
+  <text x="670" y="262" class="check">✓</text>
+
+  <line x1="20" y1="292" x2="700" y2="292" class="grid-line"/>
+  <text x="20" y="312" class="caption">curl -I against each platform's marketing domain, 2026-09-29. A hosted client site's headers may differ.</text>
+</svg>

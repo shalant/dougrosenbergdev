@@ -9,6 +9,20 @@
       "/images/blog/security-headers-musician-platforms/header-comparison.svg"
     ],
     "readingTimeMinutes": 4,
+    "faqs": [
+      {
+        "question": "Do Squarespace, Wix, Bandzoogle, and WordPress.com ship security headers?",
+        "answer": "Partly. A check of each platform's own marketing site on 2026-09-29 found Bandzoogle the only one with any Content-Security-Policy (just frame-ancestors 'self'), plus the full rest of the set. Squarespace and Wix sent HSTS and X-Content-Type-Options but no CSP or X-Frame-Options, and WordPress.com sent only HSTS with preload. These are the companies' own sites, not necessarily what an individual customer's page returns."
+      },
+      {
+        "question": "What is a hash-pinned Content-Security-Policy, and why use one?",
+        "answer": "It is a CSP that lets inline scripts run only when they match a sha256 hash, instead of leaving inline scripts wide open. It closes a class of XSS attack, and it is cheap to add on a from-scratch build because there is no third-party embed system to accommodate."
+      },
+      {
+        "question": "Is a custom-built site more secure than a website builder?",
+        "answer": "That is not claimed. The platforms are solving a much harder problem, serving millions of other people's pages. The advantage of a small custom site is that it can adopt a strict, hash-pinned CSP at close to zero cost."
+      }
+    ],
     "tags": ["Security", "Case Study", "SEO"]
   },
   {
@@ -22,6 +36,20 @@
       "/images/blog/security-review-own-deployed-app-key-vault/before-after-app-settings.svg"
     ],
     "readingTimeMinutes": 5,
+    "faqs": [
+      {
+        "question": "How do you move app secrets into Azure Key Vault without storing a credential?",
+        "answer": "Give the web app a system-assigned Managed Identity and use Key Vault references in App Settings, where each value becomes a pointer like @Microsoft.KeyVault(SecretUri=…) with no version so the app always gets the latest secret. App Service resolves the references itself, so it needs no code change and no new dependency."
+      },
+      {
+        "question": "Which Key Vault role should the web app get?",
+        "answer": "Key Vault Secrets User, which is read-only. The assignment wizard was about to give the app Secrets Officer, which can read and write, and the mistake was caught on the review screen. Least privilege is easy to violate with one dropdown."
+      },
+      {
+        "question": "What are cheap security wins for a solo-operator app?",
+        "answer": "Turn on Dependabot alerts and automated security fixes, add gitleaks secret scanning in CI, add a memory alert next to the CPU alert, and test lockout and rate limiting against the real login instead of assuming they work."
+      }
+    ],
     "tags": [
       "Security",
       "Azure",
@@ -40,6 +68,20 @@
       "/images/blog/customer-intake-backend-personal-erp/event-log-vs-status.svg"
     ],
     "readingTimeMinutes": 5,
+    "faqs": [
+      {
+        "question": "How do you keep a private ERP separate from a public-facing app in the same repo?",
+        "answer": "By isolating the data rather than the process: the personal ERP has its own DbContext and its own database, and a NetArchTest architecture test fails the build if the public namespace references ERP types or the ERP reaches for the public DbContext. The post is explicit that a compromised process would still expose both connection strings, which is an accepted gap."
+      },
+      {
+        "question": "Why use an event log instead of a status field for a sales pipeline?",
+        "answer": "A single mutable Status field overwrites history and cannot say when a lead moved. Here each thing that happened is a LeadEvent row and the current status is derived from the latest event, so questions like how long outreach took to convert are answerable from the schema. The cost is that every status change writes an event, and status can drift if something writes it directly."
+      },
+      {
+        "question": "How can several static sites send leads to one backend?",
+        "answer": "They share a Leads table tagged by Source. The static Astro sites on Cloudflare Workers cannot run C#, so they call the service over HTTP with POST /api/leads, which is CORS-restricted to allowed sites and rate-limited."
+      }
+    ],
     "tags": ["Blazor", ".NET", "Architecture", "Case Study"]
   },
   {
@@ -88,6 +130,16 @@
       "/images/blog/rebuilding-musician-site-blazor-to-astro/old-site-08-gallery-2-and-footer.jpg"
     ],
     "readingTimeMinutes": 4,
+    "faqs": [
+      {
+        "question": "Why rebuild a Blazor WebAssembly site in Astro?",
+        "answer": "Blazor WebAssembly ships a full C# runtime to the browser for what is a static content site. Astro prerenders to static HTML served from Cloudflare's edge, which made the rest verifiable: Lighthouse CI at 90+ for performance, best practices, and SEO and 95+ for accessibility, a 36-test Playwright suite, and a Content-Security-Policy with sha256-pinned inline scripts."
+      },
+      {
+        "question": "How do you shrink a sheet-music library without making it illegible?",
+        "answer": "Recompress a candidate file, re-render it, pixel-diff it against the original, and keep the change only if the render is near-identical. On an 88MB library one JPEG dropped 44.5% with no visible difference, and the script correctly rejected deleting an apparent duplicate image because the render changed."
+      }
+    ],
     "tags": ["Astro", "Blazor", "Performance", "Case Study"]
   },
   {
@@ -98,6 +150,20 @@
     "content": "<h2>The GEO Advice Everyone's Giving</h2><p>Everyone's suddenly talking about GEO — Generative Engine Optimization, the SEO-shaped discipline of getting your content surfaced and cited by AI answer engines instead of just ranked by Google. Most of the advice reads like SEO advice with new vocabulary: structured data, clear factual statements, an <code>llms.txt</code> file. Good advice, as far as it goes. But none of it answers the question I actually needed answered for my own site: what does an AI crawler get when it fetches my page, given that my page doesn't really exist until a browser runs it?</p><h2>A Site That Doesn't Exist Until JavaScript Runs</h2><p>My portfolio, dougrosenbergdev.com, is a Blazor WebAssembly single-page app — a deliberate choice, since I'm a full-stack .NET developer and the site itself is supposed to be proof of that. But it means the actual content — my bio, my experience, <a href=\"/webdesign\">my case studies</a> — doesn't live in the HTML. It lives in <code>.razor</code> components that fetch JSON data and render it client-side, after a multi-megabyte WASM runtime finishes booting in the visitor's browser.</p><p>Most AI crawlers don't run that runtime. They issue a plain HTTP GET and read whatever HTML comes back. So I did the same thing — fetched my own homepage with nothing but <code>curl</code> — to see what's actually there.</p><p><strong>What survives a plain GET:</strong> the <code>&lt;head&gt;</code> — meta description, Open Graph tags, three blocks of Schema.org JSON-LD (Person, WebSite, SoftwareApplication), and a static HTML snapshot of the hero section that I'd built for an unrelated reason (avoiding a layout flash while Blazor boots). That snapshot happens to double as crawlable content, which was a nice accident.</p><p><strong>What doesn't survive:</strong> everything else. My About section, my full work history, the consulting page — all of it sits behind a loading spinner until WASM finishes booting. To a non-JS crawler, my portfolio is a name, a job title, and a spinner.</p><h2>The Twist: My Own robots.txt Was Blocking the Fix</h2><p>I went looking for where the real bio and experience content lives, expecting to find it buried inside compiled Blazor component state. Instead it's sitting in plain JSON files — served as ordinary static assets, fetched at runtime via <code>HttpClient.GetFromJsonAsync</code>. Structurally, those files are exactly as crawlable as any other file on the site. A crawler that knew to look could read my actual bio in plain JSON without executing a single line of WASM.</p><p>Except my own <code>robots.txt</code> was stopping it: <code>Disallow: /*.json</code>. A blanket rule, presumably written to keep crawlers out of Blazor's framework manifests, was also blocking the one place my real content already existed in crawler-readable form.</p><h2>What I Shipped</h2><p>The first fix wasn't architectural — it was two small changes:</p><ul><li>Removed the blanket JSON disallow, keeping <code>/_framework/</code> blocked on its own (that's where the actual noise is — build manifests, boot config, nothing worth indexing).</li><li>Added an <code>llms.txt</code> at the site root: a plain-text, purpose-built summary of who I am and what's on the site, following the small emerging convention for exactly this problem — a place for AI systems to get a straight answer without needing to parse or render anything.</li></ul><p>Both are live now. Neither fixes the underlying issue.</p><h2>What's Still Broken</h2><p>Per-page content (<a href=\"/consulting\"><code>/consulting</code></a>, <a href=\"/webdesign\"><code>/webdesign</code></a>, <a href=\"/blog\"><code>/blog</code></a>) is still invisible to anything that won't run WASM, per-page <code>&lt;PageTitle&gt;</code> and meta tags included. That needs actual prerendering: either Blazor's built-in static prerendering support, or a build-time step that snapshots each route to static HTML for crawlers while the WASM app takes over for real visitors. That's a meatier problem, and one I think is more interesting than \"just switch frameworks\" — because the honest answer for anyone building a Blazor WASM app that cares about being found isn't to abandon WASM, it's to understand precisely which parts of the page a plain GET request can see, and design around that boundary on purpose.</p><h2>The Takeaway</h2><p>If you're running a Blazor WASM, Angular, or any other client-rendered SPA and haven't checked what a <code>curl</code> of your own homepage actually returns — do that before you write a single line of GEO advice into a meta tag. You might be surprised what's missing.</p>",
     "images": [],
     "readingTimeMinutes": 4,
+    "faqs": [
+      {
+        "question": "Can AI crawlers read a Blazor WebAssembly site?",
+        "answer": "Mostly not. Most AI crawlers do not run the WASM runtime, so a plain HTTP GET returns only the head (meta description, Open Graph tags, JSON-LD) and any static snapshot, while the real content sits behind a loading spinner."
+      },
+      {
+        "question": "What is llms.txt?",
+        "answer": "A plain-text summary at the site root, following a small emerging convention, that gives AI systems a straight answer about who you are and what is on the site without needing to parse or render anything."
+      },
+      {
+        "question": "Can your own robots.txt block the content you want crawled?",
+        "answer": "Yes. A blanket Disallow: /*.json rule was blocking the JSON files that held the real bio and experience content. The fix was to remove it and keep only /_framework/ blocked."
+      }
+    ],
     "tags": ["SEO", "GEO", "Blazor", "Web Development"]
   },
   {
@@ -108,6 +174,20 @@
     "content": "<h2>The Challenge</h2><p>What starts as \"just display a family tree\" quickly becomes complicated. My goal was to build <a href=\"/webdesign/arborkin\">ArborKin</a>—a private, multi-user family tree app where each user can browse their ancestors and descendants in an interactive, zoomable canvas.</p><p>Sounds simple, right? Wrong. Here's what I had to solve:</p><ul><li><strong>Tree Layout:</strong> Every person needs pixel-perfect positioning (X, Y coordinates) relative to their parents and siblings</li><li><strong>Drag State:</strong> Users want to reposition nodes and overlays; Blazor re-renders every 50ms, so position state kept in .NET gets wiped</li><li><strong>Photo Handling:</strong> Uploading photos to Azure Blob Storage was slow—taking 5+ minutes per image</li><li><strong>Real-time Collaboration:</strong> Multiple family members viewing/editing the same tree concurrently</li></ul><h2>Hard Problem #1: Tree Layout Without JavaScript</h2><p>Most genealogy tools use D3.js or similar to compute node positions dynamically in the browser. I wanted something different: compute all positions in C# before rendering a single pixel.</p><p><strong>Why?</strong> Predictable, testable, no layout thrashing.</p><p><strong>The Solution:</strong> A custom <code>FamilyTreeLayoutEngine</code> (C# class) that:</p><ol><li>Reads all Person + Relationship data from the database</li><li>Builds a nuclear-family graph (couples as nodes, children as edges)</li><li>Places each family unit in 2D space using a depth-first traversal</li><li>Computes every person's pixel coordinates</li><li>Returns fully-positioned data to the frontend</li></ol><p>Result: SVG canvas renders instantly, zero JavaScript layout math needed. The engine has 500+ lines of C# and 50+ unit tests covering cross-family marriages, orphans, siblings marrying-out, and other edge cases.</p><h2>Hard Problem #2: Drag State Ownership</h2><p>Users drag the hero overlay and toolbar to new positions. Blazor's re-render cycle is fast but destructive—every time component parameters change, the DOM gets rebuilt and custom CSS transforms reset.</p><p><strong>The Naive Approach:</strong> Store drag positions in C# component state. <br/><strong>Result:</strong> Draggy, laggy UX. Every 50ms, positions reset.</p><p><strong>The Fix:</strong> <strong>JavaScript owns drag state.** </strong></p><ul><li>JavaScript listens for <code>mousedown</code> → <code>mousemove</code> → <code>mouseup</code></li><li>On <code>mousemove</code>, JavaScript updates the element's <code>style.left</code> and <code>style.top</code> directly</li><li>On <code>mouseup</code>, JavaScript invokes a C# method (<code>[JSInvokable]</code>) with the final coordinates</li><li>C# persists to localStorage + database</li><li>Next page load, positions restore from localStorage instantly</li></ul><p>Pattern: <strong>JavaScript owns gestures, C# owns state.</strong> Blazor never knows the drag happened until it's done.</p><h2>Hard Problem #3: Photo Upload Latency</h2><p>Every byte traveled over SignalR (Blazor Server's WebSocket protocol). A 2MB photo meant 2MB of SignalR round-trips. At 500KB/sec, that's 4+ seconds. Multiply by 1-2 retries on slow connections, and you hit 5-10 minutes.</p><p><strong>The Fix:</strong> Blazor JavaScript interop to upload directly to Azure Blob Storage.</p><ul><li>Frontend generates a SAS (Shared Access Signature) URL on the server</li><li>Browser uploads directly to Azure Blob Storage using the SAS token</li><li>Server doesn't touch the bytes—just the URL</li><li>Result: 200KB/sec → 10 seconds for 2MB (local network speed, not server bottleneck)</li></ul><h2>The Stack</h2><pre><code>Frontend: Blazor Server (C#, Razor components)\r\nBackend: ASP.NET Core (C#, Entity Framework Core)\r\nDatabase: Azure SQL Database (serverless)\r\nStorage: Azure Blob Storage (photos, exports)\r\nLayout: Custom C# tree layout engine\r\nDeployment: Azure App Service (free tier F1)</code></pre><p>Total: ~8k lines of C#, 60+ EF migrations, 75 unit tests.</p><h2>Metrics</h2><ul><li><strong>Users:</strong> 6 (family members, invite-only)</li><li><strong>Data:</strong> 56 people, 80+ relationships, 40+ photos</li><li><strong>Performance:</strong> Tree renders in <150ms; page load <2s on 3G throttle</li><li><strong>Uptime:</strong> 99.8% (one planned migration outage)</li><li><strong>Bugs Fixed:</strong> 45 (most during MVP phase; last 3 months ~2/month)</li></ul><h2>Lessons</h2><ol><li><strong>Layout engines are complex.</strong> If you're visualizing a graph (org chart, family tree, dependency graph), expect to spend 20-30% of your time on positioning logic.</li><li><strong>Let each layer own its domain.</strong> JavaScript owns gestures, C# owns data. Mixing them causes latency and race conditions.</li><li><strong>Measure before optimizing.</strong> The photo upload slowdown wasn't obvious until I enabled Azure monitor and saw 90% of time was network I/O.</li><li><strong>Test edge cases early.</strong> A person with two spouses, an orphan sibling, cross-family marriages—these are rare but they break layouts badly if you don't handle them upfront.</li></ol><h2>What's Next?</h2><p>ArborKin is live and used by my family. Future priorities: multi-person photo tagging, life events (births, migrations, military service), and a public sharing mode for branches of the tree.</p><p>If you're building a Blazor app with complex UI interactions, I hope this breakdown helps. Feel free to reach out if you have questions!</p>",
     "images": [],
     "readingTimeMinutes": 3,
+    "faqs": [
+      {
+        "question": "How do you lay out a family tree in Blazor without JavaScript?",
+        "answer": "A custom C# layout engine computes every person's pixel position before anything renders: it builds a nuclear-family graph, places each family unit with a depth-first traversal, and returns fully positioned data, so the SVG canvas needs no JavaScript layout math. The engine is 500+ lines with 50+ unit tests."
+      },
+      {
+        "question": "How do you stop Blazor from resetting drag positions?",
+        "answer": "Let JavaScript own the gesture and C# own the state. JavaScript updates the element's position during the drag, then calls a [JSInvokable] C# method with the final coordinates on mouse-up, and C# persists them to localStorage and the database."
+      },
+      {
+        "question": "How do you speed up photo uploads in Blazor Server?",
+        "answer": "Upload directly to Azure Blob Storage with a SAS URL generated by the server, so the bytes skip SignalR. A 2MB photo went from 5+ minutes to about 10 seconds."
+      }
+    ],
     "tags": ["Blazor", "Case Study", "Web Development"]
   },
   {

@@ -42,6 +42,26 @@ const { idPrefix = '' } = Astro.props;
   // Delegated on document, and scoped by class rather than id, so this
   // fires correctly for either ContactForm instance that can be present on
   // a page at once (homepage's inline section + the header-mounted dialog).
+  // One shared toast, created on first use - two ContactForm instances can
+  // coexist on a page, so a fixed id in the markup would be duplicated.
+  let toast: HTMLDivElement | undefined;
+  let toastTimer: number | undefined;
+  function showToast(message: string) {
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'contact-toast';
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    // Force reflow so the transition replays if a second toast fires quickly.
+    void toast.offsetWidth;
+    toast.classList.add('contact-toast--visible');
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => toast?.classList.remove('contact-toast--visible'), 6000);
+  }
+
   document.addEventListener('submit', async (event) => {
     const form = event.target as HTMLElement;
     if (!(form instanceof HTMLFormElement) || !form.classList.contains('contact-form')) return;
@@ -80,9 +100,19 @@ const { idPrefix = '' } = Astro.props;
       const result = await response.json();
 
       if (response.ok) {
-        status.textContent = "Message sent — thanks! I'll reply within a few days.";
-        status.classList.add('contact-form-status--success');
         form.reset();
+        // The inline form sits far below the fold and the dialog covers the
+        // page, so an inline status line is easy to miss. Close the dialog
+        // (if sent from there) or jump to the top (if inline), then confirm
+        // with a toast the visitor can actually see.
+        const dialog = form.closest('dialog');
+        if (dialog) {
+          dialog.close();
+        } else {
+          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
+        showToast("Message sent — thanks! I'll reply within a few days.");
         if (typeof gtag === 'function') gtag('event', 'contact_form_submit');
       } else {
         status.textContent = result.error || 'Something went wrong. Please try again.';
@@ -97,3 +127,35 @@ const { idPrefix = '' } = Astro.props;
     }
   });
 </script>
+
+<style is:global>
+  .contact-toast {
+    position: fixed;
+    top: 5.5rem;
+    left: 50%;
+    z-index: 1000;
+    width: max-content;
+    max-width: calc(100vw - 2rem);
+    padding: 0.85rem 1.3rem;
+    border-radius: 4px;
+    background: rgb(var(--surface-rgb));
+    color: var(--text);
+    border: 1px solid var(--accent);
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -0.75rem);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .contact-toast--visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-toast {
+      transition: none;
+    }
+  }
+</style>

@@ -53,3 +53,39 @@ test.describe('shared contact dialog', () => {
     await expect(page.locator('#contact-form, #dialog-contact-form')).toHaveCount(2);
   });
 });
+
+test.describe('contact success toast', () => {
+  async function mockContactOk(page: Page) {
+    await page.route('**/api/contact', (route) =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }),
+    );
+  }
+
+  test('dialog submit closes the dialog and shows the toast', async ({ page }) => {
+    await mockContactOk(page);
+    await page.goto('/consulting');
+    await openContactDialogFromHeader(page);
+    const dialog = page.locator('#contactDialog');
+    await dialog.locator('#dialog-contact-name').fill('Test Person');
+    await dialog.locator('#dialog-contact-email').fill('test@example.com');
+    await dialog.locator('#dialog-contact-message').fill('Hello there');
+    await dialog.locator('button[type="submit"]').click();
+
+    await expect(dialog).toBeHidden();
+    await expect(page.locator('.contact-toast--visible')).toContainText('Message sent');
+  });
+
+  test('inline homepage submit scrolls to top and shows the toast', async ({ page }) => {
+    await mockContactOk(page);
+    await page.goto('/');
+    const form = page.locator('#contact-form');
+    await form.scrollIntoViewIfNeeded();
+    await form.locator('#contact-name').fill('Test Person');
+    await form.locator('#contact-email').fill('test@example.com');
+    await form.locator('#contact-message').fill('Hello there');
+    await form.locator('button[type="submit"]').click();
+
+    await expect(page.locator('.contact-toast--visible')).toContainText('Message sent');
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(50);
+  });
+});

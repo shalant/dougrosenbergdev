@@ -2227,8 +2227,40 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
     display: none;
   }
 
+  /* Tightened so the portrait starts higher on a ~730px-tall phone (it was
+     starting at ~620px, i.e. almost entirely below the fold): smaller
+     side padding gives the subtitle wider lines (6 -> 5), and the gaps/
+     margins that were sized for tablets shrink. The portrait is cropped
+     square from the top (head and shoulders matter, the lower torso
+     doesn't) so it needs less vertical room. */
+  .hero-content {
+    padding: 1.25rem 1.25rem 2rem;
+    gap: 1.25rem;
+  }
+
+  .hero-section h1 {
+    margin-bottom: 1.1rem;
+  }
+
+  .hero-divider {
+    margin-bottom: 1.1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    color: rgba(var(--text-rgb), 0.78);
+  }
+
   .hero-portrait {
     width: min(260px, 55vw);
+  }
+
+  .hero-portrait__img {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: top;
   }
 
   .hero-divider {

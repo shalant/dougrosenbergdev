@@ -2974,6 +2974,16 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   flex-wrap: wrap;
 }
 
+/* Labels like "Visit shalant.github.io/guacamayo-band" are one unbreakable
+   token, wider than a ~300px phone column; let the label wrap inside the
+   button instead of pushing the page 19px past the viewport (measured at
+   364px wide, 2026-10-02). */
+.wd-case__cta .hero-btn {
+  max-width: 100%;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 900px) {
   .wd-case__container {
     padding: 0 2rem;
@@ -3058,6 +3068,18 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
 
 .subpage-hero__title--centered {
   font-size: clamp(3.5rem, 7vw, 7rem) !important;
+  overflow-wrap: anywhere;
+}
+
+/* Project names like "dougrosenberg-music-v2" are one long token; at the
+   3.5rem floor they ran off the right edge of a ~364px phone and were
+   clipped. A smaller floor on narrow screens fits the longest name on one
+   line (overflow-wrap above is the backstop for anything longer). */
+@media (max-width: 600px) {
+  .subpage-hero__title--centered {
+    font-size: clamp(2.25rem, 10vw, 3.5rem) !important;
+    letter-spacing: -1px !important;
+  }
 }
 
 .subpage-hero__sub {

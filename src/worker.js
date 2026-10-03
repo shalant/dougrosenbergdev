@@ -36,6 +36,14 @@ const ALLOWED_ORIGINS = ["https://dougrosenbergdev.com"];
 const LEAD_INTAKE_URL = "https://admin.dougrosenbergdev.com/api/leads";
 const LEAD_SOURCE = "DevServices";
 
+// Which site sent the lead. Separate from LEAD_SOURCE because Source is a
+// business line (MusicBooking/DevServices), not a site - the music site sends
+// both values, so the backend can't infer the site from Source. Must match the
+// backend's allowlist exactly (lowercase, no scheme), or the forward gets a 400
+// that's only logged here. It's a self-reported label, not an auth check:
+// anyone calling the endpoint could send either allowed value.
+const SITE_NAME = "dougrosenbergdev.com";
+
 function json(data, status = 200) {
 	return new Response(JSON.stringify(data), {
 		status,
@@ -90,7 +98,7 @@ async function forwardLeadToErp({ name, email, message }) {
 		const res = await fetch(LEAD_INTAKE_URL, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ source: LEAD_SOURCE, name, email, message }),
+			body: JSON.stringify({ source: LEAD_SOURCE, originSite: SITE_NAME, name, email, message }),
 			signal: AbortSignal.timeout(5000),
 		});
 		if (!res.ok) {
@@ -132,7 +140,7 @@ async function handleContact(request, env) {
 	if (!isValidEmail(email)) {
 		return json({ error: "Enter a valid email address." }, 400);
 	}
-	if (name.length > 200 || email.length > 200 || message.length > 5000) {
+	if (name.length > 200 || email.length > 200 || message.length > 4000) {
 		return json({ error: "One of the fields is too long." }, 400);
 	}
 

@@ -24,7 +24,11 @@ window.DrScrollReveal = (function () {
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+        // threshold 0 + a positive bottom margin: reveal as the section's top edge
+        // approaches the viewport, not once 15% of the section is visible. Sections
+        // are very tall on phones (hundreds of px), so a fractional threshold left
+        // the next section blank for ~30% of a screen of scrolling (2026-10-02).
+        }, { threshold: 0, rootMargin: '0px 0px 10% 0px' });
 
         bindTargets();
     }

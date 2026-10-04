@@ -23,6 +23,7 @@
 // must never turn into a failed contact form.
 
 import { EmailMessage } from "cloudflare:email";
+import { isRateLimited } from "./rate-limit.js";
 
 const CONTACT_TO = "doug.rosenberg@gmail.com";
 const FROM_ADDRESS = "contact@dougrosenbergdev.com";
@@ -117,6 +118,15 @@ async function handleContact(request, env) {
 	const origin = request.headers.get("Origin");
 	if (origin && !ALLOWED_ORIGINS.includes(origin)) {
 		return json({ error: "Invalid origin" }, 403);
+	}
+
+	// Checked before parsing the body so a flood costs as little as possible.
+	// Each accepted request sends an email and an ERP forward.
+	if (await isRateLimited(request, env)) {
+		return new Response(
+			JSON.stringify({ error: "Too many messages. Please wait a minute and try again." }),
+			{ status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } },
+		);
 	}
 
 	let body;

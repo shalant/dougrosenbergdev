@@ -12,7 +12,9 @@
     "astro": "astro",
     "test:e2e": "playwright test",
     "indexnow": "node scripts/indexnow-ping.mjs",
-    "deploy": "npx wrangler deploy && npm run indexnow"
+    "deploy": "npx wrangler deploy && npm run indexnow",
+    "verify-csp": "node scripts/verify-csp-hashes.mjs",
+    "test:unit": "node --test src/headers.test.js src/rate-limit.test.js"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

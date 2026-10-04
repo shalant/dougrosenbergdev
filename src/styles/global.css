@@ -441,7 +441,7 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(var(--surface-nav-rgb), 0.84);
+  background: rgba(var(--surface-nav-rgb), 0.94);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   border-bottom: 1px solid rgba(var(--accent-rgb), 0.2);
@@ -482,7 +482,7 @@ a:hover {
 
 /* Scrolled: more glass, deeper blur, subtle inner highlight */
 .navbar-wrapper.scrolled {
-  background: rgba(var(--surface-rgb), 0.52);
+  background: rgba(var(--surface-rgb), 0.62);
   backdrop-filter: blur(48px) saturate(200%) brightness(1.05);
   -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.05);
   border-bottom-color: rgba(var(--accent-rgb), 0.1);

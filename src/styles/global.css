@@ -4054,15 +4054,119 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   color: rgba(var(--text-rgb), 0.5);
 }
 
+/* GitHub panels under the stat row: contribution calendar + top languages.
+   Teal tints only (no new hexes); level 0 is a faint neutral so empty days
+   still read as a grid. */
+.skills-stats__row { flex-wrap: wrap; }
+.skills-stat { min-width: 9rem; }
+
+.gh-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.gh-panel {
+  border: 1px solid rgba(var(--accent-rgb), 0.12);
+  border-radius: 4px;
+  padding: 1.25rem;
+}
+
+/* Cells scale to the panel width so the whole year fits on desktop; below the
+   min-width the strip scrolls sideways inside the panel instead. */
+.gh-calendar__scroll {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--accent-rgb), 0.4) transparent;
+}
+
+.gh-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--weeks), minmax(0, 1fr));
+  grid-template-rows: 1rem;
+  grid-auto-rows: auto;
+  gap: 3px;
+  min-width: 640px;
+}
+
+.gh-calendar__month {
+  grid-row: 1;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: rgba(var(--text-rgb), 0.5);
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.gh-day {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  display: block;
+}
+.gh-calendar__legend .gh-day { width: 11px; }
+.gh-day--0 { background: rgba(var(--text-rgb), 0.07); }
+.gh-day--1 { background: rgba(var(--accent-rgb), 0.28); }
+.gh-day--2 { background: rgba(var(--accent-rgb), 0.5); }
+.gh-day--3 { background: rgba(var(--accent-rgb), 0.75); }
+.gh-day--4 { background: rgba(var(--accent-rgb), 1); }
+
+.gh-calendar__legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: rgba(var(--text-rgb), 0.5);
+}
+.gh-calendar__legend span:first-child { margin-right: 0.35rem; }
+.gh-calendar__legend span:last-child { margin-left: 0.35rem; }
+
+.gh-languages__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  color: var(--text);
+  display: block;
+  margin-bottom: 0.9rem;
+}
+.gh-languages__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
+.gh-lang {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr 3rem;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+}
+.gh-lang__name { color: rgba(var(--text-rgb), 0.85); }
+.gh-lang__bar {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(var(--text-rgb), 0.07);
+  overflow: hidden;
+}
+.gh-lang__fill { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.gh-lang__pct { font-family: var(--mono); font-size: 0.7rem; text-align: right; color: rgba(var(--text-rgb), 0.6); }
+.gh-languages__note {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.68rem;
+  color: rgba(var(--text-rgb), 0.45);
+}
+
 @media (max-width: 768px) {
   .skills-container { padding: 0 2rem; }
   .skills-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .skills-stats__row { flex-direction: column; }
+  /* Six tiles: two per row instead of six stacked. */
+  .skills-stats__row { display: grid; grid-template-columns: 1fr 1fr; }
   .skills-stat {
-    border-right: none;
+    min-width: 0;
     border-bottom: 1px solid rgba(var(--accent-rgb), 0.12);
   }
-  .skills-stat:last-child { border-bottom: none; }
+  .skills-stat:nth-child(even) { border-right: none; }
+  .skills-stat:nth-last-child(-n+2) { border-bottom: none; }
 }
 
 /* ============================================================================

@@ -3,6 +3,41 @@
 # revalidate), wasteful for anything else. Same pattern as dougrosenbergmusic's
 # site/public/_headers.
 
+# Security response headers. Same set as dougrosenbergmusic's site/public/_headers
+# (Workers static-assets honors this file, same as Pages), rolled out in stages
+# on 2026-10-03: the simple headers are enforced, HSTS starts with a short
+# max-age, and the CSP is Report-Only until it has been checked against the
+# live site.
+#
+# HSTS: max-age is 300 (5 minutes) on purpose, so a mistake expires almost
+# immediately. Raise it (1 day, then 1 week, then 1 year) once the site has been
+# confirmed fine over HTTPS on every page. No includeSubDomains or preload:
+# admin.dougrosenbergdev.com is a separate app, and preload is hard to undo.
+#
+# CSP is Report-Only: violations show in the browser console and block nothing.
+# There is no report-uri, so check the console on the live site after a deploy.
+# Once it's clean, rename the header to Content-Security-Policy (and move
+# frame-ancestors in, which Report-Only ignores; X-Frame-Options covers
+# framing until then). script-src pins inline scripts by sha256 instead of
+# 'unsafe-inline'; Astro inlines small page scripts, and the GA4 consent-mode
+# bootstrap is one of them. `npm run build && npm run verify-csp` fails if the
+# hash list is out of date; `npm run verify-csp -- --write` rewrites it.
+# application/ld+json blocks need no hash (data, not executed).
+# style-src keeps 'unsafe-inline' for Astro's inlined <style> blocks and
+# style="" attributes. Fonts are self-hosted, so font-src is 'self' only.
+# GA4 (www.googletagmanager.com, *.google-analytics.com) runs in Consent Mode
+# v2 denied-by-default; Cloudflare Web Analytics (static.cloudflareinsights.com,
+# cloudflareinsights.com) is allowed in case it's enabled on the zone. Remove
+# either set if that service is turned off.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=300
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'sha256-+JiuA3R5+XvoRLIiQGu4ZNuZN7p93trPv5FulZRt40U=' 'sha256-3MrgYwPAYrgYGpQTaoQX/LtHbtPd30vlG5mhA3secDg=' 'sha256-4fe/3iX3WOIMVcnZZz9LRY7zfDTgwZH7li9Xm7P4PnU=' 'sha256-9G8GE6SZKJxg6OTxHwd7+6PtbjCZr+LNo1gR4fM8+Ls=' 'sha256-DuHvhuCyN37BfqrESQApZFD4TObLcxSq/k6MS5ispIc=' 'sha256-K4ikYgUKO0MEYgWJ842fSVolvPbjZjMmouYl6ep2Z2g=' 'sha256-MtP13hwB4rdezzccWjOmlObfOpeQvRvTQUfYfiKOMUI=' 'sha256-tjYfCaiyri0ziO0ZvxwPLdGiWfjDHW+ZF0IOfx3mPho=' 'sha256-vM1HVSblCyMmQJyJ7uzr3i5dcsaSiMVtpzg+eJj1dko=' 'sha256-zca4Zf87YHVizANpDAY0vA7lIejTqUUazY60xfrUiRQ=' https://static.cloudflareinsights.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
 # Astro's own content-hashed build output (/_astro/*.css, *.js, images processed
 # via astro:assets) - filename changes whenever content does, so this is safe
 # to cache for a year and never revalidate.

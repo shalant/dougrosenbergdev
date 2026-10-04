@@ -67,6 +67,7 @@ public/                # Static passthrough (fonts, robots.txt, llms.txt, _heade
 ## Testing
 
 - **E2E:** `npm run test:e2e` runs the Playwright suite (`e2e/*.spec.ts`) across Chromium, Mobile Chrome, Firefox, WebKit, and Mobile Safari. Run this — not just a visual check — before considering a UI change done; the Bootstrap-removal regression (blog search filter, mobile contact `<dialog>`) was only caught by this suite, not by eyeballing Chromium.
+- **Unit + CSP:** `npm run test:unit` runs the node tests (`src/headers.test.js`, `src/rate-limit.test.js`). After `npm run build`, `npm run verify-csp` checks `public/_headers`' CSP script hashes against the built HTML; if an inline script changes, run `npm run verify-csp -- --write`. Both run in CI.
 - **Link integrity:** `node scripts/check-links.mjs` (run against a built `dist/`) crawls every page and verifies every internal `href`/`src`/`srcset` resolves to a real file.
 - **Lighthouse:** `npx lhci autorun` (config in `lighthouserc.json`). Accessibility/best-practices/SEO should stay at 1.0; performance is locally noisy (no HTTP/2 or compression from the local `http-server`) — don't chase the CI performance number using local runs as ground truth, the real edge (Cloudflare) scores differently.
 - **CI:** `.github/workflows/e2e.yml` and `lighthouse.yml` both trigger on PRs and push to `master` — build, then run the respective check.

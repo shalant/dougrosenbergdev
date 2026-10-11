@@ -113,7 +113,9 @@ const { idPrefix = '' } = Astro.props;
           window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
         }
         showToast("Message sent — thanks! I'll reply within a few days.");
-        if (typeof gtag === 'function') gtag('event', 'contact_form_submit');
+        // The Worker returns { ok: true } for a tripped honeypot too, so the
+        // response can't tell a bot from a person; check the field instead.
+        if (!payload.website && typeof gtag === 'function') gtag('event', 'contact_form_submit');
       } else {
         status.textContent = result.error || 'Something went wrong. Please try again.';
         status.classList.add('contact-form-status--error');

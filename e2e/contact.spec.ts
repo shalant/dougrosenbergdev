@@ -89,3 +89,41 @@ test.describe('contact success toast', () => {
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(50);
   });
 });
+
+// The Worker answers a tripped honeypot with { ok: true } on purpose (so bots
+// can't tell), which means the client can't use the response to decide whether
+// the submit was real. GA4 counted ~170 contact_form_submit key events in 28
+// days while the Leads table held zero real leads - bots filling every field.
+test.describe('contact_form_submit GA4 event', () => {
+  const submitted = (page: Page) =>
+    page.evaluate(() =>
+      ((window as any).dataLayer as ArrayLike<unknown>[]).some(
+        (entry) => entry[0] === 'event' && entry[1] === 'contact_form_submit',
+      ),
+    );
+
+  async function fillAndSubmit(page: Page, honeypot: string) {
+    await page.route('**/api/contact', (route) =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }),
+    );
+    await page.goto('/');
+    const form = page.locator('#contact-form');
+    await form.scrollIntoViewIfNeeded();
+    await form.locator('#contact-name').fill('Test Person');
+    await form.locator('#contact-email').fill('test@example.com');
+    await form.locator('#contact-message').fill('Hello there');
+    if (honeypot) await form.locator('#contact-website').fill(honeypot, { force: true });
+    await form.locator('button[type="submit"]').click();
+    await expect(page.locator('.contact-toast--visible')).toContainText('Message sent');
+  }
+
+  test('a real submit fires the event', async ({ page }) => {
+    await fillAndSubmit(page, '');
+    expect(await submitted(page)).toBe(true);
+  });
+
+  test('a submit with the honeypot filled does not fire the event', async ({ page }) => {
+    await fillAndSubmit(page, 'https://spam.example');
+    expect(await submitted(page)).toBe(false);
+  });
+});

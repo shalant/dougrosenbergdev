@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+
+// One template for the audience-specific landing pages in
+// src/data/landing-pages.json. Reuses the /services/ layout classes on purpose:
+// no new tokens, so DESIGN_NOTES.md's rules carry over unchanged.
+interface Props {
+  page: {
+    path: string;
+    title: string;
+    description: string;
+    headline: string;
+    answer: string;
+    cta: string;
+    schema: { type: string; name: string; areaServed?: Record<string, string> };
+    benefitsHeading: string;
+    benefits: { title: string; description: string }[];
+    workHeading: string;
+    work: { title: string; slug: string; description: string }[];
+    faqs: { question: string; answer: string }[];
+  };
+}
+const { page } = Astro.props;
+
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': page.schema.type,
+  name: page.schema.name,
+  description: page.description,
+  url: `https://dougrosenbergdev.com${page.path}`,
+  ...(page.schema.areaServed ? { areaServed: page.schema.areaServed } : {}),
+  provider: { '@id': 'https://dougrosenbergdev.com/#person' },
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: page.faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+};
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+  </Fragment>
+
+  <Header />
+
+  <section class="subpage-hero">
+    <div class="subpage-hero__grid-bg"></div>
+    <div class="subpage-hero__content">
+      <div class="subpage-hero__text">
+        <h1 class="subpage-hero__title">{page.headline}</h1>
+        <p class="subpage-hero__sub">{page.answer}</p>
+        <button type="button" class="hero-btn hero-btn--primary" data-contact-trigger>
+          {page.cta}
+        </button>
+      </div>
+      <div class="subpage-hero__img">
+        <img src="/images/DrPortraitV5.webp" alt="Doug Rosenberg" />
+      </div>
+    </div>
+  </section>
+
+  <section class="consulting-services">
+    <div class="consulting-services__container">
+      <h2 class="consulting-services__heading">{page.benefitsHeading}</h2>
+      <div class="consulting-services__grid">
+        {page.benefits.map((b) => (
+          <div class="consulting-service-card">
+            <h3>{b.title}</h3>
+            <p>{b.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="services-faq">
+    <div class="services-faq__container">
+      <h2 class="services-faq__heading">{page.workHeading}</h2>
+      <div class="services-faq__list">
+        {page.work.map((w) => (
+          <div class="services-faq__item">
+            <h3><a href={`/webdesign/${w.slug}/`}>{w.title}</a></h3>
+            <p>{w.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="services-faq">
+    <div class="services-faq__container">
+      <h2 class="services-faq__heading">Common Questions</h2>
+      <div class="services-faq__list">
+        {page.faqs.map((faq) => (
+          <div class="services-faq__item">
+            <h3>{faq.question}</h3>
+            <p>{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="consulting-cta">
+    <div class="consulting-cta__container">
+      <p class="consulting-cta__tagline">Every project is scoped individually &mdash; reach out and let's talk about what you need.</p>
+      <button type="button" class="hero-btn hero-btn--primary" data-contact-trigger>
+        {page.cta}
+      </button>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

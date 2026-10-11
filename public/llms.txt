@@ -11,6 +11,8 @@ Brings enterprise-grade engineering discipline (security, performance, accessibi
 
 ## Pages
 - [Services](https://dougrosenbergdev.com/services/): Engagement types and rates — custom web/app development, ERP & business systems consulting, AI-assisted development/modernization, ongoing support.
+- [Web design for Chicago small businesses](https://dougrosenbergdev.com/chicago-web-design/): Custom websites for Chicago small businesses, in person or remote, from $750, with a free discovery call.
+- [Websites for musicians and bands](https://dougrosenbergdev.com/musician-websites/): Custom sites for working musicians and bands, built by a Chicago saxophonist and composer.
 - [Consulting](https://dougrosenbergdev.com/consulting/): IT support and web/app development for small businesses — affordable support, cloud setup and backup, custom sites, ongoing maintenance.
 - [Web Design](https://dougrosenbergdev.com/webdesign/): Portfolio and case studies.
 - [Blog](https://dougrosenbergdev.com/blog/): Technical writing on Blazor, .NET, and software architecture.

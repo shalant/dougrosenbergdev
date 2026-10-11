@@ -88,6 +88,10 @@ Net assessment: **structurally positive, if the eventual deploy is done carefull
 
 - Direct-answer blocks (PR #32, 2026-09-30): new `answer` field (46/51/51 words) in `aboutme.json`, `services.json` and `consulting.json`, drawn only from facts already published (price ranges, Chicago, remote, free discovery call). `/services/` and `/consulting/` render it as the hero sub-line; the homepage gets it as a body-type paragraph in About (small scoped style in `About.astro`, existing tokens only). Meta descriptions still come from `subheadline` so they stay under ~160 chars. **The services answer states current price ranges - update it if rates change.** Not yet eyeballed on a real phone.
 
+### dev.to profile linked from the site (2026-10-10)
+
+Part of the traffic plan (step 4, identity signals, and step 3, inbound links). `siteproperties.json`'s `devDotTo` was `null`, so the footer's existing dev.to icon never rendered; it is now `shalant`, and `https://dev.to/shalant` is also in the `Person` JSON-LD `sameAs` in `BaseLayout.astro`, so crawlers tie the dev.to profile to the same entity as GitHub, LinkedIn and dougrosenberg.com. Checked first: the profile returns 200 and has one published article (the SMB post, 2026-09-28, with `canonical_url` pointing back to this site). The other six drafts in the untracked `devto-crossposts/` folder are still `published: false`; the SMB draft's own front matter is stale (it says unpublished, but it is live on dev.to). Verified: build, `verify-csp`, `check-links.mjs`, `e2e/home.spec.ts` on all 5 browsers, and the built homepage contains both the footer link and the `sameAs` entry.
+
 ## Done
 
 - All 9 routes ported and verified in-browser: `/`, `/services`, `/consulting`, `/archive` (+ `/previous` redirect), `/webdesign` (3D ring + contact dialog), 8× `/webdesign/[slug]`, `/blog`, `/blog/archive`, 5× `/blog/[slug]`.

@@ -3282,6 +3282,19 @@ html[data-theme="light"] .dr-theme-scope .subpage-hero__sub {
   margin: 0 0 0.6rem 0;
 }
 
+/* Landing pages reuse this list for case-study links; without this the h3's
+   anchor falls back to the UA link color, which is near-invisible on the navy. */
+.services-faq__item h3 a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--accent-rgb), 0.4);
+  text-underline-offset: 0.2em;
+}
+
+.services-faq__item h3 a:hover {
+  text-decoration-color: currentColor;
+}
+
 .services-faq__item p {
   font-size: 0.95rem;
   color: rgba(var(--text-rgb), 0.65);

@@ -1,0 +1,127 @@
+{
+  "chicago-web-design": {
+    "path": "/chicago-web-design/",
+    "title": "Web Design for Chicago Small Businesses — Doug Rosenberg",
+    "description": "Custom websites for Chicago small businesses from a local .NET developer. In person at your shop or remote, projects from $750. Free discovery call.",
+    "headline": "Websites for Chicago Small Businesses",
+    "answer": "I'm Doug Rosenberg, a Chicago-based full-stack developer. I build custom websites for small businesses, and I'm glad to meet at your shop in Chicago or work remotely. Projects typically run $750–$3,000, and every engagement starts with a free discovery call.",
+    "cta": "Get a Free Quote",
+    "schema": {
+      "type": "ProfessionalService",
+      "name": "Doug Rosenberg — Web Design for Small Businesses",
+      "areaServed": { "@type": "City", "name": "Chicago" }
+    },
+    "benefitsHeading": "What You Get",
+    "benefits": [
+      {
+        "title": "Designed Before It's Built",
+        "description": "UI/UX design in Figma before a line of code, so you see and approve the site before it's built."
+      },
+      {
+        "title": "Fast and Accessible",
+        "description": "Responsive builds with a WCAG 2.1 AA accessibility baseline, and performance checked with real tooling instead of eyeballed."
+      },
+      {
+        "title": "Someone You Can Reach",
+        "description": "Direct access, no ticket queue. Ongoing support runs $300–$800 a month if you want it after launch."
+      },
+      {
+        "title": "In Person or Remote",
+        "description": "Based in Chicago and happy to meet at your shop. Remote works just as well if that's easier."
+      }
+    ],
+    "workHeading": "Recent Small-Business Work",
+    "work": [
+      {
+        "title": "Sonus Construction Group",
+        "slug": "sonus-construction",
+        "description": "An editorial-style site for a multi-family renovation contractor whose real audience is investors and developers vetting a partner."
+      },
+      {
+        "title": "Hardware Etc LLC",
+        "slug": "hardware-etc",
+        "description": "A bulk-materials supplier's site built to read as credible to spec-writers and to be fast for crews checking specs on-site."
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Can you meet in person?",
+        "answer": "Yes. I'm based in Chicago and happy to visit your shop. I also work remotely with clients anywhere, so location isn't a requirement."
+      },
+      {
+        "question": "What does a website cost?",
+        "answer": "Custom web projects typically run $750–$3,000, scoped after a free discovery call so you know the price before any work starts."
+      },
+      {
+        "question": "What do you build it with?",
+        "answer": "I build custom sites with Astro, Blazor, or Angular depending on what the project calls for, and I've also built on Squarespace when that was the right fit for the client."
+      },
+      {
+        "question": "Do you help after the site launches?",
+        "answer": "Yes. Ongoing support covers updates, security patches, bug fixes, and small enhancements for $300–$800 a month, with direct access to me."
+      }
+    ]
+  },
+  "musician-websites": {
+    "path": "/musician-websites/",
+    "title": "Websites for Musicians and Bands — Doug Rosenberg",
+    "description": "Custom websites for working musicians and bands, built by a Chicago saxophonist and composer. Shows, music, and booking. Projects from $750.",
+    "headline": "Websites for Musicians and Bands",
+    "answer": "I'm a working Chicago saxophonist and composer who also builds websites, so I know what a band site has to do: show people where you're playing, let them hear you, and make booking easy. Custom projects typically run $750–$3,000, and every project starts with a free discovery call.",
+    "cta": "Get a Free Quote",
+    "schema": {
+      "type": "Service",
+      "name": "Website design for musicians and bands"
+    },
+    "benefitsHeading": "What You Get",
+    "benefits": [
+      {
+        "title": "Built Around Your Own Art",
+        "description": "For the band Guacamayo, every color, font pairing, and motif was sampled from the band's real flyer and logo instead of an invented identity."
+      },
+      {
+        "title": "Shows That Stay Current",
+        "description": "Guacamayo's Shows section pulls its real gig dates from a calendar API at build time, with a graceful fallback if the fetch fails."
+      },
+      {
+        "title": "Not a Template",
+        "description": "My own site, dougrosenberg.com, is a from-scratch custom build with a specific brand concept instead of generic musician-site defaults."
+      },
+      {
+        "title": "Made by a Working Musician",
+        "description": "I'm a saxophonist and composer who plays in several working Chicago bands, so I build with real gigs and real audiences in mind."
+      }
+    ],
+    "workHeading": "Musician Sites I've Built",
+    "work": [
+      {
+        "title": "Guacamayo",
+        "slug": "guacamayo-band",
+        "description": "A currently-gigging Chicago funky Latin groove band's own site, built around the flyer art they already had."
+      },
+      {
+        "title": "dougrosenberg.com",
+        "slug": "dougrosenberg-music-v2",
+        "description": "My own musician and composer site, rebuilt from scratch in Astro and deployed to Cloudflare Workers."
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Do you understand how working bands operate?",
+        "answer": "Yes. I'm a saxophonist and composer and I play in several working Chicago bands, so I build with real gigs, press, and booking in mind."
+      },
+      {
+        "question": "What does a musician website cost?",
+        "answer": "Custom web projects typically run $750–$3,000, scoped after a free discovery call so you know the price before any work starts."
+      },
+      {
+        "question": "Do I need to be in Chicago?",
+        "answer": "No. I work remotely with clients anywhere, and I'm also happy to meet in person if you're in the Chicago area."
+      },
+      {
+        "question": "Do you help after the site launches?",
+        "answer": "Yes. Ongoing support covers updates, security patches, bug fixes, and small enhancements for $300–$800 a month, with direct access to me."
+      }
+    ]
+  }
+}

@@ -12,6 +12,7 @@ Doug's revised read (2026-09-16), after reviewing GA4 traffic and getting ~5 col
 - `public/llms.txt`'s opening line dropped the "not currently seeking full-time employment or recruiter outreach" disclaimer.
 - `BaseLayout.astro`'s default meta description and `Person`/`WebSite` JSON-LD now name small-business/SMB web work explicitly (previously enterprise/ERP-only framing) — this is a genuine SEO/GEO push, not just an undo.
 - `DESIGN_NOTES.md`'s "not to farm recruiter attention" framing note was softened to match.
+- `CLAUDE.md`'s "Standing project constraints" still told sessions to keep recruiter visibility low until ~March 2027; replaced on 2026-10-11 with the SMB/musician audience note, plus a rule not to edit LinkedIn or the GitHub profile README without Doug's go-ahead, since his day-job employer can see them.
 - No `robots.txt` changes — that reasoning (most recruiter-sourcing tools don't self-identify or respect robots.txt) still holds and was never about this constraint specifically.
 
 **Still true, not affected by this reversal:** the *live* site (`PortfolioNov25`, GitHub Pages) is a separate codebase and wasn't touched here. If Doug wants equivalent framing changes pushed there, that's a separate ask.

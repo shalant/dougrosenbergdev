@@ -85,7 +85,7 @@ public/                # Static passthrough (fonts, robots.txt, llms.txt, _heade
 
 ## Standing project constraints
 
-- **Recruiter visibility is intentionally kept low** until ~March 2027 (Doug wants the site read as "open to freelance/consulting," not "open to full-time roles"). This shaped `public/llms.txt`'s wording and the homepage hero copy. If you're touching SEO/GEO content, meta descriptions, or structured data, check `PORT_TODO.md`'s "Constraint: keep recruiter visibility low" note first — don't add recruiter-attracting copy or schema without raising it.
+- **Audience: small-business and musician clients first.** The old "keep recruiter visibility low until ~March 2027" constraint was superseded on 2026-09-16 (see `PORT_TODO.md`): recruiter interest is welcome as a side effect, but the site's target is SMB web clients and musicians, and copy and schema should be written for them, not for full-time-role recruiters. Doug's day-job employer can see his LinkedIn and GitHub profile, so don't edit those, or add day-job-facing content, without his explicit go-ahead.
 - **Faithful-port issues stay as-is unless explicitly asked to fix.** E.g. the `/webdesign` hero ring's washed-out light-theme contrast is inherited from the live Blazor site, not a porting regression — it's logged in `PORT_TODO.md`, not silently fixed, because fixing it would make this port diverge from current production.
 
 ## Git Workflow

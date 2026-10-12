@@ -9,6 +9,15 @@ test.describe('homepage', () => {
     await expect(page.locator('.hero-cta')).toHaveCount(0);
   });
 
+  test('emits the sitewide ProfessionalService node tied to the Person', async ({ page }) => {
+    await page.goto('/');
+    const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const business = blocks.map((b) => JSON.parse(b)).find((n) => n['@type'] === 'ProfessionalService');
+    expect(business?.['@id']).toBe('https://dougrosenbergdev.com/#business');
+    expect(business?.areaServed?.name).toBe('Chicago');
+    expect(business?.provider?.['@id']).toBe('https://dougrosenbergdev.com/#person');
+  });
+
   test('nav links to the client-work pages', async ({ page }) => {
     await page.goto('/');
     // CSS selectors + toBeAttached (plain DOM presence), not getByRole/toBeVisible - below

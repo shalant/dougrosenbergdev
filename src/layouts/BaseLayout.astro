@@ -140,7 +140,10 @@ const arborKinLd = {
       });
     }
     gtag('js', new Date());
-    gtag('config', 'G-3H1NB9ES0L');
+    // Production host only: CI's Playwright/Lighthouse runs against localhost
+    // were ~99% of all GA4 traffic and every key event (see PORT_TODO.md).
+    // Without a config call, later gtag('event', ...) calls have no target.
+    if (location.hostname === 'dougrosenbergdev.com') gtag('config', 'G-3H1NB9ES0L');
   </script>
 
   <!-- Sets data-theme on <html> before first paint - must run before CSS-driven paint,

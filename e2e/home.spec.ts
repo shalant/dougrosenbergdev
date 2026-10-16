@@ -18,6 +18,19 @@ test.describe('homepage', () => {
     expect(business?.provider?.['@id']).toBe('https://dougrosenbergdev.com/#person');
   });
 
+  test('sends no GA4 hits from a non-production host', async ({ page }) => {
+    // CI runs this suite on GitHub's Azure runners against localhost; before this guard,
+    // every test was a "new user" in GA4 and the mocked contact submits were key events.
+    const hits: string[] = [];
+    page.on('request', (req) => {
+      if (/google-analytics\.com\/(g\/)?collect/.test(req.url())) hits.push(req.url());
+    });
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    expect(await page.evaluate(() => (window as any).dataLayer.some((e: any) => e[0] === 'config'))).toBe(false);
+    expect(hits).toEqual([]);
+  });
+
   test('nav links to the client-work pages', async ({ page }) => {
     await page.goto('/');
     // CSS selectors + toBeAttached (plain DOM presence), not getByRole/toBeVisible - below

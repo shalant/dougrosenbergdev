@@ -141,6 +141,11 @@ test.describe('contact form validation', () => {
     const email = form.locator('#contact-email');
     const message = form.locator('#contact-message');
 
+    // WebKit has no scroll anchoring: jumping down to the form starts the
+    // lazy images above it loading, and as they size in they push the
+    // button down between Playwright's scroll and its tap. Let them land.
+    await form.scrollIntoViewIfNeeded();
+    await page.waitForLoadState('networkidle');
     await form.locator('button[type="submit"]').click();
     await expect(name).toHaveAttribute('aria-invalid', 'true');
     await expect(message).toHaveAttribute('aria-invalid', 'true');

@@ -37,7 +37,16 @@ Note: the existing `app.css` already has more bespoke thought in it than the her
 2. **One bold accent per page.** Teal is spent once as a signature interactive moment (the 3D ring on `/webdesign`, the status-line panel on `/`) — not the hover color on every card.
 3. **Left-aligned, asymmetric composition.** Never the centered-hero-two-buttons default.
 4. **Mono type is data, not decoration.** Only appears next to an actual technical fact.
-5. **One deliberate motion moment per page**, not fade-and-slide-up on every section on scroll (current `scrollReveal.js` behavior — dial back to fewer, more intentional triggers).
+5. **One deliberate motion moment per page**, not fade-and-slide-up on every section on scroll. Done 2026-10-17: sections no longer fade/slide in, the blanket `h2` `fadeInDown` and the per-chip stagger in Skills are gone, and `scrollReveal.js` survives only to play the brass waveform dividers. See "Motion inventory" below for what each page is allowed.
+
+## Motion inventory (2026-10-17)
+
+Everything else is a *state change*: short (≤0.4s), triggered by the visitor, and never an entrance.
+
+- **Signature moment, one per page:** `/` = the hero entrance (Bauhaus layers settle, name, divider, portrait; the scroll arrow nudges 3 times, then stops). `/webdesign` = the 3D ring. Subpages = their hero heading's entrance.
+- **Sitewide motif:** the brass waveform `SectionDivider` plays once when its section scrolls in.
+- **State changes:** Experience tab marker slides between jobs, and its panel settles in 0.3s.
+- **Reduced motion:** the global `prefers-reduced-motion` rule in `global.css` zeroes all transitions/animations. New JS-driven motion must check the media query itself.
 
 ## Explicitly avoided (AI-site tells, per calibration)
 

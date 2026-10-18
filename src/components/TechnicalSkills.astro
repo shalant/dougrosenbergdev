@@ -60,7 +60,7 @@ const statTiles = (githubStats
       {categories.map((cat) => (
         <div class="skills-category">
           <span class="skills-category__label">{cat.label}</span>
-          <div class="skills-category__chips reveal-on-scroll">
+          <div class="skills-category__chips">
             {cat.chips.map((chip) => <TechChip name={chip} />)}
           </div>
         </div>

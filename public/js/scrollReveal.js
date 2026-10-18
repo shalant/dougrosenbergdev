@@ -1,5 +1,7 @@
-// Fades .reveal-on-scroll sections in as they enter the viewport. Loaded once from
-// BaseLayout.astro, which calls DrScrollReveal.init() from its own inline <script>.
+// Adds .is-visible to .reveal-on-scroll sections as they enter the viewport, which
+// plays the section's brass waveform divider (the sections themselves no longer fade
+// in; see global.css "SCROLL-REVEAL TRIGGER"). Loaded once from BaseLayout.astro,
+// which calls DrScrollReveal.init() from its own inline <script>.
 window.DrScrollReveal = (function () {
     let initialized = false;
     let observer = null;

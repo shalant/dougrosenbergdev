@@ -262,7 +262,6 @@ h2 {
   letter-spacing: -0.5px;
   position: relative;
   padding-bottom: 1.5rem;
-  animation: fadeInDown 0.8s ease-out;
 }
 
 h2::after {
@@ -2123,7 +2122,9 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   opacity: 0.35;
   transition: opacity 0.3s ease;
   filter: invert(1);
-  animation: heroBounce 2.5s ease-in-out 1.8s infinite;
+  /* A few nudges after the entrance settles, then still: a cue that loops
+     forever keeps pulling the eye away from the name and portrait. */
+  animation: heroBounce 2.5s ease-in-out 1.8s 3;
 }
 
 .hero-scroll:hover img {
@@ -5248,48 +5249,16 @@ html[data-theme="light"] .dr-theme-scope .site-footer__cta:hover {
 }
 
 /* ============================================================================
-   SCROLL-REVEAL (fade in + slide up as sections enter viewport)
+   SCROLL-REVEAL TRIGGER
    ============================================================================ */
 
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.7s var(--ease-swing), transform 0.7s var(--ease-swing);
-}
-
-.reveal-on-scroll.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal-on-scroll {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
-/* Staggered chip reveal — each tech-chip fades in ~50ms after the previous
-   one once its parent .skills-category__chips crosses into view. */
-.skills-category__chips.reveal-on-scroll .tech-chip {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s var(--ease-swing), transform 0.5s var(--ease-swing);
-}
-
-.skills-category__chips.reveal-on-scroll.is-visible .tech-chip {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.skills-category__chips.reveal-on-scroll .tech-chip:nth-child(1)  { transition-delay: 0.00s; }
-.skills-category__chips.reveal-on-scroll .tech-chip:nth-child(2)  { transition-delay: 0.05s; }
-.skills-category__chips.reveal-on-scroll .tech-chip:nth-child(3)  { transition-delay: 0.10s; }
-.skills-category__chips.reveal-on-scroll .tech-chip:nth-child(4)  { transition-delay: 0.15s; }
-.skills-category__chips.reveal-on-scroll .tech-chip:nth-child(5)  { transition-delay: 0.20s; }
-.skills-category__chips.reveal-on-scroll .tech-chip:nth-child(6)  { transition-delay: 0.25s; }
-.skills-category__chips.reveal-on-scroll .tech-chip:nth-child(7)  { transition-delay: 0.30s; }
+/* .reveal-on-scroll no longer fades or slides anything itself (removed
+   2026-10-17, DESIGN_NOTES.md principle 5: one deliberate motion moment per
+   page, not fade-and-slide-up on every section). scrollReveal.js still adds
+   .is-visible, which plays each section's brass waveform divider (see
+   .section-divider__bar above). Content is visible from first paint, so a
+   late or missed observer callback can't leave a section blank, which is
+   what happened on mobile on 2026-10-02. */
 
 /* ============================================================================
    /webdesign2 — scrolling-screenshot hero (glass, depth, motion)

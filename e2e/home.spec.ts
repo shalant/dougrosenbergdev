@@ -52,6 +52,17 @@ test.describe('homepage', () => {
     await expect(html).toHaveAttribute('data-theme', 'dark');
   });
 
+  test('a rapid double toggle mid-reveal lands back on dark', async ({ page }) => {
+    // The second click starts a view transition while the first is still
+    // animating, which skips the first; its theme update must still apply.
+    await page.goto('/');
+    await page.locator('.theme-toggle').click();
+    await page.locator('.theme-toggle').click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(page.locator('html')).not.toHaveClass(/theme-switching/);
+    expect(await page.evaluate(() => localStorage.getItem('dr-theme'))).toBe('dark');
+  });
+
   test('experience tabs switch the detail panel', async ({ page }) => {
     await page.goto('/#experience');
     const items = page.locator('.experience-list__item');

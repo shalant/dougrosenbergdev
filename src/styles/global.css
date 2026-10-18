@@ -864,9 +864,8 @@ a:hover {
 /* Theme toggle — icon-only by design (nav is already tight at 7 links + CTA;
    see docs/TASKS.md Phase 3). Sized to match .nav-toggle's 44x44 tap target. */
 .theme-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   flex-shrink: 0;
   width: 44px;
   height: 44px;
@@ -877,27 +876,66 @@ a:hover {
   padding: 0;
 }
 
+/* Both icons share one grid cell so they can cross-rotate in place: the
+   outgoing one turns away and shrinks while the incoming one turns in. */
 .theme-toggle__icon {
+  grid-area: 1 / 1;
   width: 16px;
   height: 16px;
   color: rgba(var(--accent-rgb), 0.75);
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, opacity 0.35s ease, transform 0.5s var(--ease-swing);
 }
 
 .theme-toggle:hover .theme-toggle__icon {
   color: var(--accent);
 }
 
-.theme-toggle__icon--moon {
-  display: none;
+.theme-toggle:active .theme-toggle__icon {
+  transform: scale(0.85);
 }
 
+.theme-toggle__icon--moon,
 html[data-theme="light"] .theme-toggle__icon--sun {
-  display: none;
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
 }
 
 html[data-theme="light"] .theme-toggle__icon--moon {
-  display: block;
+  opacity: 1;
+  transform: none;
+}
+
+/* Theme switch reveal (driven by DrTheme.toggle() in public/js/theme.js):
+   the new theme's snapshot is clipped to a circle growing from the toggle.
+   During the switch, other transitions are suspended so colors don't also
+   fade inside the circle, and the per-page title names from the
+   cross-document transitions are cleared so those titles aren't animated
+   separately from the rest of the page. */
+html.theme-switching *:not(.theme-toggle__icon) {
+  transition: none !important;
+}
+
+html.theme-switching * {
+  view-transition-name: none !important;
+}
+
+html.theme-switching::view-transition-old(root),
+html.theme-switching::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.theme-switching::view-transition-new(root) {
+  animation: theme-reveal 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--theme-reveal-x) var(--theme-reveal-y));
+  }
+  to {
+    clip-path: circle(var(--theme-reveal-r) at var(--theme-reveal-x) var(--theme-reveal-y));
+  }
 }
 
 @media (max-width: 1200px) {

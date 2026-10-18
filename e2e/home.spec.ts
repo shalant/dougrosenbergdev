@@ -106,3 +106,26 @@ test.describe('homepage', () => {
     await expect(second).toBeHidden();
   });
 });
+
+test.describe('github stats count-up', () => {
+  test('lands on the real values, which screen readers get throughout', async ({ page }) => {
+    await page.goto('/');
+    const values = page.locator('.skills-stat__value');
+    test.skip((await values.count()) === 0, 'GitHub stats unavailable at build time');
+    const finals = await page.locator('.skills-stat .sr-only').allTextContents();
+    await page.locator('.skills-stats__row').scrollIntoViewIfNeeded();
+    await expect(values).toHaveText(finals);
+  });
+
+  test('skips the animation with reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const values = page.locator('.skills-stat__value');
+    test.skip((await values.count()) === 0, 'GitHub stats unavailable at build time');
+    const finals = await page.locator('.skills-stat .sr-only').allTextContents();
+    await page.locator('.skills-stats__row').scrollIntoViewIfNeeded();
+    // 300ms into a 900ms count, an animated value would still be mid-way.
+    await page.waitForTimeout(300);
+    expect(await values.allTextContents()).toEqual(finals);
+  });
+});

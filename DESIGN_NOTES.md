@@ -46,6 +46,7 @@ Everything else is a *state change*: short (≤0.4s), triggered by the visitor, 
 - **Signature moment, one per page:** `/` = the hero entrance (Bauhaus layers settle, name, divider, portrait; the scroll arrow nudges 3 times, then stops). `/webdesign` = the 3D ring. Subpages = their hero heading's entrance.
 - **Sitewide motif:** the brass waveform `SectionDivider` plays once when its section scrolls in.
 - **State changes:** Experience tab marker slides between jobs, and its panel settles in 0.3s.
+- **GitHub stats:** the six numbers count up once (0.9s, ease-out) the first time the row is 60% in view. Real values are in the HTML; screen readers get a static `.sr-only` copy. Skipped with reduced motion.
 - **Contact form:** bad fields get a red border (`aria-invalid`, the existing `#c0392b` error red) and focus moves to the first one; the submit button shows a small spinning ring while sending; success is the existing toast.
 - **Theme toggle:** sun/moon cross-rotate in place; the new theme is revealed in a circle growing from the toggle (same-document view transition in `public/js/theme.js`, 0.55s). Instant swap where unsupported or with reduced motion.
 - **Page-to-page:** native cross-document view transitions (CSS only). A `/webdesign` card's project name morphs into the case study title, a blog card's title into the post `h1`; everything else cross-fades in 0.25s. Names are `vt-wd-<slug>` / `vt-post-<id>` and must be unique per page; `e2e/view-transitions.spec.ts` guards that. Unsupported browsers (Firefox) navigate normally.

@@ -437,18 +437,24 @@ const faqLd = post.faqs?.length > 0 ? {
     font-style: italic;
   }
 
+  /* Two underline layers: a faint full-width one that's always there (so a
+     link isn't marked by color alone, WCAG 1.4.1) and a solid one that
+     draws across on hover/focus. */
   .blog-post-detail__content :global(a) {
     color: var(--accent);
     text-decoration: none;
-    background-image: linear-gradient(var(--accent), var(--accent));
+    background-image:
+      linear-gradient(var(--accent), var(--accent)),
+      linear-gradient(rgba(var(--accent-rgb), 0.35), rgba(var(--accent-rgb), 0.35));
     background-repeat: no-repeat;
-    background-position: left bottom;
-    background-size: 0% 1px;
+    background-position: left bottom, left bottom;
+    background-size: 0% 1px, 100% 1px;
     transition: background-size 0.3s ease;
   }
 
-  .blog-post-detail__content :global(a:hover) {
-    background-size: 100% 1px;
+  .blog-post-detail__content :global(a:hover),
+  .blog-post-detail__content :global(a:focus-visible) {
+    background-size: 100% 1px, 100% 1px;
   }
 
   .blog-post-detail__toc {

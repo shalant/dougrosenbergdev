@@ -818,7 +818,7 @@ a:hover {
   margin-left: 1.25rem;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 }
 
 .nav-cta::before {
@@ -842,10 +842,6 @@ a:hover {
 .nav-cta__text {
   position: relative;
   z-index: 1;
-}
-
-.nav-cta:hover .nav-cta__arrow {
-  transform: translate(2px, -2px);
 }
 
 /* Mobile-only copy of the CTA, rendered inside the hamburger menu itself
@@ -2041,7 +2037,9 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 2px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
@@ -2075,14 +2073,15 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   transform: translateY(-2px);
 }
 
-/* Reused wherever a hero-btn's label ends in an arrow (View Work, Send a
-   Message, Visit <site>, etc.) — mirrors the same translate-on-hover pattern
-   already used for .nav-cta__arrow / .site-footer__cta-arrow, just moving
-   right instead of diagonally since these sit inline in a button, not next
-   to a "go somewhere else" external-link glyph. */
-
-.hero-btn:hover .hero-btn__arrow {
-  transform: translateX(3px);
+/* Press feedback for the filled/outlined buttons: the hover lift drops back
+   and the button gives slightly under the finger or cursor. Fast in, so it
+   registers on a quick tap. */
+.hero-btn:active,
+.hero-inline-cta:active,
+.nav-cta:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+  transition-duration: 0.08s;
 }
 
 .hero-portrait {
@@ -5186,10 +5185,6 @@ html[data-theme="light"] .dr-theme-scope .site-footer__social img {
    theme-adjusted) accent token in light mode instead. */
 html[data-theme="light"] .dr-theme-scope .site-footer__cta:hover {
   color: var(--accent);
-}
-
-.site-footer__cta:hover .site-footer__cta-arrow {
-  transform: translate(2px, -2px);
 }
 
 /* Back-to-top button */

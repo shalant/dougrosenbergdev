@@ -59,7 +59,7 @@ const dateFmtShort = (d: string) => new Date(d).toLocaleDateString('en-US', { mo
                 {featured.map((post: any) => (
                   <a class="featured-post-card" href={`/blog/${post.id}`}>
                     <div class="featured-post-badge">Featured</div>
-                    <h3 class="featured-post-title">{post.title}</h3>
+                    <h3 class="featured-post-title vt-title" style={`view-transition-name: vt-post-${post.id}`}>{post.title}</h3>
                     <div class="featured-post-meta">
                       <span>{dateFmtShort(post.date)}</span>
                       <span>{post.readingTimeMinutes} min read</span>
@@ -83,7 +83,12 @@ const dateFmtShort = (d: string) => new Date(d).toLocaleDateString('en-US', { mo
                 hidden={featuredIds.has(post.id)}
               >
                 <div class="blog-post-card__content">
-                  <h3 class="blog-post-card__title">{post.title}</h3>
+                  {/* The featured post also sits hidden in this grid; only its
+                      featured-card copy carries the name (names must be unique). */}
+                  <h3
+                    class:list={["blog-post-card__title", { "vt-title": !featuredIds.has(post.id) }]}
+                    style={featuredIds.has(post.id) ? undefined : `view-transition-name: vt-post-${post.id}`}
+                  >{post.title}</h3>
                   <div class="blog-post-card__meta">
                     <time class="blog-post-card__date">{dateFmt(post.date)}</time>
                     <span class="blog-post-card__reading-time">{post.readingTimeMinutes} min read</span>

@@ -5261,6 +5261,45 @@ html[data-theme="light"] .dr-theme-scope .site-footer__cta:hover {
    what happened on mobile on 2026-10-02. */
 
 /* ============================================================================
+   CROSS-DOCUMENT VIEW TRANSITIONS
+   ============================================================================ */
+
+/* Native MPA view transitions: CSS only, no router, no inline script (so no
+   CSP hash churn). A /webdesign card's project name morphs into the case
+   study's title, and a blog card's title into the post's h1, both ways; the
+   rest of the page cross-fades. Browsers without support (Firefox as of
+   2026-10) just navigate normally. Names are set per item with inline
+   view-transition-name in the page markup (vt-wd-<slug>, vt-post-<id>),
+   since every name on a page has to be unique. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(*) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.25s;
+}
+
+/* Shrink-wrap the morphing titles so the snapshot is the text, not a
+   full-width block with the text at one end of it. */
+.vt-title {
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* The site-wide reduced-motion rule can't reach these pseudo-elements. */
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* ============================================================================
    /webdesign2 — scrolling-screenshot hero (glass, depth, motion)
    ============================================================================ */
 

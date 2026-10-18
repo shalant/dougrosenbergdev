@@ -95,7 +95,7 @@ const ringImages = selectRingImages(RING_CARD_COUNT);
               <span class="about-skill-chip">{project.platform}</span>
               {project.status && <span class="wd-project__wip">{project.status}</span>}
             </div>
-            <h3 class="wd-project__name">{project.name}</h3>
+            <h3 class="wd-project__name vt-title" style={`view-transition-name: vt-wd-${project.slug}`}>{project.name}</h3>
             <p class="wd-project__industry">{project.industry}</p>
             <ul class="wd-project__bullets">
               {project.bullets.map((bullet) => <li>{bullet}</li>)}

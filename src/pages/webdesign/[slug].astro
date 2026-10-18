@@ -25,7 +25,7 @@ const { project } = Astro.props;
     <div class="subpage-hero__grid-bg"></div>
     <div class="subpage-hero__content subpage-hero__content--centered">
       <span class="section-eyebrow">// case study</span>
-      <h1 class="subpage-hero__title subpage-hero__title--centered">{project.name}</h1>
+      <h1 class="subpage-hero__title subpage-hero__title--centered vt-title" style={`view-transition-name: vt-wd-${project.slug}`}>{project.name}</h1>
       <p class="subpage-hero__sub subpage-hero__sub--centered">{project.tagline}</p>
     </div>
   </section>

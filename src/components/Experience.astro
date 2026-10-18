@@ -15,12 +15,16 @@ import experiences from '../data/experience.json';
 
     <div class="experience-layout">
 
-      <div class="experience-list" role="tablist" id="experienceList">
+      <div class="experience-list" role="tablist" aria-label="Jobs" id="experienceList">
+        <span class="experience-list__indicator" aria-hidden="true"></span>
         {experiences.map((exp: any, idx: number) => (
           <button
             class:list={["experience-list__item", { active: idx === 0 }]}
             role="tab"
+            id={`exp-tab-${idx}`}
             aria-selected={idx === 0}
+            aria-controls={`exp-panel-${idx}`}
+            tabindex={idx === 0 ? 0 : -1}
             aria-label={exp.title}
             data-index={idx}
           >
@@ -38,7 +42,7 @@ import experiences from '../data/experience.json';
         const detailImage = exp.detailImage ?? exp.image;
         const chips = exp.icons.split(',');
         return (
-          <div class="experience-detail" role="tabpanel" data-index={idx} hidden={idx !== 0}>
+          <div class="experience-detail" role="tabpanel" id={`exp-panel-${idx}`} aria-labelledby={`exp-tab-${idx}`} data-index={idx} hidden={idx !== 0}>
             <div class="experience-detail__num-bg" aria-hidden="true">{numStr}</div>
 
             <div class:list={["experience-detail__logo-wrap", { "experience-detail__logo-wrap--wide": !!exp.detailImage }]}>
@@ -51,9 +55,10 @@ import experiences from '../data/experience.json';
             </p>
             <div class="experience-detail__divider"></div>
 
-            <ul class="experience-detail__bullets">
+            <ul class="experience-detail__bullets" id={`exp-bullets-${idx}`}>
               {exp.bulletpoints.map((bullet: string) => <li>{bullet}</li>)}
             </ul>
+            <button type="button" class="experience-detail__more" aria-expanded="false" aria-controls={`exp-bullets-${idx}`}>Read more</button>
 
             <div class="experience-detail__footer">
               <div class="experience-detail__chips">
@@ -76,20 +81,73 @@ import experiences from '../data/experience.json';
 <script>
   const list = document.getElementById('experienceList');
   if (list) {
-    list.addEventListener('click', (e) => {
-      const btn = (e.target as HTMLElement).closest<HTMLElement>('.experience-list__item');
-      if (!btn) return;
-      const index = btn.dataset.index;
+    const tabs = Array.from(list.querySelectorAll<HTMLElement>('.experience-list__item'));
+    const indicator = list.querySelector<HTMLElement>('.experience-list__indicator');
 
-      list.querySelectorAll('.experience-list__item').forEach((item) => {
-        const isActive = item === btn;
+    // The desktop list's active marker slides between jobs instead of jumping.
+    // Measured rather than computed from the index because item heights vary
+    // with title length. CSS hides it on the stacked mobile grid.
+    function moveIndicator(tab: HTMLElement) {
+      if (!indicator) return;
+      indicator.style.transform = `translateY(${tab.offsetTop}px)`;
+      indicator.style.height = `${tab.offsetHeight}px`;
+    }
+
+    function select(tab: HTMLElement) {
+      tabs.forEach((item) => {
+        const isActive = item === tab;
         item.classList.toggle('active', isActive);
         item.setAttribute('aria-selected', String(isActive));
+        item.tabIndex = isActive ? 0 : -1;
       });
-
       document.querySelectorAll<HTMLElement>('.experience-detail').forEach((panel) => {
-        panel.hidden = panel.dataset.index !== index;
+        panel.hidden = panel.dataset.index !== tab.dataset.index;
       });
+      moveIndicator(tab);
+    }
+
+    list.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLElement>('.experience-list__item');
+      if (btn) select(btn);
     });
+
+    // Arrow keys/Home/End per the WAI-ARIA tabs pattern. Only the active tab
+    // is in the tab order, so Tab moves straight on to the panel.
+    list.addEventListener('keydown', (e) => {
+      const current = tabs.indexOf(document.activeElement as HTMLElement);
+      if (current === -1) return;
+      const targets: Record<string, number> = {
+        ArrowDown: current + 1, ArrowRight: current + 1,
+        ArrowUp: current - 1, ArrowLeft: current - 1,
+        Home: 0, End: tabs.length - 1,
+      };
+      if (!(e.key in targets)) return;
+      e.preventDefault();
+      const next = tabs[(targets[e.key] + tabs.length) % tabs.length];
+      next.focus();
+      select(next);
+    });
+
+    const activeTab = () => tabs.find((t) => t.classList.contains('active')) ?? tabs[0];
+    moveIndicator(activeTab());
+    list.classList.add('has-indicator');
+    // Fonts swapping in and viewport changes both shift the items' offsets.
+    new ResizeObserver(() => moveIndicator(activeTab())).observe(list);
   }
+
+  // Mobile only (the clamp and the button are both scoped to the 860px
+  // breakpoint in CSS): bullets start cut to the first one with an ellipsis
+  // so the section isn't several screens tall on a phone. Set from here, not
+  // in the markup, so the full text still shows if this script never runs.
+  document.querySelectorAll<HTMLButtonElement>('.experience-detail__more').forEach((btn) => {
+    const bullets = document.getElementById(btn.getAttribute('aria-controls') ?? '');
+    if (!bullets) return;
+    bullets.dataset.clamp = 'true';
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', String(expanded));
+      bullets.dataset.clamp = String(!expanded);
+      btn.textContent = expanded ? 'Show less' : 'Read more';
+    });
+  });
 </script>

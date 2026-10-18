@@ -60,4 +60,38 @@ test.describe('homepage', () => {
     await items.nth(1).click();
     await expect(page.locator('.experience-detail:not([hidden]) .experience-detail__title')).toHaveText(secondTitle ?? '');
   });
+
+  test('experience tabs follow the arrow-key tabs pattern', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'keyboard navigation');
+    await page.goto('/#experience');
+    const items = page.locator('.experience-list__item');
+    await items.first().focus();
+    await page.keyboard.press('ArrowDown');
+    await expect(items.nth(1)).toBeFocused();
+    await expect(items.nth(1)).toHaveAttribute('aria-selected', 'true');
+    await expect(page.locator('#exp-panel-1')).toBeVisible();
+    await page.keyboard.press('End');
+    await expect(items.nth(3)).toHaveAttribute('aria-selected', 'true');
+    await page.keyboard.press('ArrowDown');
+    await expect(items.first()).toHaveAttribute('aria-selected', 'true');
+  });
+
+  test('experience bullets collapse behind "Read more" on mobile only', async ({ page, isMobile }) => {
+    await page.goto('/#experience');
+    const panel = page.locator('.experience-detail:not([hidden])');
+    const more = panel.locator('.experience-detail__more');
+    const second = panel.locator('.experience-detail__bullets li').nth(1);
+    if (!isMobile) {
+      await expect(more).toBeHidden();
+      await expect(second).toBeVisible();
+      return;
+    }
+    await expect(second).toBeHidden();
+    await more.click();
+    await expect(more).toHaveText('Show less');
+    await expect(more).toHaveAttribute('aria-expanded', 'true');
+    await expect(second).toBeVisible();
+    await more.click();
+    await expect(second).toBeHidden();
+  });
 });

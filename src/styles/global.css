@@ -1245,6 +1245,29 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   display: flex;
   flex-direction: column;
   border-right: 1px solid rgba(var(--accent-rgb), 0.12);
+  position: relative;
+}
+
+/* Sliding active marker (positioned by Experience.astro's script). Until the
+   script runs, the active item's own border-left stands in for it. */
+.experience-list__indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 0;
+  background: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s var(--ease-swing), height 0.4s var(--ease-swing);
+}
+
+.experience-list.has-indicator .experience-list__indicator {
+  opacity: 1;
+}
+
+.experience-list.has-indicator .experience-list__item.active {
+  border-left-color: transparent;
 }
 
 .experience-list__item {
@@ -1259,7 +1282,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   border-bottom: 1px solid rgba(var(--accent-rgb), 0.06);
   cursor: pointer;
   text-align: left;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, padding 0.3s var(--ease-swing), border-color 0.2s ease;
   width: 100%;
 }
 
@@ -1267,10 +1290,11 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   border-bottom: none;
 }
 
+/* Tint only. The old hover lifted the row 2px with a drop shadow, which
+   knocked it out of line with the sliding marker and was the soft-shadow
+   card tell DESIGN_NOTES.md rules out. */
 .experience-list__item:hover {
   background: rgba(var(--accent-rgb), 0.04);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 .experience-list__item:hover .experience-list__title {
@@ -1350,13 +1374,15 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-  animation: expDetailIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: expDetailIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
+/* A short settle rather than a slide: this replays on every tab switch, so it
+   should read as the content changing, not as an entrance. */
 @keyframes expDetailIn {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -1493,14 +1519,12 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   font-weight: 300;
   line-height: 1.8;
   color: rgba(var(--text-rgb), 0.55);
-  animation: fadeInUp 0.4s ease-out both;
 }
 
-.experience-detail__bullets li:nth-child(1) { animation-delay: 0.05s; }
-.experience-detail__bullets li:nth-child(2) { animation-delay: 0.1s;  }
-.experience-detail__bullets li:nth-child(3) { animation-delay: 0.15s; }
-.experience-detail__bullets li:nth-child(4) { animation-delay: 0.2s;  }
-.experience-detail__bullets li:nth-child(5) { animation-delay: 0.25s; }
+/* Shown only on the stacked mobile layout (see the 860px block below). */
+.experience-detail__more {
+  display: none;
+}
 
 .experience-detail__footer {
   display: flex;
@@ -1604,6 +1628,51 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   .experience-detail__num-bg {
     display: none;
   }
+
+  .experience-list__indicator {
+    display: none;
+  }
+
+  /* Collapsed: first bullet only, cut at four lines with an ellipsis. */
+  .experience-detail__bullets[data-clamp="true"] {
+    margin-bottom: 0.75rem;
+  }
+
+  .experience-detail__bullets[data-clamp="true"] li:nth-child(n + 2) {
+    display: none;
+  }
+
+  .experience-detail__bullets[data-clamp="true"] li:first-child {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+  }
+
+  .experience-detail__bullets[data-clamp="false"] li:nth-child(n + 2) {
+    animation: expDetailIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  .experience-detail__bullets[data-clamp] + .experience-detail__more {
+    display: inline-block;
+    margin: 0 0 1.75rem;
+    padding: 0.35rem 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(var(--text-rgb), 0.35);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(var(--text-rgb), 0.85);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .experience-detail__more:active {
+    color: var(--text);
+    border-bottom-color: var(--text);
+  }
 }
 
 /* ============================================================================
@@ -1636,35 +1705,9 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
    10. ERROR UI & LOADING
    ============================================================================ */
 
-@keyframes appLoadingSpin {
-  to {
-    transform: rotate(405deg);
-  }
-}
-
-@keyframes appLoadingPulse {
-  0%, 100% {
-    opacity: 0.35;
-  }
-  50% {
-    opacity: 0.95;
-  }
-}
-
 /* ============================================================================
    11. ANIMATIONS & KEYFRAMES
    ============================================================================ */
-
-@keyframes parallaxMove {
-  0% {
-    transform: translate(-50%, -40px);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translate(-50%, 0);
-    opacity: 1;
-  }
-}
 
 @keyframes fadeInDown {
   from {
@@ -1688,124 +1731,12 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   }
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  0% {
-    transform: translateX(-5%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes moveGradient {
-  0% {
-    background-position: 0% 50%;
-    opacity: 0.3;
-  }
-  50% {
-    background-position: 100% 50%;
-    opacity: 0.5;
-  }
-  100% {
-    background-position: 0% 50%;
-    opacity: 0.3;
-  }
-}
-
-@keyframes unBlur {
-  0% {
-    filter: blur(50px);
-  }
-  100% {
-    filter: blur(0px);
-  }
-}
-
-@keyframes codeFlow {
-  0% {
-    opacity: 0.3;
-    transform: translateX(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(10px);
-  }
-  100% {
-    opacity: 0.3;
-    transform: translateX(0);
-  }
-}
-
-@keyframes steamUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(-26px) scale(1.15);
-    opacity: 0;
-  }
-}
-
-@keyframes steam {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(-22px) scale(1.2);
-    opacity: 0;
-  }
-}
-
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
     transform: translateY(-10px);
-  }
-}
-
-@keyframes codePulse {
-  0%, 100% {
-    opacity: 0.35;
-    transform: translateX(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(8px);
-  }
-}
-
-@keyframes glowPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.08);
-    opacity: 1;
-  }
-}
-
-@keyframes sway {
-  0%, 100% {
-    transform: rotate(-1deg) translateX(0);
-  }
-  50% {
-    transform: rotate(1deg) translateX(4px);
   }
 }
 
@@ -2230,9 +2161,7 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   /* Tightened so the portrait starts higher on a ~730px-tall phone (it was
      starting at ~620px, i.e. almost entirely below the fold): smaller
      side padding gives the subtitle wider lines (6 -> 5), and the gaps/
-     margins that were sized for tablets shrink. The portrait is cropped
-     square from the top (head and shoulders matter, the lower torso
-     doesn't) so it needs less vertical room. */
+     margins that were sized for tablets shrink. */
   .hero-content {
     padding: 1.25rem 1.25rem 2rem;
     gap: 1.25rem;
@@ -2253,14 +2182,12 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
     color: rgba(var(--text-rgb), 0.78);
   }
 
+  /* Full 2:3 frame, not a square crop: the square cut him off mid-chest and
+     dropped the crossed arms and the "I turn coffee into code" mug, which
+     read as a broken image on a phone (Doug's screenshot, 2026-10-17). The
+     text above it already holds the fold, so the extra height runs below it. */
   .hero-portrait {
-    width: min(260px, 55vw);
-  }
-
-  .hero-portrait__img {
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    object-position: top;
+    width: min(260px, 62vw);
   }
 
   .hero-divider {

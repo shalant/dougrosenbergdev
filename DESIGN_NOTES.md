@@ -37,13 +37,14 @@ Note: the existing `app.css` already has more bespoke thought in it than the her
 2. **One bold accent per page.** Teal is spent once as a signature interactive moment (the 3D ring on `/webdesign`, the status-line panel on `/`) — not the hover color on every card.
 3. **Left-aligned, asymmetric composition.** Never the centered-hero-two-buttons default.
 4. **Mono type is data, not decoration.** Only appears next to an actual technical fact.
-5. **One deliberate motion moment per page**, not fade-and-slide-up on every section on scroll. Done 2026-10-17: sections no longer fade/slide in, the blanket `h2` `fadeInDown` and the per-chip stagger in Skills are gone, and `scrollReveal.js` survives only to play the brass waveform dividers. See "Motion inventory" below for what each page is allowed.
+5. **One deliberate motion moment per page**, not fade-and-slide-up on every section on scroll. Overridden by Doug on 2026-10-18: the 2026-10-17 pass removed the section fade/slide-up, the `h2` `fadeInDown`, the Skills chip stagger and the endless hero scroll-arrow bounce; after seeing it on the dev server he asked for all four back, so they stay. Don't remove them again without asking. The new state-change motion below is additive.
 
 ## Motion inventory (2026-10-17)
 
 Everything else is a *state change*: short (≤0.4s), triggered by the visitor, and never an entrance.
 
-- **Signature moment, one per page:** `/` = the hero entrance (Bauhaus layers settle, name, divider, portrait; the scroll arrow nudges 3 times, then stops). `/webdesign` = the 3D ring. Subpages = their hero heading's entrance.
+- **Signature moment, one per page:** `/` = the hero entrance (Bauhaus layers settle, name, divider, portrait; the scroll arrow keeps bouncing). `/webdesign` = the 3D ring. Subpages = their hero heading's entrance.
+- **Entrances (kept by Doug's choice, 2026-10-18):** `.reveal-on-scroll` sections fade and slide up 40px as they enter, Skills chips stagger in 50ms apart, and every `h2` runs `fadeInDown` on load.
 - **Sitewide motif:** the brass waveform `SectionDivider` plays once when its section scrolls in.
 - **State changes:** Experience tab marker slides between jobs, and its panel settles in 0.3s.
 - **GitHub stats:** the six numbers count up once (0.9s, ease-out) the first time the row is 60% in view. Real values are in the HTML; screen readers get a static `.sr-only` copy. Skipped with reduced motion.

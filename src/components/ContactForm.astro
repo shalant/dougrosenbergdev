@@ -82,14 +82,26 @@ const { idPrefix = '' } = Astro.props;
       website: String(formData.get('website') ?? ''),
     };
 
-    if (!payload.name || !payload.email || !payload.message) {
-      status.textContent = 'Please fill in your name, email, and message.';
+    // Mark each bad field rather than only printing one line under the
+    // button, and put focus on the first one so keyboard and screen-reader
+    // users land where the fix is.
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]'));
+    const invalid = fields.filter((field) => !field.value.trim() || !field.checkValidity());
+    fields.forEach((field) => field.setAttribute('aria-invalid', String(invalid.includes(field))));
+    if (invalid.length) {
+      const onlyEmailFormat = invalid.length === 1 && invalid[0].type === 'email' && invalid[0].value.trim();
+      status.textContent = onlyEmailFormat
+        ? "That email address doesn't look right."
+        : 'Please fill in your name, email, and message.';
       status.classList.add('contact-form-status--error');
+      invalid[0].focus();
       return;
     }
 
     submitButton.disabled = true;
-    submitButton.textContent = 'Sending...';
+    submitButton.classList.add('is-sending');
+    submitButton.setAttribute('aria-busy', 'true');
+    submitButton.textContent = 'Sending';
 
     try {
       const response = await fetch('/api/contact', {
@@ -125,7 +137,17 @@ const { idPrefix = '' } = Astro.props;
       status.classList.add('contact-form-status--error');
     } finally {
       submitButton.disabled = false;
+      submitButton.classList.remove('is-sending');
+      submitButton.removeAttribute('aria-busy');
       submitButton.textContent = 'Send Message';
+    }
+  });
+
+  // Clear a field's error mark as soon as it's edited.
+  document.addEventListener('input', (event) => {
+    const field = event.target as HTMLElement;
+    if (field.closest('.contact-form') && field.getAttribute('aria-invalid') === 'true') {
+      field.removeAttribute('aria-invalid');
     }
   });
 </script>

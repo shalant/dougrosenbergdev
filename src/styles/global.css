@@ -4923,7 +4923,7 @@ a.music-album__title--link:hover {
   border: 1px solid rgba(var(--accent-rgb), 0.2);
   border-radius: 8px;
   padding: 0.65rem 0.8rem;
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .contact-field textarea {
@@ -4936,6 +4936,13 @@ a.music-album__title--link:hover {
   background: rgba(var(--text-rgb), 0.08);
   border-color: rgba(var(--accent-rgb), 0.5);
   box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+}
+
+/* Set by ContactForm.astro on submit, cleared on the field's next edit. */
+.contact-field [aria-invalid="true"],
+.contact-field [aria-invalid="true"]:focus {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.15);
 }
 
 .contact-honeypot {
@@ -4958,6 +4965,30 @@ a.music-album__title--link:hover {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none !important;
+}
+
+/* In-flight: a small ring ahead of the label instead of only "Sending...".
+   The button is full-width, so the extra glyph never shifts the layout. */
+.contact-submit.is-sending {
+  opacity: 0.85;
+  cursor: progress;
+}
+
+.contact-submit.is-sending::before {
+  content: '';
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-right: 0.6em;
+  vertical-align: -0.1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: contactSpin 0.7s linear infinite;
+}
+
+@keyframes contactSpin {
+  to { transform: rotate(360deg); }
 }
 
 .contact-form-status {

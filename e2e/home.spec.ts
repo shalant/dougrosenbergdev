@@ -9,6 +9,14 @@ test.describe('homepage', () => {
     await expect(page.locator('.hero-cta')).toHaveCount(0);
   });
 
+  test('the letter-by-letter name reads as one name and keeps its casing', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveAccessibleName(/^douglas rosenberg$/i);
+    // Each letter is an inline-block, so text-transform: capitalize would
+    // capitalize every one of them; the casing is done at build time instead.
+    await expect(page.locator('.hero-name__letters')).toHaveText('Douglas Rosenberg');
+  });
+
   test('emits the sitewide ProfessionalService node tied to the Person', async ({ page }) => {
     await page.goto('/');
     const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();

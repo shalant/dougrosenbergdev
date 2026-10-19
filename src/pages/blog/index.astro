@@ -57,7 +57,7 @@ const dateFmtShort = (d: string) => new Date(d).toLocaleDateString('en-US', { mo
               <div class="featured-posts-header">&#10024; Featured</div>
               <div class="featured-posts-grid">
                 {featured.map((post: any) => (
-                  <a class="featured-post-card" href={`/blog/${post.id}`}>
+                  <a class="featured-post-card" href={`/blog/${post.id}`} data-spotlight>
                     <div class="featured-post-badge">Featured</div>
                     <h3 class="featured-post-title vt-title" style={`view-transition-name: vt-post-${post.id}`}>{post.title}</h3>
                     <div class="featured-post-meta">
@@ -71,11 +71,12 @@ const dateFmtShort = (d: string) => new Date(d).toLocaleDateString('en-US', { mo
             </div>
           )}
 
-          <div class="blog-grid" id="blogGrid">
+          <div class="blog-grid reveal-on-scroll" id="blogGrid">
             {sorted.map((post: any) => (
               <a
                 class="blog-post-card"
                 href={`/blog/${post.id}`}
+                data-spotlight
                 data-title={post.title.toLowerCase()}
                 data-excerpt={post.excerpt.toLowerCase()}
                 data-tags={(post.tags ?? []).join('|')}

@@ -46,6 +46,11 @@ Everything else is a *state change*: short (≤0.4s), triggered by the visitor, 
 - **Signature moment, one per page:** `/` = the hero entrance (Bauhaus layers settle, name, divider, portrait; the scroll arrow keeps bouncing). `/webdesign` = the 3D ring. Subpages = their hero heading's entrance.
 - **Entrances (kept by Doug's choice, 2026-10-18):** `.reveal-on-scroll` sections fade and slide up 40px as they enter, Skills chips stagger in 50ms apart, and every `h2` runs `fadeInDown` on load.
 - **Sitewide motif:** the brass waveform `SectionDivider` plays once when its section scrolls in.
+- **More motion, added at Doug's request (2026-10-18):**
+  - **Hero:** the name rises in letter by letter, and the portrait leans up to 8° toward the cursor on desktop (`public/js/motion.js`).
+  - **Scroll-driven (CSS scroll timelines, none in Firefox):** as the page scrolls, the two Bauhaus layers, the portrait and the text drift at different speeds, and blog posts get a 3px reading-progress bar at the top.
+  - **Entrances:** heading underlines draw out from the center, Experience bullets cascade in when a job is selected, and `/webdesign` project cards and `/blog` post cards stagger in like the skill chips.
+  - **Hover (desktop only):** the logo hexagon turns 60°, nav links get an underline that grows from the center, and project and post cards get a soft teal light that follows the cursor.
 - **State changes:** Experience tab marker slides between jobs, and its panel settles in 0.3s.
 - **GitHub stats:** the six numbers count up once (0.9s, ease-out) the first time the row is 60% in view. Real values are in the HTML; screen readers get a static `.sr-only` copy. Skipped with reduced motion.
 - **Contact form:** bad fields get a red border (`aria-invalid`, the existing `#c0392b` error red) and focus moves to the first one; the submit button shows a small spinning ring while sending; success is the existing toast.

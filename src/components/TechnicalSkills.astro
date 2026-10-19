@@ -73,7 +73,10 @@ const statTiles = (githubStats
         <div class="skills-stats__row">
           {statTiles.map((tile) => (
             <div class="skills-stat">
-              <span class="skills-stat__value">{tile.value}</span>
+              {/* The visible number counts up once (script below); screen
+                  readers get the static copy so they never read a midway value. */}
+              <span class="skills-stat__value" aria-hidden="true" data-count={tile.value}>{tile.value}</span>
+              <span class="sr-only">{tile.value}</span>
               <span class="skills-stat__label">{tile.label}</span>
             </div>
           ))}
@@ -134,3 +137,35 @@ const statTiles = (githubStats
 
   </div>
 </section>
+
+<script>
+  // Counts each GitHub stat up from zero the first time the row scrolls into
+  // view. The real values are already in the HTML, so without JS, with
+  // reduced motion, or before the row is visible, the final numbers show.
+  const row = document.querySelector<HTMLElement>('.skills-stats__row');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (row && !reduceMotion && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      observer.disconnect();
+      row.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
+        const match = (el.dataset.count ?? '').match(/^([\d,]+)(.*)$/);
+        if (!match) return;
+        const target = Number(match[1].replace(/,/g, ''));
+        const suffix = match[2];
+        // Hold the final width so the tiles don't reflow as digits are added.
+        el.style.minWidth = `${el.offsetWidth}px`;
+        const start = performance.now();
+        const duration = 900;
+        const tick = (now: number) => {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(target * eased).toLocaleString('en-US') + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.6 });
+    observer.observe(row);
+  }
+</script>

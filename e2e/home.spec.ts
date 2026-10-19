@@ -9,6 +9,14 @@ test.describe('homepage', () => {
     await expect(page.locator('.hero-cta')).toHaveCount(0);
   });
 
+  test('the letter-by-letter name reads as one name and keeps its casing', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveAccessibleName(/^douglas rosenberg$/i);
+    // Each letter is an inline-block, so text-transform: capitalize would
+    // capitalize every one of them; the casing is done at build time instead.
+    await expect(page.locator('.hero-name__letters')).toHaveText('Douglas Rosenberg');
+  });
+
   test('emits the sitewide ProfessionalService node tied to the Person', async ({ page }) => {
     await page.goto('/');
     const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -52,6 +60,17 @@ test.describe('homepage', () => {
     await expect(html).toHaveAttribute('data-theme', 'dark');
   });
 
+  test('a rapid double toggle mid-reveal lands back on dark', async ({ page }) => {
+    // The second click starts a view transition while the first is still
+    // animating, which skips the first; its theme update must still apply.
+    await page.goto('/');
+    await page.locator('.theme-toggle').click();
+    await page.locator('.theme-toggle').click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(page.locator('html')).not.toHaveClass(/theme-switching/);
+    expect(await page.evaluate(() => localStorage.getItem('dr-theme'))).toBe('dark');
+  });
+
   test('experience tabs switch the detail panel', async ({ page }) => {
     await page.goto('/#experience');
     const items = page.locator('.experience-list__item');
@@ -59,5 +78,62 @@ test.describe('homepage', () => {
     const secondTitle = await items.nth(1).locator('.experience-list__title').textContent();
     await items.nth(1).click();
     await expect(page.locator('.experience-detail:not([hidden]) .experience-detail__title')).toHaveText(secondTitle ?? '');
+  });
+
+  test('experience tabs follow the arrow-key tabs pattern', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'keyboard navigation');
+    await page.goto('/#experience');
+    const items = page.locator('.experience-list__item');
+    await items.first().focus();
+    await page.keyboard.press('ArrowDown');
+    await expect(items.nth(1)).toBeFocused();
+    await expect(items.nth(1)).toHaveAttribute('aria-selected', 'true');
+    await expect(page.locator('#exp-panel-1')).toBeVisible();
+    await page.keyboard.press('End');
+    await expect(items.nth(3)).toHaveAttribute('aria-selected', 'true');
+    await page.keyboard.press('ArrowDown');
+    await expect(items.first()).toHaveAttribute('aria-selected', 'true');
+  });
+
+  test('experience bullets collapse behind "Read more" on mobile only', async ({ page, isMobile }) => {
+    await page.goto('/#experience');
+    const panel = page.locator('.experience-detail:not([hidden])');
+    const more = panel.locator('.experience-detail__more');
+    const second = panel.locator('.experience-detail__bullets li').nth(1);
+    if (!isMobile) {
+      await expect(more).toBeHidden();
+      await expect(second).toBeVisible();
+      return;
+    }
+    await expect(second).toBeHidden();
+    await more.click();
+    await expect(more).toHaveText('Show less');
+    await expect(more).toHaveAttribute('aria-expanded', 'true');
+    await expect(second).toBeVisible();
+    await more.click();
+    await expect(second).toBeHidden();
+  });
+});
+
+test.describe('github stats count-up', () => {
+  test('lands on the real values, which screen readers get throughout', async ({ page }) => {
+    await page.goto('/');
+    const values = page.locator('.skills-stat__value');
+    test.skip((await values.count()) === 0, 'GitHub stats unavailable at build time');
+    const finals = await page.locator('.skills-stat .sr-only').allTextContents();
+    await page.locator('.skills-stats__row').scrollIntoViewIfNeeded();
+    await expect(values).toHaveText(finals);
+  });
+
+  test('skips the animation with reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const values = page.locator('.skills-stat__value');
+    test.skip((await values.count()) === 0, 'GitHub stats unavailable at build time');
+    const finals = await page.locator('.skills-stat .sr-only').allTextContents();
+    await page.locator('.skills-stats__row').scrollIntoViewIfNeeded();
+    // 300ms into a 900ms count, an animated value would still be mid-way.
+    await page.waitForTimeout(300);
+    expect(await values.allTextContents()).toEqual(finals);
   });
 });

@@ -17,6 +17,14 @@ const hero = heroImages.find((img: { name: string }) => img.name === 'home') ?? 
 // carrying the emoji glyph into the hero's most prominent line).
 const firstSentence = aboutMe.detailOrQuote.split(/(?<=\.)\s+/)[0];
 const currentlyBuilding = firstSentence.replace(/^[^\p{L}]+/u, '').trim();
+
+// Each letter is its own inline-block so it can rise in on its own beat, but
+// text-transform: capitalize would then capitalize every letter (each block
+// counts as a new word), so the casing is done here instead.
+const nameWords = siteProperties.name
+  .split(' ')
+  .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1));
+let letterIndex = 0;
 ---
 
 <section class="hero-section" id="home">
@@ -24,22 +32,36 @@ const currentlyBuilding = firstSentence.replace(/^[^\p{L}]+/u, '').trim();
 
   <div class="hero-content">
     <div class="hero-text">
-      <h1 class="hero-name">{siteProperties.name}</h1>
+      <h1 class="hero-name">
+        <span class="sr-only">{siteProperties.name}</span>
+        <span class="hero-name__letters" aria-hidden="true">
+          {nameWords.map((word: string, w: number) => (
+            <>
+              {w > 0 && ' '}
+              <span class="hero-name__word">
+                {[...word].map((ch) => <span class="hero-name__letter" style={`--i: ${letterIndex++}`}>{ch}</span>)}
+              </span>
+            </>
+          ))}
+        </span>
+      </h1>
       <div class="hero-divider"></div>
       <p class="hero-subtitle">{currentlyBuilding}</p>
       <button type="button" class="hero-inline-cta" data-contact-trigger>let&rsquo;s talk about your project</button>
     </div>
 
-    <div class="hero-portrait">
-      <Image
-        src={heroPortrait}
-        alt={hero.alt}
-        class="hero-portrait__img"
-        widths={[227, 420, 630, 840]}
-        sizes="(max-width: 700px) 60vw, 420px"
-        loading="eager"
-        fetchpriority="high"
-      />
+    <div class="hero-portrait" id="heroPortrait">
+      <div class="hero-portrait__tilt">
+        <Image
+          src={heroPortrait}
+          alt={hero.alt}
+          class="hero-portrait__img"
+          widths={[227, 420, 630, 840]}
+          sizes="(max-width: 700px) 60vw, 420px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
     </div>
   </div>
 

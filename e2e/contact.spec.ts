@@ -127,3 +127,38 @@ test.describe('contact_form_submit GA4 event', () => {
     expect(await submitted(page)).toBe(false);
   });
 });
+
+test.describe('contact form validation', () => {
+  test('marks bad fields, focuses the first, and clears the mark on edit', async ({ page }) => {
+    let posted = false;
+    await page.route('**/api/contact', (route) => {
+      posted = true;
+      return route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+    });
+    await page.goto('/');
+    const form = page.locator('#contact-form');
+    const name = form.locator('#contact-name');
+    const email = form.locator('#contact-email');
+    const message = form.locator('#contact-message');
+
+    // WebKit has no scroll anchoring: jumping down to the form starts the
+    // lazy images above it loading, and as they size in they push the
+    // button down between Playwright's scroll and its tap. Let them land.
+    await form.scrollIntoViewIfNeeded();
+    await page.waitForLoadState('networkidle');
+    await form.locator('button[type="submit"]').click();
+    await expect(name).toHaveAttribute('aria-invalid', 'true');
+    await expect(message).toHaveAttribute('aria-invalid', 'true');
+    await expect(name).toBeFocused();
+
+    await name.fill('Test Person');
+    await expect(name).not.toHaveAttribute('aria-invalid', 'true');
+    await email.fill('not-an-email');
+    await message.fill('Hello there');
+    await form.locator('button[type="submit"]').click();
+    await expect(email).toHaveAttribute('aria-invalid', 'true');
+    await expect(form.locator('.contact-form-status')).toHaveText("That email address doesn't look right.");
+    await expect(email).toBeFocused();
+    expect(posted).toBe(false);
+  });
+});

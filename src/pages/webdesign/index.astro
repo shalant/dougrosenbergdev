@@ -85,17 +85,17 @@ const ringImages = selectRingImages(RING_CARD_COUNT);
       <span class="section-eyebrow">// selected work</span>
       <h2 class="webdesign-projects__heading">Live Sites</h2>
 
-      <div class="wd-projects-grid" id="wdProjectsGrid">
+      <div class="wd-projects-grid reveal-on-scroll" id="wdProjectsGrid">
 
         {webDesign.projects.map((project) => (
-          <a href={`/webdesign/${project.slug}`} class="wd-project">
+          <a href={`/webdesign/${project.slug}`} class="wd-project" data-spotlight>
             <ProjectMediaFrame alt={`${project.name} website`} images={project.images} />
             <div class="wd-project__meta">
               <span class="wd-project__num">{project.number}</span>
               <span class="about-skill-chip">{project.platform}</span>
               {project.status && <span class="wd-project__wip">{project.status}</span>}
             </div>
-            <h3 class="wd-project__name">{project.name}</h3>
+            <h3 class="wd-project__name vt-title" style={`view-transition-name: vt-wd-${project.slug}`}>{project.name}</h3>
             <p class="wd-project__industry">{project.industry}</p>
             <ul class="wd-project__bullets">
               {project.bullets.map((bullet) => <li>{bullet}</li>)}

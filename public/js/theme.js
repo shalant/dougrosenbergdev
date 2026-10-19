@@ -19,11 +19,30 @@ window.DrTheme = (function () {
         return theme;
     }
 
+    // The new theme spreads out from the toggle in a growing circle (a same-document view
+    // transition; the clip-path animation lives in global.css under "Theme switch reveal").
+    // Falls back to an instant swap without View Transitions support or with reduced motion.
     function toggle() {
-        const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-        const next = current === 'light' ? 'dark' : 'light';
+        const next = current() === 'light' ? 'dark' : 'light';
         localStorage.setItem(STORAGE_KEY, next);
-        return apply(next);
+
+        const root = document.documentElement;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!document.startViewTransition || reduceMotion) return apply(next);
+
+        const button = document.getElementById('themeToggle');
+        const rect = button ? button.getBoundingClientRect() : null;
+        const x = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
+        const y = rect ? rect.top + rect.height / 2 : 0;
+        const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+        root.style.setProperty('--theme-reveal-x', x + 'px');
+        root.style.setProperty('--theme-reveal-y', y + 'px');
+        root.style.setProperty('--theme-reveal-r', radius + 'px');
+
+        root.classList.add('theme-switching');
+        const transition = document.startViewTransition(() => apply(next));
+        transition.finished.finally(() => root.classList.remove('theme-switching'));
+        return next;
     }
 
     function current() {

@@ -37,7 +37,26 @@ Note: the existing `app.css` already has more bespoke thought in it than the her
 2. **One bold accent per page.** Teal is spent once as a signature interactive moment (the 3D ring on `/webdesign`, the status-line panel on `/`) — not the hover color on every card.
 3. **Left-aligned, asymmetric composition.** Never the centered-hero-two-buttons default.
 4. **Mono type is data, not decoration.** Only appears next to an actual technical fact.
-5. **One deliberate motion moment per page**, not fade-and-slide-up on every section on scroll (current `scrollReveal.js` behavior — dial back to fewer, more intentional triggers).
+5. **One deliberate motion moment per page**, not fade-and-slide-up on every section on scroll. Overridden by Doug on 2026-10-18: the 2026-10-17 pass removed the section fade/slide-up, the `h2` `fadeInDown`, the Skills chip stagger and the endless hero scroll-arrow bounce; after seeing it on the dev server he asked for all four back, so they stay. Don't remove them again without asking. The new state-change motion below is additive.
+
+## Motion inventory (2026-10-17)
+
+Everything else is a *state change*: short (≤0.4s), triggered by the visitor, and never an entrance.
+
+- **Signature moment, one per page:** `/` = the hero entrance (Bauhaus layers settle, name, divider, portrait; the scroll arrow keeps bouncing). `/webdesign` = the 3D ring. Subpages = their hero heading's entrance.
+- **Entrances (kept by Doug's choice, 2026-10-18):** `.reveal-on-scroll` sections fade and slide up 40px as they enter, Skills chips stagger in 50ms apart, and every `h2` runs `fadeInDown` on load.
+- **Sitewide motif:** the brass waveform `SectionDivider` plays once when its section scrolls in.
+- **More motion, added at Doug's request (2026-10-18):**
+  - **Hero:** the name rises in letter by letter, and the portrait leans up to 8° toward the cursor on desktop (`public/js/motion.js`).
+  - **Scroll-driven (CSS scroll timelines, none in Firefox):** as the page scrolls, the two Bauhaus layers, the portrait and the text drift at different speeds, and blog posts get a 3px reading-progress bar at the top.
+  - **Entrances:** heading underlines draw out from the center, Experience bullets cascade in when a job is selected, and `/webdesign` project cards and `/blog` post cards stagger in like the skill chips.
+  - **Hover (desktop only):** the logo hexagon turns 60°, nav links get an underline that grows from the center, and project and post cards get a soft teal light that follows the cursor.
+- **State changes:** Experience tab marker slides between jobs, and its panel settles in 0.3s.
+- **GitHub stats:** the six numbers count up once (0.9s, ease-out) the first time the row is 60% in view. Real values are in the HTML; screen readers get a static `.sr-only` copy. Skipped with reduced motion.
+- **Contact form:** bad fields get a red border (`aria-invalid`, the existing `#c0392b` error red) and focus moves to the first one; the submit button shows a small spinning ring while sending; success is the existing toast.
+- **Theme toggle:** sun/moon cross-rotate in place; the new theme is revealed in a circle growing from the toggle (same-document view transition in `public/js/theme.js`, 0.55s). Instant swap where unsupported or with reduced motion.
+- **Page-to-page:** native cross-document view transitions (CSS only). A `/webdesign` card's project name morphs into the case study title, a blog card's title into the post `h1`; everything else cross-fades in 0.25s. Names are `vt-wd-<slug>` / `vt-post-<id>` and must be unique per page; `e2e/view-transitions.spec.ts` guards that. Unsupported browsers (Firefox) navigate normally.
+- **Reduced motion:** the global `prefers-reduced-motion` rule in `global.css` zeroes all transitions/animations. New JS-driven motion must check the media query itself.
 
 ## Explicitly avoided (AI-site tells, per calibration)
 

@@ -10,5 +10,10 @@
   "medium": "",
   "twitter": "",
   "youTube": "",
-  "music": "https://www.dougrosenberg.com"
+  "music": "https://www.dougrosenberg.com",
+  "featuredWork": [
+    { "slug": "arborkin", "image": "arborkin-tree-dark.webp" },
+    { "slug": "hardware-etc", "image": "hardwareetc-home.jpg" },
+    { "slug": "guacamayo-band", "image": "guacamayo-hero.jpg" }
+  ]
 }

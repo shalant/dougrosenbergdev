@@ -68,6 +68,10 @@ The UI audit (see `UI_AUDIT_PLAN.md`, branch 1) found the homepage still using p
 - **Emoji:** removed the 🛠️ and 🎨 from `aboutme.json`'s `detailOrQuote`.
 - Labels that moved from dimmed teal to dimmed text color now sit at 0.7 opacity so they still clear AA in light mode. They were also taken out of the light-mode teal override.
 
+## Selected work strip (2026-10-25)
+
+`SelectedWork.astro` sits right after the hero (UI audit branch 2): one large project and two stacked beside it, so it never reads as three identical cards. Sharp corners and a thin text-color border on the screenshots, because they are content, not controls. No teal (the homepage's one accent moment stays the status panel) and no shadow. Hover zooms the screenshot 3% and underlines the name; reduced motion drops the zoom. Its section background is plain `--bg`, not `--bg-hero`, so it doesn't run into the hero and About as one band. Picks and their strip images live in `siteproperties.json`'s `featuredWork`.
+
 ## Explicitly avoided (AI-site tells, per calibration)
 
 Warm cream + terracotta; near-black + acid accent; broadsheet zero-radius dense columns; uniform rounded-card-kit with identical soft grey shadow; tracked-out ALL-CAPS eyebrow labels; middle-dot meta strings; em-dash "WORD — fragment" labels; arrow (`→`) appended to buttons/links.

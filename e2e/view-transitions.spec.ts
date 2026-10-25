@@ -15,6 +15,7 @@ async function renderedNames(page: Page) {
 
 for (const { list, prefix, card } of [
   { list: '/webdesign/', prefix: 'vt-wd-', card: 'a.wd-project' },
+  { list: '/', prefix: 'vt-wd-', card: 'a.work-item__link' },
   { list: '/blog/', prefix: 'vt-post-', card: 'a.blog-post-card:not([hidden])' },
 ]) {
   test(`${list} view-transition names are unique and match the detail page`, async ({ page, browserName }) => {

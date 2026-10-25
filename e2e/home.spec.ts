@@ -9,6 +9,21 @@ test.describe('homepage', () => {
     await expect(page.locator('.hero-cta')).toHaveCount(0);
   });
 
+  test('each selected-work item links to its case study', async ({ page }) => {
+    await page.goto('/');
+    const items = page.locator('#work a.work-item__link');
+    await expect(items).toHaveCount(3);
+    const links = await items.evaluateAll((els) =>
+      els.map((el) => ({ href: el.getAttribute('href'), name: el.querySelector('h3')?.textContent?.trim() })),
+    );
+    for (const { href, name } of links) {
+      expect(href).toMatch(/^\/webdesign\/[a-z0-9-]+$/);
+      const response = await page.goto(href!);
+      expect(response?.status()).toBe(200);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(name!);
+    }
+  });
+
   test('the letter-by-letter name reads as one name and keeps its casing', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveAccessibleName(/^douglas rosenberg$/i);

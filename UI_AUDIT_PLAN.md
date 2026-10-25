@@ -45,7 +45,14 @@ The page currently uses patterns that `CLAUDE.md` and `DESIGN_NOTES.md` list as 
 
 ## Branch 2: `ui-audit-selected-work`, show client work on the homepage
 
-**Status:** not started. **Expected gain:** about +6.
+**Status:** approved by Doug from the before/after artifact (four revisions) and committed on `ui-audit-selected-work-2026-10-25` (2026-10-25). This branch was cut from `ui-audit-skills-section-2026-10-25` rather than a fresh `master`, at Doug's request, so it carries that branch's plan update instead of a separate docs PR.
+- **Picks:** ArborKin (large), Hardware Etc, Guacamayo: a C# full-stack app, a small-business client site and a musician site, so the strip shows C# full-stack depth alongside client sites. ArborKin leads because Doug rates it his strongest work by a wide margin (C#, complex RBAC, 593 tests per the FamilyTree README as of 2026-10-25); its strip image is the dark-theme tree view. The proposed Sonus Construction was dropped on 2026-10-25 after Doug judged its screenshots weak; it's still on `/webdesign`. The picks live in `siteproperties.json` as the ordered `featuredWork` list of `{ slug, image }`; the first gets the large slot. Each `image` is a file in `src/assets/images/webdesign/` used only by this strip (the build fails with a message naming the file if it's missing).
+- **Screenshots:** Hardware Etc's strip image is a fresh capture of the live hardwareetc.net homepage (1440px viewport at 2x, 2026-10-25), because the case study's existing hero crop read poorly as a thumbnail. ArborKin and Guacamayo reuse case-study images. The case-study pages themselves are unchanged.
+- **Also changed:** the hero's scroll arrow now lands on `#work` instead of `#about`. ArborKin's case-study numbers in `webdesign.json` were stale (`~8k` lines, 12 migrations, 11 xUnit tests). They now read ~14k lines of C# (application code, excluding tests and migrations), 18 EF migrations and 593 automated tests, counted from the `shalant/FamilyTree` repo and README on 2026-10-25. Its `industry` line now names C#/.NET and role-based access control. The 2026-09 blog post's older figures were left as they were, since the post is dated.
+- **Verified:** build, `test:unit` (9/9), `verify-csp`, `test:e2e` (190 passed, 5 skipped), `check-links`, and Lighthouse (accessibility, best-practices and SEO assertions all passed). The new selected-work and view-transition tests also passed 85/85 with `--repeat-each=5`.
+- **Copy still open:** the heading "Selected Work", the link "all web design work" and Guacamayo's third-person `industry` line ("Doug's own band site") shipped as-is. Doug hasn't confirmed them.
+
+**Expected gain:** about +6.
 
 The site targets small-business and musician clients, yet `/` reads like a résumé. This branch adds a selected-work strip directly after the hero.
 
@@ -59,10 +66,18 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 
 ## Branch 3: `ui-audit-section-rhythm`, vary the sections and tame the background
 
-**Status:** not started. **Expected gain:** about +5.
+**Status:** built on `ui-audit-section-rhythm-2026-10-25` (2026-10-25), approved by Doug and committed as `ebe0a84` (2026-10-25). Stacked on branch 2 (`1feb271`) rather than a freshly merged `master`, because Doug asked to keep going before branch 2 merged; merge branch 2 first.
+- **Gap:** one rule, `h2:has(+ .section-divider)`, sets every section heading's bottom margin to 0.75rem, replacing the per-section 2.5-3.5rem that left the waveform about 80px below its heading. The waveform's own bottom margin went from 1.75rem to 2.5rem so the header group still has room before the content.
+- **Background:** the first build deleted the Bauhaus layers on About, Experience, Skills, Casual and Contact. Doug reversed that on 2026-10-25: he likes the texture, and at most one homepage section may go without it. That section is the selected-work strip. Every other section keeps its layer at its old opacity. To remove the seams instead, the About, Experience, Casual, Music and Contact layers are now boxes shaped like the 2:3 artwork, with a mask that fades out the open edge. Before, the image stopped partway across a full-width box and left a hard line. Skills is full-bleed `cover`, so it had no seam and is unchanged. Music's layer moved from the left to the right edge, because the photo panel now covers the left.
+- **Music:** the photo is a panel flush with the viewport's left edge (46% of the width), pinned while the text scrolls; the heading moved into the text column. The letterbox bars are cropped with `aspect-ratio` and `object-fit: cover`, not by editing the JPEG. The discography rows share one column grid through `subgrid`. Below 1050px the photo runs full width above the text.
+- **Contact:** two columns, pitch left and form right, with the frosted card (`.contact-glass`) removed. The form's centered 420px column is dropped only inside `.contact-container`, since the header dialog renders the same form.
+- **Casual:** container widened from 900px to the shared 1180px so content starts at x=194, with the description and the hobby grid capped at 760px. Hobbies are a 2×2 grid (one column below 600px).
+- **Verified:** build, `test:unit` (9/9), `verify-csp`, `test:e2e` (190 passed, 5 skipped, Playwright's own exit code 0), `check-links`, and Lighthouse (accessibility, best-practices and SEO assertions passed; performance gave its usual local warning).
+
+**Expected gain:** about +5.
 
 - **Spacing:** close the gap of about 80px between each `h2` and its brass waveform.
-- **Background motif:** keep the Bauhaus layer strong in the hero and the Music section, and remove it or turn it way down elsewhere. Fix the hard seams in Casual (a vertical edge at about x=630) and behind Contact.
+- **Background motif:** ~~keep the Bauhaus layer strong in the hero and the Music section, and remove it or turn it way down elsewhere~~ (overruled 2026-10-25: keep the texture everywhere except one section). Fix the hard seams in Casual (a vertical edge at about x=630) and behind Contact.
 - **Break the repeated layout twice:**
   - **Music** becomes a full-bleed spread with the sax photo as a large panel. Also fix the photo's black letterbox bars and align the discography columns on one grid.
   - **Contact** becomes left-aligned and two columns, with the pitch on the left and the form on the right. That replaces the centered heading and the card-inside-a-section.
@@ -86,7 +101,9 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 
 ## Branch 5: `ui-audit-skills-section`, Skills and GitHub stats
 
-**Status:** not started. **Expected gain:** about +2.
+**Status:** closed with no code change (2026-10-25). Doug tried monochrome logos in a before/after and preferred the brand colors on every chip, so the Skills chips stay as they were, including the Syncfusion and DevExpress plates. He also chose to keep all six GitHub tiles and the full-year heatmap. The estimate below was not earned.
+
+**Expected gain:** about +2.
 
 - **Logo chips:** render vendor logos in one color so purple, orange and red don't leak into the palette, and stop Syncfusion and DevExpress from rendering as white chips.
 - **Chip layout:** reduce the uniform chip wall. A good option is plain text lists per category, keeping icons only where they help.
@@ -100,3 +117,4 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 |---|---|---|---|
 | 2026-10-25 | audit (`3ceaf92`) | 68 | Baseline |
 | 2026-10-25 | 1, tells cleanup | 73 (est.) | Eyebrows, caps, decorative mono, middle dot and emoji removed |
+| 2026-10-25 | 2, selected work | 79 (est.) | ArborKin, Hardware Etc and Guacamayo strip after the hero |

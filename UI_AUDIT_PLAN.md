@@ -86,7 +86,9 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 
 ## Branch 5: `ui-audit-skills-section`, Skills and GitHub stats
 
-**Status:** not started. **Expected gain:** about +2.
+**Status:** closed with no code change (2026-10-25). Doug tried monochrome logos in a before/after and preferred the brand colors on every chip, so the Skills chips stay as they were, including the Syncfusion and DevExpress plates. He also chose to keep all six GitHub tiles and the full-year heatmap. The estimate below was not earned.
+
+**Expected gain:** about +2.
 
 - **Logo chips:** render vendor logos in one color so purple, orange and red don't leak into the palette, and stop Syncfusion and DevExpress from rendering as white chips.
 - **Chip layout:** reduce the uniform chip wall. A good option is plain text lists per category, keeping icons only where they help.

@@ -66,10 +66,18 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 
 ## Branch 3: `ui-audit-section-rhythm`, vary the sections and tame the background
 
-**Status:** not started. **Expected gain:** about +5.
+**Status:** built on `ui-audit-section-rhythm-2026-10-25` (2026-10-25), waiting for Doug's approval of the before/after artifact. Stacked on branch 2 (`1feb271`) rather than a freshly merged `master`, because Doug asked to keep going before branch 2 merged; merge branch 2 first.
+- **Gap:** one rule, `h2:has(+ .section-divider)`, sets every section heading's bottom margin to 0.75rem, replacing the per-section 2.5-3.5rem that left the waveform about 80px below its heading. The waveform's own bottom margin went from 1.75rem to 2.5rem so the header group still has room before the content.
+- **Background:** the first build deleted the Bauhaus layers on About, Experience, Skills, Casual and Contact. Doug reversed that on 2026-10-25: he likes the texture, and at most one homepage section may go without it. That section is the selected-work strip. Every other section keeps its layer at its old opacity. To remove the seams instead, the About, Experience, Casual, Music and Contact layers are now boxes shaped like the 2:3 artwork, with a mask that fades out the open edge. Before, the image stopped partway across a full-width box and left a hard line. Skills is full-bleed `cover`, so it had no seam and is unchanged. Music's layer moved from the left to the right edge, because the photo panel now covers the left.
+- **Music:** the photo is a panel flush with the viewport's left edge (46% of the width), pinned while the text scrolls; the heading moved into the text column. The letterbox bars are cropped with `aspect-ratio` and `object-fit: cover`, not by editing the JPEG. The discography rows share one column grid through `subgrid`. Below 1050px the photo runs full width above the text.
+- **Contact:** two columns, pitch left and form right, with the frosted card (`.contact-glass`) removed. The form's centered 420px column is dropped only inside `.contact-container`, since the header dialog renders the same form.
+- **Casual:** container widened from 900px to the shared 1180px so content starts at x=194, with the description and the hobby grid capped at 760px. Hobbies are a 2×2 grid (one column below 600px).
+- **Verified:** build, `test:unit` (9/9), `verify-csp`, `test:e2e` (190 passed, 5 skipped, Playwright's own exit code 0), `check-links`, and Lighthouse (accessibility, best-practices and SEO assertions passed; performance gave its usual local warning).
+
+**Expected gain:** about +5.
 
 - **Spacing:** close the gap of about 80px between each `h2` and its brass waveform.
-- **Background motif:** keep the Bauhaus layer strong in the hero and the Music section, and remove it or turn it way down elsewhere. Fix the hard seams in Casual (a vertical edge at about x=630) and behind Contact.
+- **Background motif:** ~~keep the Bauhaus layer strong in the hero and the Music section, and remove it or turn it way down elsewhere~~ (overruled 2026-10-25: keep the texture everywhere except one section). Fix the hard seams in Casual (a vertical edge at about x=630) and behind Contact.
 - **Break the repeated layout twice:**
   - **Music** becomes a full-bleed spread with the sax photo as a large panel. Also fix the photo's black letterbox bars and align the discography columns on one grid.
   - **Contact** becomes left-aligned and two columns, with the pitch on the left and the form on the right. That replaces the centered heading and the card-inside-a-section.

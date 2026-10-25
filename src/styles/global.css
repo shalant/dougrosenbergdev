@@ -303,7 +303,15 @@ h2::after {
   align-items: flex-end;
   gap: 3px;
   height: 16px;
-  margin: 0.5rem 0 1.75rem;
+  margin: 0.5rem 0 2.5rem;
+}
+
+/* Each section heading's own bottom margin (2.5-3.5rem, plus the generic h2
+   padding where a section never zeroed it) left the waveform ~80px below the
+   heading it belongs to. Pulled in here once rather than per section. */
+h2:has(+ .section-divider) {
+  margin-bottom: 0.75rem !important;
+  padding-bottom: 0 !important;
 }
 
 .section-divider__bar {
@@ -4162,7 +4170,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 }
 
 .casual-container {
-  max-width: 900px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 0 4rem;
   position: relative;
@@ -4197,15 +4205,17 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   margin: 0;
   border-left: 2px solid rgba(var(--accent-rgb), 0.4);
   padding-left: 1.5rem;
+  max-width: 760px;
 }
 
 .casual-hobbies {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  max-width: 760px;
 }
 
 .casual-hobby {
@@ -4294,13 +4304,17 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   .casual-container { padding: 0 2rem; }
 }
 
+@media (max-width: 600px) {
+  .casual-hobbies { grid-template-columns: 1fr; }
+}
+
 /* ============================================================================
    19. MUSIC
    ============================================================================ */
 
 .music-section {
   background: var(--bg);
-  padding: 7rem 0;
+  padding: 0;
   position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(var(--accent-rgb), 0.08);
@@ -4315,10 +4329,9 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   pointer-events: none;
 }
 
+/* The one section that breaks the shared 1180px column: the photo runs to
+   the viewport's left edge as a panel, and the text sits beside it. */
 .music-container {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 4rem;
   position: relative;
   z-index: 1;
 }
@@ -4337,8 +4350,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 
 .music-body {
   display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 5rem;
+  grid-template-columns: minmax(0, 46%) minmax(0, 1fr);
   align-items: start;
 }
 
@@ -4346,6 +4358,8 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
+  max-width: 720px;
+  padding: 7rem 4rem 7rem 5rem;
 }
 
 .music-paragraph {
@@ -4369,26 +4383,28 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 }
 
 .music-photo {
+  order: -1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 0.75rem;
   position: sticky;
-  top: 7rem;
+  top: 0;
 }
 
 .music-photo__link {
   display: block;
   cursor: pointer;
-  border-radius: 2px;
   overflow: hidden;
-  box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(var(--accent-rgb), 0.1);
 }
 
+/* The JPEG carries black letterbox bars (36px top, 40px bottom). Cropping a
+   little inside the picture's own 818:760 shape removes them without editing
+   the file; exactly 818:760 left a 2px sliver of the bottom bar. */
 .music-photo__img {
   width: 100%;
+  aspect-ratio: 818 / 750;
+  object-fit: cover;
+  object-position: 50% 47%;
   display: block;
   filter: grayscale(20%);
   transition: filter 0.4s ease, transform 0.4s ease-in-out;
@@ -4404,6 +4420,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   font-style: italic;
   font-size: 1rem;
   color: rgba(var(--text-rgb), 0.7);
+  padding: 0 1.5rem;
 }
 
 .music-section-label {
@@ -4444,19 +4461,22 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   flex-direction: column;
 }
 
+/* Rows share one set of columns (subgrid), so artists and roles line up
+   however long each title is. */
 .music-albums {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+  column-gap: 1.5rem;
 }
 
 .music-album {
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 0.5rem 1.5rem;
+  grid-template-columns: subgrid;
+  row-gap: 0.5rem;
   align-items: baseline;
   padding: 0.55rem 0;
   border-bottom: 1px solid rgba(var(--text-rgb), 0.05);
@@ -4535,18 +4555,20 @@ a.music-album__title--link:hover {
    was meant to give up on two columns. Stack earlier instead, before the
    fixed-width photo column can starve the text column. */
 @media (max-width: 1050px) {
-  .music-container { padding: 0 2rem; }
   .music-body {
     grid-template-columns: 1fr;
-    gap: 3rem;
   }
   .music-photo {
     position: static;
-    align-items: center;
   }
-  .music-photo__img { max-width: 340px; }
+  .music-text {
+    max-width: none;
+    padding: 3rem 2rem 5rem;
+  }
+  .music-albums {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
   .music-album {
-    grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
   }
   .music-album__artist {
@@ -4618,16 +4640,24 @@ a.music-album__title--link:hover {
   z-index: 2;
 }
 
+/* Every homepage section carries a Bauhaus layer except the selected-work
+   strip, whose screenshots are texture enough (Doug, 2026-10-25: at most one
+   section without it). Each layer is a box shaped like the 2:3 artwork, so
+   its open edge can fade out with a mask instead of ending in a hard seam. */
+
 /* About — Mondrian left-anchored; ::before is the scanline grid */
 .about-section::after {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 55%; height: 100%;
+  top: -5%;
+  left: 0;
+  height: 110%;
+  aspect-ratio: 2 / 3;
+  max-width: 55%;
   background-image: var(--art-deco-1);
-  background-size: auto 110%;
-  background-position: left center;
-  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-mask-image: linear-gradient(to right, #000 55%, transparent);
+  mask-image: linear-gradient(to right, #000 55%, transparent);
   mix-blend-mode: var(--art-deco-blend);
   opacity: 0.1;
   pointer-events: none;
@@ -4642,12 +4672,15 @@ a.music-album__title--link:hover {
 .experience-section::after {
   content: '';
   position: absolute;
-  top: 0; right: 0;
-  width: 60%; height: 100%;
+  top: -2.5%;
+  right: 0;
+  height: 105%;
+  aspect-ratio: 2 / 3;
+  max-width: 60%;
   background-image: var(--art-deco-2);
-  background-size: auto 105%;
-  background-position: right center;
-  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent);
+  mask-image: linear-gradient(to left, #000 55%, transparent);
   mix-blend-mode: var(--art-deco-blend);
   opacity: 0.08;
   pointer-events: none;
@@ -4658,24 +4691,25 @@ a.music-album__title--link:hover {
   z-index: 1;
 }
 
-/* ArborKin — Mondrian full-bleed, subtle */
-
-/* Shared mixin pattern — sections that need overflow: hidden added */
 .casual-section,
 .music-section,
 .skills-section {
   overflow: hidden;
 }
 
-/* Casual — arch columns (bg2), right-anchored so arches frame the content */
+/* Casual — arch columns (bg2), right-anchored, filling the side the
+   readable-width text leaves open */
 .casual-section::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: -5%;
+  right: 0;
+  height: 110%;
+  aspect-ratio: 2 / 3;
   background-image: var(--art-deco-2);
-  background-size: auto 110%;
-  background-position: right center;
-  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent);
+  mask-image: linear-gradient(to left, #000 55%, transparent);
   mix-blend-mode: var(--art-deco-blend);
   opacity: 0.18;
   pointer-events: none;
@@ -4686,15 +4720,19 @@ a.music-album__title--link:hover {
   z-index: 1;
 }
 
-/* Music — Mondrian grid (bg1), left-anchored, behind the text column */
+/* Music — Mondrian grid (bg1), right-anchored behind the text column now
+   that the photo panel covers the left */
 .music-section::after {
   content: '';
   position: absolute;
-  inset: 0;
+  top: -7.5%;
+  right: 0;
+  height: 115%;
+  aspect-ratio: 2 / 3;
   background-image: var(--art-deco-1);
-  background-size: auto 115%;
-  background-position: left center;
-  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent);
+  mask-image: linear-gradient(to left, #000 55%, transparent);
   mix-blend-mode: var(--art-deco-blend);
   opacity: 0.15;
   pointer-events: none;
@@ -4828,14 +4866,18 @@ a.music-album__title--link:hover {
   border-top: 1px solid rgba(var(--accent-rgb), 0.08);
 }
 
+/* Contact — arches (bg2) behind the form column, both edges faded */
 .contact-section::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: -10%;
+  right: 8%;
+  height: 120%;
+  aspect-ratio: 2 / 3;
   background-image: var(--art-deco-2);
-  background-size: auto 120%;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 30%, #000 70%, transparent);
   mix-blend-mode: var(--art-deco-blend);
   opacity: 0.1;
   pointer-events: none;
@@ -4843,38 +4885,31 @@ a.music-album__title--link:hover {
 }
 
 .contact-container {
-  max-width: 760px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 0 4rem;
   position: relative;
   z-index: 1;
-  text-align: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 5rem;
+  align-items: start;
 }
 
 .contact-heading {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-size: clamp(3rem, 7vw, 6rem) !important;
+  font-size: clamp(3rem, 6vw, 5rem) !important;
   font-weight: 300 !important;
   color: var(--text) !important;
   letter-spacing: -2px !important;
-  margin: 0.5rem 0 0 0 !important;
+  margin: 0 !important;
   padding-bottom: 0 !important;
-  text-align: center !important;
+  text-align: left !important;
   line-height: 1 !important;
 }
 
 .contact-heading::after {
   display: none !important;
-}
-
-.contact-glass {
-  margin-top: 3rem;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
-  border: 1px solid rgba(var(--accent-rgb), 0.18);
-  border-radius: 8px;
-  padding: 3rem;
 }
 
 .contact-sub {
@@ -4884,7 +4919,14 @@ a.music-album__title--link:hover {
   color: rgba(var(--text-rgb), 0.55);
   line-height: 1.85;
   max-width: 440px;
-  margin: 0 auto 2.5rem !important;
+  margin: 0 !important;
+}
+
+/* The same form also renders in the header's contact dialog, so only the
+   homepage copy drops its centered 420px column. */
+.contact-container .contact-form-wrap {
+  max-width: none;
+  margin: 0;
 }
 
 .contact-form-wrap {
@@ -5003,8 +5045,11 @@ a.music-album__title--link:hover {
 }
 
 @media (max-width: 768px) {
-  .contact-container { padding: 0 1.5rem; }
-  .contact-glass { padding: 2rem 1.5rem; }
+  .contact-container {
+    padding: 0 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
   .contact-heading { letter-spacing: -1px !important; }
 }
 

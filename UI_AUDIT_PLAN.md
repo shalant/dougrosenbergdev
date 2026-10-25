@@ -45,7 +45,14 @@ The page currently uses patterns that `CLAUDE.md` and `DESIGN_NOTES.md` list as 
 
 ## Branch 2: `ui-audit-selected-work`, show client work on the homepage
 
-**Status:** not started. **Expected gain:** about +6.
+**Status:** approved by Doug from the before/after artifact (four revisions) and committed on `ui-audit-selected-work-2026-10-25` (2026-10-25). This branch was cut from `ui-audit-skills-section-2026-10-25` rather than a fresh `master`, at Doug's request, so it carries that branch's plan update instead of a separate docs PR.
+- **Picks:** ArborKin (large), Hardware Etc, Guacamayo: a C# full-stack app, a small-business client site and a musician site, so the strip shows C# full-stack depth alongside client sites. ArborKin leads because Doug rates it his strongest work by a wide margin (C#, complex RBAC, 593 tests per the FamilyTree README as of 2026-10-25); its strip image is the dark-theme tree view. The proposed Sonus Construction was dropped on 2026-10-25 after Doug judged its screenshots weak; it's still on `/webdesign`. The picks live in `siteproperties.json` as the ordered `featuredWork` list of `{ slug, image }`; the first gets the large slot. Each `image` is a file in `src/assets/images/webdesign/` used only by this strip (the build fails with a message naming the file if it's missing).
+- **Screenshots:** Hardware Etc's strip image is a fresh capture of the live hardwareetc.net homepage (1440px viewport at 2x, 2026-10-25), because the case study's existing hero crop read poorly as a thumbnail. ArborKin and Guacamayo reuse case-study images. The case-study pages themselves are unchanged.
+- **Also changed:** the hero's scroll arrow now lands on `#work` instead of `#about`. ArborKin's case-study numbers in `webdesign.json` were stale (`~8k` lines, 12 migrations, 11 xUnit tests). They now read ~14k lines of C# (application code, excluding tests and migrations), 18 EF migrations and 593 automated tests, counted from the `shalant/FamilyTree` repo and README on 2026-10-25. Its `industry` line now names C#/.NET and role-based access control. The 2026-09 blog post's older figures were left as they were, since the post is dated.
+- **Verified:** build, `test:unit` (9/9), `verify-csp`, `test:e2e` (190 passed, 5 skipped), `check-links`, and Lighthouse (accessibility, best-practices and SEO assertions all passed). The new selected-work and view-transition tests also passed 85/85 with `--repeat-each=5`.
+- **Copy still open:** the heading "Selected Work", the link "all web design work" and Guacamayo's third-person `industry` line ("Doug's own band site") shipped as-is. Doug hasn't confirmed them.
+
+**Expected gain:** about +6.
 
 The site targets small-business and musician clients, yet `/` reads like a résumé. This branch adds a selected-work strip directly after the hero.
 
@@ -102,3 +109,4 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 |---|---|---|---|
 | 2026-10-25 | audit (`3ceaf92`) | 68 | Baseline |
 | 2026-10-25 | 1, tells cleanup | 73 (est.) | Eyebrows, caps, decorative mono, middle dot and emoji removed |
+| 2026-10-25 | 2, selected work | 79 (est.) | ArborKin, Hardware Etc and Guacamayo strip after the hero |

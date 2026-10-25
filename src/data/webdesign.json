@@ -240,7 +240,7 @@
       "slug": "arborkin",
       "number": "04",
       "name": "ArborKin",
-      "industry": "Private, multi-user family tree app — solo full-stack build",
+      "industry": "Private, multi-tenant family tree app — solo C#/.NET build with role-based access control",
       "platform": "Blazor Server",
       "status": "live · invite-only",
       "siteLabel": null,
@@ -273,7 +273,7 @@
       "bullets": [
         "JS-free tree layout — every node's pixel position computed server-side in C#, no post-render flicker",
         "Custom drag-state ownership bridging JS gestures and Blazor persistence",
-        "~8k lines of C#, 12 EF migrations, shipped to Azure and used by real people"
+        "~14k lines of C#, 18 EF migrations and 593 automated tests, shipped to Azure and used by real people"
       ],
       "tagline": "A private, multi-user family tree app — built solo, shipped to Azure, used by real people. Full stack from data model to layout algorithm to auth system.",
       "approach": [
@@ -298,15 +298,15 @@
       "facts": [
         {
           "label": "lines of C#",
-          "value": "~8k"
+          "value": "~14k"
         },
         {
           "label": "EF migrations",
-          "value": "12"
+          "value": "18"
         },
         {
-          "label": "xUnit tests",
-          "value": "11"
+          "label": "automated tests",
+          "value": "593"
         },
         {
           "label": "Azure services",

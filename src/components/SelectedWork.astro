@@ -1,0 +1,207 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import SectionDivider from './SectionDivider.astro';
+import siteProperties from '../data/siteproperties.json';
+import webDesign from '../data/webdesign.json';
+
+// Which projects show, and in what order (the first is the large one), lives in
+// siteproperties.json so BackendTools can change the picks without touching markup.
+// Each pick names its own strip image rather than reusing the case study's first
+// screenshot: those were cropped for the case-study gallery and read poorly as
+// thumbnails. They live in src/assets (not public/) so astro:assets can generate a
+// srcset, the same reason the hero portrait lives there.
+const screenshots = import.meta.glob<{ default: ImageMetadata }>('../assets/images/webdesign/*.{jpg,webp}', { eager: true });
+
+const projects = siteProperties.featuredWork.map(({ slug, image }: { slug: string; image: string }) => {
+  const project = webDesign.projects.find((p) => p.slug === slug);
+  if (!project) throw new Error(`featuredWork: no webdesign.json project "${slug}"`);
+  const screenshot = screenshots[`../assets/images/webdesign/${image}`];
+  if (!screenshot) throw new Error(`featuredWork: no src/assets/images/webdesign/${image}`);
+  return { ...project, screenshot: screenshot.default };
+});
+---
+
+<section class="work-section reveal-on-scroll" id="work">
+  <div class="work-container">
+    <div class="work-header">
+      <h2 class="work-heading">Selected Work</h2>
+      <SectionDivider />
+    </div>
+
+    <ul class="work-grid">
+      {projects.map((project, i) => (
+        <li class={i === 0 ? 'work-item work-item--lead' : 'work-item'}>
+          <a href={`/webdesign/${project.slug}`} class="work-item__link">
+            <div class="work-item__frame">
+              <Image
+                src={project.screenshot}
+                alt={`${project.name} website`}
+                class="work-item__img"
+                widths={i === 0 ? [480, 760, 1140, 1522] : [400, 560, 840]}
+                sizes={i === 0 ? '(max-width: 900px) 100vw, 680px' : '(max-width: 900px) 100vw, 420px'}
+              />
+            </div>
+            <h3 class="work-item__name vt-title" style={`view-transition-name: vt-wd-${project.slug}`}>{project.name}</h3>
+            <p class="work-item__industry">{project.industry}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <a href="/webdesign" class="work-all">all web design work</a>
+  </div>
+</section>
+
+<style>
+  .work-section {
+    background: var(--bg);
+    padding: 7rem 0;
+    position: relative;
+    color: var(--text);
+  }
+
+  .work-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 4rem;
+  }
+
+  .work-heading {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: -1px;
+    margin: 0 0 3.5rem;
+    padding-bottom: 0;
+    text-align: left;
+  }
+
+  .work-heading::after {
+    display: none;
+  }
+
+  /* One large project and two stacked beside it, so the strip doesn't read as
+     three identical cards. Sharp corners: these are content, not controls. */
+  .work-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: auto auto;
+    gap: 2.5rem 3rem;
+  }
+
+  .work-item--lead {
+    grid-row: 1 / span 2;
+  }
+
+  .work-item__link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .work-item__frame {
+    overflow: hidden;
+    border: 1px solid rgba(var(--text-rgb), 0.12);
+    aspect-ratio: 16 / 9;
+  }
+
+  .work-item--lead .work-item__frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .work-item--lead .work-item__img {
+    object-position: center;
+  }
+
+  .work-item__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+    transition: transform 0.6s var(--ease-swing, ease);
+  }
+
+  .work-item__name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin: 1rem 0 0.35rem;
+  }
+
+  .work-item--lead .work-item__name {
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+  }
+
+  .work-item__industry {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    color: rgba(var(--text-rgb), 0.75);
+  }
+
+  .work-item__link:hover .work-item__img,
+  .work-item__link:focus-visible .work-item__img {
+    transform: scale(1.03);
+  }
+
+  .work-item__link:hover .work-item__name,
+  .work-item__link:focus-visible .work-item__name {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .work-all {
+    display: inline-block;
+    margin-top: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .work-item__img {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .work-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .work-item--lead {
+      grid-row: auto;
+    }
+
+    .work-item--lead .work-item__frame {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .work-section {
+      padding: 5rem 0;
+    }
+
+    .work-container {
+      padding: 0 2rem;
+    }
+
+    .work-heading {
+      font-size: 2.25rem;
+    }
+  }
+</style>

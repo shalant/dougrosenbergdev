@@ -58,6 +58,16 @@ Everything else is a *state change*: short (≤0.4s), triggered by the visitor, 
 - **Page-to-page:** native cross-document view transitions (CSS only). A `/webdesign` card's project name morphs into the case study title, a blog card's title into the post `h1`; everything else cross-fades in 0.25s. Names are `vt-wd-<slug>` / `vt-post-<id>` and must be unique per page; `e2e/view-transitions.spec.ts` guards that. Unsupported browsers (Firefox) navigate normally.
 - **Reduced motion:** the global `prefers-reduced-motion` rule in `global.css` zeroes all transitions/animations. New JS-driven motion must check the media query itself.
 
+## Tells removed from the homepage (2026-10-25)
+
+The UI audit (see `UI_AUDIT_PLAN.md`, branch 1) found the homepage still using patterns from the list below:
+- **Removed** the `// eyebrow` labels above every homepage `h2`. Subpages (`/services`, `/consulting`, `/blog`, `/webdesign`) still have theirs; that cleanup is a separate change.
+- **Removed** tracked ALL-CAPS text from `.hero-btn` (sitewide, so every primary/ghost button), the mobile nav CTA, the `more` dropdown label, Skills category labels, GitHub stat labels, contact form labels and the Music photo caption.
+- **Moved off monospace**, keeping it for real facts only (dates, numbers, percentages, the heatmap months): nav links, the nav and footer CTAs, the side section nav, Experience company and `Visit` links, hobby details, Music labels, roles, press attribution and collaborator chips. The footer name is now in Cormorant Garamond instead of a glowing mono `// douglas rosenberg`.
+- **Footer copyright:** dropped the middle dot. It now reads `© <year>. Built with Astro.`
+- **Emoji:** removed the 🛠️ and 🎨 from `aboutme.json`'s `detailOrQuote`.
+- Labels that moved from dimmed teal to dimmed text color now sit at 0.7 opacity so they still clear AA in light mode. They were also taken out of the light-mode teal override.
+
 ## Explicitly avoided (AI-site tells, per calibration)
 
 Warm cream + terracotta; near-black + acid accent; broadsheet zero-radius dense columns; uniform rounded-card-kit with identical soft grey shadow; tracked-out ALL-CAPS eyebrow labels; middle-dot meta strings; em-dash "WORD — fragment" labels; arrow (`→`) appended to buttons/links.

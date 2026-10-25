@@ -566,9 +566,11 @@ a:hover {
 .nav-link,
 .nav-link--page,
 .nav-link--archive {
-  font-family: var(--mono);
-  font-size: 1rem;
-  letter-spacing: 0.06em;
+  /* Montserrat, not --mono: mono is kept for real technical facts (dates,
+     numbers, code), and a mono nav was one of the AI-site tells. */
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
   text-decoration: none;
   padding: 0.5rem 1rem;
   display: inline-flex;
@@ -754,8 +756,7 @@ a:hover {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.62rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   color: rgba(var(--text-rgb), 0.35);
   padding: 0.3rem 0.75rem 0.5rem;
 }
@@ -769,9 +770,9 @@ a:hover {
 }
 
 .nav-dropdown-item {
-  font-family: var(--mono);
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.88rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.01em;
   color: rgba(var(--text-rgb), 0.7) !important;
   text-decoration: none;
   padding: 0.55rem 1.25rem;
@@ -817,9 +818,10 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   color: var(--accent) !important;
   text-decoration: none;
   background: none;
@@ -1203,8 +1205,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     text-shadow: none;
     cursor: pointer;
   }
@@ -1533,9 +1534,9 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   align-items: center;
   flex-wrap: wrap;
   gap: 0.6rem;
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.03em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
   margin: 0 0 1.25rem 0;
 }
 
@@ -1590,10 +1591,10 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 .experience-detail__link {
   position: relative;
   display: inline-block;
-  font-family: var(--mono);
-  font-size: 0.76rem;
-  color: rgba(var(--accent-rgb), 0.6) !important;
-  letter-spacing: 0.1em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(var(--accent-rgb), 0.75) !important;
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
@@ -1995,12 +1996,6 @@ html[data-theme="light"] .dr-theme-scope .experience-detail__link {
   color: var(--accent) !important;
 }
 
-html[data-theme="light"] .dr-theme-scope .skills-category__label,
-html[data-theme="light"] .dr-theme-scope .casual-hobby__detail,
-html[data-theme="light"] .dr-theme-scope .music-press__attribution,
-html[data-theme="light"] .dr-theme-scope .music-section-label,
-html[data-theme="light"] .dr-theme-scope .music-album__role,
-html[data-theme="light"] .dr-theme-scope .music-photo__caption,
 html[data-theme="light"] .dr-theme-scope .nav-dropdown-label,
 html[data-theme="light"] .dr-theme-scope .wd-case__fact-label {
   color: rgba(var(--accent-rgb), 0.85);
@@ -2047,8 +2042,7 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   text-decoration: none;
   border-radius: 2px;
   transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -2286,7 +2280,7 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  font-family: var(--mono);
+  font-family: 'Montserrat', sans-serif;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -3981,11 +3975,10 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 }
 
 .skills-category__label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(var(--accent-rgb), 0.6);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(var(--text-rgb), 0.8);
   padding-bottom: 0.5rem;
   border-bottom: 1px solid rgba(var(--accent-rgb), 0.1);
 }
@@ -3997,11 +3990,10 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 }
 
 .skills-stats__label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: rgba(var(--accent-rgb), 0.5);
-  letter-spacing: 0.12em;
-  text-transform: lowercase;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(var(--text-rgb), 0.8);
   display: block;
   margin-bottom: 1rem;
 }
@@ -4038,11 +4030,9 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 
 .skills-stat .skills-stat__label {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(var(--text-rgb), 0.5);
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 /* GitHub panels under the stat row: contribution calendar + top languages.
@@ -4279,10 +4269,9 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 }
 
 .casual-hobby__detail {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: rgba(var(--accent-rgb), 0.55);
-  letter-spacing: 0.04em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(var(--text-rgb), 0.7);
   margin-top: 0.2rem;
   transition: color 0.2s ease;
 }
@@ -4411,19 +4400,17 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 }
 
 .music-photo__caption {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  color: rgba(var(--accent-rgb), 0.45);
-  text-transform: uppercase;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 .music-section-label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: rgba(var(--accent-rgb), 0.5);
-  letter-spacing: 0.12em;
-  text-transform: lowercase;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(var(--text-rgb), 0.8);
   display: block;
   margin-bottom: 0.85rem;
 }
@@ -4446,10 +4433,9 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 }
 
 .music-press__attribution {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: rgba(var(--accent-rgb), 0.5);
-  letter-spacing: 0.1em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 /* Discography */
@@ -4505,10 +4491,9 @@ a.music-album__title--link:hover {
 }
 
 .music-album__role {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: rgba(var(--accent-rgb), 0.5);
-  letter-spacing: 0.04em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(var(--text-rgb), 0.7);
   white-space: nowrap;
 }
 
@@ -4528,13 +4513,12 @@ a.music-album__title--link:hover {
 }
 
 .music-collab-chip {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: rgba(var(--text-rgb), 0.5);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(var(--text-rgb), 0.7);
   border: 1px solid rgba(var(--text-rgb), 0.1);
   border-radius: 2px;
   padding: 0.25rem 0.65rem;
-  letter-spacing: 0.03em;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -4917,11 +4901,10 @@ a.music-album__title--link:hover {
 }
 
 .contact-field label {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(var(--text-rgb), 0.55);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(var(--text-rgb), 0.75);
 }
 
 /* Same visual language as .blog-search-input, this site's one other real
@@ -5073,12 +5056,12 @@ a.music-album__title--link:hover {
 }
 
 .site-footer__name {
-  font-family: var(--mono);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.4);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text);
+  text-transform: capitalize;
 }
 
 .site-footer__title {
@@ -5093,11 +5076,10 @@ a.music-album__title--link:hover {
 }
 
 .site-footer__copy {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: rgba(var(--text-rgb), 0.3);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  color: rgba(var(--text-rgb), 0.45);
   margin-top: 0.5rem;
-  letter-spacing: 0.04em;
 }
 
 /* Right column */
@@ -5172,10 +5154,10 @@ html[data-theme="light"] .dr-theme-scope .site-footer__social img {
   display: inline-flex;
   align-items: center;
   gap: 0.3em;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   color: var(--accent);
   border: 1px solid rgba(var(--accent-rgb), 0.45);
   border-radius: 3px;

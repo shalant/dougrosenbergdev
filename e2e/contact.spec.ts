@@ -146,6 +146,14 @@ test.describe('contact form validation', () => {
     // button down between Playwright's scroll and its tap. Let them land.
     await form.scrollIntoViewIfNeeded();
     await page.waitForLoadState('networkidle');
+    // The section's scroll entrance slides it up with an overshooting ease;
+    // Firefox could read the button as stable at the top of the overshoot
+    // and click where it no longer was (about 3 runs in 10 on 2026-10-25).
+    await page.locator('#contact').evaluate((section) =>
+      Promise.all(section.getAnimations({ subtree: true })
+        .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity)
+        .map((a) => a.finished.catch(() => {}))),
+    );
     await form.locator('button[type="submit"]').click();
     await expect(name).toHaveAttribute('aria-invalid', 'true');
     await expect(message).toHaveAttribute('aria-invalid', 'true');

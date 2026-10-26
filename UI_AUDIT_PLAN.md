@@ -2,6 +2,8 @@
 
 Started 2026-10-25. Goal: take the homepage (`/`) from the audit's **68/100** (roughly better than 75-80% of developers with ~4 years' experience) to **85+**, which is the bar for "better than 95%". The audit screenshots were taken at 1440px and 390px wide, in dark and light themes, from a production build of `master` at `3ceaf92`.
 
+**Closed 2026-10-25 at 85/100** (re-audit of the live site after #59, scored on the same seven areas). The goal is met. What's left is deliberate or minor; see "Closing re-audit" at the end of the branch sections.
+
 The work is split into five branches. Each one branches from a freshly pulled `master` after the previous branch has merged, because they touch the same section headers and CSS.
 
 ## How every branch runs
@@ -126,13 +128,24 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 
 **Re-audit (2026-10-25, live site after #58):** **82/100**, not the 87 the running estimates added up to. Each branch had been scored by adding its planned gain, without re-auditing the page. Scores by area: hero 17/20, typography 13/15, color 12/15, layout 12/15, showing work 12/15, motion 9/10, polish 7/10. The original audit's table rows summed to 58, not the 68 it reported: it was unclear whether polish earned its 10. This re-audit counts every row.
 
-**Branch 6 status:** built on `ui-audit-final-polish-2026-10-25` (2026-10-25), approved by Doug from the before/after artifact, including the new copy (2026-10-25). Doug asked for all three fixes from the re-audit:
+**Branch 6 status:** merged as #59 (2026-10-25) and confirmed live; built on `ui-audit-final-polish-2026-10-25`, approved by Doug from the before/after artifact, including the new copy (2026-10-25). Doug asked for all three fixes from the re-audit:
 - **GitHub stats:** dropped the `years active` and `current streak` tiles, leaving commits, repositories, contributions and longest streak. The heatmap shows the last 26 weeks, beside the languages panel from 900px up; the stat totals still cover the past year. This reverses Doug's branch 5 choice to keep all six tiles and the full year, at his request.
 - **Hardware Etc image:** the strip uses a fresh 1280×720 capture of hardwareetc.net's Products page (`hardwareetc-products.jpg`). It replaces the home-page capture, which was mostly black with text too small to read at strip size.
 - **Copy (approved by Doug):**
   - Music caption: "Better Than TV — live" (wrong, since it's an album cover) is now "Cover of Better Than TV, my album as leader and composer".
   - Contact heading: "Get In Touch" is now "Let's talk".
   - Contact line: "Tell me what you need built: a website, a web app, or help with a .NET or ERP system. I'll reply by email."
+
+## Closing re-audit (2026-10-25)
+
+Live site after #59: **85/100**. By area: hero 17/20, typography 13/15, color 12/15, layout 12/15, showing work 13/15, motion 9/10, polish 9/10. Branch 6's estimate was 86.
+
+Left open on purpose, about a point each:
+- **Skills logos** keep their brand colors. That was Doug's branch 5 choice, so it isn't a defect.
+- **About, Experience, Skills and Casual** still open the same way (heading, waveform, content). Changing that means redesigning sections that work, against Doug's "avoid changing the site too much".
+- **Mobile Music:** the Bauhaus layer is scaled very large on a tall phone layout, so one of its shapes shows as a hard horizontal edge behind the heading.
+
+Process note for future audits: re-score the whole page after each merge rather than adding planned gains. The running estimate drifted to 87 against a measured 82.
 
 ---
 
@@ -146,3 +159,4 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 | 2026-10-25 | 3, section rhythm | 84 (est.) | Music spread, two-column Contact, heading gap, seamless texture |
 | 2026-10-25 | 4, hero and contrast | 87 (est.) | Subtitle A, dark-mode contrast, visible field borders and tab logos |
 | 2026-10-25 | re-audit, live after #58 | 82 | First full re-score since the baseline; the running estimates overshot by 5 |
+| 2026-10-25 | 6, final polish (live after #59) | 85 | GitHub stats trimmed, Hardware Etc recaptured, Music and Contact copy; audit closed |

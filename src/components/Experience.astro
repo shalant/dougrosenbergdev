@@ -37,13 +37,10 @@ import experiences from '../data/experience.json';
       </div>
 
       {experiences.map((exp: any, idx: number) => {
-        const numStr = String(idx + 1).padStart(2, '0');
         const detailImage = exp.detailImage ?? exp.image;
         const chips = exp.icons.split(',');
         return (
           <div class="experience-detail" role="tabpanel" id={`exp-panel-${idx}`} aria-labelledby={`exp-tab-${idx}`} data-index={idx} hidden={idx !== 0}>
-            <div class="experience-detail__num-bg" aria-hidden="true">{numStr}</div>
-
             <div class:list={["experience-detail__logo-wrap", { "experience-detail__logo-wrap--wide": !!exp.detailImage }]}>
               <img src={detailImage} alt={exp.title} class="experience-detail__logo" loading="lazy" />
             </div>

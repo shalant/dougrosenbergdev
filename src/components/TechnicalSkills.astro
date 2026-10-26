@@ -19,28 +19,31 @@ const categories = [
 const githubStats = await loadGithubStats(siteProperties.gitHub);
 const contrib = githubStats?.contributions ?? null;
 
+// The heatmap shows the last 26 weeks, not the full year the totals cover: the
+// year view opened on a quiet stretch that read as inactivity, and half a year
+// sits at a readable cell size beside the languages panel.
+const weeks = contrib ? contrib.weeks.slice(-26) : [];
+const shownDays = weeks.flat().filter((d) => d !== null);
+const shownTotal = shownDays.reduce((sum, d) => sum + d.count, 0);
+
 const utc = (iso: string) => new Date(`${iso}T00:00:00Z`);
 const monthFmt = new Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'UTC' });
 const dayFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 
 // Month label above the first week column that starts a new month.
-const monthLabels = contrib
-  ? contrib.weeks.map((week, i) => {
+const monthLabels = weeks.map((week, i) => {
       const first = week.find(Boolean);
-      const prev = i > 0 ? contrib.weeks[i - 1].find(Boolean) : null;
+      const prev = i > 0 ? weeks[i - 1].find(Boolean) : null;
       // No label in the last 3 columns: a 3-letter month would spill past the grid edge.
-      if (!first || !prev || i >= contrib.weeks.length - 3) return '';
+      if (!first || !prev || i >= weeks.length - 3) return '';
       return utc(first.date).getUTCMonth() !== utc(prev.date).getUTCMonth() ? monthFmt.format(utc(first.date)) : '';
-    })
-  : [];
+    });
 
 const statTiles = (githubStats
   ? [
       githubStats.commits != null && { value: `${githubStats.commits.toLocaleString()}+`, label: 'commits' },
       githubStats.repos != null && { value: String(githubStats.repos), label: 'repositories' },
-      githubStats.yearsActive != null && { value: String(githubStats.yearsActive), label: 'years active' },
       contrib && { value: contrib.total.toLocaleString(), label: 'contributions, past year' },
-      contrib && { value: `${contrib.currentStreak}d`, label: 'current streak' },
       contrib && { value: `${contrib.longestStreak}d`, label: 'longest streak, past year' },
     ]
   : []
@@ -88,13 +91,13 @@ const statTiles = (githubStats
                 <div
                   class="gh-calendar__grid"
                   role="img"
-                  aria-label={`${contrib.total} contributions on GitHub between ${dayFmt.format(utc(contrib.from))} and ${dayFmt.format(utc(contrib.to))}`}
-                  style={`--weeks: ${contrib.weeks.length}`}
+                  aria-label={`${shownTotal} contributions on GitHub between ${dayFmt.format(utc(shownDays[0].date))} and ${dayFmt.format(utc(contrib.to))}`}
+                  style={`--weeks: ${weeks.length}`}
                 >
                   {monthLabels.map((label, i) => (
                     <span class="gh-calendar__month" style={`grid-column: ${i + 1}`}>{label}</span>
                   ))}
-                  {contrib.weeks.map((week, col) =>
+                  {weeks.map((week, col) =>
                     week.map((day, row) =>
                       day ? (
                         <span

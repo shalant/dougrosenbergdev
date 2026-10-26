@@ -122,6 +122,18 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 - **Chip layout:** reduce the uniform chip wall. A good option is plain text lists per category, keeping icons only where they help.
 - **GitHub stats:** **Doug decides** whether to drop `current streak` and `years active`, and whether the heatmap should keep showing the quiet Feb-May stretch or switch to a shorter window. The data is real, so this is a framing choice, not a correction.
 
+## Re-audit after branch 4, and branch 6: `ui-audit-final-polish`
+
+**Re-audit (2026-10-25, live site after #58):** **82/100**, not the 87 the running estimates added up to. Each branch had been scored by adding its planned gain, without re-auditing the page. Scores by area: hero 17/20, typography 13/15, color 12/15, layout 12/15, showing work 12/15, motion 9/10, polish 7/10. The original audit's table rows summed to 58, not the 68 it reported: it was unclear whether polish earned its 10. This re-audit counts every row.
+
+**Branch 6 status:** built on `ui-audit-final-polish-2026-10-25` (2026-10-25), approved by Doug from the before/after artifact, including the new copy (2026-10-25). Doug asked for all three fixes from the re-audit:
+- **GitHub stats:** dropped the `years active` and `current streak` tiles, leaving commits, repositories, contributions and longest streak. The heatmap shows the last 26 weeks, beside the languages panel from 900px up; the stat totals still cover the past year. This reverses Doug's branch 5 choice to keep all six tiles and the full year, at his request.
+- **Hardware Etc image:** the strip uses a fresh 1280×720 capture of hardwareetc.net's Products page (`hardwareetc-products.jpg`). It replaces the home-page capture, which was mostly black with text too small to read at strip size.
+- **Copy (approved by Doug):**
+  - Music caption: "Better Than TV — live" (wrong, since it's an album cover) is now "Cover of Better Than TV, my album as leader and composer".
+  - Contact heading: "Get In Touch" is now "Let's talk".
+  - Contact line: "Tell me what you need built: a website, a web app, or help with a .NET or ERP system. I'll reply by email."
+
 ---
 
 ## Score log
@@ -133,3 +145,4 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 | 2026-10-25 | 2, selected work | 79 (est.) | ArborKin, Hardware Etc and Guacamayo strip after the hero |
 | 2026-10-25 | 3, section rhythm | 84 (est.) | Music spread, two-column Contact, heading gap, seamless texture |
 | 2026-10-25 | 4, hero and contrast | 87 (est.) | Subtitle A, dark-mode contrast, visible field borders and tab logos |
+| 2026-10-25 | re-audit, live after #58 | 82 | First full re-score since the baseline; the running estimates overshot by 5 |

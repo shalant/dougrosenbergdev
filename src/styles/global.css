@@ -4039,6 +4039,12 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   margin-top: 1rem;
 }
 
+/* Half a year of weeks beside the languages, rather than a full-width year
+   whose empty months read as the headline. */
+@media (min-width: 900px) {
+  .gh-panels { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+}
+
 .gh-panel {
   border: 1px solid rgba(var(--accent-rgb), 0.12);
   border-radius: 4px;
@@ -4060,7 +4066,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   grid-template-rows: 1rem;
   grid-auto-rows: auto;
   gap: 3px;
-  min-width: 640px;
+  min-width: calc(var(--weeks) * 10px);
 }
 
 .gh-calendar__month {
@@ -4131,7 +4137,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 @media (max-width: 768px) {
   .skills-container { padding: 0 2rem; }
   .skills-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  /* Six tiles: two per row instead of six stacked. */
+  /* Four tiles: two per row instead of four stacked. */
   .skills-stats__row { display: grid; grid-template-columns: 1fr 1fr; }
   .skills-stat {
     min-width: 0;

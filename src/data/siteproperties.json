@@ -13,7 +13,7 @@
   "music": "https://www.dougrosenberg.com",
   "featuredWork": [
     { "slug": "arborkin", "image": "arborkin-tree-dark.webp" },
-    { "slug": "hardware-etc", "image": "hardwareetc-home.jpg" },
+    { "slug": "hardware-etc", "image": "hardwareetc-products.jpg" },
     { "slug": "guacamayo-band", "image": "guacamayo-hero.jpg" }
   ]
 }

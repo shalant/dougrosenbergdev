@@ -1,7 +1,8 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import SectionDivider from './SectionDivider.astro';
+import ProjectMediaFrame from './ProjectMediaFrame.astro';
 import siteProperties from '../data/siteproperties.json';
 import webDesign from '../data/webdesign.json';
 
@@ -13,13 +14,16 @@ import webDesign from '../data/webdesign.json';
 // srcset, the same reason the hero portrait lives there.
 const screenshots = import.meta.glob<{ default: ImageMetadata }>('../assets/images/webdesign/*.{jpg,webp}', { eager: true });
 
-const projects = siteProperties.featuredWork.map(({ slug, image }: { slug: string; image: string }) => {
+const projects = await Promise.all(siteProperties.featuredWork.map(async ({ slug, image }: { slug: string; image: string }, i: number) => {
   const project = webDesign.projects.find((p) => p.slug === slug);
   if (!project) throw new Error(`featuredWork: no webdesign.json project "${slug}"`);
   const screenshot = screenshots[`../assets/images/webdesign/${image}`];
   if (!screenshot) throw new Error(`featuredWork: no src/assets/images/webdesign/${image}`);
-  return { ...project, screenshot: screenshot.default };
-});
+  // The curated strip image leads the crossfade, so the resting state is unchanged;
+  // the case study's own screenshots follow it on hover. Same ProjectMediaFrame as /webdesign.
+  const lead = await getImage({ src: screenshot.default, width: i === 0 ? 1140 : 840, format: 'webp' });
+  return { ...project, frameImages: [lead.src, ...project.images] };
+}));
 ---
 
 <section class="work-section reveal-on-scroll" id="work">
@@ -34,13 +38,7 @@ const projects = siteProperties.featuredWork.map(({ slug, image }: { slug: strin
         <li class={i === 0 ? 'work-item work-item--lead' : 'work-item'}>
           <a href={`/webdesign/${project.slug}`} class="work-item__link">
             <div class="work-item__frame">
-              <Image
-                src={project.screenshot}
-                alt={`${project.name} website`}
-                class="work-item__img"
-                widths={i === 0 ? [480, 760, 1140, 1522] : [400, 560, 840]}
-                sizes={i === 0 ? '(max-width: 900px) 100vw, 680px' : '(max-width: 900px) 100vw, 420px'}
-              />
+              <ProjectMediaFrame alt={`${project.name} website`} images={project.frameImages} />
             </div>
             <h3 class="work-item__name vt-title" style={`view-transition-name: vt-wd-${project.slug}`}>{project.name}</h3>
             <p class="work-item__industry">{project.industry}</p>
@@ -52,6 +50,30 @@ const projects = siteProperties.featuredWork.map(({ slug, image }: { slug: strin
     <a href="/webdesign" class="work-all">all web design work</a>
   </div>
 </section>
+
+<script>
+  // Same hover-intent crossfade trigger as the /webdesign grid: the screenshots only
+  // start cycling once the pointer rests on a card for a beat, so skimming across the
+  // strip doesn't set all three animating. Touch devices autoplay via CSS instead.
+  let hoverTimer: ReturnType<typeof setTimeout> | null = null;
+  const grid = document.querySelector('.work-grid');
+
+  grid?.addEventListener('mouseover', (e) => {
+    const frame = (e.target as HTMLElement).closest<HTMLElement>('[data-media-frame]');
+    if (!frame || frame.contains(e.relatedTarget as Node)) return;
+    if (hoverTimer) clearTimeout(hoverTimer);
+    hoverTimer = setTimeout(() => {
+      frame.querySelector('.wd-project__frame-stage')?.classList.add('is-active');
+    }, 200);
+  });
+
+  grid?.addEventListener('mouseout', (e) => {
+    const frame = (e.target as HTMLElement).closest<HTMLElement>('[data-media-frame]');
+    if (!frame || frame.contains(e.relatedTarget as Node)) return;
+    if (hoverTimer) clearTimeout(hoverTimer);
+    frame.querySelector('.wd-project__frame-stage')?.classList.remove('is-active');
+  });
+</script>
 
 <style>
   .work-section {
@@ -114,17 +136,27 @@ const projects = siteProperties.featuredWork.map(({ slug, image }: { slug: strin
     aspect-ratio: 4 / 3;
   }
 
-  .work-item--lead .work-item__img {
-    object-position: center;
+  /* ProjectMediaFrame ships its own chrome for the /webdesign cards (negative
+     margin, rounded corners, border, fixed 1.94 ratio). Here the frame is just
+     the stage inside .work-item__frame, which keeps the sharp border and ratio. */
+  .work-item__frame :global(.wd-project__frame) {
+    height: 100%;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
   }
 
-  .work-item__img {
-    display: block;
-    width: 100%;
+  .work-item__frame :global(.wd-project__frame-stage) {
     height: 100%;
-    object-fit: cover;
+    aspect-ratio: auto;
+  }
+
+  .work-item__frame :global(.wd-project__frame-img) {
     object-position: top left;
-    transition: transform 0.6s var(--ease-swing, ease);
+  }
+
+  .work-item--lead .work-item__frame :global(.wd-project__frame-img) {
+    object-position: center;
   }
 
   .work-item__name {
@@ -148,9 +180,9 @@ const projects = siteProperties.featuredWork.map(({ slug, image }: { slug: strin
     color: rgba(var(--text-rgb), 0.75);
   }
 
-  .work-item__link:hover .work-item__img,
-  .work-item__link:focus-visible .work-item__img {
-    transform: scale(1.03);
+  .work-item__link:hover .work-item__frame :global(.wd-project__frame-stage),
+  .work-item__link:focus-visible .work-item__frame :global(.wd-project__frame-stage) {
+    transform: scale(1.04);
   }
 
   .work-item__link:hover .work-item__name,
@@ -172,8 +204,13 @@ const projects = siteProperties.featuredWork.map(({ slug, image }: { slug: strin
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .work-item__img {
+    .work-item__frame :global(.wd-project__frame-stage) {
       transition: none;
+      transform: none !important;
+    }
+
+    .work-item__frame :global(.wd-project__frame-img) {
+      animation: none !important;
     }
   }
 

@@ -266,6 +266,9 @@
         "Blazor Server",
         "EF Core",
         "MudBlazor",
+        "ASP.NET Core Identity",
+        "Playwright",
+        "GitHub Actions",
         "Azure App Service",
         "Azure SQL",
         "Blob Storage"
@@ -273,13 +276,15 @@
       "bullets": [
         "JS-free tree layout — every node's pixel position computed server-side in C#, no post-render flicker",
         "Custom drag-state ownership bridging JS gestures and Blazor persistence",
-        "~14k lines of C#, 18 EF migrations and 593 automated tests, shipped to Azure and used by real people"
+        "Invite-only, multi-tenant by design: every family's data is scoped at the service layer, and a cross-tenant test matrix proves it",
+        "~14k lines of C# (plus ~12k of Razor), 18 EF migrations and 633 passing tests including real-browser E2E, shipped to Azure and used by real people"
       ],
       "tagline": "A private, multi-user family tree app — built solo, shipped to Azure, used by real people. Full stack from data model to layout algorithm to auth system.",
       "approach": [
         "ArborKin is a private, invite-only family tree app — not a portfolio demo, a real product with real users adding real relatives. The brief was self-imposed: build something with the same architectural discipline as client work, end to end, alone.",
         "The core design problem was the tree canvas itself: laying out generations so the visual hierarchy is instantly readable, without a JS layout library doing the work. Every node's pixel position is computed in C# before the browser ever paints — the Y-axis is a real birth-year timeline, so generation gaps render proportionally instead of as evenly-spaced rows.",
-        "Beyond layout, most of the hard problems were about Blazor Server's specific constraints — SignalR round-trip latency on uploads, re-renders fighting client-side drag state — solved by being deliberate about which layer (C#, JS interop, or the browser itself) owns which piece of behavior."
+        "Beyond layout, most of the hard problems were about Blazor Server's specific constraints — SignalR round-trip latency on uploads, re-renders fighting client-side drag state — solved by being deliberate about which layer (C#, JS interop, or the browser itself) owns which piece of behavior.",
+        "The other half of the work was trust. Each family's data is isolated at the service layer, registration is invite-only and fails closed, sessions are revoked when a password or role changes, and every write lands in an audit log. A CI pipeline with branch protection, a disposable-SQL-Server E2E job and a manual deploy gate keeps all of it honest."
       ],
       "highlights": [
         {
@@ -289,6 +294,18 @@
         {
           "title": "Blazor Upload Latency",
           "description": "Photos were taking five minutes. Root cause: every byte travels over SignalR to the server before reaching Azure Blob Storage. Fix: Canvas API compression in the browser first — a 12 MB phone photo becomes ~400 KB before Blazor ever touches it. Minutes to seconds."
+        },
+        {
+          "title": "Tenant Isolation, Proven",
+          "description": "The FamilyId is baked into the auth cookie and every family-scoped query filters on it. Rather than trust that, a test matrix calls every public method of the scoped services as one family against another family's IDs and requires each to fail or return nothing."
+        },
+        {
+          "title": "Sessions That Actually Revoke",
+          "description": "A password reset or role change signs the user out everywhere. The security stamp is re-checked every five minutes, on ordinary requests and inside open Blazor circuits, which is where most apps quietly forget to look. Registration fails closed to invite-only if the setting is missing or unrecognised."
+        },
+        {
+          "title": "Fuzzy Duplicate Detection",
+          "description": "Linking a new relative runs a Levenshtein name match at an 80% threshold, so a typo or spelling variant surfaces the person who already exists instead of creating a second one. Soft delete with cascading restore means a mistaken delete is recoverable."
         },
         {
           "title": "Drag State Ownership",
@@ -306,7 +323,11 @@
         },
         {
           "label": "automated tests",
-          "value": "593"
+          "value": "633"
+        },
+        {
+          "label": "E2E tests in real browser",
+          "value": "18"
         },
         {
           "label": "Azure services",

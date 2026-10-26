@@ -66,7 +66,7 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 
 ## Branch 3: `ui-audit-section-rhythm`, vary the sections and tame the background
 
-**Status:** built on `ui-audit-section-rhythm-2026-10-25` (2026-10-25), approved by Doug and committed as `ebe0a84` (2026-10-25). Stacked on branch 2 (`1feb271`) rather than a freshly merged `master`, because Doug asked to keep going before branch 2 merged; merge branch 2 first.
+**Status:** built on `ui-audit-section-rhythm-2026-10-25` (2026-10-25), approved by Doug and committed as `ebe0a84` (2026-10-25). Stacked on branch 2 (`1feb271`) rather than a freshly merged `master`, because Doug asked to keep going before branch 2 merged. Branches 2 and 3 (and the branch 5 docs commit) shipped together in PR #57, merged 2026-10-25 as `bd25e5f`; the live site showed the selected-work strip and two-column Contact afterward.
 - **Gap:** one rule, `h2:has(+ .section-divider)`, sets every section heading's bottom margin to 0.75rem, replacing the per-section 2.5-3.5rem that left the waveform about 80px below its heading. The waveform's own bottom margin went from 1.75rem to 2.5rem so the header group still has room before the content.
 - **Background:** the first build deleted the Bauhaus layers on About, Experience, Skills, Casual and Contact. Doug reversed that on 2026-10-25: he likes the texture, and at most one homepage section may go without it. That section is the selected-work strip. Every other section keeps its layer at its old opacity. To remove the seams instead, the About, Experience, Casual, Music and Contact layers are now boxes shaped like the 2:3 artwork, with a mask that fades out the open edge. Before, the image stopped partway across a full-width box and left a hard line. Skills is full-bleed `cover`, so it had no seam and is unchanged. Music's layer moved from the left to the right edge, because the photo panel now covers the left.
 - **Music:** the photo is a panel flush with the viewport's left edge (46% of the width), pinned while the text scrolls; the heading moved into the text column. The letterbox bars are cropped with `aspect-ratio` and `object-fit: cover`, not by editing the JPEG. The discography rows share one column grid through `subgrid`. Below 1050px the photo runs full width above the text.
@@ -86,7 +86,20 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 
 ## Branch 4: `ui-audit-hero-contrast`, client-facing hero and readable body text
 
-**Status:** not started. **Expected gain:** about +3.
+**Status:** contrast and mobile work built on `ui-audit-hero-contrast-2026-10-25` (2026-10-25), stacked on branch 3 (`0a875fd`, already on `master` via #57). Approved by Doug from the before/after artifact (two revisions) and committed.
+- **Hero subtitle:** Doug picked option A (2026-10-25): "Full-stack .NET developer in Chicago. I build ERP systems for organizations and custom websites for small businesses." It lives in `aboutme.json` as `heroSubtitle`. Before, the hero took the first sentence of `detailOrQuote`, which About also shows in full, so the sentence appeared twice; now it appears once.
+- **Mobile hero:** stays centered. A left-aligned version was built and dropped: Doug prefers centered on a phone. The "centered hero" tell is the desktop two-button template, and the short subtitle A takes care of centered text's readability cost.
+- **Expected gain:** about +3.
+- **Dark-mode contrast** (text blended over the section background):
+  - Hero subtitle: 0.55 → 0.78 opacity, 5.7 → 7.4:1.
+  - Experience bullets: 0.865rem/300/55% → 0.95rem/400/75%, 5.6 → 9.5:1. Light mode already used that size and weight.
+  - Inactive tab titles: 0.38 → 0.62.
+  - About "currently" paragraph: 0.9rem/50% → 1rem/70%.
+  - Discography artist: 3.3:1 (failing AA) → 6.9:1.
+- **Experience tab logos:** they sit on the fixed light plate that `.tech-chip__logo-wrap--light` already uses, and the inactive dim went from `grayscale(70%) brightness(0.9)` to `grayscale(40%)`. Tackle's and Shift's dark wordmarks disappeared on the old navy disc.
+- **Ghost numeral:** removed `.experience-detail__num-bg`, a 4% teal `01` that was invisible in practice.
+- **Contact inputs:** the border went from 20% teal (about 1.4:1) to 45% text color, which is 60% in light mode. Measured 4.1:1 dark and 3.3:1 light, against WCAG 1.4.11's 3:1. Focus now shows a solid teal border.
+- **Verified:** build, `test:unit` (9/9), `verify-csp`, `check-links`, `test:e2e` (190 passed, 5 skipped, exit 0), and Lighthouse (accessibility, best-practices and SEO passed; performance gave its usual local warning). In the first full e2e run, Firefox's "inline homepage submit scrolls to top and shows the toast" timed out once waiting for the toast. It then passed 5 of 5 times alone, and the full rerun passed, so it was flaky under load rather than broken by this branch. After subtitle A went in, the same thing happened to a different test: WebKit's "theme toggle switches light/dark" timed out once on the click. It passed 5 of 5 times alone, and the full rerun passed (190 passed, 5 skipped, exit 0). Two different one-off timeouts across runs point to suite-level flakiness worth a separate look, not to this branch.
 
 - **Hero subtitle:** replace the ERP/data-masking résumé sentence with a line aimed at clients. **Doug writes or approves the copy.** Claude can draft options, but nothing goes on the page unapproved. Also raise its opacity from 0.55.
 - **About pull-quote:** stop repeating the hero sentence word for word.
@@ -118,3 +131,5 @@ The site targets small-business and musician clients, yet `/` reads like a résu
 | 2026-10-25 | audit (`3ceaf92`) | 68 | Baseline |
 | 2026-10-25 | 1, tells cleanup | 73 (est.) | Eyebrows, caps, decorative mono, middle dot and emoji removed |
 | 2026-10-25 | 2, selected work | 79 (est.) | ArborKin, Hardware Etc and Guacamayo strip after the hero |
+| 2026-10-25 | 3, section rhythm | 84 (est.) | Music spread, two-column Contact, heading gap, seamless texture |
+| 2026-10-25 | 4, hero and contrast | 87 (est.) | Subtitle A, dark-mode contrast, visible field borders and tab logos |

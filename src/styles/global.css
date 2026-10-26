@@ -1382,7 +1382,9 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   justify-content: center;
   width: 44px;
   height: 44px;
-  background: rgba(44, 62, 80, 0.6);
+  /* Same fixed light plate as .tech-chip__logo-wrap--light: Tackle's and
+     Shift's marks are dark wordmarks and vanished on the old navy disc. */
+  background: rgba(238, 242, 247, 0.92);
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -1394,7 +1396,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   width: 34px;
   height: 34px;
   object-fit: contain;
-  filter: grayscale(70%) brightness(0.9);
+  filter: grayscale(40%);
   transition: filter 0.3s ease;
 }
 
@@ -1413,7 +1415,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   font-size: 0.76rem;
   font-weight: 400;
   line-height: 1.45;
-  color: rgba(var(--text-rgb), 0.38);
+  color: rgba(var(--text-rgb), 0.62);
   transition: color 0.2s ease;
 }
 
@@ -1444,20 +1446,6 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.experience-detail__num-bg {
-  position: absolute;
-  top: -2.5rem;
-  right: -1rem;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(8rem, 16vw, 14rem);
-  font-weight: 300;
-  line-height: 1;
-  color: rgba(var(--accent-rgb), 0.04);
-  pointer-events: none;
-  user-select: none;
-  letter-spacing: -8px;
 }
 
 .experience-detail__logo-wrap {
@@ -1571,10 +1559,10 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 
 .experience-detail__bullets li {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.865rem;
-  font-weight: 300;
+  font-size: 0.95rem;
+  font-weight: 400;
   line-height: 1.8;
-  color: rgba(var(--text-rgb), 0.55);
+  color: rgba(var(--text-rgb), 0.75);
 }
 
 /* Shown only on the stacked mobile layout (see the 860px block below). */
@@ -1679,10 +1667,6 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   .experience-detail {
     margin-left: 0;
     padding: 1.5rem;
-  }
-
-  .experience-detail__num-bg {
-    display: none;
   }
 
   .experience-list__indicator {
@@ -1881,7 +1865,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
   font-weight: 300;
-  color: rgba(var(--text-rgb), 0.55);
+  color: rgba(var(--text-rgb), 0.78);
   letter-spacing: 0.04em;
   line-height: 1.7;
   margin: 0 0 1.5rem 0;
@@ -1923,10 +1907,9 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   outline-offset: 3px;
 }
 
-/* 0.55 alpha (measured ~2.9:1 on navy-on-cream) reads as intentionally
-   muted in dark mode against the near-black hero gradient, but fails WCAG
-   AA body-text contrast (4.5:1) on the much lighter cream background.
-   Bumped to 0.75 alpha for light mode only — verified ~4.9:1. */
+/* Dark mode's alpha (0.55 until 2026-10-25, now 0.78; the old value read
+   as too faint behind the Bauhaus layer) fails WCAG AA on the much lighter
+   cream background, so light mode sets its own. */
 html[data-theme="light"] .dr-theme-scope .hero-subtitle {
   color: rgba(var(--text-rgb), 0.85);
 }
@@ -2608,10 +2591,10 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   padding: 2rem 0 0;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 300;
   line-height: 1.85;
-  color: rgba(var(--text-rgb), 0.5);
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 @media (max-width: 768px) {
@@ -4507,7 +4490,7 @@ a.music-album__title--link:hover {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.8rem;
   font-weight: 300;
-  color: rgba(var(--text-rgb), 0.38);
+  color: rgba(var(--text-rgb), 0.62);
 }
 
 .music-album__role {
@@ -4957,7 +4940,9 @@ a.music-album__title--link:hover {
   font-size: 0.95rem;
   color: var(--text);
   background: rgba(var(--text-rgb), 0.05);
-  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  /* 3:1 against the section (WCAG 1.4.11, a field's boundary); the old
+     20% teal border was ~1.4:1, so the fields read as faint smudges. */
+  border: 1px solid rgba(var(--text-rgb), 0.45);
   border-radius: 8px;
   padding: 0.65rem 0.8rem;
   transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
@@ -4967,12 +4952,18 @@ a.music-album__title--link:hover {
   resize: vertical;
 }
 
+/* Navy at 45% only reaches ~2.3:1 on cream. */
+html[data-theme="light"] .dr-theme-scope .contact-field input,
+html[data-theme="light"] .dr-theme-scope .contact-field textarea {
+  border-color: rgba(var(--text-rgb), 0.6);
+}
+
 .contact-field input:focus,
 .contact-field textarea:focus {
   outline: none;
   background: rgba(var(--text-rgb), 0.08);
-  border-color: rgba(var(--accent-rgb), 0.5);
-  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
 }
 
 /* Set by ContactForm.astro on submit, cleared on the field's next edit. */

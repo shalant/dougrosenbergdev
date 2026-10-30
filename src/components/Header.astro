@@ -45,34 +45,26 @@ import ContactDialog from './ContactDialog.astro';
       <ul class="nav-items" id="navItems">
 
         <li>
-          <a class="nav-link nav-link--page" href="/webdesign">
-            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-              <line x1="7" y1="13" x2="7" y2="7"/>
-              <line x1="7" y1="7" x2="3" y2="3"/>
-              <line x1="7" y1="7" x2="11" y2="3"/>
-            </svg>
-            web design
-          </a>
+          <a class="nav-link nav-link--page nav-dropdown-item" href="/#work">
+                <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1.5 2.5 H12.5 V11.5 H1.5 Z M1.5 5.5 H12.5"/>
+                </svg>
+                work
+              </a>
         </li>
 
         <li>
-          <a class="nav-link nav-link--page" href="/services">
-            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="1.5" y="4.5" width="11" height="7.5" rx="1"/>
-              <path d="M5 4.5V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5"/>
-              <line x1="1.5" y1="7.5" x2="12.5" y2="7.5"/>
-            </svg>
-            services
-          </a>
-        </li>
-
-        <li>
-          <a class="nav-link nav-link--page" href="/consulting">
-            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M1.5 2.5 H12.5 V9 H5.5 L3 11.5 V9 H1.5 Z"/>
-            </svg>
-            consulting
-          </a>
+          <a class="nav-link nav-link--page nav-dropdown-item" href="/#experience">
+                <svg class="nav-icon" viewBox="0 0 14 14" fill="currentColor" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
+                  <circle cx="3" cy="4"  r="1.3" stroke="none"/>
+                  <line x1="6.5" y1="4"  x2="12" y2="4"/>
+                  <circle cx="3" cy="8"  r="1.3" stroke="none"/>
+                  <line x1="6.5" y1="8"  x2="10" y2="8"/>
+                  <circle cx="3" cy="12" r="1.3" stroke="none"/>
+                  <line x1="6.5" y1="12" x2="11" y2="12"/>
+                </svg>
+                experience
+              </a>
         </li>
 
         <li>
@@ -81,18 +73,6 @@ import ContactDialog from './ContactDialog.astro';
               <path d="M7 1 L7 13 M1 3 L7 3 M7 3 L13 3 M1 8 L7 8 M7 8 L13 8"/>
             </svg>
             blog
-          </a>
-        </li>
-
-        <li class="nav-divider" role="separator" aria-hidden="true"></li>
-
-        <li>
-          <a class="nav-link nav-link--page" href="https://admin.dougrosenbergdev.com" target="_blank" rel="noopener">
-            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="6.5" width="8" height="6" rx="1"/>
-              <path d="M4.5 6.5V4.5a2.5 2.5 0 0 1 5 0v2"/>
-            </svg>
-            login
           </a>
         </li>
 
@@ -109,28 +89,11 @@ import ContactDialog from './ContactDialog.astro';
           <div class="nav-dropdown">
             <div class="nav-dropdown-group">
               <span class="nav-dropdown-label">on this page</span>
-              <a class="nav-link nav-link--page nav-dropdown-item" href="/#work">
-                <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M1.5 2.5 H12.5 V11.5 H1.5 Z M1.5 5.5 H12.5"/>
-                </svg>
-                work
-              </a>
               <a class="nav-link nav-link--page nav-dropdown-item" href="/#about">
                 <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
                   <path d="M2 13 L2 7.5 A5 5 0 0 0 12 7.5 L12 13"/>
                 </svg>
                 about
-              </a>
-              <a class="nav-link nav-link--page nav-dropdown-item" href="/#experience">
-                <svg class="nav-icon" viewBox="0 0 14 14" fill="currentColor" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
-                  <circle cx="3" cy="4"  r="1.3" stroke="none"/>
-                  <line x1="6.5" y1="4"  x2="12" y2="4"/>
-                  <circle cx="3" cy="8"  r="1.3" stroke="none"/>
-                  <line x1="6.5" y1="8"  x2="10" y2="8"/>
-                  <circle cx="3" cy="12" r="1.3" stroke="none"/>
-                  <line x1="6.5" y1="12" x2="11" y2="12"/>
-                </svg>
-                experience
               </a>
               <a class="nav-link nav-link--page nav-dropdown-item" href="/#technicalskills">
                 <svg class="nav-icon" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
@@ -148,6 +111,31 @@ import ContactDialog from './ContactDialog.astro';
                 </svg>
                 contact
               </a>
+            </div>
+            <div class="nav-dropdown-group">
+              <span class="nav-dropdown-label">freelance</span>
+              <a class="nav-link nav-link--page nav-dropdown-item" href="/webdesign">
+            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <line x1="7" y1="13" x2="7" y2="7"/>
+              <line x1="7" y1="7" x2="3" y2="3"/>
+              <line x1="7" y1="7" x2="11" y2="3"/>
+            </svg>
+            web design
+          </a>
+              <a class="nav-link nav-link--page nav-dropdown-item" href="/services">
+            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="1.5" y="4.5" width="11" height="7.5" rx="1"/>
+              <path d="M5 4.5V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5"/>
+              <line x1="1.5" y1="7.5" x2="12.5" y2="7.5"/>
+            </svg>
+            services
+          </a>
+              <a class="nav-link nav-link--page nav-dropdown-item" href="/consulting">
+            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1.5 2.5 H12.5 V9 H5.5 L3 11.5 V9 H1.5 Z"/>
+            </svg>
+            consulting
+          </a>
             </div>
           </div>
         </li>

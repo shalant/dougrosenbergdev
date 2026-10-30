@@ -1,6 +1,7 @@
 ---
 import SectionDivider from './SectionDivider.astro';
 import ContactForm from './ContactForm.astro';
+import siteProperties from '../data/siteproperties.json';
 ---
 
 <section class="contact-section reveal-on-scroll" id="contact">
@@ -9,9 +10,14 @@ import ContactForm from './ContactForm.astro';
       <h2 class="contact-heading">Let&rsquo;s talk</h2>
       <SectionDivider />
       <p class="contact-sub">
-        Tell me what you need built: a website, a web app, or help with a
-        .NET or ERP system. I&rsquo;ll reply by email.
+        Tell me about the system you&rsquo;re building or the problem you&rsquo;re
+        trying to solve. I&rsquo;ll reply by email.
       </p>
+      <ul class="contact-links">
+        <li><a href="/resume/DouglasRosenbergResumeAugust26.pdf" download target="_blank" rel="noopener">R&eacute;sum&eacute; (PDF)</a></li>
+        <li><a href={`https://linkedin.com/in/${siteProperties.linkedIn}`} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href={`https://github.com/${siteProperties.gitHub}`} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      </ul>
     </div>
     <ContactForm />
   </div>

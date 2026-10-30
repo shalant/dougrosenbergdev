@@ -1,6 +1,14 @@
 ---
 import SectionDivider from './SectionDivider.astro';
 import aboutMe from '../data/aboutme.json';
+
+// Every figure is from experience.json (Friars ERP and Tackle.ai entries), not new claims.
+const evidence = [
+  { value: '500+', label: 'staff rely on the 50 custom reports I shipped' },
+  { value: '10', label: 'production Blazor apps deployed through 2 CI/CD pipelines I built' },
+  { value: '50+', label: 'database tables behind one reusable data grid' },
+  { value: '4', label: 'applications I designed end to end at Tackle.ai' },
+];
 ---
 
 <section class="about-section reveal-on-scroll" id="about">
@@ -18,9 +26,16 @@ import aboutMe from '../data/aboutme.json';
           Download r&eacute;sum&eacute;
         </a>
       </div>
-    </div>
 
-    <blockquote class="about-quote">{aboutMe.detailOrQuote}</blockquote>
+      <ul class="about-evidence">
+        {evidence.map((item) => (
+          <li class="about-evidence__row">
+            <span class="about-evidence__value">{item.value}</span>
+            <span class="about-evidence__label">{item.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -34,5 +49,56 @@ import aboutMe from '../data/aboutme.json';
     line-height: 1.7;
     margin: 1.5rem 0 0;
     color: rgba(var(--text-rgb), 0.82);
+  }
+
+  .about-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 0;
+  }
+
+  .about-bio {
+    max-width: none;
+  }
+
+  /* A ruled ledger like Experience's, not a row of stat tiles. */
+  .about-evidence {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(var(--brass-rgb), 0.28);
+  }
+
+  .about-evidence__row {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    align-items: baseline;
+    gap: 1.25rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid rgba(var(--brass-rgb), 0.28);
+  }
+
+  .about-evidence__value {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2.6rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .about-evidence__label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: rgba(var(--text-rgb), 0.82);
+  }
+
+  @media (max-width: 900px) {
+    .about-body {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
   }
 </style>

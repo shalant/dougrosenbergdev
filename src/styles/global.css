@@ -303,7 +303,7 @@ h2::after {
   align-items: flex-end;
   gap: 3px;
   height: 16px;
-  margin: 0.5rem 0 2.5rem;
+  margin: 0.5rem 0 1.75rem;
 }
 
 /* Each section heading's own bottom margin (2.5-3.5rem, plus the generic h2
@@ -503,7 +503,7 @@ a:hover {
 
 /* Scrolled: more glass, deeper blur, subtle inner highlight */
 .navbar-wrapper.scrolled {
-  background: rgba(var(--surface-rgb), 0.62);
+  background: rgba(var(--surface-rgb), 0.94);
   backdrop-filter: blur(48px) saturate(200%) brightness(1.05);
   -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.05);
   border-bottom-color: rgba(var(--accent-rgb), 0.1);
@@ -1327,15 +1327,16 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 }
 
 .experience-list__item {
+  flex: 1;
   display: grid;
-  grid-template-columns: 28px 48px 1fr;
+  grid-template-columns: 44px 1fr;
   align-items: center;
-  gap: 0.85rem;
-  padding: 1.4rem 1.25rem 1.4rem 0;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 1.25rem 0;
   background: none;
   border: none;
   border-left: 2px solid transparent;
-  border-bottom: 1px solid rgba(var(--accent-rgb), 0.06);
+  border-bottom: 1px solid rgba(var(--brass-rgb), 0.28);
   cursor: pointer;
   text-align: left;
   transition: background-color 0.2s ease, padding 0.3s var(--ease-swing), border-color 0.2s ease;
@@ -1363,17 +1364,31 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   padding-left: 0.85rem;
 }
 
-.experience-list__num {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: rgba(var(--accent-rgb), 0.5);
-  letter-spacing: 0.1em;
-  line-height: 1;
-  transition: color 0.2s ease;
+.experience-list__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
 }
 
-.experience-list__item.active .experience-list__num {
+.experience-list__years {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: rgba(var(--text-rgb), 0.7);
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+.experience-list__item.active .experience-list__years {
   color: var(--accent);
+}
+
+.experience-list__company {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.15;
+  color: rgba(var(--text-rgb), 0.85);
 }
 
 .experience-list__logo-wrap {
@@ -1412,21 +1427,20 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 
 .experience-list__title {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 400;
-  line-height: 1.45;
-  color: rgba(var(--text-rgb), 0.62);
+  line-height: 1.4;
+  color: rgba(var(--text-rgb), 0.7);
   transition: color 0.2s ease;
 }
 
 .experience-list__item.active .experience-list__title {
   color: rgba(var(--text-rgb), 0.9);
-  font-weight: 500;
 }
 
 /* --- Right: detail panel --- */
 .experience-detail {
-  margin-left: 4rem;
+  margin-left: 2.5rem;
   padding: 2.5rem 2.75rem;
   position: relative;
   background: rgba(255, 255, 255, 0.03);
@@ -1645,7 +1659,8 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   }
 
   .experience-list__item {
-    grid-template-columns: 24px 36px;
+    grid-template-columns: 36px 1fr;
+    gap: 0.65rem;
     border-left: none;
     border-bottom: none;
     border: 1px solid rgba(var(--accent-rgb), 0.1);
@@ -1662,6 +1677,10 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 
   .experience-list__title {
     display: none;
+  }
+
+  .experience-list__company {
+    font-size: 1.05rem;
   }
 
   .experience-detail {
@@ -1895,6 +1914,27 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   animation: fadeInUp 0.8s ease-out 0.55s both;
 }
 
+/* One understated text link under the single CTA: the resume is the thing a
+   hiring manager wants, and a second button would bring back the two-button
+   hero. */
+.hero-resume {
+  display: inline-block;
+  margin: 1.5rem 0 0 1.5rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: rgba(var(--text-rgb), 0.85);
+  text-decoration: underline;
+  text-decoration-color: var(--brass);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  animation: fadeInUp 0.8s ease-out 0.7s both;
+}
+
+.hero-resume:hover {
+  color: var(--text);
+}
+
 .hero-inline-cta:hover {
   background: var(--teal-dark);
   border-color: var(--teal-dark);
@@ -1967,10 +2007,8 @@ html[data-theme="light"] .dr-theme-scope .casual-description,
 html[data-theme="light"] .dr-theme-scope .music-paragraph,
 html[data-theme="light"] .dr-theme-scope .contact-sub,
 html[data-theme="light"] .dr-theme-scope .site-footer__title,
-html[data-theme="light"] .dr-theme-scope .about-quote,
 html[data-theme="light"] .dr-theme-scope .casual-quote,
-html[data-theme="light"] .dr-theme-scope .music-album__artist,
-html[data-theme="light"] .dr-theme-scope .music-collab-chip {
+html[data-theme="light"] .dr-theme-scope .about-evidence__label {
   color: rgba(var(--text-rgb), 0.85);
 }
 
@@ -1999,6 +2037,8 @@ html[data-theme="light"] .dr-theme-scope .wd-case__fact-label {
 html[data-theme="light"] .dr-theme-scope .site-footer__copy {
   color: rgba(var(--text-rgb), 0.6);
 }
+
+
 
 /* Same low-alpha-on-cream failure as the body-copy/label passes above,
    found via a follow-up contrast audit (2026-09-04) that covered every
@@ -2263,10 +2303,10 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
    dropdown carries casual/music/contact for anyone below that width. */
 .vertical-section-nav {
   position: fixed;
-  right: 28px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 150px;
+  width: 15px;
   z-index: 500;
   display: flex;
   flex-direction: column;
@@ -2285,6 +2325,7 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
 }
 
 .vsn-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -2306,7 +2347,10 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
 }
 
 .vsn-label {
-  position: relative;
+  position: absolute;
+  right: calc(100% + 10px);
+  padding: 0.2rem 0.6rem;
+  background: rgba(var(--surface-nav-rgb), 0.96);
   font-size: 0.8rem;
   letter-spacing: 0.06em;
   color: rgba(var(--text-rgb), 0.9);
@@ -2319,8 +2363,8 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
 .vsn-label::after {
   content: '';
   position: absolute;
-  left: 0;
-  bottom: -5px;
+  left: 0.6rem;
+  bottom: 1px;
   width: 0;
   height: 1.5px;
   background: linear-gradient(90deg, var(--accent), transparent);
@@ -2334,16 +2378,14 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
    (opacity doesn't remove it), but sighted keyboard users need the same
    visual confirmation mouse users get on hover. */
 .vsn-item:hover .vsn-label,
-.vsn-item:focus-visible .vsn-label,
-.vsn-item.active .vsn-label {
+.vsn-item:focus-visible .vsn-label {
   opacity: 1;
   transform: none;
 }
 
 .vsn-item:hover .vsn-label::after,
-.vsn-item:focus-visible .vsn-label::after,
-.vsn-item.active .vsn-label::after {
-  width: 100%;
+.vsn-item:focus-visible .vsn-label::after {
+  width: calc(100% - 1.2rem);
 }
 
 .vsn-item:hover .vsn-icon,
@@ -4166,9 +4208,22 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   z-index: 1;
 }
 
+.casual-container {
+  display: grid;
+  grid-template-columns: 11.5rem minmax(0, 1fr);
+  column-gap: 3rem;
+  align-items: start;
+}
+
+.casual-header {
+  position: sticky;
+  top: 7rem;
+}
+
 .casual-heading {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-size: clamp(2.5rem, 5vw, 4rem) !important;
+  font-size: clamp(2rem, 3vw, 2.75rem) !important;
+  line-height: 1.05 !important;
   font-weight: 300 !important;
   color: var(--text) !important;
   letter-spacing: -1px !important;
@@ -4201,82 +4256,32 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
   max-width: 760px;
+  border-top: 1px solid rgba(var(--brass-rgb), 0.28);
 }
 
+/* A ruled list, not four bordered cards: name in the display serif on the
+   left, the fact on the right, a hairline between rows. */
 .casual-hobby {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.95rem;
-  padding: 0.85rem 1.4rem;
-  border: 1px solid rgba(var(--accent-rgb), 0.15);
-  border-radius: 4px;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-  cursor: default;
-  min-width: 12.5rem;
-}
-
-.casual-hobby:hover {
-  border-color: rgba(var(--accent-rgb), 0.5);
-  background: rgba(var(--accent-rgb), 0.05);
-  transform: translateY(-2px);
-}
-
-.casual-hobby__icon {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background: rgba(var(--accent-rgb), 0.08);
-  color: rgba(var(--accent-rgb), 0.65);
-  transition: color 0.2s ease, background 0.2s ease;
-}
-
-.casual-hobby__icon svg {
-  width: 1.4rem;
-  height: 1.4rem;
-}
-
-.casual-hobby:hover .casual-hobby__icon {
-  color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.16);
-}
-
-.casual-hobby__text {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(var(--brass-rgb), 0.28);
 }
 
 .casual-hobby__name {
-  font-family: 'Montserrat', sans-serif;
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  font-weight: 300;
-  color: rgba(var(--text-rgb), 0.8);
-  letter-spacing: 0.04em;
-  transition: color 0.2s ease;
-}
-
-.casual-hobby:hover .casual-hobby__name {
-  color: var(--text);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(var(--text-rgb), 0.9);
 }
 
 .casual-hobby__detail {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
-  color: rgba(var(--text-rgb), 0.7);
-  margin-top: 0.2rem;
-  transition: color 0.2s ease;
-}
-
-.casual-hobby:hover .casual-hobby__detail {
-  color: rgba(var(--accent-rgb), 0.85);
+  font-size: 0.9rem;
+  color: rgba(var(--text-rgb), 0.75);
 }
 
 .casual-quote {
@@ -4289,12 +4294,17 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   border-left: 1px solid rgba(var(--accent-rgb), 0.2);
 }
 
+@media (max-width: 1100px) {
+  .casual-container { grid-template-columns: 1fr; }
+  .casual-header { position: static; }
+}
+
 @media (max-width: 768px) {
   .casual-container { padding: 0 2rem; }
 }
 
 @media (max-width: 600px) {
-  .casual-hobbies { grid-template-columns: 1fr; }
+  .casual-hobby { grid-template-columns: 1fr; gap: 0.1rem; }
 }
 
 /* ============================================================================
@@ -4337,12 +4347,6 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 
 .music-heading::after { display: none !important; }
 
-.music-body {
-  display: grid;
-  grid-template-columns: minmax(0, 46%) minmax(0, 1fr);
-  align-items: start;
-}
-
 .music-text {
   display: flex;
   flex-direction: column;
@@ -4358,17 +4362,6 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   line-height: 1.9;
   color: rgba(var(--text-rgb), 0.55);
   margin: 0;
-}
-
-.music-paragraph--lead {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.3rem, 2vw, 1.65rem);
-  font-weight: 300;
-  font-style: italic;
-  color: rgba(var(--text-rgb), 0.8);
-  line-height: 1.65;
-  border-left: 2px solid rgba(var(--accent-rgb), 0.45);
-  padding-left: 1.5rem;
 }
 
 .music-photo {
@@ -4404,23 +4397,6 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   transform: scale(1.06);
 }
 
-.music-photo__caption {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-style: italic;
-  font-size: 1rem;
-  color: rgba(var(--text-rgb), 0.7);
-  padding: 0 1.5rem;
-}
-
-.music-section-label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: rgba(var(--text-rgb), 0.8);
-  display: block;
-  margin-bottom: 0.85rem;
-}
-
 /* Press quote */
 .music-press {
   margin: 0;
@@ -4445,132 +4421,9 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 }
 
 /* Discography */
-.music-discography {
-  display: flex;
-  flex-direction: column;
-}
-
 /* Rows share one set of columns (subgrid), so artists and roles line up
    however long each title is. */
-.music-albums {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
-  column-gap: 1.5rem;
-}
-
-.music-album {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: subgrid;
-  row-gap: 0.5rem;
-  align-items: baseline;
-  padding: 0.55rem 0;
-  border-bottom: 1px solid rgba(var(--text-rgb), 0.05);
-  transition: background 0.15s ease;
-}
-
-.music-album:last-child {
-  border-bottom: none;
-}
-
-.music-album__title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 400;
-  color: rgba(var(--text-rgb), 0.8);
-  text-decoration: none;
-}
-
-a.music-album__title--link {
-  transition: color 0.2s ease;
-}
-
-a.music-album__title--link:hover {
-  color: var(--accent);
-}
-
-.music-album__artist {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 300;
-  color: rgba(var(--text-rgb), 0.62);
-}
-
-.music-album__role {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.78rem;
-  color: rgba(var(--text-rgb), 0.7);
-  white-space: nowrap;
-}
-
 /* Collaborators */
-.music-collaborators {
-  display: flex;
-  flex-direction: column;
-}
-
-.music-collab-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.music-collab-chip {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
-  color: rgba(var(--text-rgb), 0.7);
-  border: 1px solid rgba(var(--text-rgb), 0.1);
-  border-radius: 2px;
-  padding: 0.25rem 0.65rem;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.music-collab-chip:hover {
-  color: rgba(var(--text-rgb), 0.8);
-  border-color: rgba(var(--accent-rgb), 0.3);
-}
-
-/* 1050px (was 860px) - .music-photo is a fixed 400px column, not a
-   fraction, so above 860px the text column (prose + the 3-col discography
-   grid) was left with whatever's leftover: at a ~950px "tablet" viewport
-   that's only ~320-400px for real song titles/artist names/roles, which
-   wrapped and mis-stacked into an illegible mess well before the layout
-   was meant to give up on two columns. Stack earlier instead, before the
-   fixed-width photo column can starve the text column. */
-@media (max-width: 1050px) {
-  .music-body {
-    grid-template-columns: 1fr;
-  }
-  .music-photo {
-    position: static;
-  }
-  .music-text {
-    max-width: none;
-    padding: 3rem 2rem 5rem;
-  }
-  .music-albums {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-  .music-album {
-    grid-template-rows: auto auto;
-  }
-  .music-album__artist {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  .music-album__role {
-    grid-column: 2;
-    grid-row: 1 / 3;
-    align-self: center;
-  }
-}
-
 /* ============================================================================
    20. ART DECO — screen blend overlays
    mix-blend-mode: screen makes black transparent; the lighter blue shapes
@@ -4693,7 +4546,10 @@ a.music-album__title--link:hover {
   position: absolute;
   top: -5%;
   right: 0;
-  height: 110%;
+  /* The pattern is sized from the section's height, and the ruled hobby list
+     made the section shorter, which shrank it. The floor keeps it at the size
+     it had beside the old card grid. */
+  height: max(110%, 66rem);
   aspect-ratio: 2 / 3;
   background-image: var(--art-deco-2);
   background-size: cover;
@@ -4881,7 +4737,7 @@ a.music-album__title--link:hover {
   z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 5rem;
+  gap: 3.5rem;
   align-items: start;
 }
 
@@ -4901,13 +4757,39 @@ a.music-album__title--link:hover {
   display: none !important;
 }
 
+.contact-links {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(var(--brass-rgb), 0.28);
+}
+
+.contact-links li {
+  border-bottom: 1px solid rgba(var(--brass-rgb), 0.28);
+}
+
+/* The whole row is the link target, not just the word. */
+.contact-links a {
+  display: block;
+  padding: 0.85rem 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.4rem;
+  color: rgba(var(--text-rgb), 0.9);
+  text-decoration: none;
+}
+
+.contact-links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .contact-sub {
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem !important;
   font-weight: 300;
   color: rgba(var(--text-rgb), 0.55);
   line-height: 1.85;
-  max-width: 440px;
+  max-width: 520px;
   margin: 0 !important;
 }
 
@@ -4916,6 +4798,11 @@ a.music-album__title--link:hover {
 .contact-container .contact-form-wrap {
   max-width: none;
   margin: 0;
+}
+
+/* Taller message box so the form column ends level with the links column. */
+.contact-container .contact-field textarea {
+  min-height: 11.5rem;
 }
 
 .contact-form-wrap {
@@ -5122,6 +5009,20 @@ html[data-theme="light"] .dr-theme-scope .contact-field textarea {
   font-size: 0.72rem;
   color: rgba(var(--text-rgb), 0.45);
   margin-top: 0.5rem;
+}
+
+.site-footer__login {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(var(--text-rgb), 0.7);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  width: fit-content;
+  margin-top: 0.4rem;
+}
+
+.site-footer__login:hover {
+  color: var(--text);
 }
 
 /* Right column */
@@ -5983,4 +5884,74 @@ h2::after {
   background: rgba(var(--accent-rgb), 0.1);
   border: 1px solid rgba(var(--accent-rgb), 0.3);
   color: var(--text);
+}
+
+/* ============================================================================
+   MUSIC (compact, 2026-10-29)
+   The homepage is aimed at hiring managers, so music is one human detail: a
+   small cover, one paragraph, one quote. The full story lives on
+   dougrosenberg.com. These rules override the earlier .music-* base rules.
+   ============================================================================ */
+.music-section {
+  padding: 2.25rem 0;
+}
+
+.music-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 4rem;
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.music-photo__link {
+  width: 9.5rem;
+}
+
+.music-photo__img {
+  aspect-ratio: 1;
+  object-position: 50% 40%;
+}
+
+.music-text {
+  max-width: 720px;
+  padding: 0;
+  gap: 0.6rem;
+}
+
+.music-heading {
+  font-size: clamp(1.75rem, 3vw, 2.25rem) !important;
+  margin: 0 !important;
+}
+
+.music-text .section-divider {
+  margin: 0.25rem 0 0.25rem;
+}
+
+.music-paragraph {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(var(--text-rgb), 0.8);
+}
+
+.music-more {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  width: fit-content;
+}
+
+@media (max-width: 700px) {
+  .music-container {
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+    gap: 1.5rem;
+  }
+  .music-photo__link {
+    width: 8rem;
+  }
 }

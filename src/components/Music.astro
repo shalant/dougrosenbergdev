@@ -5,66 +5,24 @@ import music from '../data/music.json';
 
 <section class="music-section reveal-on-scroll" id="music">
   <div class="music-container">
+    <a href="https://www.dougrosenberg.com" target="_blank" rel="noopener noreferrer" class="music-photo__link" aria-label="Doug Rosenberg's music site">
+      <img src="/images/dougRosenbergBetterThanTv.jpg"
+           alt="Cover of Better Than TV, Doug Rosenberg's album as leader and composer"
+           class="music-photo__img"
+           loading="lazy" />
+    </a>
 
-    <div class="music-body">
-
-      <div class="music-text">
-        <div class="music-header">
-          <h2 class="music-heading">From Saxophone to Software</h2>
-          <SectionDivider />
-        </div>
-
-        <p class="music-paragraph music-paragraph--lead">{music.paragraph1}</p>
-        <p class="music-paragraph">{music.paragraph2}</p>
-        <p class="music-paragraph">{music.paragraph3}</p>
-
-        {music.pressQuote && (
-          <figure class="music-press">
-            <blockquote class="music-press__quote">&ldquo;{music.pressQuote}&rdquo;</blockquote>
-            {music.pressAttribution && <figcaption class="music-press__attribution">&mdash; {music.pressAttribution}</figcaption>}
-          </figure>
-        )}
-
-        {music.albums.length > 0 && (
-          <div class="music-discography">
-            <span class="music-section-label">Discography</span>
-            <ul class="music-albums">
-              {music.albums.map((album: { title: string; artist: string; role: string; url?: string }) => (
-                <li class="music-album">
-                  {album.url ? (
-                    <a href={album.url} target="_blank" rel="noopener noreferrer" class="music-album__title music-album__title--link">{album.title}</a>
-                  ) : (
-                    <span class="music-album__title">{album.title}</span>
-                  )}
-                  <span class="music-album__artist">{album.artist}</span>
-                  <span class="music-album__role">{album.role}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {music.collaborators.length > 0 && (
-          <div class="music-collaborators">
-            <span class="music-section-label">Performed with</span>
-            <ul class="music-collab-list">
-              {music.collaborators.map((name: string) => <li class="music-collab-chip">{name}</li>)}
-            </ul>
-          </div>
-        )}
-      </div>
-
-      <div class="music-photo">
-        <a href="https://www.dougrosenberg.com" target="_blank" rel="noopener noreferrer" class="music-photo__link">
-          <img src="/images/dougRosenbergBetterThanTv.jpg"
-               alt="Doug Rosenberg performing"
-               class="music-photo__img"
-               loading="lazy" />
-        </a>
-        <span class="music-photo__caption">Cover of Better Than TV, my album as leader and composer</span>
-      </div>
-
+    <div class="music-text">
+      <h2 class="music-heading">From Saxophone to Software</h2>
+      <SectionDivider />
+      <p class="music-paragraph">{music.paragraph1}</p>
+      {music.pressQuote && (
+        <figure class="music-press">
+          <blockquote class="music-press__quote">&ldquo;{music.pressQuote}&rdquo;</blockquote>
+          {music.pressAttribution && <figcaption class="music-press__attribution">{music.pressAttribution}</figcaption>}
+        </figure>
+      )}
+      <a href="https://www.dougrosenberg.com" target="_blank" rel="noopener noreferrer" class="music-more">More at dougrosenberg.com</a>
     </div>
-
   </div>
 </section>

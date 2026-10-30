@@ -1,7 +1,7 @@
 {
-  "heroSubtitle": "Full-stack .NET developer in Chicago. I build ERP systems for organizations and custom websites for small businesses.",
-  "description": "Full-stack .NET developer who turns sprawling enterprise systems into software people actually enjoy using—Blazor by trade, detail-obsessed by nature.",
-  "answer": "I'm Doug Rosenberg, a Chicago-based full-stack .NET developer. I build custom websites and web apps for small businesses, and Blazor and ERP systems for larger organizations, currently leading the full-stack build of an ERP system for a global nonprofit. I'm available for freelance projects and consulting.",
+  "heroSubtitle": "Full-stack .NET developer in Chicago. I design and build ERP systems: data pipelines, integrations, reporting and the CI/CD behind them.",
+  "description": "Full-stack .NET developer who turns sprawling enterprise systems into software people actually enjoy using. Blazor by trade, detail-obsessed by nature.",
+  "answer": "I'm Doug Rosenberg, a Chicago-based full-stack .NET developer. I build Blazor and ERP systems for large organizations. I'm currently leading the full-stack build of an ERP system for a global nonprofit, with a secure data-masking pipeline for safe dev access, synced Salesforce and ERP records, and CI/CD for ten production apps. Before that I led UI/UX design and development across four applications at Tackle.ai.",
   "skills": [
     "Microsoft Dotnet, C#, Blazor",
     "Figma",

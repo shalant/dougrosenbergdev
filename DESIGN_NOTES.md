@@ -72,6 +72,28 @@ The UI audit (see `UI_AUDIT_PLAN.md`, branch 1) found the homepage still using p
 
 `SelectedWork.astro` sits right after the hero (UI audit branch 2): one large project and two stacked beside it, so it never reads as three identical cards. Sharp corners and a thin text-color border on the screenshots, because they are content, not controls. No teal (the homepage's one accent moment stays the status panel) and no shadow. Hover zooms the screenshot 3% and underlines the name; reduced motion drops the zoom. Its section background is plain `--bg`, not `--bg-hero`, so it doesn't run into the hero and About as one band. Picks and their strip images live in `siteproperties.json`'s `featuredWork`.
 
+## Score direction (2026-10-29, branch `score-direction-2026-10-29`)
+
+From a harsh live audit that judged the site competent but generic (navy + teal, stock component kits) with its one ownable idea, the saxophone, buried. Built on the "reads like a score" idea:
+- **Divider:** a five-line brass staff was tried in place of the waveform and reverted the same day: Doug prefers the waveform, so `SectionDivider` is unchanged.
+- **Experience:** the list is a ruled ledger of years (mono, real dates from `experience.json`), company (Cormorant) and title, with thin brass rules. The decorative `01`-`04` numbers are gone. The tab markup and keyboard pattern are unchanged.
+- **Split heading:** "When I'm Not Coding" puts its title in a narrow sticky left column. Selected Work was tried the same way and reverted at Doug's request (he prefers the original stacked layout); Experience, Skills and Contact were never changed this way.
+- **Hobbies:** the four bordered cards became a ruled list. The casual section's Bauhaus pattern is sized from the section's height, so its `::before` has a `66rem` floor to keep it at the size it had beside the cards.
+- **Kept as before, at Doug's request (2026-10-29):** the nav icons (top nav and the section rail), the Skills logo chips, the Selected Work layout and the album cover's colors. Only `login` moved, from the main nav to the footer as "client login".
+- **Music:** one serif-italic line under the hero CTA links to `#music`. A navy-and-brass re-tint of the album cover was tried and reverted the same day: Doug found the yellow arbitrary, so the cover keeps its original purple.
+
+## Job-focused homepage (2026-10-29, same branch)
+
+Doug asked for the site to serve the next full-time developer job (see `career-development/docs/FOCUS_PLAN.md`) and to downplay music. Chosen defaults: an implicit signal only (no "open to roles", no salary, since career strategy stays local and the day-job employer can see public pages), freelance pages kept live but moved under "more", music shrunk.
+- **Hero:** subtitle describes architecture work (pipelines, integrations, reporting, CI/CD); the single button reads "get in touch"; a plain "Download resume" text link sits beside it (an inline link, not a second button).
+- **Nav:** work, experience and blog lead. Web design, services and consulting are a "freelance" group in the `more` dropdown. The nav icons stay.
+- **About:** the freelance sentence and the duplicated "currently leading" paragraph are gone. A ruled evidence ledger (500+ staff on 50 reports, 10 apps through 2 pipelines, 50+ tables, 4 applications) sits beside the bio; every figure comes from `experience.json`.
+- **Contact:** copy no longer mentions websites; resume, LinkedIn and GitHub links fill the pitch column.
+- **Music:** a compact band (small cover, one paragraph, the Tribune quote, a link to dougrosenberg.com) at about 4% of page height. The discography and collaborator chips left the homepage; `music.json` still holds them.
+- **Fixes from the audit:** the scrolled header is 94% opaque (was 62%, so text showed through); the section rail is 15px wide at the right edge with labels on hover only, so it no longer overlaps text from 1280px up; the homepage has no em or en dashes outside Experience; the featured project captions lost theirs.
+- **Measured:** a scripted 13-check rubric (nav opacity, rail overlap, largest empty block per section, repeated copy, CTA labels, dashes, mobile overflow, axe, plus the job-focus checks) scored the parent commit 31.3 and this branch 99.4. It measures structure and accessibility, not beauty.
+- **Not changed, needs a decision:** page `<title>` and meta ("Web & ERP Development"), the "dr codeworks" wordmark, the footer tagline, `llms.txt`, and the audience paragraph in this repo's `CLAUDE.md`, which still says SMB and musician clients first.
+
 ## Explicitly avoided (AI-site tells, per calibration)
 
 Warm cream + terracotta; near-black + acid accent; broadsheet zero-radius dense columns; uniform rounded-card-kit with identical soft grey shadow; tracked-out ALL-CAPS eyebrow labels; middle-dot meta strings; em-dash "WORD — fragment" labels; arrow (`→`) appended to buttons/links.

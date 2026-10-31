@@ -1,8 +1,8 @@
 # Doug Rosenberg
 
-> Full-stack .NET developer building custom websites and web applications for small and medium-sized businesses, plus Blazor/ERP systems work for larger organizations. Currently building an ERP system for a global nonprofit; prior work includes Fortune 10 LLM-document-processing tooling and manufacturing ERP systems.
+> Full-stack .NET developer in Chicago building Blazor and ERP systems for large organizations. Currently leading the full-stack build of an ERP system for a global nonprofit; prior work includes Fortune 10 LLM-document-processing tooling and manufacturing ERP systems.
 
-Brings enterprise-grade engineering discipline (security, performance, accessibility) — honed building sprawling ERP systems — to SMB budgets and timelines. Primary focus: custom websites and web applications for small and medium-sized businesses. Also open to freelance/consulting engagements and full-time opportunities.
+Brings enterprise-grade engineering discipline (security, performance, accessibility), honed building sprawling ERP systems, to every project. Also takes on a small number of freelance website and consulting engagements for Chicago small businesses and musicians; those pages are listed below.
 
 ## Background
 - Current: Full-stack .NET engineer on an ERP system for a global nonprofit — secure data-masking pipeline, Salesforce/ERP sync, 50 custom reports serving 500+ staff

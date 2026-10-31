@@ -2,6 +2,13 @@
 
 Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the visual-differentiation pass, and `../PortfolioNov25/.claude/plans/jiggly-hugging-kernighan.md`-derived plan for the original phased roadmap this follows.
 
+## Positioning moved to the full-time developer search (2026-10-29)
+
+Doug asked for the site to serve the next full-time developer job and to downplay music (decided in a design session; signal is implicit only, freelance pages stay live, music shrunk). Homepage changes shipped in PR #62. Branch `positioning-metadata-2026-10-29` aligns the metadata with it:
+- **Changed:** `BaseLayout.astro` default `<title>` ("Blazor & ERP Systems" instead of "Web & ERP Development"), default meta description, and the `Person` and `WebSite` JSON-LD descriptions; the footer tagline (`siteproperties.json` `title`); the opening of `public/llms.txt`, which also dropped its public "open to full-time opportunities" sentence to match the implicit-only rule; the audience paragraph in `CLAUDE.md`.
+- **Deliberately unchanged:** the sitewide `ProfessionalService` node and its "Web Design & Software Development" name (it describes the freelance side line the landing pages still serve, and `e2e/home.spec.ts` asserts it); every freelance page's own title and copy; the `dr codeworks` wordmark (needs a business-name decision).
+- **Not done here:** `career-development/docs/FOCUS_PLAN.md` still lists the positioning decision as "proposed", and `docs/SITE_OPS_REGISTRY.md` still lists the entity-consistency gap as open. Both live in another repo.
+
 ## Constraint: keep recruiter visibility low — SUPERSEDED (2026-09-16)
 
 **Status as of 2026-09-16: this constraint is lifted.** Original goal (2026-09-08): keep the site reading as "available for freelance/consulting" rather than "open to full-time roles," staying quiet for recruiters until ~March 2027, after Doug noticed quality recruiter outreach picking up and wanted to suppress it.

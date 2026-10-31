@@ -9,6 +9,10 @@ Doug asked for the site to serve the next full-time developer job and to downpla
 - **Deliberately unchanged:** the sitewide `ProfessionalService` node and its "Web Design & Software Development" name (it describes the freelance side line the landing pages still serve, and `e2e/home.spec.ts` asserts it); every freelance page's own title and copy; the `dr codeworks` wordmark (needs a business-name decision).
 - **Not done here:** `career-development/docs/FOCUS_PLAN.md` still lists the positioning decision as "proposed", and `docs/SITE_OPS_REGISTRY.md` still lists the entity-consistency gap as open. Both live in another repo.
 
+## Nav glass eased back (2026-10-30)
+
+Doug likes the layer under the nav showing through, so the scrolled `.navbar-wrapper` went from 0.94 opacity and a 48px blur to 0.8 opacity and a 10px blur (`global.css`). Tried 0.78 with the 48px blur first: it read as a flat bar, because blur erases thin light text on the dark theme. At 10px, images and large shapes show through as soft color and text under the nav does not read. Checked in real Chrome (headless Chromium doesn't reliably render the blur, see the 2026-09-10 mobile-nav note) in dark and light. The mobile dropdown stays at 0.94 on purpose, for that same blur-reliability reason.
+
 ## Constraint: keep recruiter visibility low — SUPERSEDED (2026-09-16)
 
 **Status as of 2026-09-16: this constraint is lifted.** Original goal (2026-09-08): keep the site reading as "available for freelance/consulting" rather than "open to full-time roles," staying quiet for recruiters until ~March 2027, after Doug noticed quality recruiter outreach picking up and wanted to suppress it.

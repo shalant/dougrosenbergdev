@@ -79,6 +79,7 @@ From a harsh live audit that judged the site competent but generic (navy + teal,
 - **Experience:** the list is a ruled ledger of years (mono, real dates from `experience.json`), company (Cormorant) and title, with thin brass rules. The decorative `01`-`04` numbers are gone. The tab markup and keyboard pattern are unchanged.
 - **Split heading:** "When I'm Not Coding" puts its title in a narrow sticky left column. Selected Work was tried the same way and reverted at Doug's request (he prefers the original stacked layout); Experience, Skills and Contact were never changed this way.
 - **Hobbies:** the four bordered cards became a ruled list. The casual section's Bauhaus pattern is sized from the section's height, so its `::before` has a `66rem` floor to keep it at the size it had beside the cards.
+- **Selected Work picks (2026-10-30):** ArborKin, Customer Intake Backend, Guacamayo. Same layout; only `featuredWork` in `siteproperties.json` changed. See `PORT_TODO.md` for the screenshot and confidentiality rules.
 - **Kept as before, at Doug's request (2026-10-29):** the nav icons (top nav and the section rail), the Skills logo chips, the Selected Work layout and the album cover's colors. Only `login` moved, from the main nav to the footer as "client login".
 - **Music:** one serif-italic line under the hero CTA links to `#music`. A navy-and-brass re-tint of the album cover was tried and reverted the same day: Doug found the yellow arbitrary, so the cover keeps its original purple.
 

@@ -238,6 +238,7 @@
     },
     {
       "slug": "arborkin",
+      "titleLabel": "Software Case Study",
       "number": "04",
       "name": "ArborKin",
       "industry": "Private, multi-tenant family tree app. Solo C#/.NET build with role-based access control",
@@ -277,7 +278,7 @@
         "JS-free tree layout — every node's pixel position computed server-side in C#, no post-render flicker",
         "Custom drag-state ownership bridging JS gestures and Blazor persistence",
         "Invite-only, multi-tenant by design: every family's data is scoped at the service layer, and a cross-tenant test matrix proves it",
-        "~14k lines of C# (plus ~12k of Razor), 18 EF migrations and 633 passing tests including real-browser E2E, shipped to Azure and used by real people"
+        "~15k lines of C# (plus ~12k of Razor), 18 EF migrations and 633 passing tests including real-browser E2E, shipped to Azure and used by real people"
       ],
       "tagline": "A private, multi-user family tree app — built solo, shipped to Azure, used by real people. Full stack from data model to layout algorithm to auth system.",
       "approach": [
@@ -315,7 +316,7 @@
       "facts": [
         {
           "label": "lines of C#",
-          "value": "~14k"
+          "value": "~15k"
         },
         {
           "label": "EF migrations",
@@ -340,6 +341,90 @@
       ],
       "relatedBlogPostSlug": "building-family-tree-blazor",
       "relatedBlogPostLabel": "Read the technical deep dive"
+    },
+    {
+      "slug": "customer-intake-backend",
+      "titleLabel": "Software Case Study",
+      "number": "09",
+      "name": "Customer Intake Backend",
+      "industry": "The .NET API and admin app behind the contact forms on my own sites. Minimal API, Blazor Server, EF Core and SQL Server on Azure",
+      "platform": "ASP.NET Core 10 + Blazor Server",
+      "status": "live, private repo",
+      "siteLabel": null,
+      "externalUrl": null,
+      "gitHubUrl": null,
+      "images": [
+        "/images/customer-intake/intake-leads.webp",
+        "/images/customer-intake/intake-lead-detail.webp"
+      ],
+      "imageCaptions": [
+        "Admin leads list. Every contact-form submission from both sites lands here, tagged by business line. Screenshot uses invented sample data.",
+        "Lead detail. Status, company, follow-up date and notes, all behind the admin login. Invented sample data."
+      ],
+      "stack": [
+        ".NET 10",
+        "C# 13",
+        "ASP.NET Core minimal API",
+        "Blazor Server",
+        "EF Core",
+        "SQL Server",
+        "MudBlazor",
+        "ASP.NET Core Identity",
+        "GitHub Actions"
+      ],
+      "bullets": [
+        "One service takes the contact forms from two sites on separate Cloudflare Workers, so neither site needs a backend of its own",
+        "A public endpoint built to be exposed: CORS allow-list, per-IP rate limits, security headers, a honeypot field, and input limits that match the database columns",
+        "Admin login with per-IP throttling on top of per-account lockout, and noindex on every response",
+        "CI builds, runs the tests and scans for vulnerable packages; deploys run by hand and sign in to Azure with a short-lived OIDC token, not a stored secret"
+      ],
+      "tagline": "The .NET service behind the contact forms on my own sites: one intake API and one admin app, built the way I would build it for a client.",
+      "approach": [
+        "My two sites are static, so neither can run C# or hold data. Rather than build a one-off form handler for each, I built one small service they both call over HTTP. A single Leads table is tagged by business line and by the site that sent it, so a music booking and a development inquiry share one schema and one admin screen.",
+        "The interesting work is that the endpoint is public. Browsers can call it only from an allow-listed origin, each IP is rate limited, responses carry a strict set of security headers, and a hidden honeypot field quietly drops bots. The request validators mirror the database column lengths, so an oversized submission gets a clean 400 instead of a database error.",
+        "The admin side is a Blazor Server app on ASP.NET Core Identity. Failed logins are throttled per IP and locked out per account, every response sends noindex (as a header, because a robots.txt Disallow would stop Google from ever seeing it), and the pages are not reachable without signing in.",
+        "It runs on Azure App Service with Azure SQL. A GitHub Actions pipeline builds, tests and checks dependencies on every PR, and a separate manual workflow deploys using Azure's OIDC login, so no long-lived Azure secret is stored anywhere."
+      ],
+      "highlights": [
+        {
+          "title": "One Schema, Two Businesses",
+          "description": "Music bookings and development inquiries use the same Leads table, tagged by source and by originating site. One admin screen and one set of validators instead of two parallel mini-apps."
+        },
+        {
+          "title": "Built To Be Public",
+          "description": "CORS allow-list, per-IP rate limiting, CSP and frame-denial headers, a honeypot, and request limits that match the column sizes. The public GET that lists leads is dev-only."
+        },
+        {
+          "title": "Login That Fails Safe",
+          "description": "ASP.NET Core Identity with a five-attempt, fifteen-minute lockout per account and a separate per-IP throttle on the login route. A noindex header on every response keeps the login page out of search results."
+        },
+        {
+          "title": "No Standing Cloud Credentials",
+          "description": "Deploys sign in to Azure with GitHub's own OIDC token, valid for the one run. The deploy is a manual workflow on purpose, so a merge alone never changes production."
+        }
+      ],
+      "facts": [
+        {
+          "label": "sites feeding it",
+          "value": "2"
+        },
+        {
+          "label": "lines of C# and Razor",
+          "value": "~4k"
+        },
+        {
+          "label": "automated tests",
+          "value": "47"
+        },
+        {
+          "label": "failed logins before lockout",
+          "value": "5"
+        },
+        {
+          "label": "full-stack build",
+          "value": "solo"
+        }
+      ]
     },
     {
       "slug": "sonus-construction",

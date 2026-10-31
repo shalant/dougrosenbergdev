@@ -2,6 +2,10 @@
 
 Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the visual-differentiation pass, and `../PortfolioNov25/.claude/plans/jiggly-hugging-kernighan.md`-derived plan for the original phased roadmap this follows.
 
+## Footer Haxbyte icon was Astro's logo (2026-10-30)
+
+`public/images/socials/haxbyte.svg` (footer social row) was Astro's stock logo mark, byte-for-byte the same path as the starter favicon in the `haxbyte` repo, so the link to haxbyte.com showed Astro's logo. Replaced with a single-colour white redraw of the real Haxbyte mark (code brackets plus circuit trace), measured by hand from `haxbyte/docs/assets/brand/haxbyte-logo-source.png`, stroke-based with thickened strokes so it holds up next to the filled social icons at about 20px. It is a redraw, not a trace, since the only source is a 409x322 PNG. The same mark replaced the favicon in the `haxbyte` repo (branch `design/real-favicon-2026-10-30`).
+
 ## Selected Work leads with engineering projects (2026-10-30)
 
 Doug wants the homepage to serve the full-time developer search, so Selected Work now shows ArborKin (large), Customer Intake Backend and Guacamayo (his front-end work). Hardware Etc left the homepage strip only; it stays on `/webdesign`. The layout is unchanged (one large project, two stacked).

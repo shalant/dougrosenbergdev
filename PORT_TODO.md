@@ -2,6 +2,15 @@
 
 Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the visual-differentiation pass, and `../PortfolioNov25/.claude/plans/jiggly-hugging-kernighan.md`-derived plan for the original phased roadmap this follows.
 
+## Selected Work leads with engineering projects (2026-10-30)
+
+Doug wants the homepage to serve the full-time developer search, so Selected Work now shows ArborKin (large), Customer Intake Backend and Guacamayo (his front-end work). Hardware Etc left the homepage strip only; it stays on `/webdesign`. The layout is unchanged (one large project, two stacked).
+- **Added:** a `customer-intake-backend` case study in `webdesign.json` (number 09), with two screenshots in `public/images/customer-intake/` and a strip image in `src/assets/images/webdesign/`. The repo is private, so there is no GitHub link. Every claim comes from that repo's README, `Program.cs`, workflows and todo list (CORS allow-list, per-IP rate limits, security headers, honeypot, Identity lockout, noindex header, OIDC deploy, 47 tests).
+- **Screenshots use invented data.** They were shot from a throwaway local database (since dropped) with fictional names on `.example` addresses. The app's sidebar also lists personal-tracking pages; those links were hidden before capture, and the case study describes the intake side only. Do not add screenshots of the personal-tracking pages or the real local lead data.
+- **Corrected:** ArborKin's C# line count from "~14k" to "~15k" (15,241 non-test, non-migration lines counted 2026-10-30; the 633 tests, 18 migrations and ~12k Razor lines matched the FamilyTree repo).
+- **Added `titleLabel`:** an optional field on a `webdesign.json` project that replaces "Web Design Case Study" in the page title. Set to "Software Case Study" on ArborKin and Customer Intake Backend.
+- **Left out on purpose:** DocIntakeERP/BizMachina. Its own `IDEA.md` says build-in-public posts are off the table because the day-job employer watches public activity, and it has no screenshots or live deploy. GigSync was judged too small.
+
 ## Positioning moved to the full-time developer search (2026-10-29)
 
 Doug asked for the site to serve the next full-time developer job and to downplay music (decided in a design session; signal is implicit only, freelance pages stay live, music shrunk). Homepage changes shipped in PR #62. Branch `positioning-metadata-2026-10-29` aligns the metadata with it:

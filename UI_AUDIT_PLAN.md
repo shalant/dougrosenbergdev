@@ -160,6 +160,9 @@ Process note for future audits: re-score the whole page after each merge rather 
 | 2026-10-25 | 4, hero and contrast | 87 (est.) | Subtitle A, dark-mode contrast, visible field borders and tab logos |
 | 2026-10-25 | re-audit, live after #58 | 82 | First full re-score since the baseline; the running estimates overshot by 5 |
 | 2026-10-25 | 6, final polish (live after #59) | 85 | GitHub stats trimmed, Hardware Etc recaptured, Music and Contact copy; audit closed |
+| 2026-11-01 | live re-audit (desktop dark only) | 86 | Found five flaws: ArborKin gap, Guacamayo caption, Contact space, no Hardware Etc, dim Contact intro |
+| 2026-11-01 | good cop, after #68 (branch build, my judgment) | 89 | Gap closed, four projects, texture on every section; mobile and light eyeballed, not measured |
+| 2026-11-01 | bad cop, same build (my judgment) | 76 | Stock palette, Experience card kit, Skills chip wall and a small saxophone; separate lens, not comparable to the good-cop score |
 
 ## Live re-audit (2026-11-01) and follow-up polish
 
@@ -170,3 +173,10 @@ Desktop dark only, scored about 86 against the same seven areas (not logged as a
 - **Contact:** section padding went from 8rem top and bottom to 6rem top and 3.5rem bottom, which shortens the empty band above the footer.
 - **Contact intro line:** weight 300 to 400 and opacity 0.55 to 0.78 in dark mode (light mode was already 0.85).
 - **Selected Work Bauhaus layer restored** (Doug, 2026-11-01): the strip was the one section allowed to go without the texture (2026-10-25). It now has the arches layer on the right at 10% opacity, so every homepage section carries one.
+
+### Bad-cop follow-ups (2026-11-01, branch `polish-crops-cover-2026-11-01`)
+- **Intake strip image:** re-cropped from the Leads screen to the Name-to-Email columns (900×625) so the strip shows a whole table with a clean right edge instead of cutting "Created" in half. Only the strip copy in `src/assets` changed; the case-study screenshots are untouched.
+- **Guacamayo strip image:** recaptured from the live band site (1424×715, headless, 2026-11-01). The old capture showed a scrollbar down the right edge and the mouse cursor over the logo.
+- **Casual quote contrast:** measured with a screenshot of the element with its text hidden: dark mode was 3.50:1 (fails AA 4.5:1) at 40% opacity, now 7.54:1 at 65%. Light mode already used 85% (6.39:1).
+- **Album cover:** the compact Music layout forced a 1:1 crop that kept the JPEG's 36px top letterbox bar. It now uses the base `818 / 750` crop and `50% 47%` position, which sits between the bars (rows 36 to 796).
+- **Not touched:** the Experience section (Doug is overhauling it), and Hardware Etc's small in-image text.

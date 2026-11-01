@@ -4313,7 +4313,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 1.1rem;
   font-style: italic;
-  color: rgba(var(--text-rgb), 0.4);
+  color: rgba(var(--text-rgb), 0.65);
   margin: 0;
   padding-left: 1.5rem;
   border-left: 1px solid rgba(var(--accent-rgb), 0.2);
@@ -5960,11 +5960,6 @@ h2::after {
 
 .music-photo__link {
   width: 9.5rem;
-}
-
-.music-photo__img {
-  aspect-ratio: 1;
-  object-position: 50% 40%;
 }
 
 .music-text {

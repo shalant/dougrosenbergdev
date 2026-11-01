@@ -104,21 +104,21 @@ const projects = await Promise.all(siteProperties.featuredWork.map(async ({ slug
     display: none;
   }
 
-  /* One large project and two stacked beside it, so the strip doesn't read as
-     three identical cards. Sharp corners: these are content, not controls. */
+  /* Two staggered rows (3/5 + 2/5, then 2/5 + 3/5) so four projects don't read as a
+     uniform card grid. Frames share a height within a row so captions line up. */
   .work-grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    grid-template-rows: auto auto;
-    gap: 2.5rem 3rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3rem;
   }
 
-  .work-item--lead {
-    grid-row: 1 / span 2;
-  }
+  .work-item:nth-child(1) { grid-column: 1 / span 3; }
+  .work-item:nth-child(2) { grid-column: 4 / span 2; }
+  .work-item:nth-child(3) { grid-column: 1 / span 2; }
+  .work-item:nth-child(4) { grid-column: 3 / span 3; }
 
   .work-item__link {
     display: block;
@@ -129,11 +129,12 @@ const projects = await Promise.all(siteProperties.featuredWork.map(async ({ slug
   .work-item__frame {
     overflow: hidden;
     border: 1px solid rgba(var(--text-rgb), 0.12);
-    aspect-ratio: 16 / 9;
+    height: 17rem;
   }
 
-  .work-item--lead .work-item__frame {
-    aspect-ratio: 4 / 3;
+  .work-item:nth-child(3) .work-item__frame,
+  .work-item:nth-child(4) .work-item__frame {
+    height: 14rem;
   }
 
   /* ProjectMediaFrame ships its own chrome for the /webdesign cards (negative
@@ -219,11 +220,13 @@ const projects = await Promise.all(siteProperties.featuredWork.map(async ({ slug
       grid-template-columns: 1fr;
     }
 
-    .work-item--lead {
-      grid-row: auto;
+    .work-item:nth-child(n) {
+      grid-column: auto;
     }
 
-    .work-item--lead .work-item__frame {
+    .work-item__frame,
+    .work-item:nth-child(n) .work-item__frame {
+      height: auto;
       aspect-ratio: 16 / 9;
     }
   }

@@ -2,6 +2,24 @@
 
 Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the visual-differentiation pass, and `../PortfolioNov25/.claude/plans/jiggly-hugging-kernighan.md`-derived plan for the original phased roadmap this follows.
 
+## Open decisions and where work stopped (2026-10-31)
+
+State when the 2026-10-30 session ended:
+- **`section-rhythm-2026-10-30` is uncommitted** (padding, quiet Experience/Skills headings, caption fix, these docs). Doug has not yet approved committing. No PR open for it. Commit only on his word; open PRs only on his word.
+- **haxbyte PR #25** (real favicon, in the `Haxbyte` repo) is open and unmerged. The mark is a hand redraw from a 409x322 PNG; a vector original would be better.
+- **Palette change: undecided.** Doug is exploring a matte grey/black base but has not picked one. Five candidates (Graphite and Teal, Charcoal and Seafoam, Soft Black and Aquamarine, Slate and Celeste, Greige and Sea-glass) were mocked up and screenshotted against the live homepage as private artifacts, with no repo changes. Findings to remember: the art-deco textures behind the hero, About and Contact are navy-tinted and turn visibly blue on grey, so they must be recolored or dropped; hero and Contact gradients and the glass nav would flatten; about six hard-coded navy hexes (`#0a1628` x6, `#060e1a` x4, and a few others) are not variables. The navy/teal/brass tokens above remain binding until Doug chooses.
+- **Header wordmark: undecided.** Header says "dr codeworks", page title and schema say "Doug Rosenberg", footer says "Douglas Rosenberg" (`siteproperties.json` `name`). Options A-E were mocked up; the lean is B (hexagon plus "Doug Rosenberg"). Option E would use the brass waveform outside its divider-only role and needs Doug's OK.
+- **Experience bullets: waiting on Doug's figures.** Outcome-first drafts exist for Friars ERP, Tackle.ai, TC Industries and Shift, with blanks where facts are needed; nothing invented. Flags in the current `experience.json`: TC Industries says "seven foundational layers" but lists six; "zero disruption" is an absolute claim; the Tackle.ai "secured the win" wording claims more than building the interface; the Shift security bullet is only a tool list.
+- **Known leftovers:** 648x144px empty gap under the ArborKin tile (layout kept on purpose); admin screenshot is a plain table; dead CSS `.about-quote`; lightningcss `:deep` build warning; brass contrast on the light theme; full five-browser Playwright suite not rerun on the recent branches (only Chromium and mobile-chrome).
+
+## Section rhythm (2026-10-30, branch `section-rhythm-2026-10-30`)
+
+The design critique's biggest open item was that every section had the same shape: a large left-aligned heading, the waveform beneath it, and `padding: 7rem 0`. Two changes, both inside the existing colors and fonts:
+- **Quiet headings for the reference sections.** Experience and Skills use a smaller heading (`clamp(1.9rem, 3.2vw, 2.6rem)`) on a hairline, with the waveform at the rule's right end (`.section-head--ledger` in `global.css`). About, Selected Work and Contact keep the large heading, so the page alternates loud and quiet. The two `!important`s in that rule are there because each section's own heading rule already uses them.
+- **Uneven vertical spacing.** About 7rem top and 5rem bottom, Selected Work 5rem and 7rem, Experience 6rem, Skills 5.5rem and 6rem, "When I'm Not Coding" 6rem and 5rem, Contact 8rem. Music is unchanged.
+- **Also in this branch:** the Customer Intake Backend caption shortening (`28eb590`), which landed on `selected-work-2026-10-30` after PR #65 had merged, so it never reached `master`.
+- **Verified:** build, `verify-csp`, link check; Chromium and mobile-chrome Playwright, 77 passed.
+
 ## Selected Work leads with engineering projects (2026-10-30)
 
 Doug wants the homepage to serve the full-time developer search, so Selected Work now shows ArborKin (large), Customer Intake Backend and Guacamayo (his front-end work). Hardware Etc left the homepage strip only; it stays on `/webdesign`. The layout is unchanged (one large project, two stacked).

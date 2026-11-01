@@ -314,6 +314,31 @@ h2:has(+ .section-divider) {
   padding-bottom: 0 !important;
 }
 
+/* Rhythm: the reference sections (Experience, Skills) get a quiet heading on a
+   hairline, with the waveform at the rule's right end, so the page alternates
+   loud (About, Selected Work, Contact) and quiet instead of repeating one large
+   heading seven times. Needs the !importants: each section's own heading rule
+   uses them. */
+.section-head--ledger {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 2.75rem;
+  border-bottom: 1px solid rgba(var(--text-rgb), 0.16);
+}
+
+.section-head--ledger > h2 {
+  flex: 1;
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.section-head--ledger > .section-divider {
+  margin: 0 0 0.45rem;
+}
+
 .section-divider__bar {
   display: block;
   width: 2px;
@@ -1243,7 +1268,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 
 .experience-section {
   background: var(--bg);
-  padding: 7rem 0;
+  padding: 6rem 0;
   position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(var(--accent-rgb), 0.08);
@@ -2407,7 +2432,7 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
 
 .about-section {
   background: var(--bg-hero);
-  padding: 7rem 0;
+  padding: 7rem 0 5rem;
   position: relative;
   overflow: hidden;
   color: var(--text);
@@ -3958,7 +3983,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 
 .skills-section {
   background: var(--bg);
-  padding: 7rem 0;
+  padding: 5.5rem 0 6rem;
   position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(var(--accent-rgb), 0.08);
@@ -4195,7 +4220,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 
 .casual-section {
   background: var(--bg);
-  padding: 7rem 0;
+  padding: 6rem 0 5rem;
   position: relative;
   border-top: 1px solid rgba(var(--accent-rgb), 0.08);
 }
@@ -4705,7 +4730,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 
 .contact-section {
   background: var(--bg-hero);
-  padding: 7rem 0;
+  padding: 8rem 0;
   position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(var(--accent-rgb), 0.08);

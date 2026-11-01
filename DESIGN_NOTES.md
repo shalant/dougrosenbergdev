@@ -95,6 +95,10 @@ Doug asked for the site to serve the next full-time developer job (see `career-d
 - **Measured:** a scripted 13-check rubric (nav opacity, rail overlap, largest empty block per section, repeated copy, CTA labels, dashes, mobile overflow, axe, plus the job-focus checks) scored the parent commit 31.3 and this branch 99.4. It measures structure and accessibility, not beauty.
 - **Not changed, needs a decision:** page `<title>` and meta ("Web & ERP Development"), the "dr codeworks" wordmark, the footer tagline, `llms.txt`, and the audience paragraph in this repo's `CLAUDE.md`, which still says SMB and musician clients first.
 
+## Section rhythm (2026-10-30)
+
+Headings come in two voices, so the page alternates instead of repeating one device. **Loud** (About, Selected Work, Contact, "When I'm Not Coding"): the large Cormorant heading with the waveform beneath it. **Quiet** (Experience, Skills, the two reference sections): a compact heading on a hairline with the waveform at the right end, via the `.section-head--ledger` modifier. Vertical padding is deliberately uneven (6 to 8rem, see `PORT_TODO.md`), not a uniform 7rem, which our baseline lists as a "safe symmetric spacing" tell. To make another section quiet, add the modifier to its header wrapper. Colors, fonts and the brass rule (the waveform stays the only brass) are unchanged.
+
 ## Explicitly avoided (AI-site tells, per calibration)
 
 Warm cream + terracotta; near-black + acid accent; broadsheet zero-radius dense columns; uniform rounded-card-kit with identical soft grey shadow; tracked-out ALL-CAPS eyebrow labels; middle-dot meta strings; em-dash "WORD — fragment" labels; arrow (`→`) appended to buttons/links.

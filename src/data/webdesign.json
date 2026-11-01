@@ -347,7 +347,7 @@
       "titleLabel": "Software Case Study",
       "number": "09",
       "name": "Customer Intake Backend",
-      "industry": "The .NET API and admin app behind the contact forms on my own sites. Minimal API, Blazor Server, EF Core and SQL Server on Azure",
+      "industry": "The .NET API and admin app behind my sites' contact forms. Blazor Server, EF Core, Azure SQL",
       "platform": "ASP.NET Core 10 + Blazor Server",
       "status": "live, private repo",
       "siteLabel": null,

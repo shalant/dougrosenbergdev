@@ -5,8 +5,8 @@ Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the
 ## Open decisions and where work stopped (2026-10-31)
 
 State when the 2026-10-30 session ended:
-- **`section-rhythm-2026-10-30` is uncommitted** (padding, quiet Experience/Skills headings, caption fix, these docs). Doug has not yet approved committing. No PR open for it. Commit only on his word; open PRs only on his word.
-- **haxbyte PR #25** (real favicon, in the `Haxbyte` repo) is open and unmerged. The mark is a hand redraw from a 409x322 PNG; a vector original would be better.
+- **`section-rhythm-2026-10-30` is committed and open as PR #67** (padding, quiet Experience/Skills headings, caption fix, these docs), opened 2026-10-31. Merging deploys; merge only on Doug's word.
+- **haxbyte PR #25** (real favicon, in the `Haxbyte` repo) is open and unmerged. The footer icon in this repo is already fixed and live (PR #66). The mark is a hand redraw from a 409x322 PNG; a vector original would be better.
 - **Palette change: undecided.** Doug is exploring a matte grey/black base but has not picked one. Five candidates (Graphite and Teal, Charcoal and Seafoam, Soft Black and Aquamarine, Slate and Celeste, Greige and Sea-glass) were mocked up and screenshotted against the live homepage as private artifacts, with no repo changes. Findings to remember: the art-deco textures behind the hero, About and Contact are navy-tinted and turn visibly blue on grey, so they must be recolored or dropped; hero and Contact gradients and the glass nav would flatten; about six hard-coded navy hexes (`#0a1628` x6, `#060e1a` x4, and a few others) are not variables. The navy/teal/brass tokens above remain binding until Doug chooses.
 - **Header wordmark: undecided.** Header says "dr codeworks", page title and schema say "Doug Rosenberg", footer says "Douglas Rosenberg" (`siteproperties.json` `name`). Options A-E were mocked up; the lean is B (hexagon plus "Doug Rosenberg"). Option E would use the brass waveform outside its divider-only role and needs Doug's OK.
 - **Experience bullets: waiting on Doug's figures.** Outcome-first drafts exist for Friars ERP, Tackle.ai, TC Industries and Shift, with blanks where facts are needed; nothing invented. Flags in the current `experience.json`: TC Industries says "seven foundational layers" but lists six; "zero disruption" is an absolute claim; the Tackle.ai "secured the win" wording claims more than building the interface; the Shift security bullet is only a tool list.
@@ -19,6 +19,10 @@ The design critique's biggest open item was that every section had the same shap
 - **Uneven vertical spacing.** About 7rem top and 5rem bottom, Selected Work 5rem and 7rem, Experience 6rem, Skills 5.5rem and 6rem, "When I'm Not Coding" 6rem and 5rem, Contact 8rem. Music is unchanged.
 - **Also in this branch:** the Customer Intake Backend caption shortening (`28eb590`), which landed on `selected-work-2026-10-30` after PR #65 had merged, so it never reached `master`.
 - **Verified:** build, `verify-csp`, link check; Chromium and mobile-chrome Playwright, 77 passed.
+
+## Footer Haxbyte icon was Astro's logo (2026-10-30)
+
+`public/images/socials/haxbyte.svg` (footer social row) was Astro's stock logo mark, byte-for-byte the same path as the starter favicon in the `haxbyte` repo, so the link to haxbyte.com showed Astro's logo. Replaced with a single-colour white redraw of the real Haxbyte mark (code brackets plus circuit trace), measured by hand from `haxbyte/docs/assets/brand/haxbyte-logo-source.png`, stroke-based with thickened strokes so it holds up next to the filled social icons at about 20px. It is a redraw, not a trace, since the only source is a 409x322 PNG. The same mark replaced the favicon in the `haxbyte` repo (branch `design/real-favicon-2026-10-30`).
 
 ## Selected Work leads with engineering projects (2026-10-30)
 

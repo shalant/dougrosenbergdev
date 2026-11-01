@@ -4507,10 +4507,37 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   z-index: 2;
 }
 
-/* Every homepage section carries a Bauhaus layer except the selected-work
-   strip, whose screenshots are texture enough (Doug, 2026-10-25: at most one
-   section without it). Each layer is a box shaped like the 2:3 artwork, so
-   its open edge can fade out with a mask instead of ending in a hard seam. */
+/* Every homepage section carries a Bauhaus layer. The selected-work strip went
+   without one from 2026-10-25 (Doug allowed at most one section without it); he
+   asked for it back on 2026-11-01. Each layer is a box shaped like the 2:3
+   artwork, so its open edge can fade out with a mask instead of ending in a
+   hard seam. */
+
+/* Selected Work — arches right, behind the project strip (About's grid is left) */
+.work-section {
+  overflow: hidden;
+}
+.work-section::after {
+  content: '';
+  position: absolute;
+  top: -5%;
+  right: 0;
+  height: 110%;
+  aspect-ratio: 2 / 3;
+  max-width: 60%;
+  background-image: var(--art-deco-2);
+  background-size: cover;
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent);
+  mask-image: linear-gradient(to left, #000 55%, transparent);
+  mix-blend-mode: var(--art-deco-blend);
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+.work-container {
+  position: relative;
+  z-index: 1;
+}
 
 /* About — Mondrian left-anchored; ::before is the scanline grid */
 .about-section::after {
@@ -4730,7 +4757,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 
 .contact-section {
   background: var(--bg-hero);
-  padding: 8rem 0;
+  padding: 6rem 0 3.5rem;
   position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(var(--accent-rgb), 0.08);
@@ -4811,8 +4838,8 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 .contact-sub {
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem !important;
-  font-weight: 300;
-  color: rgba(var(--text-rgb), 0.55);
+  font-weight: 400;
+  color: rgba(var(--text-rgb), 0.78);
   line-height: 1.85;
   max-width: 520px;
   margin: 0 !important;

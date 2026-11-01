@@ -14,6 +14,7 @@
   "featuredWork": [
     { "slug": "arborkin", "image": "arborkin-tree-dark.webp" },
     { "slug": "customer-intake-backend", "image": "intake-leads.webp" },
+    { "slug": "hardware-etc", "image": "hardwareetc-products.jpg" },
     { "slug": "guacamayo-band", "image": "guacamayo-hero.jpg" }
   ]
 }

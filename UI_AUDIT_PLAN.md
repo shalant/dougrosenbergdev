@@ -160,3 +160,13 @@ Process note for future audits: re-score the whole page after each merge rather 
 | 2026-10-25 | 4, hero and contrast | 87 (est.) | Subtitle A, dark-mode contrast, visible field borders and tab logos |
 | 2026-10-25 | re-audit, live after #58 | 82 | First full re-score since the baseline; the running estimates overshot by 5 |
 | 2026-10-25 | 6, final polish (live after #59) | 85 | GitHub stats trimmed, Hardware Etc recaptured, Music and Contact copy; audit closed |
+
+## Live re-audit (2026-11-01) and follow-up polish
+
+Desktop dark only, scored about 86 against the same seven areas (not logged as a score: mobile and light weren't re-checked). Branch `polish-gap-contact-2026-11-01` fixes the five flaws it found:
+- **Selected Work layout:** the strip now has four projects (ArborKin, Customer Intake Backend, Hardware Etc, Guacamayo) in two staggered rows (3/5 + 2/5, then 2/5 + 3/5) with frames of equal height within a row. This replaces the large-plus-stacked layout, whose ArborKin caption left a gap of about 130px under it. At 900px and narrower it is still one column.
+- **Hardware Etc is back in the strip** (Doug approved 2026-11-01, reversing its removal in #65) to restore the small-business client signal. It sits beside Guacamayo; Customer Intake Backend stays, so the engineering projects still lead.
+- **Guacamayo caption:** "Chicago funky Latin groove band, Doug's own band site" is now "A new band playing music from South America", Doug's wording (2026-11-01). It also shows on `/webdesign`.
+- **Contact:** section padding went from 8rem top and bottom to 6rem top and 3.5rem bottom, which shortens the empty band above the footer.
+- **Contact intro line:** weight 300 to 400 and opacity 0.55 to 0.78 in dark mode (light mode was already 0.85).
+- **Selected Work Bauhaus layer restored** (Doug, 2026-11-01): the strip was the one section allowed to go without the texture (2026-10-25). It now has the arches layer on the right at 10% opacity, so every homepage section carries one.

@@ -12,7 +12,7 @@ test.describe('homepage', () => {
   test('each selected-work item links to its case study', async ({ page }) => {
     await page.goto('/');
     const items = page.locator('#work a.work-item__link');
-    await expect(items).toHaveCount(3);
+    await expect(items).toHaveCount(4);
     const links = await items.evaluateAll((els) =>
       els.map((el) => ({ href: el.getAttribute('href'), name: el.querySelector('h3')?.textContent?.trim() })),
     );

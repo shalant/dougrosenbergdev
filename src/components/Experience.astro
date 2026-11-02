@@ -54,7 +54,7 @@ function span(exp: { startDate?: string; endDate?: string }): string {
         const chips = exp.icons.split(',');
         return (
           <div class="experience-detail" role="tabpanel" id={`exp-panel-${idx}`} aria-labelledby={`exp-tab-${idx}`} data-index={idx} hidden={idx !== 0}>
-            <div class:list={["experience-detail__logo-wrap", { "experience-detail__logo-wrap--wide": !!exp.detailImage }]}>
+            <div class:list={["experience-detail__logo-wrap", { "experience-detail__logo-wrap--wide": !!exp.detailImage, "experience-detail__logo-wrap--plate": !!exp.lightPlate }]}>
               <img src={detailImage} alt={exp.title} class="experience-detail__logo" loading="lazy" />
             </div>
 

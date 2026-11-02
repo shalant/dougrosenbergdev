@@ -27,6 +27,7 @@
     "url": "https://tackle.ai",
     "icons": "Figma, Blazor, ASP.NET, Syncfusion, CSS",
     "image": "/images/Tackle_Ai_SUA_logo.webp",
+    "lightPlate": true,
     "startDate": "2024-07-01",
     "endDate": "2024-12-01",
     "bulletpoints": [
@@ -59,6 +60,7 @@
     "url": "https://bridgestonemarketing.com",
     "icons": "Angular, ASP.NET, Kendo UI, SQL",
     "image": "/images/cropped-SHIFTLogo_4-C.webp",
+    "lightPlate": true,
     "startDate": "2023-03-01",
     "endDate": "2023-10-01",
     "bulletpoints": [

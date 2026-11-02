@@ -20,6 +20,10 @@ Run at 3:34 PM CT on the live site after both merged (field data: none yet). **D
 
 The Franciscan Friars lockup (`franciscan-friars-full.webp`) has a dark brown wordmark on transparency, so on the dark Experience card it nearly vanished. Added a rule in `global.css` giving `.experience-detail__logo-wrap--wide` the same light plate as `.experience-list__logo-wrap` (`rgba(238,242,247,0.92)`, 8px corners, `width: fit-content`), dark mode only; light mode is unchanged. Checked with screenshots of both themes and `e2e/home.spec.ts` on Chromium (13 pass). Alternative if the plate feels heavy: lighten the artwork instead, which would also brighten the badge's glow.
 
+### Experience logo discs: position hacks replaced by a data flag (2026-11-01)
+
+Tackle.ai and Shift have dark wordmarks that vanished on the dark detail disc. The old fix was `brightness(1.3)`/`(1.6)` and a 1.2x scale keyed to `nth-child(2)`/`(4)`, which would have broken on any tab reorder, and Shift's scaled mark was wider than the 120px disc and spilled out. Now `experience.json` has `"lightPlate": true` on both; `Experience.astro` adds `experience-detail__logo-wrap--plate`, which gives the disc the same light fill as the sidebar logos in both themes and caps the artwork at 96px so it stays inside. Removed the brightness rules and Shift's scale. The TC Industries 0.8 scale is still keyed to `nth-child(3)`. Verified with screenshots of both tabs in both themes; Shift's tagline is small because the source image is wide.
+
 ## Section rhythm (2026-10-30, branch `section-rhythm-2026-10-30`)
 
 The design critique's biggest open item was that every section had the same shape: a large left-aligned heading, the waveform beneath it, and `padding: 7rem 0`. Two changes, both inside the existing colors and fonts:

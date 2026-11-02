@@ -12,6 +12,14 @@ State when the 2026-10-30 session ended:
 - **Experience bullets: waiting on Doug's figures.** Outcome-first drafts exist for Friars ERP, Tackle.ai, TC Industries and Shift, with blanks where facts are needed; nothing invented. Flags in the current `experience.json`: TC Industries says "seven foundational layers" but lists six; "zero disruption" is an absolute claim; the Tackle.ai "secured the win" wording claims more than building the interface; the Shift security bullet is only a tool list.
 - **Known leftovers:** 648x144px empty gap under the ArborKin tile (layout kept on purpose); admin screenshot is a plain table; dead CSS `.about-quote`; lightningcss `:deep` build warning; brass contrast on the light theme; full five-browser Playwright suite not rerun on the recent branches (only Chromium and mobile-chrome).
 
+## PageSpeed Insights baseline after PRs #68 and #69 (2026-11-01)
+
+Run at 3:34 PM CT on the live site after both merged (field data: none yet). **Desktop:** Performance 98, Accessibility 99, Best Practices 100, SEO 100; FCP 0.3 s, LCP 1.2 s, TBT 50 ms, CLS 0, Speed Index 0.7 s. **Mobile (Moto G Power, slow 4G):** Performance 84, same other three; FCP 1.1 s, LCP 4.4 s, TBT 40 ms, CLS 0, Speed Index 2.8 s. Mobile matches the 84 / LCP 4.4 s baseline from 2026-09-10 and 2026-09-20, so the Selected Work changes did not move it; the local `lhci` 0.77-0.78 is the noisy local proxy, not a regression. Open items PSI listed: image delivery (est. 914 KiB mobile), render-blocking requests (460 ms mobile), cache lifetimes (131 KiB), images without explicit width and height, 19-20 non-composited animations, and Accessibility 99 from "Document does not have a main landmark" (not investigated yet).
+
+## Friars logo plate in dark mode (2026-11-01, branch `experience-overhaul-2026-11-01`)
+
+The Franciscan Friars lockup (`franciscan-friars-full.webp`) has a dark brown wordmark on transparency, so on the dark Experience card it nearly vanished. Added a rule in `global.css` giving `.experience-detail__logo-wrap--wide` the same light plate as `.experience-list__logo-wrap` (`rgba(238,242,247,0.92)`, 8px corners, `width: fit-content`), dark mode only; light mode is unchanged. Checked with screenshots of both themes and `e2e/home.spec.ts` on Chromium (13 pass). Alternative if the plate feels heavy: lighten the artwork instead, which would also brighten the badge's glow.
+
 ## Section rhythm (2026-10-30, branch `section-rhythm-2026-10-30`)
 
 The design critique's biggest open item was that every section had the same shape: a large left-aligned heading, the waveform beneath it, and `padding: 7rem 0`. Two changes, both inside the existing colors and fonts:

@@ -1535,6 +1535,16 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   max-height: 72px;
 }
 
+/* The Friars lockup's wordmark is dark brown on transparency, so on the dark card it
+   nearly vanishes. Same fixed light plate as .experience-list__logo-wrap, dark mode only
+   (light mode already reads fine without one). */
+html:not([data-theme="light"]) .experience-detail__logo-wrap--wide {
+  background: rgba(238, 242, 247, 0.92) !important;
+  width: fit-content;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+}
+
 /* Brighten dark logos (SHIFT at index 3, Tackle AI at index 1) */
 .experience-layout:has(> .experience-list [role="tab"]:nth-child(2).active) .experience-detail__logo,
 .experience-layout:has(> .experience-list [role="tab"]:nth-child(4).active) .experience-detail__logo {

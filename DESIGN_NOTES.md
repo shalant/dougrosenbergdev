@@ -101,7 +101,7 @@ Headings come in two voices, so the page alternates instead of repeating one dev
 
 ## Palette exploration (2026-11-02, undecided, no code changed)
 
-Doug wants to leave navy and teal, which the audit called the stock SaaS pairing. Nothing here is adopted: the navy/teal/brass tokens stay binding until he picks. The mockups are archived in `ui-lab/artifacts/portfolio/`: `palette-trials-first-mock.html` (Gemini's four palettes; Doug didn't like any), `real-site-palette-previews.html` (screenshots of the live homepage in five matte palettes) and `matte-palette-trials.html` (ten dark/light palettes on a live mock, with Off/Subtle/Bold texture and a grain toggle).
+Doug wants to leave navy and teal, which the audit called the stock SaaS pairing. Nothing here is adopted: the navy/teal/brass tokens stay binding until he picks. The mockups are archived in `ui-lab/artifacts/portfolio/`: `palette-trials-first-mock.html` (Gemini's four palettes; Doug didn't like any), `matte-palette-options.html` (the original five matte palettes as swatches with contrast ratios; the source of the hex values), `real-site-palette-previews.html` (screenshots of the live homepage in five matte palettes) and `matte-palette-trials.html` (ten dark/light palettes on a live mock, with Off/Subtle/Bold texture and a grain toggle).
 
 **Shortlist and why**
 - **Greige and Sea-glass** (dark `#1e1d1b` base, `#6fd6c4` accent): the recommended default. A warm base is what makes the brass waveform look intended, and the accent stays in the teal family. Runner-up: Charcoal and Seafoam (`#1b1d1e`, `#73d9bf`), slightly cooler.

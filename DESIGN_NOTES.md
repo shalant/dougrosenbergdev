@@ -99,6 +99,28 @@ Doug asked for the site to serve the next full-time developer job (see `career-d
 
 Headings come in two voices, so the page alternates instead of repeating one device. **Loud** (About, Selected Work, Contact, "When I'm Not Coding"): the large Cormorant heading with the waveform beneath it. **Quiet** (Experience, Skills, the two reference sections): a compact heading on a hairline with the waveform at the right end, via the `.section-head--ledger` modifier. Vertical padding is deliberately uneven (6 to 8rem, see `PORT_TODO.md`), not a uniform 7rem, which our baseline lists as a "safe symmetric spacing" tell. To make another section quiet, add the modifier to its header wrapper. Colors, fonts and the brass rule (the waveform stays the only brass) are unchanged.
 
+## Palette exploration (2026-11-02, undecided, no code changed)
+
+Doug wants to leave navy and teal, which the audit called the stock SaaS pairing. Nothing here is adopted: the navy/teal/brass tokens stay binding until he picks. The mockups are archived in `ui-lab/artifacts/portfolio/`: `palette-trials-first-mock.html` (Gemini's four palettes; Doug didn't like any), `matte-palette-options.html` (the original five matte palettes as swatches with contrast ratios; the source of the hex values), `real-site-palette-previews.html` (screenshots of the live homepage in five matte palettes) and `matte-palette-trials.html` (ten dark/light palettes on a live mock, with Off/Subtle/Bold texture and a grain toggle).
+
+**Shortlist and why**
+- **Greige and Sea-glass** (dark `#1e1d1b` base, `#6fd6c4` accent): the recommended default. A warm base is what makes the brass waveform look intended, and the accent stays in the teal family. Runner-up: Charcoal and Seafoam (`#1b1d1e`, `#73d9bf`), slightly cooler.
+- **Parchment and Moss** (first-pass hexes: `#101412` / `#8ba89b` dark, `#f5f0e8` / `#2a4b40` light): the most distinctive. Risk: a quiet accent weakens the one-accent moment, so check the "get in touch" button.
+- **Steel Slate and Indigo** (`#0f1217`, `#3b52ff`): the most on-trend, from Gemini's recipe. `#3b52ff` is only about 3.4:1 on that base, so text and links need a lighter tint (`#8c9aff`); the button fill can stay exact. Likeliest to date, since luminous blue on dark is becoming the new default.
+- **Graphite and Bianchi Celeste** (`#151819`, `#5fd3c6`, an approximation, there is no official hex): Doug likes the color. It is a mint-leaning aqua, so it sits close to today's teal and to Seafoam. Not the sky-cyan of "Slate and Celeste".
+
+**Textures**
+- Doug likes the Bauhaus/art-deco shapes and wants them kept on every palette. They do not conflict with current design; geometric shapes are in a revival. What dates a site is the template look, not the geometry.
+- The shipped images are navy-tinted, so a new palette needs them recolored: a two-tone of the palette's base and muted tone (done in the browser in the mockup). A real change means re-exporting `artDecoBackground1/2` (and the `-light` pair) per palette, or masking one neutral image with a CSS variable colour.
+- **Recommendation: Subtle.** About the strength the site uses today (opacity 0.1 to 0.28). Bold competes with the headline and the Selected Work captions; Off drops the most ownable thing on the page. If any area goes bolder, make it the hero only. Grain on, kept at roughly 2-4%.
+
+**Trends taken or skipped (from Gemini's 2027 research, which is generic trend writing, not data)**
+- Take: a single disciplined accent over 90% neutral (already our rule); micro-noise grain; asymmetric editorial grid (Selected Work's large lead item already does this); warm off-white light mode.
+- Skip: ambient radial glow / blurred light blooms (our baseline lists gradient mesh and glassmorphism as AI tells, and it dates fastest); acid lime (wrong register for hiring managers, and it fights the one-accent rule).
+- Maybe later: interactive code-snippet toggles (C#/Blazor, TypeScript, SQL). A real feature needing real content, not a colour decision.
+
+**If a palette is chosen, the work is:** replace the six-odd hard-coded navy hexes that are not variables (`#0a1628` x6, `#060e1a` x4, others), recolor the four texture images, flatten the hero and Contact gradients and the glass nav, and re-derive the light theme's accent for AA contrast. This changes the color tokens, so it needs Doug's go-ahead first (see "Things to avoid without discussion" in `CLAUDE.md`).
+
 ## Explicitly avoided (AI-site tells, per calibration)
 
 Warm cream + terracotta; near-black + acid accent; broadsheet zero-radius dense columns; uniform rounded-card-kit with identical soft grey shadow; tracked-out ALL-CAPS eyebrow labels; middle-dot meta strings; em-dash "WORD — fragment" labels; arrow (`→`) appended to buttons/links.

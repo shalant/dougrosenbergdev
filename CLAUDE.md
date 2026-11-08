@@ -64,6 +64,10 @@ public/                # Static passthrough (fonts, robots.txt, llms.txt, _heade
 - **Avoid the AI-site tells** already identified and removed once: eyebrow labels above headings, two-button hero CTAs with an arrow (`→`) suffix, tracked-out ALL-CAPS labels, middle-dot meta strings, uniform rounded-card-with-soft-shadow kits. Don't reintroduce these patterns in new sections.
 - **No new color hexes or a new type family without discussion** — this mirrors the prior project's rule and is reinforced by `DESIGN_NOTES.md`'s "port every token verbatim" instruction.
 
+## Claude Code session label
+
+`.claude/settings.json` sets a `statusLine` command (`.claude/statusline.js`) that prints an orange `■ dougrosenbergdev` label plus the model name at the bottom of the Claude Code window, so this repo's session is easy to spot among several open terminals (added 2026-11-08). It colors the status line only, not the tab or terminal background. Other repos use their own label and color number (`\x1b[38;5;208m` is the orange here).
+
 ## Testing
 
 - **E2E:** `npm run test:e2e` runs the Playwright suite (`e2e/*.spec.ts`) across Chromium, Mobile Chrome, Firefox, WebKit, and Mobile Safari. Run this — not just a visual check — before considering a UI change done; the Bootstrap-removal regression (blog search filter, mobile contact `<dialog>`) was only caught by this suite, not by eyeballing Chromium.

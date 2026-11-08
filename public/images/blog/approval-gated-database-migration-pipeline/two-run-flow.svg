@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" font-family="Montserrat, -apple-system, Segoe UI, sans-serif" role="img" aria-labelledby="flowTitle flowDesc">
+  <title id="flowTitle">A database migration pipeline with a human between two runs</title>
+  <desc id="flowDesc">Run one, plan, uses no credentials: it lists the migrations, generates idempotent SQL, scans the newest migrations for destructive changes and posts a summary. The developer reads the SQL and decides. Run two, apply, logs in with OIDC, opens a firewall rule for the runner, runs a migration bundle against one database and closes the rule.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1abc9c" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="800" height="420" rx="16" fill="#2c3e50" />
+  <text x="400" y="46" text-anchor="middle" fill="#eef2f7" font-size="20" font-weight="700">Two runs, one human decision in between</text>
+
+  <!-- Run 1: plan -->
+  <rect x="30" y="76" width="270" height="262" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.4)" stroke-width="1.5" />
+  <text x="165" y="108" text-anchor="middle" fill="#eef2f7" font-size="17" font-weight="700">1. Plan</text>
+  <text x="165" y="128" text-anchor="middle" fill="rgba(238,242,247,0.6)" font-size="12">no credentials, safe to run anytime</text>
+  <rect x="46" y="146" width="238" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="58" y="168" fill="rgba(238,242,247,0.8)" font-size="12">List the migrations in the repo</text>
+  <rect x="46" y="190" width="238" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="58" y="212" fill="rgba(238,242,247,0.8)" font-size="12">Generate the idempotent SQL</text>
+  <rect x="46" y="234" width="238" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="58" y="256" fill="rgba(238,242,247,0.8)" font-size="12">Scan newest N for drops and alters</text>
+  <rect x="46" y="278" width="238" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="58" y="300" fill="rgba(238,242,247,0.8)" font-size="12">Post a summary and the SQL file</text>
+
+  <!-- Human gate -->
+  <line x1="300" y1="207" x2="326" y2="207" stroke="#1abc9c" stroke-width="2" marker-end="url(#arrow)" />
+  <rect x="330" y="157" width="140" height="100" rx="10" fill="rgba(26,188,156,0.12)" stroke="#1abc9c" stroke-width="1.5" />
+  <text x="400" y="196" text-anchor="middle" fill="#1abc9c" font-size="14" font-weight="700">You read</text>
+  <text x="400" y="216" text-anchor="middle" fill="#1abc9c" font-size="14" font-weight="700">the SQL</text>
+  <text x="400" y="240" text-anchor="middle" fill="rgba(238,242,247,0.6)" font-size="11">then decide</text>
+  <line x1="474" y1="207" x2="496" y2="207" stroke="#1abc9c" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Run 2: apply -->
+  <rect x="500" y="76" width="270" height="262" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.4)" stroke-width="1.5" />
+  <text x="635" y="108" text-anchor="middle" fill="#eef2f7" font-size="17" font-weight="700">2. Apply</text>
+  <text x="635" y="128" text-anchor="middle" fill="rgba(238,242,247,0.6)" font-size="12">apply switched on, one database</text>
+  <rect x="516" y="146" width="238" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="528" y="168" fill="rgba(238,242,247,0.8)" font-size="12">OIDC login as the migrate identity</text>
+  <rect x="516" y="190" width="238" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="528" y="212" fill="rgba(238,242,247,0.8)" font-size="12">Open a firewall rule for the runner</text>
+  <rect x="516" y="234" width="238" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="528" y="256" fill="rgba(238,242,247,0.8)" font-size="12">Run the migration bundle</text>
+  <rect x="516" y="278" width="238" height="34" rx="6" fill="rgba(26,188,156,0.1)" />
+  <text x="528" y="300" fill="rgba(238,242,247,0.8)" font-size="12">Close the firewall rule</text>
+
+  <rect x="140" y="364" width="520" height="30" rx="15" fill="rgba(26,188,156,0.15)" stroke="#1abc9c" stroke-width="1.5" />
+  <text x="400" y="384" text-anchor="middle" fill="#1abc9c" font-size="12" font-weight="700">The approval is two deliberate runs, not a required-reviewer click</text>
+</svg>

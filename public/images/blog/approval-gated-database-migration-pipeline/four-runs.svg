@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" font-family="Montserrat, -apple-system, Segoe UI, sans-serif" role="img" aria-labelledby="runsTitle runsDesc">
+  <title id="runsTitle">What the first four pipeline runs caught</title>
+  <desc id="runsDesc">Run one, plan only, passed. Run two failed because the apply job never restored packages on its fresh runner. Run three went green but its cleanup step failed on a flag that does not exist and left a firewall rule open. Run four was clean, and the server's firewall rules were checked afterward.</desc>
+
+  <rect x="0" y="0" width="800" height="380" rx="16" fill="#2c3e50" />
+  <text x="400" y="46" text-anchor="middle" fill="#eef2f7" font-size="20" font-weight="700">Four runs, two bugs, one green check that lied</text>
+
+  <!-- Run 1 -->
+  <rect x="40" y="76" width="720" height="56" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.4)" stroke-width="1.5" />
+  <text x="60" y="110" fill="#eef2f7" font-size="15" font-weight="700">Run 1</text>
+  <rect x="140" y="92" width="100" height="26" rx="13" fill="rgba(26,188,156,0.15)" stroke="#1abc9c" stroke-width="1.5" />
+  <text x="190" y="110" text-anchor="middle" fill="#1abc9c" font-size="12" font-weight="700">passed</text>
+  <text x="262" y="110" fill="rgba(238,242,247,0.8)" font-size="13">Scan and SQL summary worked. Apply skipped by design.</text>
+
+  <!-- Run 2 -->
+  <rect x="40" y="146" width="720" height="56" rx="10" fill="#1a252f" stroke="rgba(224,122,95,0.55)" stroke-width="1.5" />
+  <text x="60" y="180" fill="#eef2f7" font-size="15" font-weight="700">Run 2</text>
+  <rect x="140" y="162" width="100" height="26" rx="13" fill="rgba(224,122,95,0.15)" stroke="#e07a5f" stroke-width="1.5" />
+  <text x="190" y="180" text-anchor="middle" fill="#e07a5f" font-size="12" font-weight="700">failed</text>
+  <text x="262" y="180" fill="rgba(238,242,247,0.8)" font-size="13">Apply never restored packages on its fresh runner.</text>
+
+  <!-- Run 3 -->
+  <rect x="40" y="216" width="720" height="56" rx="10" fill="#1a252f" stroke="rgba(224,122,95,0.55)" stroke-width="1.5" stroke-dasharray="6 4" />
+  <text x="60" y="250" fill="#eef2f7" font-size="15" font-weight="700">Run 3</text>
+  <rect x="140" y="232" width="100" height="26" rx="13" fill="rgba(224,122,95,0.15)" stroke="#e07a5f" stroke-width="1.5" />
+  <text x="190" y="250" text-anchor="middle" fill="#e07a5f" font-size="12" font-weight="700">green, but</text>
+  <text x="262" y="250" fill="rgba(238,242,247,0.8)" font-size="13">Cleanup used a flag that doesn't exist; rule left open.</text>
+
+  <!-- Run 4 -->
+  <rect x="40" y="286" width="720" height="56" rx="10" fill="#1a252f" stroke="rgba(26,188,156,0.4)" stroke-width="1.5" />
+  <text x="60" y="320" fill="#eef2f7" font-size="15" font-weight="700">Run 4</text>
+  <rect x="140" y="302" width="100" height="26" rx="13" fill="rgba(26,188,156,0.15)" stroke="#1abc9c" stroke-width="1.5" />
+  <text x="190" y="320" text-anchor="middle" fill="#1abc9c" font-size="12" font-weight="700">clean</text>
+  <text x="262" y="320" fill="rgba(238,242,247,0.8)" font-size="13">No warning, and the server's firewall list checked after.</text>
+</svg>

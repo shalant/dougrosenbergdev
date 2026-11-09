@@ -11,7 +11,11 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: when latest moved to 26.04 (between 2026-11-01 and 2026-11-07)
+    # Playwright's WebKit build changed with it and the two theme-toggle specs began timing out
+    # on webkit and mobile-safari only. Same Playwright and WebKit version, same code, still
+    # green on Windows. Unpin once the 26.04 WebKit behavior is understood.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

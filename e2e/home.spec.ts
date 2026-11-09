@@ -86,6 +86,25 @@ test.describe('homepage', () => {
     expect(await page.evaluate(() => localStorage.getItem('dr-theme'))).toBe('dark');
   });
 
+  test('the theme still applies when the view transition never runs its callback', async ({ page }) => {
+    // Regression for the 2026-11 CI failures on the ubuntu-26.04 WebKit build: data-theme was
+    // only set inside the startViewTransition callback, so a transition that never reached
+    // its callback left the toggle doing nothing. Simulated here by stubbing the API with a
+    // transition that never calls back (and never finishes).
+    await page.addInitScript(() => {
+      document.startViewTransition = (() => ({
+        finished: new Promise(() => {}),
+        ready: new Promise(() => {}),
+        updateCallbackDone: new Promise(() => {}),
+        skipTransition() {},
+      })) as unknown as typeof document.startViewTransition;
+    });
+    await page.goto('/');
+    await page.locator('.theme-toggle').click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    expect(await page.evaluate(() => localStorage.getItem('dr-theme'))).toBe('light');
+  });
+
   test('experience tabs switch the detail panel', async ({ page }) => {
     await page.goto('/#experience');
     const items = page.locator('.experience-list__item');

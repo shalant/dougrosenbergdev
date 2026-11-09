@@ -40,8 +40,24 @@ window.DrTheme = (function () {
         root.style.setProperty('--theme-reveal-r', radius + 'px');
 
         root.classList.add('theme-switching');
-        const transition = document.startViewTransition(() => apply(next));
-        transition.finished.finally(() => root.classList.remove('theme-switching'));
+        let applied = false;
+        const transition = document.startViewTransition(() => {
+            applied = true;
+            apply(next);
+        });
+        // The attribute is only set inside the transition callback, which runs after the browser
+        // captures the old frame. If that never happens (the ubuntu-26.04 Playwright WebKit build
+        // never got there, so the toggle did nothing), apply the theme directly instead of leaving
+        // the click dead. The storage check skips this if a later toggle already superseded `next`.
+        const watchdog = setTimeout(() => {
+            if (!applied && localStorage.getItem(STORAGE_KEY) === next) apply(next);
+            transition.skipTransition();
+            root.classList.remove('theme-switching');
+        }, 600);
+        transition.finished.finally(() => {
+            clearTimeout(watchdog);
+            root.classList.remove('theme-switching');
+        });
         return next;
     }
 

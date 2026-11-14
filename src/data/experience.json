@@ -2,25 +2,28 @@
   {
     "title": "Full-stack .NET software engineer",
     "company": "Friars ERP",
-    "description": "Developer on the Franciscan Friars' internal ERP and public website.",
+    "description": "Developer on the Franciscan Friars' internal ERP and public website. Since September 2026, also leading the email platform replacement and moving into product owner for the new public site.",
     "url": "https://friars.us",
     "icons": "C#, Blazor, ASP.NET, Syncfusion, SQL, Azure",
     "image": "/images/franciscan-friars-badge.webp",
     "detailImage": "/images/franciscan-friars-full.webp",
     "startDate": "2025-02-01",
     "bulletpoints": [
+      "Led the evaluation to replace the email marketing platform. The two finalists are projected to cut annual platform cost by about $100k, net of year-one costs.",
+      "Narrowed 10 email vendors to 2 finalists. Gathered requirements from Communications and the Salesforce admin, ran sales demos, and scored each vendor on 10 weighted requirements.",
+      "Found and fixed Meta server-side conversion tracking that had been failing silently for about 18 months. Server events now carry the click ID, and observed coverage went from none to about 90%.",
+      "Made five embedded third-party forms visible to GA4. Each form now sends its own event, checked end to end in production with no personal data reaching GA4.",
+      "Product owner for the new public website (in progress, launch planned after Thanksgiving 2026). Work with stakeholders to gather requirements.",
       "Built the ERP-to-Salesforce integration that syncs and reconciles records, working alone.",
       "Built 50 reports for every department.",
       "Replaced separate per-department list-view grids with one shared data grid used across 50+ tables.",
-      "Built 10 features, including a staff directory with cascading filters and a two-mode prayer wall.",
-      "Wrote the ERP's service layer, beginning the migration from a vertical-slice architecture where each page fetched its own data.",
-      "Built proof-of-concept versions of a SQL data-masking tool that creates sanitized copies of ERP data for local development, and of a GitHub Actions CI/CD pipeline with automated tests for 10 Blazor apps and a SharePoint site."
+      "Built 10 features, including a staff directory with cascading filters and a two-mode prayer wall."
     ]
   },
   {
     "title": "Front-end software engineer",
     "company": "Tackle.ai",
-    "description": "Front-end engineer on an AI document-processing product, designing and building four Blazor applications.",
+    "description": "Front-end engineer on an AI document-processing product, designing and building several Blazor applications.",
     "url": "https://tackle.ai",
     "icons": "Figma, Blazor, ASP.NET, Syncfusion, CSS",
     "image": "/images/Tackle_Ai_SUA_logo.webp",
@@ -29,7 +32,7 @@
     "bulletpoints": [
       "Built the Admin Portal from scratch, working with product managers to map client onboarding and define its data needs.",
       "Rebuilt the Customer Portal, where clients upload files for LLM document processing.",
-      "Designed in Figma and built in Blazor the interfaces for four applications.",
+      "Designed in Figma and built in Blazor the interfaces for several applications.",
       "Built the interface for an LLM document-processing project for a large enterprise client, working with Python and infrastructure engineers."
     ]
   },
@@ -44,8 +47,7 @@
     "endDate": "2024-03-01",
     "bulletpoints": [
       "Helped build a custom ERP for a global manufacturer in six layers: database, repository, domain, domain services, API, and UI.",
-      "Helped rebuild the raw steel ordering process from a DOS green-screen system as a modern Blazor interface.",
-      "Attended architecture sessions with subject-matter experts and compared CSS libraries for the UI."
+      "Contributed to architecture sessions with subject-matter experts."
     ]
   },
   {
@@ -58,10 +60,9 @@
     "startDate": "2023-03-01",
     "endDate": "2023-10-01",
     "bulletpoints": [
-      "Shipped features and bug fixes on Bridgestone's B2B marketing site, across the Angular front end, three ASP.NET services, the SQL database, and Kendo UI components.",
       "Built middleware that showed inventory content in French based on each user's profile.",
-      "Deployed releases to staging and production with TFS and Azure DevOps.",
-      "Upgraded security on Microsoft 365, AlertLogic, and Xamin."
+      "Shipped features and bug fixes across the Angular front end, three ASP.NET services, and the SQL database.",
+      "Deployed releases to staging and production with TFS and Azure DevOps."
     ]
   }
 ]

@@ -23,6 +23,7 @@ jobs:
       - run: npm run build
       - run: npm run verify-csp
       - run: npm run test:unit
+      - run: npm run check:colors
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: always()

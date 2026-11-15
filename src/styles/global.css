@@ -44,6 +44,8 @@
 /* Static brand colors (unaffected by theme) */
 :root {
   --navy: #2c3e50;
+  --navy-rgb: 44, 62, 80;
+  --navy-deep: #1a2635;
   --navy-light: #1a252f;
   --teal: #1abc9c;
   --teal-dark: #16a085;
@@ -101,9 +103,9 @@ html[data-theme="light"] .dr-theme-scope {
   --bg-hero: linear-gradient(135deg, #f8f3e8 0%, #efe6d4 50%, #f8f3e8 100%);
   --surface-rgb: 255, 255, 255;
   --surface-nav-rgb: 255, 255, 255;
-  --text: #2c3e50;
-  --text-rgb: 44, 62, 80;
-  --heading: #2c3e50;
+  --text: var(--navy);
+  --text-rgb: var(--navy-rgb);
+  --heading: var(--navy);
   /* Darker than --teal so accent text/icons still clear WCAG AA against the
      cream background (#1abc9c on cream is only ~2.1:1 — fails even the 3:1
      UI-component floor). Verified: #0f7a63 on #f5f1e8 ~= 4.68:1. */
@@ -271,7 +273,7 @@ h2 {
   font-size: 2.5rem;
   margin: 2rem 0 3rem 0;
   text-align: center;
-  color: #2c3e50;
+  color: var(--navy);
   letter-spacing: -0.5px;
   position: relative;
   padding-bottom: 1.5rem;
@@ -1517,7 +1519,7 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(44, 62, 80, 0.6);
+  background: rgba(var(--navy-rgb), 0.6);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(var(--accent-rgb), 0.25);
@@ -3993,7 +3995,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #2c3e50 0%, #1a2635 100%);
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
   padding: 40px 20px;
 }
 

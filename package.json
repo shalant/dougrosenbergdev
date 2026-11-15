@@ -14,7 +14,8 @@
     "indexnow": "node scripts/indexnow-ping.mjs",
     "deploy": "npx wrangler deploy && npm run indexnow",
     "verify-csp": "node scripts/verify-csp-hashes.mjs",
-    "test:unit": "node --test src/headers.test.js src/rate-limit.test.js"
+    "test:unit": "node --test src/headers.test.js src/rate-limit.test.js src/palette.test.js",
+    "check:colors": "node scripts/check-colors.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

@@ -1627,6 +1627,63 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   color: rgba(var(--text-rgb), 0.75);
 }
 
+/* Lead figures for a role, same ruled ledger as About's evidence list.
+   Text-colored rules, not brass: brass stays on the hero/divider motif. */
+.experience-detail__highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75rem 0;
+  border-top: 1px solid rgba(var(--text-rgb), 0.18);
+}
+
+.experience-detail__highlight {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid rgba(var(--text-rgb), 0.18);
+}
+
+.experience-detail__highlight-value {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--text);
+}
+
+.experience-detail__highlight-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(var(--text-rgb), 0.82);
+}
+
+/* Scope-of-work bullets after the outcomes: a ruled break and slightly
+   smaller type so the first group reads as the headline. */
+.experience-detail__bullets li.is-secondary {
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.experience-detail__bullets li.is-secondary-start {
+  margin-top: 0.6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(var(--text-rgb), 0.18);
+}
+
+@media (max-width: 480px) {
+  .experience-detail__highlight {
+    grid-template-columns: 5rem 1fr;
+    gap: 1rem;
+  }
+
+  .experience-detail__highlight-value {
+    font-size: 1.9rem;
+  }
+}
+
 /* Shown only on the stacked mobile layout (see the 860px block below). */
 .experience-detail__more {
   display: none;
@@ -2046,6 +2103,10 @@ html[data-theme="light"] .dr-theme-scope .about-quote {
 html[data-theme="light"] .dr-theme-scope .experience-detail__bullets li {
   font-weight: 400;
   font-size: 0.95rem;
+}
+
+html[data-theme="light"] .dr-theme-scope .experience-detail__bullets li.is-secondary {
+  font-size: 0.88rem;
 }
 
 /* Same fix as .hero-subtitle above, for the other spots where real body

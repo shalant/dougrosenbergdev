@@ -1270,7 +1270,9 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   background: var(--bg);
   padding: 6rem 0;
   position: relative;
-  overflow: hidden;
+  /* clip, not hidden: hidden makes this a scroll container and the sticky job
+     list inside it would never stick. */
+  overflow: clip;
   border-top: 1px solid rgba(var(--accent-rgb), 0.08);
 }
 
@@ -1322,11 +1324,29 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 }
 
 /* --- Left: selector list --- */
+/* Sticky so the jobs follow you down a long panel. That means the list is only
+   as tall as its entries, so the divider moved off the list's right border and
+   onto the layout (::before below), where it still runs the full height. */
+.experience-layout {
+  position: relative;
+}
+
+.experience-layout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 279px;
+  width: 1px;
+  background: rgba(var(--accent-rgb), 0.12);
+}
+
 .experience-list {
   display: flex;
   flex-direction: column;
-  border-right: 1px solid rgba(var(--accent-rgb), 0.12);
-  position: relative;
+  align-self: start;
+  position: sticky;
+  top: 6rem;
 }
 
 /* Sliding active marker (positioned by Experience.astro's script). Until the
@@ -1351,8 +1371,11 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   border-left-color: transparent;
 }
 
+/* flex: none, not 1: the list column stretches to the detail panel's height
+   (so the divider runs full length), and flex: 1 made each job fill an equal
+   share of that, about 265px per tab with the entry floating in empty space. */
 .experience-list__item {
-  flex: 1;
+  flex: none;
   display: grid;
   grid-template-columns: 44px 1fr;
   align-items: center;
@@ -1673,8 +1696,13 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
      in, leaving the 4th stranded alone on its own row (3-then-1). Grid
      with a fixed 2-column track gives a guaranteed, content-independent
      2x2 regardless of how many entries there are. */
+  .experience-layout::before {
+    display: none;
+  }
+
   .experience-list {
-    border-right: none;
+    position: relative;
+    top: auto;
     border-bottom: 1px solid rgba(var(--accent-rgb), 0.1);
     margin-bottom: 2.5rem;
     display: grid;

@@ -163,6 +163,9 @@ Process note for future audits: re-score the whole page after each merge rather 
 | 2026-11-01 | live re-audit (desktop dark only) | 86 | Found five flaws: ArborKin gap, Guacamayo caption, Contact space, no Hardware Etc, dim Contact intro |
 | 2026-11-01 | good cop, after #68 (branch build, my judgment) | 89 | Gap closed, four projects, texture on every section; mobile and light eyeballed, not measured |
 | 2026-11-01 | bad cop, same build (my judgment) | 76 | Stock palette, Experience card kit, Skills chip wall and a small saxophone; separate lens, not comparable to the good-cop score |
+| 2026-11-14 | good cop, `master` after #77 (my judgment, desktop dark plus light and mobile spot checks) | 88 | Experience bullets are now nine same-weight paragraphs, so scannability slipped a point |
+| 2026-11-14 | bad cop, same build (my judgment) | 77 | Friars wall of text, 265px job tabs, Skills chip wall, small Music section, stock palette |
+| 2026-11-14 | bad cop, after the figure ledger and compact sticky rail (estimate, my judgment) | 78 to 79 | About +1 each for the ledger and the rail; the palette and the Skills chips still cost the most |
 
 ## Live re-audit (2026-11-01) and follow-up polish
 

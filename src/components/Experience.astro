@@ -64,8 +64,21 @@ function span(exp: { startDate?: string; endDate?: string }): string {
             </p>
             <div class="experience-detail__divider"></div>
 
+            {exp.highlights?.length > 0 && (
+              <ul class="experience-detail__highlights">
+                {exp.highlights.map((h: { value: string; label: string }) => (
+                  <li class="experience-detail__highlight">
+                    <span class="experience-detail__highlight-value">{h.value}</span>
+                    <span class="experience-detail__highlight-label">{h.label}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
             <ul class="experience-detail__bullets" id={`exp-bullets-${idx}`}>
-              {exp.bulletpoints.map((bullet: string) => <li>{bullet}</li>)}
+              {exp.bulletpoints.map((bullet: string, i: number) => (
+                <li class:list={{ 'is-secondary': exp.secondaryFrom != null && i >= exp.secondaryFrom, 'is-secondary-start': i === exp.secondaryFrom }}>{bullet}</li>
+              ))}
             </ul>
             <button type="button" class="experience-detail__more" aria-expanded="false" aria-controls={`exp-bullets-${idx}`}>Read more</button>
 

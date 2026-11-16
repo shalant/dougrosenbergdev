@@ -46,7 +46,13 @@ window.DrTheme = (function () {
     // transition; the clip-path animation lives in global.css under "Theme switch reveal").
     // Falls back to an instant swap without View Transitions support or with reduced motion.
     function toggle() {
-        const next = THEMES[(THEMES.indexOf(current()) + 1) % THEMES.length];
+        return go(THEMES[(THEMES.indexOf(current()) + 1) % THEMES.length]);
+    }
+
+    // Switches straight to a named theme (the toggle's drag lands on one; toggle() above is the
+    // plain next-theme tap).
+    function go(next) {
+        if (THEMES.indexOf(next) === -1 || next === current()) return current();
         localStorage.setItem(STORAGE_KEY, next);
 
         const root = document.documentElement;
@@ -89,5 +95,5 @@ window.DrTheme = (function () {
         return t === 'light' || t === 'steel' ? t : 'dark';
     }
 
-    return { resolve, apply, toggle, current };
+    return { resolve, apply, toggle, go, current };
 })();

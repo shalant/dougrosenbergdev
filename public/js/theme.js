@@ -1,4 +1,4 @@
-// Light/dark theme: reads a saved preference, falls back to dark (the site's intended default —
+// Light/dark (and hidden steel) theme: reads a saved preference, falls back to dark (the site's intended default —
 // deliberately ignores the OS/browser color-scheme setting so first-time visitors always see the
 // brand's dark navy+teal look), and applies it via a data-theme attribute on <html>. `apply()`
 // also runs synchronously and inline from BaseLayout.astro's <head> (see the blocking <script>
@@ -8,9 +8,21 @@
 window.DrTheme = (function () {
     const STORAGE_KEY = 'dr-theme';
 
+    // 'steel' is a hidden third theme with no toggle state, only a URL entry: ?theme=steel is
+    // remembered like the others, and ?theme=dark or ?theme=light leaves it. The toggle button
+    // still flips light and dark, and from steel it goes to dark.
+    const THEMES = ['dark', 'light', 'steel'];
+
     function resolve() {
+        try {
+            const asked = new URLSearchParams(location.search).get('theme');
+            if (THEMES.indexOf(asked) !== -1) {
+                localStorage.setItem(STORAGE_KEY, asked);
+                return asked;
+            }
+        } catch (e) { /* storage unavailable: fall through to the saved value or the default */ }
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved === 'light' || saved === 'dark') return saved;
+        if (THEMES.indexOf(saved) !== -1) return saved;
         return 'dark';
     }
 
@@ -23,7 +35,7 @@ window.DrTheme = (function () {
     // transition; the clip-path animation lives in global.css under "Theme switch reveal").
     // Falls back to an instant swap without View Transitions support or with reduced motion.
     function toggle() {
-        const next = current() === 'light' ? 'dark' : 'light';
+        const next = current() === 'dark' ? 'light' : 'dark';
         localStorage.setItem(STORAGE_KEY, next);
 
         const root = document.documentElement;
@@ -62,7 +74,8 @@ window.DrTheme = (function () {
     }
 
     function current() {
-        return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        const t = document.documentElement.getAttribute('data-theme');
+        return t === 'light' || t === 'steel' ? t : 'dark';
     }
 
     return { resolve, apply, toggle, current };

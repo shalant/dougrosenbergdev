@@ -75,6 +75,19 @@ test.describe('homepage', () => {
     await expect(html).toHaveAttribute('data-theme', 'dark');
   });
 
+  test('?theme=steel opens the hidden steel theme, remembers it, and the toggle leaves it for dark', async ({ page }) => {
+    await page.goto('/?theme=steel');
+    const html = page.locator('html');
+    await expect(html).toHaveAttribute('data-theme', 'steel');
+    expect(await page.evaluate(() => localStorage.getItem('dr-theme'))).toBe('steel');
+    await page.goto('/');
+    await expect(html).toHaveAttribute('data-theme', 'steel');
+    await page.locator('.theme-toggle').click();
+    await expect(html).toHaveAttribute('data-theme', 'dark');
+    await page.goto('/?theme=bogus');
+    await expect(html).toHaveAttribute('data-theme', 'dark');
+  });
+
   test('a rapid double toggle mid-reveal lands back on dark', async ({ page }) => {
     // The second click starts a view transition while the first is still
     // animating, which skips the first; its theme update must still apply.

@@ -77,6 +77,24 @@
   --brass: #c9a15a;
   --brass-rgb: 201, 161, 90;
 
+  /* Steel and orange: the palette of the third theme (data-theme="steel"). Blue-grey
+     steel, not charcoal, so it stays apart from the music site's charcoal and teal;
+     orange is the single signal color. */
+  --steel-deep: #171c22;
+  --steel-deep-rgb: 23, 28, 34;
+  --steel-ground: #262d36;
+  --steel-ground-rgb: 38, 45, 54;
+  --steel-panel: #2d3641;
+  --steel-panel-rgb: 45, 54, 65;
+  --steel-mid: #5b6876;
+  --steel-ink: #eef2f6;
+  --steel-ink-rgb: 238, 242, 246;
+  --steel-soft: #b8c2cc;
+  --orange: #f78e0e;
+  --orange-rgb: 247, 142, 14;
+  --orange-dark: #d97706;
+  --orange-ink: #16120c;
+
   /* Tier 2, fixed roles: the same in every theme (components that stay dark on
      the cream page, shadows, text on photos). */
   --canvas-dark: #060e1a;       /* page ground, dark theme and every non-homepage page */
@@ -132,6 +150,10 @@
   --heading: #eef2f7;
   --accent: #1abc9c;
   --accent-rgb: 26, 188, 156;
+  /* Solid button fills: a filled button needs its own background/text pair, which is
+     not the text-on-page contrast --accent is tuned for. --on-accent sits on it. */
+  --accent-fill: var(--teal);
+  --accent-fill-hover: var(--teal-dark);
   --art-deco-1: url('/images/artDecoBackground1.webp');
   --art-deco-2: url('/images/artDecoBackground2.webp');
   --art-deco-blend: screen;
@@ -156,6 +178,44 @@ html[data-theme="light"] .dr-theme-scope {
      recolored texture out to near-invisible, so light mode needs multiply
      instead (darkens the cream using the now-navy-on-cream shapes). */
   --art-deco-blend: multiply;
+}
+
+/* Third theme, hidden: reach it with ?theme=steel (see public/js/theme.js). It is a dark
+   theme, so it inherits every dark rule and only reassigns roles. The fixed dark roles
+   are re-pointed at steel too, so panels, scrims and page grounds follow without a
+   component rule changing. The navy art-deco textures are dropped; steel draws its own
+   grid and dial. */
+html[data-theme="steel"] {
+  --bg: var(--steel-ground);
+  --bg-hero: linear-gradient(135deg, var(--steel-deep) 0%, var(--steel-ground) 55%, var(--steel-deep) 100%);
+  --surface-rgb: var(--steel-deep-rgb);
+  --surface-nav-rgb: var(--steel-deep-rgb);
+  --text: var(--steel-ink);
+  --text-rgb: var(--steel-ink-rgb);
+  --heading: var(--steel-ink);
+  --accent: var(--orange);
+  --accent-rgb: var(--orange-rgb);
+  --accent-fill: var(--orange);
+  --accent-fill-hover: var(--orange-dark);
+  --accent-bright: var(--orange);
+  --accent-glow-rgb: var(--orange-rgb);
+  --on-accent: var(--orange-ink);
+  --art-deco-1: none;
+  --art-deco-2: none;
+  --art-deco-blend: normal;
+  --canvas-dark: var(--steel-ground);
+  --panel-dark: var(--steel-deep);
+  --panel-dark-rgb: var(--steel-deep-rgb);
+  --panel-deep: var(--steel-deep);
+  --bg-panel-dark: linear-gradient(160deg, var(--steel-deep) 0%, var(--steel-panel) 100%);
+  --scrim-rgb: var(--steel-deep-rgb);
+  --scrim-deep-rgb: var(--steel-deep-rgb);
+  --navy-light-rgb: var(--steel-deep-rgb);
+  --text-on-dark-soft: var(--steel-soft);
+  --marker: var(--steel-mid);
+  /* Brass is the section-divider motif; steel has one signal color, so the motif turns orange. */
+  --brass: var(--orange);
+  --brass-rgb: var(--orange-rgb);
 }
 
 :root {
@@ -1272,8 +1332,8 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
     gap: 0.5rem;
     width: 100%;
     padding: 0.8rem 1rem;
-    background: var(--teal);
-    border: 2px solid var(--teal);
+    background: var(--accent-fill);
+    border: 2px solid var(--accent-fill);
     border-radius: 2px;
     color: var(--on-accent) !important;
     font-family: 'Montserrat', sans-serif;
@@ -1285,8 +1345,8 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   }
 
   .nav-link--cta:hover {
-    background: var(--teal-dark);
-    border-color: var(--teal-dark);
+    background: var(--accent-fill-hover);
+    border-color: var(--accent-fill-hover);
     color: var(--on-accent) !important;
   }
 
@@ -2056,8 +2116,8 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   font-weight: 600;
   letter-spacing: 0.01em;
   color: var(--on-accent);
-  background: var(--teal);
-  border: 2px solid var(--teal);
+  background: var(--accent-fill);
+  border: 2px solid var(--accent-fill);
   border-radius: 2px;
   cursor: pointer;
   text-decoration: none;
@@ -2087,8 +2147,8 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 }
 
 .hero-inline-cta:hover {
-  background: var(--teal-dark);
-  border-color: var(--teal-dark);
+  background: var(--accent-fill-hover);
+  border-color: var(--accent-fill-hover);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.35);
 }
@@ -2242,14 +2302,14 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
      solid filled button, so it needs its own bg/text contrast pair, not the
      text-on-page contrast --accent is tuned for. #1abc9c behind near-black
      text clears AA in both themes without adjustment. */
-  background: var(--teal);
+  background: var(--accent-fill);
   color: var(--on-accent) !important;
-  border: 2px solid var(--teal);
+  border: 2px solid var(--accent-fill);
 }
 
 .hero-btn--primary:hover {
-  background: var(--teal-dark);
-  border-color: var(--teal-dark);
+  background: var(--accent-fill-hover);
+  border-color: var(--accent-fill-hover);
   color: var(--on-accent) !important;
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.35);
@@ -4048,7 +4108,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 .archive-header h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
-  background: linear-gradient(135deg, var(--accent), var(--teal-dark));
+  background: linear-gradient(135deg, var(--accent), var(--accent-fill-hover));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

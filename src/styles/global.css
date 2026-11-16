@@ -77,6 +77,26 @@
   --brass: #c9a15a;
   --brass-rgb: 201, 161, 90;
 
+  /* Steel and orange: the palette of the third theme (data-theme="steel"). Blue-grey
+     steel, not charcoal, so it stays apart from the music site's charcoal and teal;
+     orange is the single signal color. */
+  --steel-deep: #171c22;
+  --steel-deep-rgb: 23, 28, 34;
+  --steel-ground: #262d36;
+  --steel-ground-rgb: 38, 45, 54;
+  --steel-panel: #2d3641;
+  --steel-panel-rgb: 45, 54, 65;
+  --steel-mid: #5b6876;
+  --steel-ink: #eef2f6;
+  --steel-ink-rgb: 238, 242, 246;
+  --steel-soft: #b8c2cc;
+  --steel-bright: #e8edf2;      /* top of the metal letters */
+  --steel-low: #97a3b0;         /* bottom of the metal letters */
+  --orange: #f78e0e;
+  --orange-rgb: 247, 142, 14;
+  --orange-dark: #d97706;
+  --orange-ink: #16120c;
+
   /* Tier 2, fixed roles: the same in every theme (components that stay dark on
      the cream page, shadows, text on photos). */
   --canvas-dark: #060e1a;       /* page ground, dark theme and every non-homepage page */
@@ -132,6 +152,10 @@
   --heading: #eef2f7;
   --accent: #1abc9c;
   --accent-rgb: 26, 188, 156;
+  /* Solid button fills: a filled button needs its own background/text pair, which is
+     not the text-on-page contrast --accent is tuned for. --on-accent sits on it. */
+  --accent-fill: var(--teal);
+  --accent-fill-hover: var(--teal-dark);
   --art-deco-1: url('/images/artDecoBackground1.webp');
   --art-deco-2: url('/images/artDecoBackground2.webp');
   --art-deco-blend: screen;
@@ -156,6 +180,44 @@ html[data-theme="light"] .dr-theme-scope {
      recolored texture out to near-invisible, so light mode needs multiply
      instead (darkens the cream using the now-navy-on-cream shapes). */
   --art-deco-blend: multiply;
+}
+
+/* Third theme, hidden: reach it with ?theme=steel (see public/js/theme.js). It is a dark
+   theme, so it inherits every dark rule and only reassigns roles. The fixed dark roles
+   are re-pointed at steel too, so panels, scrims and page grounds follow without a
+   component rule changing. The navy art-deco textures are dropped; steel draws its own
+   grid and dial. */
+html[data-theme="steel"] {
+  --bg: var(--steel-ground);
+  --bg-hero: linear-gradient(135deg, var(--steel-deep) 0%, var(--steel-ground) 55%, var(--steel-deep) 100%);
+  --surface-rgb: var(--steel-deep-rgb);
+  --surface-nav-rgb: var(--steel-deep-rgb);
+  --text: var(--steel-ink);
+  --text-rgb: var(--steel-ink-rgb);
+  --heading: var(--steel-ink);
+  --accent: var(--orange);
+  --accent-rgb: var(--orange-rgb);
+  --accent-fill: var(--orange);
+  --accent-fill-hover: var(--orange-dark);
+  --accent-bright: var(--orange);
+  --accent-glow-rgb: var(--orange-rgb);
+  --on-accent: var(--orange-ink);
+  --art-deco-1: none;
+  --art-deco-2: none;
+  --art-deco-blend: normal;
+  --canvas-dark: var(--steel-ground);
+  --panel-dark: var(--steel-deep);
+  --panel-dark-rgb: var(--steel-deep-rgb);
+  --panel-deep: var(--steel-deep);
+  --bg-panel-dark: linear-gradient(160deg, var(--steel-deep) 0%, var(--steel-panel) 100%);
+  --scrim-rgb: var(--steel-deep-rgb);
+  --scrim-deep-rgb: var(--steel-deep-rgb);
+  --navy-light-rgb: var(--steel-deep-rgb);
+  --text-on-dark-soft: var(--steel-soft);
+  --marker: var(--steel-mid);
+  /* Brass is the section-divider motif; steel has one signal color, so the motif turns orange. */
+  --brass: var(--orange);
+  --brass-rgb: var(--orange-rgb);
 }
 
 :root {
@@ -980,13 +1042,18 @@ a:hover {
   transform: scale(0.85);
 }
 
+/* The icon shows where a click goes: dark shows the sun (to light), light shows the dial
+   (to steel), steel shows the moon (to dark). */
 .theme-toggle__icon--moon,
-html[data-theme="light"] .theme-toggle__icon--sun {
+.theme-toggle__icon--dial,
+html[data-theme="light"] .theme-toggle__icon--sun,
+html[data-theme="steel"] .theme-toggle__icon--sun {
   opacity: 0;
   transform: rotate(-90deg) scale(0.4);
 }
 
-html[data-theme="light"] .theme-toggle__icon--moon {
+html[data-theme="light"] .theme-toggle__icon--dial,
+html[data-theme="steel"] .theme-toggle__icon--moon {
   opacity: 1;
   transform: none;
 }
@@ -1272,8 +1339,8 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
     gap: 0.5rem;
     width: 100%;
     padding: 0.8rem 1rem;
-    background: var(--teal);
-    border: 2px solid var(--teal);
+    background: var(--accent-fill);
+    border: 2px solid var(--accent-fill);
     border-radius: 2px;
     color: var(--on-accent) !important;
     font-family: 'Montserrat', sans-serif;
@@ -1285,8 +1352,8 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   }
 
   .nav-link--cta:hover {
-    background: var(--teal-dark);
-    border-color: var(--teal-dark);
+    background: var(--accent-fill-hover);
+    border-color: var(--accent-fill-hover);
     color: var(--on-accent) !important;
   }
 
@@ -2056,8 +2123,8 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
   font-weight: 600;
   letter-spacing: 0.01em;
   color: var(--on-accent);
-  background: var(--teal);
-  border: 2px solid var(--teal);
+  background: var(--accent-fill);
+  border: 2px solid var(--accent-fill);
   border-radius: 2px;
   cursor: pointer;
   text-decoration: none;
@@ -2087,8 +2154,8 @@ html[data-theme="light"] .dr-theme-scope .nav-link--page {
 }
 
 .hero-inline-cta:hover {
-  background: var(--teal-dark);
-  border-color: var(--teal-dark);
+  background: var(--accent-fill-hover);
+  border-color: var(--accent-fill-hover);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.35);
 }
@@ -2242,14 +2309,14 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
      solid filled button, so it needs its own bg/text contrast pair, not the
      text-on-page contrast --accent is tuned for. #1abc9c behind near-black
      text clears AA in both themes without adjustment. */
-  background: var(--teal);
+  background: var(--accent-fill);
   color: var(--on-accent) !important;
-  border: 2px solid var(--teal);
+  border: 2px solid var(--accent-fill);
 }
 
 .hero-btn--primary:hover {
-  background: var(--teal-dark);
-  border-color: var(--teal-dark);
+  background: var(--accent-fill-hover);
+  border-color: var(--accent-fill-hover);
   color: var(--on-accent) !important;
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.35);
@@ -4048,7 +4115,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
 .archive-header h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
-  background: linear-gradient(135deg, var(--accent), var(--teal-dark));
+  background: linear-gradient(135deg, var(--accent), var(--accent-fill-hover));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -6131,4 +6198,161 @@ h2::after {
   .music-photo__link {
     width: 8rem;
   }
+}
+
+/* ============================================================================
+   STEEL THEME EXTRAS (2026-11-15). Only under html[data-theme="steel"]; the
+   markup and the pointer/scroll values come from public/js/steel.js, which
+   injects nothing under any other theme. Colors are role/palette tokens only.
+   ============================================================================ */
+
+/* Metal name: each letter is a steel surface; a specular light follows the
+   pointer (--cx/--cy are set per letter), and idles across the name on its own. */
+html[data-theme="steel"] .hero-name__letter {
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  background-image:
+    radial-gradient(circle 170px at var(--cx, -999px) var(--cy, -999px), var(--white) 0%, transparent 68%),
+    linear-gradient(180deg, var(--steel-bright) 0%, var(--steel-low) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Lit grid: a faint engineering grid across the hero, brighter near the pointer. */
+html[data-theme="steel"] .hero-grid-bg {
+  background-image:
+    linear-gradient(rgba(var(--steel-ink-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--steel-ink-rgb), 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+html[data-theme="steel"] .hero-grid-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(var(--steel-ink-rgb), 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--steel-ink-rgb), 0.3) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(circle 230px at var(--mx, 62%) var(--my, 40%), black 0%, transparent 70%);
+  mask-image: radial-gradient(circle 230px at var(--mx, 62%) var(--my, 40%), black 0%, transparent 70%);
+}
+
+/* Engraved dial behind the portrait; the needle follows page scroll (--steel-p, 0 to 1). */
+.steel-dial {
+  position: absolute;
+  top: 50%;
+  right: 4%;
+  width: min(92vh, 760px);
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.steel-dial svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.steel-dial__ring {
+  fill: none;
+  stroke: rgba(var(--steel-ink-rgb), 0.13);
+  stroke-width: 1;
+}
+
+.steel-dial__tick {
+  stroke: rgba(var(--steel-ink-rgb), 0.18);
+  stroke-width: 1;
+}
+
+.steel-dial__tick--major {
+  stroke: rgba(var(--steel-ink-rgb), 0.4);
+  stroke-width: 2;
+}
+
+.steel-dial__needle {
+  transform-origin: 0 0;
+  transform: rotate(calc(-130deg + var(--steel-p, 0) * 260deg));
+  transition: transform 0.25s ease-out;
+}
+
+.steel-dial__hand {
+  stroke: var(--orange);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.steel-dial__hub {
+  fill: var(--orange);
+}
+
+/* Scroll-progress ring, bottom-left; wide screens only so it never crowds a phone. */
+.steel-progress {
+  position: fixed;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  width: 52px;
+  height: 52px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(var(--steel-deep-rgb), 0.8);
+  pointer-events: none;
+  z-index: 40;
+}
+
+@media (min-width: 821px) {
+  .steel-progress { display: flex; }
+}
+
+.steel-progress svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.steel-progress__track,
+.steel-progress__arc {
+  fill: none;
+  stroke-width: 3;
+}
+
+.steel-progress__track {
+  stroke: rgba(var(--steel-ink-rgb), 0.18);
+}
+
+.steel-progress__arc {
+  stroke: var(--orange);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--steel-p, 0) * 100);
+}
+
+.steel-progress__label {
+  position: relative;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--steel-ink);
+}
+
+/* Section titles etch in left to right (class added by steel.js, so no script means no hiding). */
+html[data-theme="steel"] .steel-etch {
+  clip-path: inset(-0.2em 100% -0.2em 0);
+  transition: clip-path 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+html[data-theme="steel"] .steel-etch.is-etched {
+  clip-path: inset(-0.2em -0.2em -0.2em 0);
+}
+
+@media (max-width: 700px) {
+  /* On a phone the dial sits behind the text, so it fades to a texture. */
+  .steel-dial { opacity: 0.4; right: -30%; }
 }

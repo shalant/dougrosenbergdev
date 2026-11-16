@@ -65,20 +65,56 @@ test.describe('homepage', () => {
     await expect(page.locator('a.nav-link[href="/consulting"]')).toBeAttached();
   });
 
-  test('theme toggle switches light/dark and persists the attribute', async ({ page }) => {
+  test('theme toggle cycles dark, light, steel, dark and names the next theme', async ({ page }) => {
     await page.goto('/');
     const html = page.locator('html');
+    const toggle = page.locator('.theme-toggle');
     await expect(html).not.toHaveAttribute('data-theme', 'light');
-    await page.locator('.theme-toggle').click();
+    await expect(toggle).toHaveAttribute('aria-label', /dark now, light next/);
+    await toggle.click();
     await expect(html).toHaveAttribute('data-theme', 'light');
-    await page.locator('.theme-toggle').click();
+    await expect(toggle).toHaveAttribute('aria-label', /light now, steel and orange next/);
+    await toggle.click();
+    await expect(html).toHaveAttribute('data-theme', 'steel');
+    await expect(toggle).toHaveAttribute('aria-label', /steel and orange now, dark next/);
+    await toggle.click();
     await expect(html).toHaveAttribute('data-theme', 'dark');
   });
 
-  test('a rapid double toggle mid-reveal lands back on dark', async ({ page }) => {
-    // The second click starts a view transition while the first is still
-    // animating, which skips the first; its theme update must still apply.
+  test('?theme=steel opens the steel theme directly, remembers it, and the toggle cycles on to dark', async ({ page }) => {
+    await page.goto('/?theme=steel');
+    const html = page.locator('html');
+    await expect(html).toHaveAttribute('data-theme', 'steel');
+    expect(await page.evaluate(() => localStorage.getItem('dr-theme'))).toBe('steel');
     await page.goto('/');
+    await expect(html).toHaveAttribute('data-theme', 'steel');
+    await page.locator('.theme-toggle').click();
+    await expect(html).toHaveAttribute('data-theme', 'dark');
+    await page.goto('/?theme=bogus');
+    await expect(html).toHaveAttribute('data-theme', 'dark');
+  });
+
+  test('steel extras (dial, progress ring, etched titles) exist only under steel and tear down', async ({ page }) => {
+    await page.goto('/?theme=steel');
+    await expect(page.locator('.steel-dial')).toHaveCount(1);
+    await expect(page.locator('.steel-progress')).toHaveCount(1);
+    await expect(page.locator('.steel-etch').first()).toBeAttached();
+    // Scrolling moves the needle's input and the ring's readout off zero.
+    await page.evaluate(() => window.scrollTo(0, 1500));
+    await expect(page.locator('.steel-progress__label')).not.toHaveText('0');
+    await page.locator('.theme-toggle').click();
+    await expect(page.locator('.steel-dial')).toHaveCount(0);
+    await expect(page.locator('.steel-progress')).toHaveCount(0);
+    await expect(page.locator('.steel-etch')).toHaveCount(0);
+    await page.goto('/?theme=dark');
+    await expect(page.locator('.steel-dial')).toHaveCount(0);
+  });
+
+  test('a rapid triple toggle mid-reveal lands back on dark', async ({ page }) => {
+    // Each click starts a view transition while the previous is still animating, which
+    // skips it; every theme update must still apply, so three clicks complete the cycle.
+    await page.goto('/');
+    await page.locator('.theme-toggle').click();
     await page.locator('.theme-toggle').click();
     await page.locator('.theme-toggle').click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');

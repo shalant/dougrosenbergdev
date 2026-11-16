@@ -11,6 +11,7 @@ const css = readFileSync(new URL('./styles/global.css', import.meta.url), 'utf8'
 const THEMES = {
   dark: [':root'],
   light: [':root', 'html[data-theme="light"] .dr-theme-scope'],
+  steel: [':root', 'html[data-theme="steel"]'],
 };
 
 // Every top-level block whose selector line is exactly `selector {`.
@@ -77,8 +78,10 @@ for (const theme of Object.keys(THEMES)) {
       assert.ok(r >= min, `${fg} on ${bg} is ${r.toFixed(2)}:1 in ${theme}, floor is ${min}:1`);
     });
   }
-  test(`${theme}: --on-accent on the teal fill is at least 4.5:1`, () => {
-    const r = ratio(resolve(map, '--on-accent'), resolve(map, '--teal'));
-    assert.ok(r >= 4.5, `--on-accent on --teal is ${r.toFixed(2)}:1`);
-  });
+  for (const fill of ['--accent-fill', '--accent-fill-hover']) {
+    test(`${theme}: --on-accent on ${fill} is at least 4.5:1`, () => {
+      const r = ratio(resolve(map, '--on-accent'), resolve(map, fill));
+      assert.ok(r >= 4.5, `--on-accent on ${fill} is ${r.toFixed(2)}:1 in ${theme}`);
+    });
+  }
 }

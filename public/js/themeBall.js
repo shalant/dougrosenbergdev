@@ -1,5 +1,5 @@
 // The theme toggle's steel ball. A tap is handled by the ordinary click listener in BaseLayout
-// (DrTheme.toggle, next theme); this file adds the drag (pick the ball up, let go, it drops into
+// (DrTheme.toggle, next theme; touch only ever taps); this file adds the mouse drag (pick the ball up, let go, it drops into
 // the nearest of the three pockets) and moves the ball with a small spring whenever the theme
 // changes, from the button, the keyboard, ?theme= or anywhere else. A few faint filings trail
 // the ball. The loop only runs while something is moving; at rest nothing is scheduled.
@@ -13,10 +13,10 @@
     const ball = track.querySelector('.theme-toggle__ball');
     const cv = track.querySelector('.theme-toggle__dust');
     const ctx = cv.getContext('2d');
-    ctx.scale(2, 2); // the canvas is 2x the 68 x 28 groove
+    ctx.scale(2, 2); // the canvas is 2x the 60 x 24 groove
     const THEMES = ['dark', 'light', 'steel'];
-    const C = [14, 34, 54];           // pocket centers inside the groove
-    const MIN = 10, MAX = 58;         // how far a dragged ball may go
+    const C = [12, 30, 48];           // pocket centers inside the groove
+    const MIN = 9, MAX = 51;          // how far a dragged ball may go
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let idx = Math.max(0, THEMES.indexOf(DrTheme.current()));
@@ -26,18 +26,18 @@
     // Faint filings: nine dots that rest in a loose ring around the ball and lag behind it.
     const dust = Array.from({ length: 9 }, (_, k) => {
         const a = (k / 9) * Math.PI * 2 + Math.random() * 0.5;
-        return { a, r: 13 + Math.random() * 4, x: 0, y: 0, vx: 0, vy: 0 };
+        return { a, r: 11.5 + Math.random() * 3, x: 0, y: 0, vx: 0, vy: 0 };
     });
-    dust.forEach((d) => { d.x = x + Math.cos(d.a) * d.r; d.y = 14 + Math.sin(d.a) * d.r * 0.55; });
+    dust.forEach((d) => { d.x = x + Math.cos(d.a) * d.r; d.y = 12 + Math.sin(d.a) * d.r * 0.5; });
 
     function readColor() {
         color = getComputedStyle(root).getPropertyValue('--accent-fill').trim() || color;
     }
 
     function draw() {
-        ball.style.transform = 'translateX(' + (x - 10) + 'px) scaleX(' + (1 + Math.min(0.1, Math.abs(v) * 0.02)).toFixed(3) + ')';
+        ball.style.transform = 'translateX(' + (x - 9) + 'px) scaleX(' + (1 + Math.min(0.1, Math.abs(v) * 0.02)).toFixed(3) + ')';
         ball.style.setProperty('--ball-roll', (x * 14).toFixed(0) + 'deg');
-        ctx.clearRect(0, 0, 68, 28);
+        ctx.clearRect(0, 0, 60, 24);
         if (still) return;
         ctx.globalAlpha = 0.55;
         ctx.fillStyle = color;
@@ -59,7 +59,7 @@
         }
         if (!still) {
             for (const d of dust) {
-                const hx = x + Math.cos(d.a) * d.r, hy = 14 + Math.sin(d.a) * d.r * 0.55;
+                const hx = x + Math.cos(d.a) * d.r, hy = 12 + Math.sin(d.a) * d.r * 0.5;
                 d.vx = (d.vx + (hx - d.x) * 0.06 * f) * Math.pow(0.8, f);
                 d.vy = (d.vy + (hy - d.y) * 0.06 * f) * Math.pow(0.8, f);
                 d.x += d.vx * f; d.y += d.vy * f;
@@ -71,10 +71,10 @@
     }
     function wake() { if (!frame) frame = requestAnimationFrame(step); }
 
-    const posOf = (e) => { const r = track.getBoundingClientRect(); return (e.clientX - r.left) * (68 / r.width); };
+    const posOf = (e) => { const r = track.getBoundingClientRect(); return (e.clientX - r.left) * (60 / r.width); };
 
     btn.addEventListener('pointerdown', (e) => {
-        if (e.button) return;
+        if (e.button || e.pointerType === 'touch') return; // touch only taps: a shaky finger must never miss a theme
         drag = true; moved = 0; downX = posOf(e);
         try { btn.setPointerCapture(e.pointerId); } catch (err) { /* capture is a nicety */ }
     });

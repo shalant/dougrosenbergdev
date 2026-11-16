@@ -66,6 +66,7 @@ test.describe('homepage', () => {
   });
 
   test('theme toggle cycles dark, light, steel, dark and names the next theme', async ({ page }) => {
+    test.setTimeout(90_000); // three view transitions; WebKit here took 24-29s against the 30s default under load
     await page.goto('/');
     const html = page.locator('html');
     const toggle = page.locator('.theme-toggle');
@@ -81,14 +82,31 @@ test.describe('homepage', () => {
     await expect(html).toHaveAttribute('data-theme', 'dark');
   });
 
+  test('touch taps on the toggle cycle through all three themes, so a phone can always reach steel', async ({ browser, browserName }) => {
+    test.skip(browserName === 'firefox', 'Firefox has no touch emulation in Playwright');
+    test.setTimeout(90_000); // a fresh WebKit context is slow here: this took 18-30s against the 30s default
+    const context = await browser.newContext({ hasTouch: true, viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    await page.goto('/?theme=dark');
+    const html = page.locator('html');
+    const toggle = page.locator('.theme-toggle');
+    await toggle.tap();
+    await expect(html).toHaveAttribute('data-theme', 'light');
+    await toggle.tap();
+    await expect(html).toHaveAttribute('data-theme', 'steel');
+    await toggle.tap();
+    await expect(html).toHaveAttribute('data-theme', 'dark');
+    await context.close();
+  });
+
   test('dragging the toggle ball into a pocket picks that theme and is not also counted as a tap', async ({ page }) => {
     await page.goto('/?theme=dark');
     const html = page.locator('html');
     const box = (await page.locator('.theme-toggle__track').boundingBox())!;
     const y = box.y + box.height / 2;
-    await page.mouse.move(box.x + 14, y);
+    await page.mouse.move(box.x + 12, y);
     await page.mouse.down();
-    await page.mouse.move(box.x + 54, y, { steps: 6 });
+    await page.mouse.move(box.x + 48, y, { steps: 6 });
     await page.mouse.up();
     await expect(html).toHaveAttribute('data-theme', 'steel');
     // The click that follows a drag must not tap on to the next theme (dark).

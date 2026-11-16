@@ -185,8 +185,8 @@ html[data-theme="light"] .dr-theme-scope {
 /* Third theme, hidden: reach it with ?theme=steel (see public/js/theme.js). It is a dark
    theme, so it inherits every dark rule and only reassigns roles. The fixed dark roles
    are re-pointed at steel too, so panels, scrims and page grounds follow without a
-   component rule changing. The navy art-deco textures are dropped; steel draws its own
-   grid and dial. */
+   component rule changing. The Bauhaus textures stay, as grey steel copies, because the shapes are
+   part of the site's identity on every palette (see DESIGN_NOTES). */
 html[data-theme="steel"] {
   --bg: var(--steel-ground);
   --bg-hero: linear-gradient(135deg, var(--steel-deep) 0%, var(--steel-ground) 55%, var(--steel-deep) 100%);
@@ -202,9 +202,8 @@ html[data-theme="steel"] {
   --accent-bright: var(--orange);
   --accent-glow-rgb: var(--orange-rgb);
   --on-accent: var(--orange-ink);
-  --art-deco-1: none;
-  --art-deco-2: none;
-  --art-deco-blend: normal;
+  --art-deco-1: var(--art-deco-1-steel);
+  --art-deco-2: var(--art-deco-2-steel);
   --canvas-dark: var(--steel-ground);
   --panel-dark: var(--steel-deep);
   --panel-dark-rgb: var(--steel-deep-rgb);
@@ -223,6 +222,9 @@ html[data-theme="steel"] {
 :root {
   --art-deco-1-light: url('/images/artDecoBackground1-light.webp');
   --art-deco-2-light: url('/images/artDecoBackground2-light.webp');
+  /* The same two Bauhaus textures with the blue taken out (grey, slightly cool), for steel. */
+  --art-deco-1-steel: url('/images/artDecoBackground1-steel.webp');
+  --art-deco-2-steel: url('/images/artDecoBackground2-steel.webp');
 }
 
 .dr-theme-scope {
@@ -6355,4 +6357,20 @@ html[data-theme="steel"] .steel-etch.is-etched {
 @media (max-width: 700px) {
   /* On a phone the dial sits behind the text, so it fades to a texture. */
   .steel-dial { opacity: 0.4; right: -30%; }
+}
+
+/* The Bauhaus layers in the hero and nav were tuned for the blue texture; the grey copy reads
+   brighter, and the hero already has the grid and dial, so those four layers are dimmed. The
+   sections below keep their normal strength. */
+html[data-theme="steel"] .hero-section::before,
+html[data-theme="steel"] .hero-section::after {
+  opacity: 0.07;
+}
+
+html[data-theme="steel"] .navbar-wrapper::before {
+  opacity: 0.1;
+}
+
+html[data-theme="steel"] .navbar-wrapper::after {
+  opacity: 0.08;
 }

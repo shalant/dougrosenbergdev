@@ -132,7 +132,9 @@ test.describe('homepage', () => {
     await page.goto('/?theme=steel');
     await expect(page.locator('.steel-dial')).toHaveCount(1);
     await expect(page.locator('.steel-progress')).toHaveCount(1);
-    await expect(page.locator('.steel-etch').first()).toBeAttached();
+    // Titles are only etched in with motion (the WebKit projects run with reduced motion; see playwright.config.ts).
+    const motion = await page.evaluate(() => !matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (motion) await expect(page.locator('.steel-etch').first()).toBeAttached();
     // Scrolling moves the needle's input and the ring's readout off zero.
     await page.evaluate(() => window.scrollTo(0, 1500));
     await expect(page.locator('.steel-progress__label')).not.toHaveText('0');
@@ -160,7 +162,10 @@ test.describe('homepage', () => {
     // Regression for the 2026-11 CI failures on the ubuntu-26.04 WebKit build: data-theme was
     // only set inside the startViewTransition callback, so a transition that never reached
     // its callback left the toggle doing nothing. Simulated here by stubbing the API with a
-    // transition that never calls back (and never finishes).
+    // transition that never calls back (and never finishes). The WebKit projects run with reduced
+    // motion, where theme.js skips view transitions entirely and this would pass without testing
+    // anything, so motion is turned back on here.
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.addInitScript(() => {
       document.startViewTransition = (() => ({
         finished: new Promise(() => {}),

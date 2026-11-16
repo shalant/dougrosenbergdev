@@ -90,6 +90,8 @@
   --steel-ink: #eef2f6;
   --steel-ink-rgb: 238, 242, 246;
   --steel-soft: #b8c2cc;
+  --steel-bright: #e8edf2;      /* top of the metal letters */
+  --steel-low: #97a3b0;         /* bottom of the metal letters */
   --orange: #f78e0e;
   --orange-rgb: 247, 142, 14;
   --orange-dark: #d97706;
@@ -6191,4 +6193,161 @@ h2::after {
   .music-photo__link {
     width: 8rem;
   }
+}
+
+/* ============================================================================
+   STEEL THEME EXTRAS (2026-11-15). Only under html[data-theme="steel"]; the
+   markup and the pointer/scroll values come from public/js/steel.js, which
+   injects nothing under any other theme. Colors are role/palette tokens only.
+   ============================================================================ */
+
+/* Metal name: each letter is a steel surface; a specular light follows the
+   pointer (--cx/--cy are set per letter), and idles across the name on its own. */
+html[data-theme="steel"] .hero-name__letter {
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  background-image:
+    radial-gradient(circle 170px at var(--cx, -999px) var(--cy, -999px), var(--white) 0%, transparent 68%),
+    linear-gradient(180deg, var(--steel-bright) 0%, var(--steel-low) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Lit grid: a faint engineering grid across the hero, brighter near the pointer. */
+html[data-theme="steel"] .hero-grid-bg {
+  background-image:
+    linear-gradient(rgba(var(--steel-ink-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--steel-ink-rgb), 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+html[data-theme="steel"] .hero-grid-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(var(--steel-ink-rgb), 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--steel-ink-rgb), 0.3) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(circle 230px at var(--mx, 62%) var(--my, 40%), black 0%, transparent 70%);
+  mask-image: radial-gradient(circle 230px at var(--mx, 62%) var(--my, 40%), black 0%, transparent 70%);
+}
+
+/* Engraved dial behind the portrait; the needle follows page scroll (--steel-p, 0 to 1). */
+.steel-dial {
+  position: absolute;
+  top: 50%;
+  right: 4%;
+  width: min(92vh, 760px);
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.steel-dial svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.steel-dial__ring {
+  fill: none;
+  stroke: rgba(var(--steel-ink-rgb), 0.13);
+  stroke-width: 1;
+}
+
+.steel-dial__tick {
+  stroke: rgba(var(--steel-ink-rgb), 0.18);
+  stroke-width: 1;
+}
+
+.steel-dial__tick--major {
+  stroke: rgba(var(--steel-ink-rgb), 0.4);
+  stroke-width: 2;
+}
+
+.steel-dial__needle {
+  transform-origin: 0 0;
+  transform: rotate(calc(-130deg + var(--steel-p, 0) * 260deg));
+  transition: transform 0.25s ease-out;
+}
+
+.steel-dial__hand {
+  stroke: var(--orange);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.steel-dial__hub {
+  fill: var(--orange);
+}
+
+/* Scroll-progress ring, bottom-left; wide screens only so it never crowds a phone. */
+.steel-progress {
+  position: fixed;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  width: 52px;
+  height: 52px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(var(--steel-deep-rgb), 0.8);
+  pointer-events: none;
+  z-index: 40;
+}
+
+@media (min-width: 821px) {
+  .steel-progress { display: flex; }
+}
+
+.steel-progress svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.steel-progress__track,
+.steel-progress__arc {
+  fill: none;
+  stroke-width: 3;
+}
+
+.steel-progress__track {
+  stroke: rgba(var(--steel-ink-rgb), 0.18);
+}
+
+.steel-progress__arc {
+  stroke: var(--orange);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--steel-p, 0) * 100);
+}
+
+.steel-progress__label {
+  position: relative;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--steel-ink);
+}
+
+/* Section titles etch in left to right (class added by steel.js, so no script means no hiding). */
+html[data-theme="steel"] .steel-etch {
+  clip-path: inset(-0.2em 100% -0.2em 0);
+  transition: clip-path 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+html[data-theme="steel"] .steel-etch.is-etched {
+  clip-path: inset(-0.2em -0.2em -0.2em 0);
+}
+
+@media (max-width: 700px) {
+  /* On a phone the dial sits behind the text, so it fades to a texture. */
+  .steel-dial { opacity: 0.4; right: -30%; }
 }

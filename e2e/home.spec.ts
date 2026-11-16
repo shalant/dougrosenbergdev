@@ -88,6 +88,22 @@ test.describe('homepage', () => {
     await expect(html).toHaveAttribute('data-theme', 'dark');
   });
 
+  test('steel extras (dial, progress ring, etched titles) exist only under steel and tear down', async ({ page }) => {
+    await page.goto('/?theme=steel');
+    await expect(page.locator('.steel-dial')).toHaveCount(1);
+    await expect(page.locator('.steel-progress')).toHaveCount(1);
+    await expect(page.locator('.steel-etch').first()).toBeAttached();
+    // Scrolling moves the needle's input and the ring's readout off zero.
+    await page.evaluate(() => window.scrollTo(0, 1500));
+    await expect(page.locator('.steel-progress__label')).not.toHaveText('0');
+    await page.locator('.theme-toggle').click();
+    await expect(page.locator('.steel-dial')).toHaveCount(0);
+    await expect(page.locator('.steel-progress')).toHaveCount(0);
+    await expect(page.locator('.steel-etch')).toHaveCount(0);
+    await page.goto('/?theme=dark');
+    await expect(page.locator('.steel-dial')).toHaveCount(0);
+  });
+
   test('a rapid double toggle mid-reveal lands back on dark', async ({ page }) => {
     // The second click starts a view transition while the first is still
     // animating, which skips the first; its theme update must still apply.

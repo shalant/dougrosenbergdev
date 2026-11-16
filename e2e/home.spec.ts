@@ -81,6 +81,22 @@ test.describe('homepage', () => {
     await expect(html).toHaveAttribute('data-theme', 'dark');
   });
 
+  test('dragging the toggle ball into a pocket picks that theme and is not also counted as a tap', async ({ page }) => {
+    await page.goto('/?theme=dark');
+    const html = page.locator('html');
+    const box = (await page.locator('.theme-toggle__track').boundingBox())!;
+    const y = box.y + box.height / 2;
+    await page.mouse.move(box.x + 14, y);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 54, y, { steps: 6 });
+    await page.mouse.up();
+    await expect(html).toHaveAttribute('data-theme', 'steel');
+    // The click that follows a drag must not tap on to the next theme (dark).
+    await page.waitForTimeout(400);
+    await expect(html).toHaveAttribute('data-theme', 'steel');
+    expect(await page.evaluate(() => localStorage.getItem('dr-theme'))).toBe('steel');
+  });
+
   test('?theme=steel opens the steel theme directly, remembers it, and the toggle cycles on to dark', async ({ page }) => {
     await page.goto('/?theme=steel');
     const html = page.locator('html');

@@ -1011,53 +1011,104 @@ a:hover {
   display: none;
 }
 
-/* Theme toggle — icon-only by design (nav is already tight at 7 links + CTA;
-   see docs/TASKS.md Phase 3). Sized to match .nav-toggle's 44x44 tap target. */
+/* Theme toggle: a steel ball in a groove with three pockets (dark, light, steel). Tap to roll
+   to the next pocket, or drag the ball and let go to drop it in the nearest one. The ball's
+   position comes from public/js/themeBall.js; this is the look. The groove is dark in every
+   theme so the ball reads on both the navy and the cream header. The 44px-high button is the
+   tap target; the groove inside it is 68 x 28. */
 .theme-toggle {
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  width: 44px;
+  width: 76px;
   height: 44px;
   margin-left: 0.35rem;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: grab;
   padding: 0;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Both icons share one grid cell so they can cross-rotate in place: the
-   outgoing one turns away and shrinks while the incoming one turns in. */
-.theme-toggle__icon {
-  grid-area: 1 / 1;
-  width: 16px;
-  height: 16px;
-  color: rgba(var(--accent-rgb), 0.75);
-  transition: color 0.2s ease, opacity 0.35s ease, transform 0.5s var(--ease-swing);
+.theme-toggle:active {
+  cursor: grabbing;
 }
 
-.theme-toggle:hover .theme-toggle__icon {
-  color: var(--accent);
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 14px;
 }
 
-.theme-toggle:active .theme-toggle__icon {
-  transform: scale(0.85);
+.theme-toggle__track {
+  position: relative;
+  width: 68px;
+  height: 28px;
+  border-radius: 14px;
+  background: linear-gradient(rgba(var(--shadow-rgb), 0.75), rgba(var(--steel-deep-rgb), 0.95));
+  box-shadow: inset 0 2px 4px rgba(var(--shadow-rgb), 0.7), 0 0 0 1px rgba(var(--highlight-rgb), 0.16);
 }
 
-/* The icon shows where a click goes: dark shows the sun (to light), light shows the dial
-   (to steel), steel shows the moon (to dark). */
-.theme-toggle__icon--moon,
-.theme-toggle__icon--dial,
-html[data-theme="light"] .theme-toggle__icon--sun,
-html[data-theme="steel"] .theme-toggle__icon--sun {
-  opacity: 0;
-  transform: rotate(-90deg) scale(0.4);
+/* Subtle filings that trail the ball (drawn by themeBall.js, only while it moves). */
+.theme-toggle__dust {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-html[data-theme="light"] .theme-toggle__icon--dial,
-html[data-theme="steel"] .theme-toggle__icon--moon {
-  opacity: 1;
-  transform: none;
+.theme-toggle__pocket {
+  position: absolute;
+  top: 9px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(var(--shadow-rgb), 0.85);
+  box-shadow: inset 0 1px 2px rgba(var(--shadow-rgb), 0.9), 0 1px 0 rgba(var(--highlight-rgb), 0.14);
+  transition: box-shadow 0.3s ease;
+}
+
+.theme-toggle__pocket[data-theme-pocket="dark"] { left: 9px; --pocket: var(--teal); }
+.theme-toggle__pocket[data-theme-pocket="light"] { left: 29px; --pocket: var(--canvas-light); }
+.theme-toggle__pocket[data-theme-pocket="steel"] { left: 49px; --pocket: var(--orange); }
+
+/* The pocket of the current theme glows in that theme's own color. */
+html[data-theme="dark"] .theme-toggle__pocket[data-theme-pocket="dark"],
+html[data-theme="light"] .theme-toggle__pocket[data-theme-pocket="light"],
+html[data-theme="steel"] .theme-toggle__pocket[data-theme-pocket="steel"] {
+  box-shadow: inset 0 1px 2px rgba(var(--shadow-rgb), 0.9), 0 0 8px 1px var(--pocket);
+}
+
+.theme-toggle__ball {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, var(--white) 0, var(--steel-bright) 22%, var(--steel-low) 62%, var(--steel-mid));
+  box-shadow: 0 3px 5px rgba(var(--shadow-rgb), 0.65);
+  /* Before the script runs, rest on the pocket of the current theme. */
+  transform: translateX(var(--ball-x, 4px));
+}
+
+html[data-theme="light"] .theme-toggle__ball { --ball-x: 24px; }
+html[data-theme="steel"] .theme-toggle__ball { --ball-x: 44px; }
+
+/* A small mark that turns as the ball rolls, in the current theme's accent. */
+.theme-toggle__ball::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 3px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-fill);
+  transform-origin: 2px 7px;
+  transform: rotate(var(--ball-roll, 0deg));
 }
 
 /* Theme switch reveal (driven by DrTheme.toggle() in public/js/theme.js):
@@ -1066,7 +1117,7 @@ html[data-theme="steel"] .theme-toggle__icon--moon {
    fade inside the circle, and the per-page title names from the
    cross-document transitions are cleared so those titles aren't animated
    separately from the rest of the page. */
-html.theme-switching *:not(.theme-toggle__icon) {
+html.theme-switching *:not(.theme-toggle__ball) {
   transition: none !important;
 }
 

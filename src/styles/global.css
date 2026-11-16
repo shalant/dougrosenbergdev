@@ -1042,13 +1042,18 @@ a:hover {
   transform: scale(0.85);
 }
 
+/* The icon shows where a click goes: dark shows the sun (to light), light shows the dial
+   (to steel), steel shows the moon (to dark). */
 .theme-toggle__icon--moon,
-html[data-theme="light"] .theme-toggle__icon--sun {
+.theme-toggle__icon--dial,
+html[data-theme="light"] .theme-toggle__icon--sun,
+html[data-theme="steel"] .theme-toggle__icon--sun {
   opacity: 0;
   transform: rotate(-90deg) scale(0.4);
 }
 
-html[data-theme="light"] .theme-toggle__icon--moon {
+html[data-theme="light"] .theme-toggle__icon--dial,
+html[data-theme="steel"] .theme-toggle__icon--moon {
   opacity: 1;
   transform: none;
 }

@@ -65,17 +65,23 @@ test.describe('homepage', () => {
     await expect(page.locator('a.nav-link[href="/consulting"]')).toBeAttached();
   });
 
-  test('theme toggle switches light/dark and persists the attribute', async ({ page }) => {
+  test('theme toggle cycles dark, light, steel, dark and names the next theme', async ({ page }) => {
     await page.goto('/');
     const html = page.locator('html');
+    const toggle = page.locator('.theme-toggle');
     await expect(html).not.toHaveAttribute('data-theme', 'light');
-    await page.locator('.theme-toggle').click();
+    await expect(toggle).toHaveAttribute('aria-label', /dark now, light next/);
+    await toggle.click();
     await expect(html).toHaveAttribute('data-theme', 'light');
-    await page.locator('.theme-toggle').click();
+    await expect(toggle).toHaveAttribute('aria-label', /light now, steel and orange next/);
+    await toggle.click();
+    await expect(html).toHaveAttribute('data-theme', 'steel');
+    await expect(toggle).toHaveAttribute('aria-label', /steel and orange now, dark next/);
+    await toggle.click();
     await expect(html).toHaveAttribute('data-theme', 'dark');
   });
 
-  test('?theme=steel opens the hidden steel theme, remembers it, and the toggle leaves it for dark', async ({ page }) => {
+  test('?theme=steel opens the steel theme directly, remembers it, and the toggle cycles on to dark', async ({ page }) => {
     await page.goto('/?theme=steel');
     const html = page.locator('html');
     await expect(html).toHaveAttribute('data-theme', 'steel');
@@ -104,10 +110,11 @@ test.describe('homepage', () => {
     await expect(page.locator('.steel-dial')).toHaveCount(0);
   });
 
-  test('a rapid double toggle mid-reveal lands back on dark', async ({ page }) => {
-    // The second click starts a view transition while the first is still
-    // animating, which skips the first; its theme update must still apply.
+  test('a rapid triple toggle mid-reveal lands back on dark', async ({ page }) => {
+    // Each click starts a view transition while the previous is still animating, which
+    // skips it; every theme update must still apply, so three clicks complete the cycle.
     await page.goto('/');
+    await page.locator('.theme-toggle').click();
     await page.locator('.theme-toggle').click();
     await page.locator('.theme-toggle').click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');

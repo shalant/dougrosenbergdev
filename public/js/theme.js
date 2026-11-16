@@ -8,10 +8,10 @@
 window.DrTheme = (function () {
     const STORAGE_KEY = 'dr-theme';
 
-    // 'steel' is a hidden third theme with no toggle state, only a URL entry: ?theme=steel is
-    // remembered like the others, and ?theme=dark or ?theme=light leaves it. The toggle button
-    // still flips light and dark, and from steel it goes to dark.
+    // Three themes. The toggle button cycles dark, light, steel, dark; its icon shows the one a
+    // click goes to. ?theme=dark|light|steel also picks one directly and is remembered.
     const THEMES = ['dark', 'light', 'steel'];
+    const LABELS = { dark: 'dark', light: 'light', steel: 'steel and orange' };
 
     function resolve() {
         try {
@@ -28,14 +28,25 @@ window.DrTheme = (function () {
 
     function apply(theme) {
         document.documentElement.setAttribute('data-theme', theme);
+        label(theme);
         return theme;
     }
+
+    // Names the current theme and the next one for assistive tech; the button may not exist yet
+    // when apply() first runs in <head>, so it is also called once the page has loaded.
+    function label(theme) {
+        const button = document.getElementById('themeToggle');
+        if (!button) return;
+        const next = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length];
+        button.setAttribute('aria-label', 'Switch theme: ' + LABELS[theme] + ' now, ' + LABELS[next] + ' next');
+    }
+    document.addEventListener('DOMContentLoaded', () => label(current()));
 
     // The new theme spreads out from the toggle in a growing circle (a same-document view
     // transition; the clip-path animation lives in global.css under "Theme switch reveal").
     // Falls back to an instant swap without View Transitions support or with reduced motion.
     function toggle() {
-        const next = current() === 'dark' ? 'light' : 'dark';
+        const next = THEMES[(THEMES.indexOf(current()) + 1) % THEMES.length];
         localStorage.setItem(STORAGE_KEY, next);
 
         const root = document.documentElement;

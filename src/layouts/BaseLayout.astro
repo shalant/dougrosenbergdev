@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ConsentBanner from '../components/ConsentBanner.astro';
+import { jsUrl } from '../lib/jsUrl';
 
 interface Props {
   title?: string;
@@ -148,7 +149,7 @@ const arborKinLd = {
 
   <!-- Sets data-theme on <html> before first paint - must run before CSS-driven paint,
        so it's a blocking script here rather than deferred like everything else. -->
-  <script is:inline src="/js/theme.js"></script>
+  <script is:inline src={jsUrl('theme.js')}></script>
   <script is:inline>DrTheme.apply(DrTheme.resolve());</script>
 
   <meta property="og:type" content="website" />
@@ -190,13 +191,13 @@ const arborKinLd = {
 
   <ConsentBanner />
 
-  <script is:inline src="/js/nav.js"></script>
-  <script is:inline src="/js/scrollReveal.js"></script>
-  <script is:inline src="/js/contactDialog.js"></script>
-  <script is:inline src="/js/consent.js"></script>
-  <script is:inline src="/js/motion.js"></script>
-  <script is:inline src="/js/steel.js"></script>
-  <script is:inline src="/js/themeBall.js"></script>
+  <script is:inline src={jsUrl('nav.js')}></script>
+  <script is:inline src={jsUrl('scrollReveal.js')}></script>
+  <script is:inline src={jsUrl('contactDialog.js')}></script>
+  <script is:inline src={jsUrl('consent.js')}></script>
+  <script is:inline src={jsUrl('motion.js')}></script>
+  <script is:inline src={jsUrl('steel.js')}></script>
+  <script is:inline src={jsUrl('themeBall.js')}></script>
 
   <script is:inline>
     DrNav.init();

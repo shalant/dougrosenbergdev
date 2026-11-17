@@ -22,6 +22,7 @@ jobs:
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run build
       - run: npm run verify-csp
+      - run: npm run verify-js-versions
       - run: npm run test:unit
       - run: npm run check:colors
       - run: npm run test:e2e

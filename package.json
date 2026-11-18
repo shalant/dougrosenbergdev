@@ -14,6 +14,7 @@
     "indexnow": "node scripts/indexnow-ping.mjs",
     "deploy": "npx wrangler deploy && npm run indexnow",
     "verify-csp": "node scripts/verify-csp-hashes.mjs",
+    "verify-js-versions": "node scripts/verify-js-versions.mjs",
     "test:unit": "node --test src/headers.test.js src/rate-limit.test.js src/palette.test.js",
     "check:colors": "node scripts/check-colors.mjs"
   },

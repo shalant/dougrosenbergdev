@@ -64,8 +64,12 @@ test.describe('navbar layout', () => {
         expect(toggle.x + toggle.width, `${where}: toggle past the edge`).toBeLessThanOrEqual(width);
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${where}: horizontal scroll`).toBe(true);
 
-        // Text only, and the four links share one size and weight.
-        await expect(page.locator('.navbar-wrapper .nav-icon'), `${where}: icons are gone`).toHaveCount(0);
+        // Each of the four top-level links has one 14px glyph (added 2026-11-17), and they share one size and weight.
+        await expect(page.locator('.nav-items > li > .nav-link:not(.nav-link--cta) .nav-glyph'), `${where}: glyphs`).toHaveCount(4);
+        const glyphSizes = await page.evaluate(() =>
+          [...document.querySelectorAll('.nav-items .nav-glyph')].map((g) => `${g.getBoundingClientRect().width}x${g.getBoundingClientRect().height}`),
+        );
+        expect(glyphSizes, `${where}: glyphs are not all 14x14`).toEqual(['14x14', '14x14', '14x14', '14x14']);
         const looks = await page.evaluate(() =>
           [...document.querySelectorAll('.nav-items > li > .nav-link:not(.nav-link--cta)')].map((a) => {
             const c = getComputedStyle(a);

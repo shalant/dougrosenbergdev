@@ -45,44 +45,25 @@ import ContactDialog from './ContactDialog.astro';
       <ul class="nav-items" id="navItems">
 
         <li>
-          <a class="nav-link nav-link--page nav-dropdown-item" href="/#work">
-                <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M1.5 2.5 H12.5 V11.5 H1.5 Z M1.5 5.5 H12.5"/>
-                </svg>
+          <a class="nav-link nav-link--page" href="/#work">
                 work
               </a>
         </li>
 
         <li>
-          <a class="nav-link nav-link--page nav-dropdown-item" href="/#experience">
-                <svg class="nav-icon" viewBox="0 0 14 14" fill="currentColor" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
-                  <circle cx="3" cy="4"  r="1.3" stroke="none"/>
-                  <line x1="6.5" y1="4"  x2="12" y2="4"/>
-                  <circle cx="3" cy="8"  r="1.3" stroke="none"/>
-                  <line x1="6.5" y1="8"  x2="10" y2="8"/>
-                  <circle cx="3" cy="12" r="1.3" stroke="none"/>
-                  <line x1="6.5" y1="12" x2="11" y2="12"/>
-                </svg>
+          <a class="nav-link nav-link--page" href="/#experience">
                 experience
               </a>
         </li>
 
         <li>
           <a class="nav-link nav-link--page" href="/blog">
-            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-              <path d="M7 1 L7 13 M1 3 L7 3 M7 3 L13 3 M1 8 L7 8 M7 8 L13 8"/>
-            </svg>
             blog
           </a>
         </li>
 
         <li class="nav-has-dropdown">
           <button class="nav-link nav-link--page" type="button">
-            <svg class="nav-icon" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
-              <circle cx="3" cy="7" r="1.3"/>
-              <circle cx="7" cy="7" r="1.3"/>
-              <circle cx="11" cy="7" r="1.3"/>
-            </svg>
             more
             <span class="nav-caret">&#9662;</span>
           </button>
@@ -90,50 +71,24 @@ import ContactDialog from './ContactDialog.astro';
             <div class="nav-dropdown-group">
               <span class="nav-dropdown-label">on this page</span>
               <a class="nav-link nav-link--page nav-dropdown-item" href="/#about">
-                <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-                  <path d="M2 13 L2 7.5 A5 5 0 0 0 12 7.5 L12 13"/>
-                </svg>
                 about
               </a>
               <a class="nav-link nav-link--page nav-dropdown-item" href="/#technicalskills">
-                <svg class="nav-icon" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
-                  <rect x="1.5" y="1.5" width="4.5" height="4.5" rx="0.5"/>
-                  <rect x="8"   y="1.5" width="4.5" height="4.5" rx="0.5"/>
-                  <rect x="1.5" y="8"   width="4.5" height="4.5" rx="0.5"/>
-                  <rect x="8"   y="8"   width="4.5" height="4.5" rx="0.5"/>
-                </svg>
                 skills
               </a>
               <a class="nav-link nav-link--page nav-dropdown-item" href="/#contact">
-                <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <rect x="1.5" y="2.5" width="11" height="9" rx="1"/>
-                  <path d="M1.8 3.2 L7 7.3 L12.2 3.2"/>
-                </svg>
                 contact
               </a>
             </div>
             <div class="nav-dropdown-group">
               <span class="nav-dropdown-label">freelance</span>
               <a class="nav-link nav-link--page nav-dropdown-item" href="/webdesign">
-            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-              <line x1="7" y1="13" x2="7" y2="7"/>
-              <line x1="7" y1="7" x2="3" y2="3"/>
-              <line x1="7" y1="7" x2="11" y2="3"/>
-            </svg>
             web design
           </a>
               <a class="nav-link nav-link--page nav-dropdown-item" href="/services">
-            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="1.5" y="4.5" width="11" height="7.5" rx="1"/>
-              <path d="M5 4.5V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5"/>
-              <line x1="1.5" y1="7.5" x2="12.5" y2="7.5"/>
-            </svg>
             services
           </a>
               <a class="nav-link nav-link--page nav-dropdown-item" href="/consulting">
-            <svg class="nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M1.5 2.5 H12.5 V9 H5.5 L3 11.5 V9 H1.5 Z"/>
-            </svg>
             consulting
           </a>
             </div>
@@ -149,23 +104,25 @@ import ContactDialog from './ContactDialog.astro';
       </ul>
     </nav>
 
-    <button type="button" class="nav-cta" data-contact-trigger aria-label="Contact Doug Rosenberg">
-      <span class="nav-cta__text">get in touch</span>
-    </button>
+    <div class="nav-actions">
+      <button type="button" class="nav-cta" data-contact-trigger aria-label="Contact Doug Rosenberg">
+        <span class="nav-cta__text">get in touch</span>
+      </button>
 
-    <button class="theme-toggle" aria-label="Switch theme" id="themeToggle">
-      <span class="theme-toggle__track" aria-hidden="true">
-        <canvas class="theme-toggle__dust" width="120" height="48"></canvas>
-        <span class="theme-toggle__pocket" data-theme-pocket="dark"></span>
-        <span class="theme-toggle__pocket" data-theme-pocket="light"></span>
-        <span class="theme-toggle__pocket" data-theme-pocket="steel"></span>
-        <span class="theme-toggle__ball"></span>
-      </span>
-    </button>
+      <button class="theme-toggle" aria-label="Switch theme" id="themeToggle">
+        <span class="theme-toggle__track" aria-hidden="true">
+          <canvas class="theme-toggle__dust" width="120" height="48"></canvas>
+          <span class="theme-toggle__pocket" data-theme-pocket="dark"></span>
+          <span class="theme-toggle__pocket" data-theme-pocket="light"></span>
+          <span class="theme-toggle__pocket" data-theme-pocket="steel"></span>
+          <span class="theme-toggle__ball"></span>
+        </span>
+      </button>
 
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
 
   </div>
 </header>
@@ -173,3 +130,606 @@ import ContactDialog from './ContactDialog.astro';
 <div class="nav-scrim" id="navScrim"></div>
 
 <ContactDialog />
+
+<style>
+/* ============================================================================
+   NAVBAR. Everything about the header lives here; global.css keeps only the page-wide
+   theme-switch reveal. Colors are role tokens only (npm run check:colors).
+
+   Layout: one three-column grid, logo | links | actions. The links sit in the middle
+   column and the actions (CTA, theme ball, hamburger) in the right one, so nothing is
+   pushed around with auto margins and there is no per-breakpoint nudging. Link size and
+   spacing are fluid (clamp), so a single breakpoint (960px, where the menu collapses into
+   the hamburger sheet) is all the layout needs.
+
+   Links are text only, with one rule for hover, keyboard focus and the current section: an
+   accent hairline drawing in from the left. (The icons are gone: the labels already carry
+   the meaning, and the teal icons against grey labels were a second colour system.)
+
+   JS contract (public/js/nav.js, e2e): ids #navbar #navItems #navToggle #navScrim; classes
+   .nav-link .nav-cta .nav-link--cta .nav-toggle and the state classes .scrolled (header),
+   .active (link, sheet) and .open (hamburger), plus body.nav-open.
+   ============================================================================ */
+
+.navbar-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(var(--surface-nav-rgb), 0.94);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.2);
+  transition: background 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+/* Bauhaus bg1: a tiled strip, small enough to read as pattern, not blob */
+.navbar-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--art-deco-1);
+  background-size: 28% auto;
+  background-repeat: repeat-x;
+  background-position: left center;
+  mix-blend-mode: var(--art-deco-blend);
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Bauhaus bg2: tiled, right-offset so the two patterns interleave */
+.navbar-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--art-deco-2);
+  background-size: 22% auto;
+  background-repeat: repeat-x;
+  background-position: right center;
+  mix-blend-mode: var(--art-deco-blend);
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Scrolled: more glass, deeper blur, subtle inner highlight */
+.navbar-wrapper.scrolled {
+  background: rgba(var(--surface-rgb), 0.8);
+  backdrop-filter: blur(10px) saturate(180%) brightness(1.05);
+  -webkit-backdrop-filter: blur(10px) saturate(180%) brightness(1.05);
+  border-bottom-color: rgba(var(--accent-rgb), 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(var(--highlight-rgb), 0.05),
+    0 1px 0 rgba(var(--accent-rgb), 0.1),
+    0 12px 48px rgba(var(--shadow-rgb), 0.4);
+}
+
+.navbar-wrapper.scrolled::before { opacity: 0.07; }
+.navbar-wrapper.scrolled::after  { opacity: 0.06; }
+
+/* Steel: these layers were tuned for the blue texture; the grey copy reads brighter. */
+:global(html[data-theme="steel"]) .navbar-wrapper::before { opacity: 0.1; }
+:global(html[data-theme="steel"]) .navbar-wrapper::after { opacity: 0.08; }
+
+.navbar-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 1.5rem;
+  padding: 0 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ---- logo ---- */
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo-section a {
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.logo-section a:hover {
+  opacity: 0.85;
+}
+
+.logo-section svg {
+  height: 80px;
+  width: auto;
+}
+
+/* ---- links ---- */
+nav {
+  justify-self: center;
+}
+
+.nav-items {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.1rem, 2.4vw, 2.25rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-items li {
+  position: relative;
+}
+
+.nav-link {
+  --pad-x: 0px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.5rem var(--pad-x);
+  /* Montserrat, not --mono: mono is kept for real technical facts (dates, numbers,
+     code), and a mono nav was one of the AI-site tells. */
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.88rem, 0.4vw + 0.78rem, 0.95rem);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  color: rgba(var(--text-rgb), 0.85);
+  border: 0;
+  cursor: pointer;
+  /* The hairline is a background gradient whose size animates from 0 to the full content
+     width (the padding is excluded by background-origin, so it hugs the text in both the row
+     and the sheet). background-size, not a scaled pseudo-element: the nav has avoided
+     transforms since scale read as twitchy here, and this changes paint only, never layout. */
+  background-color: transparent;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: left calc(100% - 0.15rem);
+  background-origin: content-box;
+  background-clip: border-box;
+  background-size: 0 1px;
+  transition: color 0.2s ease, background-size 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-link.active {
+  color: var(--text);
+  background-size: 100% 1px;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---- "more" dropdown: desktop only (the hamburger sheet replaces it below 960px) ---- */
+.nav-has-dropdown {
+  position: relative;
+}
+
+.nav-caret {
+  display: inline-block;
+  margin-left: 0.15em;
+  font-size: 0.6em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.nav-has-dropdown:hover .nav-caret,
+.nav-has-dropdown:focus-within .nav-caret {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  flex-direction: row;
+  background: rgba(var(--surface-rgb), 0.97);
+  backdrop-filter: blur(32px) saturate(160%);
+  border: 1px solid rgba(var(--accent-rgb), 0.18);
+  border-radius: 6px;
+  padding: 0.6rem;
+  z-index: 1001;
+}
+
+.nav-has-dropdown:hover .nav-dropdown,
+.nav-has-dropdown:focus-within .nav-dropdown {
+  display: flex;
+}
+
+.nav-dropdown-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.nav-dropdown-label {
+  padding: 0.3rem 0.75rem 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(var(--text-rgb), 0.7);
+}
+
+.nav-dropdown-item {
+  --pad-x: 1.25rem;
+  padding: 0.55rem var(--pad-x);
+  font-size: 0.88rem;
+  color: rgba(var(--text-rgb), 0.78);
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.nav-dropdown-item::after {
+  display: none;
+}
+
+.nav-dropdown-item:hover,
+.nav-dropdown-item:focus-visible {
+  color: var(--text);
+  background: rgba(var(--accent-rgb), 0.07);
+}
+
+.nav-dropdown-item.active {
+  color: var(--text);
+  background: rgba(var(--accent-rgb), 0.1);
+  border-radius: 4px;
+}
+
+/* ---- actions: CTA, theme ball, hamburger ---- */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* A real filled button, the same treatment as the homepage's own primary button. A <button>
+   (it opens the contact dialog), so the browser chrome needs the explicit resets. */
+.nav-cta {
+  padding: 0.55rem 1.15rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--on-accent);
+  background: var(--accent-fill);
+  border: 0;
+  border-radius: 2px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nav-cta:hover {
+  background: var(--accent-fill-hover);
+}
+
+.nav-cta:active {
+  transform: scale(0.97);
+  transition-duration: 0.08s;
+}
+
+.nav-cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* The mobile copy of the CTA lives inside the hamburger sheet; hidden on desktop. */
+.nav-cta-mobile-item {
+  display: none;
+}
+
+/* Hamburger: three spans */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: rgba(var(--text-rgb), 0.85);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Backdrop for the mobile sheet; inert above the breakpoint. */
+.nav-scrim {
+  display: none;
+}
+
+/* ---- theme toggle: a steel ball in a groove with three pockets (dark, light, steel) ----
+   Tap to roll to the next pocket; with a mouse you can also drag the ball and let go to drop it
+   in the nearest one (touch just taps, so a shaky finger can never miss a theme). The ball's
+   position comes from public/js/themeBall.js; this is the look. The groove is dark on the navy
+   header and a soft tint on the cream one, and a lighter blue-grey on steel, so it never reads
+   as a black blob and the empty pockets stay visible. The 44px-high button is the tap target;
+   the groove inside it is 60 x 24. */
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 68px;
+  height: 44px;
+  background: none;
+  border: none;
+  cursor: default;
+  padding: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+.theme-toggle__track {
+  position: relative;
+  width: 60px;
+  height: 24px;
+  border-radius: 12px;
+  background: linear-gradient(rgba(var(--shadow-rgb), 0.6), rgba(var(--steel-deep-rgb), 0.85));
+  box-shadow: inset 0 2px 4px rgba(var(--shadow-rgb), 0.6), 0 0 0 1px rgba(var(--highlight-rgb), 0.14);
+}
+
+:global(html[data-theme="light"]) .theme-toggle__track {
+  background: linear-gradient(rgba(var(--navy-rgb), 0.3), rgba(var(--navy-rgb), 0.16));
+  box-shadow: inset 0 2px 3px rgba(var(--navy-rgb), 0.35), 0 0 0 1px rgba(var(--navy-rgb), 0.2);
+}
+
+/* Steel: a mid blue-grey groove like the light theme's, so the empty pockets and the ball's
+   edge stay visible instead of vanishing into black. */
+:global(html[data-theme="steel"]) .theme-toggle__track {
+  background: linear-gradient(var(--steel-groove-hi), var(--steel-groove-lo));
+  box-shadow: inset 0 2px 3px rgba(var(--shadow-rgb), 0.4), 0 0 0 1px rgba(var(--steel-ink-rgb), 0.24);
+}
+
+/* Subtle filings that trail the ball (drawn by themeBall.js, only while it moves). */
+.theme-toggle__dust {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.theme-toggle__pocket {
+  position: absolute;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(var(--shadow-rgb), 0.8);
+  box-shadow: inset 0 1px 2px rgba(var(--shadow-rgb), 0.9), 0 1px 0 rgba(var(--highlight-rgb), 0.12);
+  transition: box-shadow 0.3s ease;
+}
+
+:global(html[data-theme="light"]) .theme-toggle__pocket {
+  background: rgba(var(--navy-rgb), 0.5);
+  box-shadow: inset 0 1px 2px rgba(var(--navy-rgb), 0.6), 0 1px 0 rgba(var(--highlight-rgb), 0.5);
+}
+
+:global(html[data-theme="steel"]) .theme-toggle__pocket {
+  background: rgba(var(--steel-deep-rgb), 0.5);
+  box-shadow: inset 0 1px 2px rgba(var(--shadow-rgb), 0.7), 0 1px 0 rgba(var(--steel-ink-rgb), 0.22);
+}
+
+.theme-toggle__pocket[data-theme-pocket="dark"] { left: 8px; --pocket: var(--teal); }
+.theme-toggle__pocket[data-theme-pocket="light"] { left: 26px; --pocket: var(--canvas-light); }
+.theme-toggle__pocket[data-theme-pocket="steel"] { left: 44px; --pocket: var(--orange); }
+
+/* The pocket of the current theme glows in that theme's own color. */
+:global(html[data-theme="dark"]) .theme-toggle__pocket[data-theme-pocket="dark"],
+:global(html[data-theme="light"]) .theme-toggle__pocket[data-theme-pocket="light"],
+:global(html[data-theme="steel"]) .theme-toggle__pocket[data-theme-pocket="steel"] {
+  box-shadow: inset 0 1px 2px rgba(var(--shadow-rgb), 0.9), 0 0 7px 1px var(--pocket);
+}
+
+.theme-toggle__ball {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, var(--white) 0, var(--steel-bright) 22%, var(--steel-low) 62%, var(--steel-mid));
+  box-shadow: 0 2px 4px rgba(var(--shadow-rgb), 0.55);
+  /* Before the script runs, rest on the pocket of the current theme. */
+  transform: translateX(var(--ball-x, 3px));
+}
+
+:global(html[data-theme="light"]) .theme-toggle__ball { --ball-x: 21px; }
+:global(html[data-theme="steel"]) .theme-toggle__ball { --ball-x: 39px; }
+
+/* A small mark that turns as the ball rolls, in the current theme's accent. */
+.theme-toggle__ball::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 2.5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-fill);
+  transform-origin: 2px 6.5px;
+  transform: rotate(var(--ball-roll, 0deg));
+}
+
+/* ---- below 960px the row collapses into the hamburger sheet ----
+   960 matches the hero's own row-to-stacked breakpoint, so the two never disagree (at the old
+   820px there was a dead zone where the hero had stacked but the nav still tried to fit its
+   full row and clipped the CTA off the edge). */
+@media (max-width: 960px) {
+  .navbar-content {
+    grid-template-columns: 1fr auto;
+    padding: 0 1.25rem;
+  }
+
+  /* <nav> has no in-flow content on a phone (the sheet is absolutely positioned), so it is an
+     empty zero-height box. It shares the logo's grid cell instead of claiming a column. */
+  .logo-section,
+  nav {
+    grid-area: 1 / 1;
+  }
+
+  .nav-actions {
+    grid-area: 1 / 2;
+  }
+
+  .logo-section svg {
+    height: 60px;
+  }
+
+  .nav-has-dropdown,
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  /* Glass, not solid: it floats over the page rather than hiding it, with .nav-scrim blurring
+     and dimming what is still visible behind it. Rounded bottom corners and a shadow read as a
+     floating sheet. Open and close is a vertical unroll, not a display:none flash: scaleY from
+     a fixed top origin plus an opacity fade. display:none cannot be animated, so the sheet
+     stays display:flex always and visibility carries the "actually hidden" state, flipping to
+     hidden only once the collapse transform finishes (the transition-delay below), so the sheet
+     stays visible through its own closing animation.
+     The background is near-opaque (the same --surface-nav-rgb the header uses): real-device
+     testing showed backdrop-filter does not reliably render here, so the menu has to read
+     correctly whether or not the blur applies. */
+  .nav-items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(var(--surface-nav-rgb), 0.94);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    padding: 0.4rem 0 0.6rem;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.2);
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 24px 64px rgba(var(--shadow-rgb), 0.45);
+    z-index: 999;
+    transform-origin: top center;
+    transform: scaleY(0);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.32s var(--ease-swing), opacity 0.24s ease, visibility 0s linear 0.32s;
+  }
+
+  .nav-items.active {
+    transform: scaleY(1);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: transform 0.34s var(--ease-swing), opacity 0.28s ease;
+  }
+
+  .nav-items li {
+    width: 100%;
+  }
+
+  .nav-link {
+    --pad-x: 1.5rem;
+    padding: 0.45rem var(--pad-x);
+    font-size: 0.94rem;
+  }
+
+  .nav-cta-mobile-item {
+    display: block;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.25rem 1.1rem;
+    border-top: 1px solid rgba(var(--accent-rgb), 0.15);
+  }
+
+  /* The sheet's own filled button, so it never reads as a second, competing "get in touch"
+     (before the scrim existed, the homepage hero's own button showed through underneath). */
+  .nav-link--cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--accent-fill);
+    border: 2px solid var(--accent-fill);
+    border-radius: 2px;
+    color: var(--on-accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-link--cta::after {
+    display: none;
+  }
+
+  .nav-link--cta:hover,
+  .nav-link--cta:focus-visible {
+    background: var(--accent-fill-hover);
+    border-color: var(--accent-fill-hover);
+    color: var(--on-accent);
+  }
+
+  /* Full-screen scrim behind the sheet. The sheet is only as tall as its content, so without
+     this the real page underneath showed straight through below it. Blurred and dimmed, with
+     the same visibility-delay pattern as .nav-items above. */
+  .nav-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 998;
+    background: rgba(var(--scrim-deep-rgb), 0.4);
+    backdrop-filter: blur(7px) saturate(1.15);
+    -webkit-backdrop-filter: blur(7px) saturate(1.15);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+  }
+
+  :global(body.nav-open) .nav-scrim {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.28s ease;
+  }
+
+  /* nav.js toggles body.nav-open when #navToggle fires, and that button only exists below this
+     width, so the scroll lock never applies where the links are always visible. */
+  :global(body.nav-open) {
+    overflow: hidden;
+  }
+}
+</style>

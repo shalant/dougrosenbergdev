@@ -113,6 +113,76 @@ test.describe('navbar layout', () => {
     });
   }
 
+  // The right-hand section rail uses the same hexagon glyph family as the top nav (2026-11-19):
+  // seven glyphs, each with base strokes and exactly one lit part, and the lit part (only) takes
+  // the accent for the current section.
+  test('section rail: seven two-tone glyphs, and the lit part marks the current section', async ({ page }) => {
+    for (const theme of THEMES) {
+      await open(page, 1280, theme);
+      await page.evaluate(() => document.getElementById('about')?.scrollIntoView());
+      await expect(page.locator('.vertical-section-nav.past-hero'), `${theme}: rail reveals past the hero`).toBeVisible();
+      const items = page.locator('.vsn-item');
+      await expect(items, `${theme}: seven rail items`).toHaveCount(7);
+      for (let i = 0; i < 7; i++) {
+        await expect(items.nth(i).locator('.vsn-icon .base').first(), `${theme}: item ${i} has base strokes`).toBeAttached();
+        expect(await items.nth(i).locator('.vsn-icon .lit').count(), `${theme}: item ${i} has a lit part`).toBeGreaterThan(0);
+      }
+      const strokeOf = (sel: string) => page.locator(sel).first().evaluate((e) => getComputedStyle(e).stroke);
+      const accentStroke = async () => {
+        const probe = page.locator('.vsn-item.active .vsn-icon .lit');
+        await expect(probe.first(), `${theme}: a section is current`).toBeAttached();
+        return probe.first().evaluate((e) => getComputedStyle(e).stroke);
+      };
+      await expect.poll(accentStroke, { message: `${theme}: current section's lit part differs from a resting one` })
+        .not.toBe(await strokeOf('.vsn-item:not(.active) .vsn-icon .lit'));
+    }
+  });
+
+  // The rail also shows progress down the page (2026-11-19): --vsn-p is a fractional index, the
+  // hairline under icon k fills as it goes from k to k+1, and passed sections get .passed.
+  test('section rail: the progress line grows with the scroll and marks passed sections', async ({ page }) => {
+    await open(page, 1280, 'steel');
+    const p = () => page.locator('#verticalSectionNav').evaluate((el) => parseFloat(getComputedStyle(el).getPropertyValue('--vsn-p')));
+    // Computed background-size keeps its percentage, so this is the filled share of the segment: 0 to 100.
+    const segHeight = (k: number) =>
+      page.locator('.vsn-item').nth(k).evaluate((el) => parseFloat(getComputedStyle(el, '::after').backgroundSize.split(' ')[1]));
+    // The page smooth-scrolls, so wait until the scroll position has stopped changing.
+    const settle = () =>
+      page.evaluate(
+        () =>
+          new Promise<void>((done) => {
+            let last = -1;
+            let still = 0;
+            const tick = () => {
+              if (Math.abs(window.scrollY - last) < 1) {
+                if (++still >= 8) return done();
+              } else still = 0;
+              last = window.scrollY;
+              requestAnimationFrame(tick);
+            };
+            tick();
+          }),
+      );
+    const seen: number[] = [];
+    for (const id of ['about', 'experience', 'casual', 'contact']) {
+      await page.evaluate((s) => document.getElementById(s)?.scrollIntoView(), id);
+      await settle();
+      seen.push(await p());
+    }
+    expect(seen, `p never decreases as the page scrolls down: ${seen.join(' < ')}`).toEqual([...seen].sort((a, b) => a - b));
+    expect(seen[3], 'p is near the end at the contact section').toBeGreaterThan(5);
+    expect(seen[0], 'p is small at the about section').toBeLessThan(2);
+
+    // At the contact section, the first segment is full, and passed sections are marked.
+    expect(await segHeight(0), 'first segment is full once the page is past it').toBeCloseTo(100, 0);
+    expect(await page.locator('.vsn-item.passed').count(), 'sections above the current one are passed').toBeGreaterThanOrEqual(4);
+
+    // Back at the top of the rail, nothing is filled or passed.
+    await page.evaluate(() => document.getElementById('work')?.scrollIntoView());
+    await settle();
+    expect(await segHeight(3), 'a later segment is empty while still at work').toBeCloseTo(0, 0);
+  });
+
   test('hovering a link draws its hairline; the current section keeps it', async ({ page }) => {
     await open(page, 1280, 'dark');
     const link = page.locator('.nav-link[href="/blog"]');

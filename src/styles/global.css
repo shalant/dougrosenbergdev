@@ -5586,12 +5586,14 @@ h2::after {
    ============================================================================ */
 
 /* Metal name: each letter is a steel surface; a specular light follows the
-   pointer (--cx/--cy are set per letter), and idles across the name on its own. */
+   pointer, and idles across the name on its own. steel.js writes one shared point on the
+   name (--nx/--ny) and measures each letter's offset once (--ox/--oy); the letter subtracts
+   its own offset here, so the loop updates 2 elements a frame, not one per letter. */
 html[data-theme="steel"] .hero-name__letter {
   padding-bottom: 0.14em;
   margin-bottom: -0.14em;
   background-image:
-    radial-gradient(circle 170px at var(--cx, -999px) var(--cy, -999px), var(--white) 0%, transparent 68%),
+    radial-gradient(circle 170px at calc(var(--nx, -999px) - var(--ox, 0px)) calc(var(--ny, -999px) - var(--oy, 0px)), var(--white) 0%, transparent 68%),
     linear-gradient(180deg, var(--steel-bright) 0%, var(--steel-low) 100%);
   -webkit-background-clip: text;
   background-clip: text;

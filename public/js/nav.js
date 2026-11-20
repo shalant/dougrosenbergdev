@@ -41,8 +41,11 @@ window.DrNav = (function () {
         const sections = Array.from(document.querySelectorAll('section[id]'));
         const threshold = (navbar ? navbar.offsetHeight : 80) + 40;
         let currentSection = sections.length ? sections[0].id : null;
+        const tops = {};
         for (const s of sections) {
-            if (s.getBoundingClientRect().top <= threshold) currentSection = s.id;
+            const top = s.getBoundingClientRect().top;
+            tops[s.id] = top;
+            if (top <= threshold) currentSection = s.id;
         }
 
         const path = window.location.pathname.replace(/\/$/, '') || '/';
@@ -67,9 +70,31 @@ window.DrNav = (function () {
         const rail = document.getElementById('verticalSectionNav');
         if (rail) {
             rail.classList.toggle('past-hero', currentSection !== null && currentSection !== 'home');
-            rail.querySelectorAll('.vsn-item[data-section]').forEach(item => {
+            const railItems = Array.from(rail.querySelectorAll('.vsn-item[data-section]'));
+            railItems.forEach(item => {
                 item.classList.toggle('active', item.dataset.section === currentSection);
             });
+
+            // Progress down the page (2026-11-19): --vsn-p is a fractional index into the rail
+            // (0 = the first section's top, 6.5 = halfway from the 7th to the 8th). The hairline
+            // between icon k and k+1 fills as p goes from k to k+1, so the line reaches an icon
+            // exactly when that section reaches the same reference line as the active state.
+            // Sections the reader has already passed get .passed (a faint accent on the glyph).
+            // It rides the tops this pass already measured, so it adds no layout reads.
+            let idx = -1;
+            railItems.forEach((item, i) => {
+                const top = tops[item.dataset.section];
+                if (top !== undefined && top <= threshold) idx = i;
+            });
+            let p = 0;
+            if (idx >= 0) {
+                p = idx;
+                const next = idx + 1 < railItems.length ? tops[railItems[idx + 1].dataset.section] : undefined;
+                const span = next === undefined ? 0 : next - tops[railItems[idx].dataset.section];
+                if (span > 0) p += Math.min(1, Math.max(0, (threshold - tops[railItems[idx].dataset.section]) / span));
+            }
+            rail.style.setProperty('--vsn-p', p.toFixed(3));
+            railItems.forEach((item, i) => item.classList.toggle('passed', i < idx));
         }
     }
 

@@ -65,6 +65,24 @@ test.describe('homepage', () => {
     await expect(page.locator('a.nav-link[href="/consulting"]')).toBeAttached();
   });
 
+  test('a first visit follows the OS theme, without saving it', async ({ page }) => {
+    const html = page.locator('html');
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.goto('/');
+    await expect(html).toHaveAttribute('data-theme', 'light');
+    expect(await page.evaluate(() => localStorage.getItem('dr-theme'))).toBeNull();
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.reload();
+    await expect(html).toHaveAttribute('data-theme', 'dark');
+  });
+
+  test('a saved choice beats the OS theme', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.goto('/?theme=steel');
+    await page.goto('/');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'steel');
+  });
+
   test('theme toggle cycles dark, light, steel, dark and names the next theme', async ({ page }) => {
     test.setTimeout(90_000); // three view transitions; WebKit here took 24-29s against the 30s default under load
     await page.goto('/');

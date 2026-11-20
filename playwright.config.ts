@@ -12,6 +12,9 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:4322',
     trace: 'on-first-retry',
+    // First visits follow the OS theme, and Playwright's default scheme is light. Pin dark so the
+    // specs keep their dark baseline; the first-visit specs in home.spec.ts set the scheme themselves.
+    colorScheme: 'dark',
   },
   webServer: {
     command: 'npx http-server dist -p 4322 -s',

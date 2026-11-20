@@ -1,6 +1,6 @@
-// Light/dark (and hidden steel) theme: reads a saved preference, falls back to dark (the site's intended default —
-// deliberately ignores the OS/browser color-scheme setting so first-time visitors always see the
-// brand's dark navy+teal look), and applies it via a data-theme attribute on <html>. `apply()`
+// Light/dark (and hidden steel) theme: reads a saved preference, otherwise follows the OS
+// (light if the OS asks for light, else the brand's dark navy+teal default; changed 2026-11-19, it
+// used to ignore the OS setting), and applies it via a data-theme attribute on <html>. `apply()`
 // also runs synchronously and inline from BaseLayout.astro's <head> (see the blocking <script>
 // there) — before any paint — so there's no flash of the wrong theme on load.
 // DrTheme.toggle() is called later from the #themeToggle click listener, also wired up inline
@@ -23,6 +23,13 @@ window.DrTheme = (function () {
         } catch (e) { /* storage unavailable: fall through to the saved value or the default */ }
         const saved = localStorage.getItem(STORAGE_KEY);
         if (THEMES.indexOf(saved) !== -1) return saved;
+        // First visit: follow the OS. Browsers report "light" when the OS gives no signal (there is
+        // no separate "no preference" value in practice), so those visitors get light too; dark is
+        // only the fallback when matchMedia is missing. The OS-derived pick is not saved, so it
+        // keeps following the OS until the visitor chooses a theme with the toggle or ?theme=.
+        try {
+            if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
+        } catch (e) { /* no matchMedia: keep the default */ }
         return 'dark';
     }
 

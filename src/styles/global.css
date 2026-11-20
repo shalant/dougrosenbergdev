@@ -1811,6 +1811,24 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   text-decoration: none;
 }
 
+/* Progress hairline: one segment under each icon but the last, in the 16px row gap. --k is the
+   item's index and --vsn-p (set by nav.js) is how far down the rail the page has scrolled, so
+   segment k is filled by clamp(p - k, 0, 1). The fill is a background-size, not a transform. The
+   line stops 2px short of each glyph so it never touches a stroke. */
+.vsn-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: calc(100% + 2px);
+  width: 1px;
+  height: 12px;
+  background-color: rgba(var(--text-rgb), 0.18);
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-size: 100% calc(clamp(0, var(--vsn-p, 0) - var(--k, 0), 1) * 100%);
+  pointer-events: none;
+}
+
 .vsn-icon {
   flex-shrink: 0;
   width: 15px;
@@ -1820,9 +1838,39 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   transition: color 0.3s ease, filter 0.3s ease;
 }
 
+/* Hexagon-built glyphs (2026-11-19), the same family as the top nav's. Strokes rest in the
+   icon's own color (so the light theme's contrast override above still applies); the one
+   ".lit" part per glyph takes the accent when the section is current, hovered or focused.
+   --vsn-base / --vsn-lit are custom properties, not color, so the light override (which sets
+   color) cannot shadow the lit state. Motion is color and a staggered delay, no transform. */
+.vsn-icon {
+  --vsn-base: currentColor;
+  --vsn-lit: currentColor;
+}
+
 .vsn-icon svg {
   width: 100%;
   height: 100%;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+.vsn-icon .base {
+  stroke: var(--vsn-base);
+  transition: stroke 0.3s ease;
+}
+
+.vsn-icon .lit {
+  stroke: var(--vsn-lit);
+  transition: stroke 0.3s ease calc(var(--i, 0) * 80ms), fill 0.3s ease calc(var(--i, 0) * 80ms);
+}
+
+.vsn-icon .fill {
+  stroke: none;
+  fill: var(--vsn-lit);
 }
 
 .vsn-label {
@@ -1867,11 +1915,22 @@ html[data-theme="light"] .dr-theme-scope .wd-case__shot figcaption {
   width: calc(100% - 1.2rem);
 }
 
+/* Sections already scrolled past keep a faint accent on their lit part; it sits before the
+   hover/active rule so the current section still wins. */
+.vsn-item.passed .vsn-icon {
+  --vsn-lit: rgba(var(--accent-rgb), 0.55);
+}
+
 .vsn-item:hover .vsn-icon,
 .vsn-item:focus-visible .vsn-icon,
 .vsn-item.active .vsn-icon {
-  color: var(--accent);
-  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.7));
+  --vsn-base: rgba(var(--text-rgb), 0.9);
+  --vsn-lit: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vsn-icon .base,
+  .vsn-icon .lit { transition: none; }
 }
 
 @media (max-width: 1100px) {

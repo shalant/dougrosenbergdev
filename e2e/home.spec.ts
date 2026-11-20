@@ -242,6 +242,33 @@ test.describe('homepage', () => {
   });
 });
 
+test.describe('skills layers', () => {
+  test('the skills section groups all 35 tools into eight layers and keeps their brand icons', async ({ page }) => {
+    await page.goto('/');
+    const layers = page.locator('.skills-layer');
+    await expect(layers).toHaveCount(8);
+    await expect(layers.locator('.skills-layer__label')).toHaveText([
+      'Interface', 'Application', 'Data', 'Platform', 'Delivery', 'Measurement', 'Design', 'Assistants',
+    ]);
+    // 35 tools, none dropped by the regrouping; icons and wordmark logos survive the chip's box coming off.
+    await expect(page.locator('.skills-layer .tech-chip')).toHaveCount(35);
+    expect(await page.locator('.skills-layer .tech-chip img, .skills-layer .tech-chip__icon--tint').count()).toBeGreaterThanOrEqual(28);
+    // Bare items: no chip box.
+    const box = await page.locator('.skills-layer .tech-chip').first().evaluate((el) => {
+      const cs = getComputedStyle(el);
+      return { border: cs.borderTopColor, bg: cs.backgroundColor };
+    });
+    expect(box.border).toBe('rgba(0, 0, 0, 0)');
+    expect(box.bg).toBe('rgba(0, 0, 0, 0)');
+  });
+
+  test('the layers fit the screen with no sideways scroll', async ({ page }) => {
+    await page.goto('/#technicalskills');
+    await page.locator('.skills-layers').scrollIntoViewIfNeeded();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+});
+
 test.describe('github stats count-up', () => {
   test('lands on the real values, which screen readers get throughout', async ({ page }) => {
     await page.goto('/');

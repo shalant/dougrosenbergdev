@@ -166,6 +166,8 @@ Process note for future audits: re-score the whole page after each merge rather 
 | 2026-11-14 | good cop, `master` after #77 (my judgment, desktop dark plus light and mobile spot checks) | 88 | Experience bullets are now nine same-weight paragraphs, so scannability slipped a point |
 | 2026-11-14 | bad cop, same build (my judgment) | 77 | Friars wall of text, 265px job tabs, Skills chip wall, small Music section, stock palette |
 | 2026-11-14 | bad cop, after the figure ledger and compact sticky rail (estimate, my judgment) | 78 to 79 | About +1 each for the ledger and the rail; the palette and the Skills chips still cost the most |
+| 2026-11-19 | good cop, live site after #92 (my judgment; desktop 1440 and mobile 390, all three themes, reduced motion, Chromium emulation) | 90 | Hero 19/20, typography 14/15, color 14/15, layout 12/15, showing work 13/15, motion 9/10 (carried over, not re-seen), polish 9/10. Steel is now the default first view, the nav and rail glyphs landed, and the three themes read as one system. Layout holds at 12 for the Experience card's dead zone and the Skills chip wall. Same model that built part of it scored it: allow about three points either way |
+| 2026-11-19 | bad cop, same build (my judgment) | 82 | Up from 78 to 79: steel as the first view mostly lifts the stock-palette cost, and the dial, lit grid and metal name are memorable. Still costing: Skills chip wall, a dead zone of about 400px inside the Experience card at desktop (new), the small Music strip, Friars still dense. Dark and light keep the navy and teal look, so the palette gain applies to the steel first view |
 
 ## Live re-audit (2026-11-01) and follow-up polish
 

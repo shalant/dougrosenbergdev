@@ -65,11 +65,11 @@ test.describe('homepage', () => {
     await expect(page.locator('a.nav-link[href="/consulting"]')).toBeAttached();
   });
 
-  test('a first visit follows the OS theme, without saving it', async ({ page }) => {
+  test('a first visit gets dark from a dark OS and steel otherwise, without saving it', async ({ page }) => {
     const html = page.locator('html');
-    await page.emulateMedia({ colorScheme: 'light' });
+    await page.emulateMedia({ colorScheme: 'light' }); // also what browsers report with no OS signal
     await page.goto('/');
-    await expect(html).toHaveAttribute('data-theme', 'light');
+    await expect(html).toHaveAttribute('data-theme', 'steel');
     expect(await page.evaluate(() => localStorage.getItem('dr-theme'))).toBeNull();
     await page.emulateMedia({ colorScheme: 'dark' });
     await page.reload();
@@ -77,10 +77,10 @@ test.describe('homepage', () => {
   });
 
   test('a saved choice beats the OS theme', async ({ page }) => {
-    await page.emulateMedia({ colorScheme: 'light' });
-    await page.goto('/?theme=steel');
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.goto('/?theme=light');
     await page.goto('/');
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'steel');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   });
 
   test('theme toggle cycles dark, light, steel, dark and names the next theme', async ({ page }) => {

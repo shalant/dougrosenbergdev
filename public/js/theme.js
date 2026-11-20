@@ -23,14 +23,15 @@ window.DrTheme = (function () {
         } catch (e) { /* storage unavailable: fall through to the saved value or the default */ }
         const saved = localStorage.getItem(STORAGE_KEY);
         if (THEMES.indexOf(saved) !== -1) return saved;
-        // First visit: follow the OS. Browsers report "light" when the OS gives no signal (there is
-        // no separate "no preference" value in practice), so those visitors get light too; dark is
-        // only the fallback when matchMedia is missing. The OS-derived pick is not saved, so it
-        // keeps following the OS until the visitor chooses a theme with the toggle or ?theme=.
+        // First visit: an OS that asks for dark gets dark; everyone else gets steel, the site's
+        // lead theme. Browsers report "light" when the OS gives no signal (there is no separate
+        // "no preference" value in practice), so "no signal" and "OS says light" cannot be told
+        // apart: both land on steel, and light is reached with the toggle. The pick is not saved,
+        // so it keeps following the OS until the visitor chooses a theme with the toggle or ?theme=.
         try {
-            if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
-        } catch (e) { /* no matchMedia: keep the default */ }
-        return 'dark';
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+        } catch (e) { /* no matchMedia: use the default */ }
+        return 'steel';
     }
 
     function apply(theme) {

@@ -164,6 +164,37 @@ test.describe('homepage', () => {
     await expect(page.locator('.steel-dial')).toHaveCount(0);
   });
 
+  test('the steel hero light reads no layout per frame, and a touch screen runs no loop', async ({ page }) => {
+    // Regression for the 2026-11-20 finding: tick() read getBoundingClientRect() on the hero and
+    // on every letter each frame, forcing layout, which kept a throttled phone's main thread busy.
+    await page.addInitScript(() => {
+      (window as any).__reads = 0;
+      const orig = Element.prototype.getBoundingClientRect;
+      Element.prototype.getBoundingClientRect = function () {
+        const c = (this as Element).classList;
+        if (c && (c.contains('hero-name__letter') || c.contains('hero-name__letters') || c.contains('hero-section'))) (window as any).__reads++;
+        return orig.call(this);
+      };
+    });
+    await page.goto('/?theme=steel');
+    await page.waitForTimeout(3000); // the letters finish rising and the geometry is measured once
+    await page.evaluate(() => { (window as any).__reads = 0; });
+    await page.waitForTimeout(1500);
+    expect(await page.evaluate(() => (window as any).__reads)).toBeLessThan(40);
+
+    const hover = await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches);
+    const motion = await page.evaluate(() => !matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const nx = () => page.locator('.hero-name__letters').evaluate((el) => (el as HTMLElement).style.getPropertyValue('--nx'));
+    const a = await nx();
+    await page.waitForTimeout(700);
+    const b = await nx();
+    expect(a).not.toBe(''); // the light is placed either way
+    if (hover && motion) expect(b).not.toBe(a); // a mouse device drifts
+    else expect(b).toBe(a); // a touch screen or reduced motion holds one fixed light
+    // Each letter's own offset is measured once, so the letter can derive its point in CSS.
+    expect(await page.locator('.hero-name__letter').first().evaluate((el) => (el as HTMLElement).style.getPropertyValue('--ox'))).not.toBe('');
+  });
+
   test('a rapid triple toggle mid-reveal lands back on dark', async ({ page }) => {
     // Each click starts a view transition while the previous is still animating, which
     // skips it; every theme update must still apply, so three clicks complete the cycle.

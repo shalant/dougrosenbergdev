@@ -4,13 +4,17 @@ import TechChip from './TechChip.astro';
 import siteProperties from '../data/siteproperties.json';
 import { loadGithubStats } from '../lib/githubStats';
 
-const categories = [
-  { label: 'Languages', chips: ['C#', 'JavaScript', 'TypeScript', 'SQL', 'HTML / CSS'] },
-  { label: 'Frameworks & UI', chips: ['.NET 10', 'Blazor', '.NET MAUI (Blazor Hybrid)', 'Angular', 'React', 'Astro', 'Node.js', 'MudBlazor', 'Bootstrap'] },
-  { label: 'Cloud & Infrastructure', chips: ['Azure', 'AWS', 'Docker', 'Linux', 'macOS', 'Github Actions', 'Digital Ocean', 'SQL Server', 'Cloudflare'] },
-  { label: 'Tooling & Design', chips: ['Figma', 'Squarespace', 'GitLab', 'Entity Framework', 'Syncfusion', 'DevExpress'] },
-  { label: 'Marketing & Analytics', chips: ['Google Analytics', 'Meta Pixel', 'Meta Conversions API'] },
-  { label: 'AI Tools', chips: ['Claude', 'Gemini', 'Copilot'] },
+// Grouped by where each tool sits in a system, top to bottom, rather than by type
+// (2026-11-19, replacing the six type groups and their uniform chip wall). Same 35 tools.
+const layers = [
+  { label: 'Interface', note: 'What people touch', chips: ['HTML / CSS', 'JavaScript', 'TypeScript', 'Blazor', 'MudBlazor', 'Angular', 'React', 'Astro', 'Bootstrap', '.NET MAUI (Blazor Hybrid)'] },
+  { label: 'Application', note: 'Where the logic lives', chips: ['C#', '.NET 10', 'Node.js', 'Entity Framework', 'Syncfusion', 'DevExpress'] },
+  { label: 'Data', note: 'Where it is kept', chips: ['SQL', 'SQL Server'] },
+  { label: 'Platform', note: 'Where it runs', chips: ['Azure', 'AWS', 'Digital Ocean', 'Cloudflare', 'Docker', 'Linux', 'macOS'] },
+  { label: 'Delivery', note: 'How it ships', chips: ['Github Actions', 'GitLab'] },
+  { label: 'Measurement', note: 'How it is checked', chips: ['Google Analytics', 'Meta Pixel', 'Meta Conversions API'] },
+  { label: 'Design', note: 'How it is shaped', chips: ['Figma', 'Squarespace'] },
+  { label: 'Assistants', note: 'What helps along the way', chips: ['Claude', 'Gemini', 'Copilot'] },
 ];
 
 // Fetched at build time (see src/lib/githubStats.ts): a GitHub rate limit or
@@ -58,12 +62,16 @@ const statTiles = (githubStats
       <SectionDivider />
     </div>
 
-    <div class="skills-grid">
-      {categories.map((cat) => (
-        <div class="skills-category">
-          <span class="skills-category__label">{cat.label}</span>
-          <div class="skills-category__chips reveal-on-scroll">
-            {cat.chips.map((chip) => <TechChip name={chip} />)}
+    <div class="skills-layers">
+      {layers.map((layer) => (
+        <div class="skills-layer">
+          <svg class="skills-layer__node" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 1 L12.2 4 V10 L7 13 L1.8 10 V4 Z" /></svg>
+          <div class="skills-layer__name">
+            <span class="skills-layer__label">{layer.label}</span>
+            <span class="skills-layer__note">{layer.note}</span>
+          </div>
+          <div class="skills-layer__items reveal-on-scroll">
+            {layer.chips.map((chip) => <TechChip name={chip} />)}
           </div>
         </div>
       ))}

@@ -54,6 +54,22 @@ test.describe('homepage', () => {
     expect(hits).toEqual([]);
   });
 
+  test('gtag.js is not requested during load, and arrives on first interaction', async ({ page }) => {
+    // The analytics script is deferred so it cannot compete with first paint; the
+    // dataLayer queue and consent defaults must still be in place before it loads.
+    const gtagReqs: string[] = [];
+    page.on('request', (req) => {
+      if (/googletagmanager\.com\/gtag\/js/.test(req.url())) gtagReqs.push(req.url());
+    });
+    await page.route(/googletagmanager\.com\/gtag\/js/, (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: '' }));
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    expect(gtagReqs).toEqual([]);
+    expect(await page.evaluate(() => (window as any).dataLayer.some((e: any) => e[0] === 'consent' && e[1] === 'default'))).toBe(true);
+    await page.mouse.move(50, 50);
+    await page.keyboard.press('Tab');
+    await expect.poll(() => gtagReqs.length).toBe(1);
+  });
+
   test('nav links to the client-work pages', async ({ page }) => {
     await page.goto('/');
     // CSS selectors + toBeAttached (plain DOM presence), not getByRole/toBeVisible - below

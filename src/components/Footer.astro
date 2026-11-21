@@ -1,7 +1,16 @@
 ---
 import siteProperties from '../data/siteproperties.json';
+import landingPages from '../data/landing-pages.json';
 
 const property = siteProperties;
+
+// Sitewide crawlable links to the two landing pages. Google had listed both as "discovered,
+// not indexed" with only the sitemap pointing at them (2026-11-21); paths come from the data
+// file so a moved page can't leave a dead footer link.
+const landingLinks = [
+  { label: 'web design for Chicago businesses', href: landingPages['chicago-web-design'].path },
+  { label: 'websites for musicians', href: landingPages['musician-websites'].path },
+];
 const year = new Date().getFullYear();
 
 const socials = [
@@ -26,6 +35,9 @@ const socials = [
       <span class="site-footer__name">{property.name}</span>
       <span class="site-footer__title">{property.title}</span>
       <span class="site-footer__copy">&copy; {year}. Built with Astro.</span>
+      <nav class="site-footer__links" aria-label="Web design services">
+        {landingLinks.map((l) => <a class="site-footer__login" href={l.href}>{l.label}</a>)}
+      </nav>
       <a class="site-footer__login" href="https://admin.dougrosenbergdev.com" target="_blank" rel="noopener">client login</a>
     </div>
 

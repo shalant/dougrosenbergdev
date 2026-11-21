@@ -4668,6 +4668,17 @@ html[data-theme="light"] .dr-theme-scope .contact-field textarea {
   color: var(--text);
 }
 
+.site-footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.site-footer__links .site-footer__login {
+  margin-top: 0;
+}
+
 /* Right column */
 .site-footer__right {
   display: flex;

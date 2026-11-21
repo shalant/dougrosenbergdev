@@ -106,9 +106,6 @@ const arborKinLd = {
   <link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono.woff2" crossorigin />
   <link rel="preload" as="image" href="/images/artDecoBackground1.webp" />
 
-  <link rel="preconnect" href="https://www.googletagmanager.com" />
-  <link rel="preconnect" href="https://www.google-analytics.com" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3H1NB9ES0L"></script>
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
@@ -145,6 +142,31 @@ const arborKinLd = {
     // were ~99% of all GA4 traffic and every key event (see PORT_TODO.md).
     // Without a config call, later gtag('event', ...) calls have no target.
     if (location.hostname === 'dougrosenbergdev.com') gtag('config', 'G-3H1NB9ES0L');
+    // gtag.js itself (about 170 KB of script) loads after the page settles instead of
+    // racing first paint: on a throttled phone it was nearly all of the blocking time
+    // (2026-11-20 A/B: 502 ms -> 70 ms). Everything above is already queued on
+    // dataLayer, so events replay in order when it arrives and consent still defaults
+    // first. Trigger: first interaction, or browser idle after load (4 s cap). A visit
+    // that ends before either is not counted.
+    (function () {
+      var started = false;
+      function load() {
+        if (started) return;
+        started = true;
+        ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (t) { removeEventListener(t, load); });
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3H1NB9ES0L';
+        document.head.appendChild(s);
+      }
+      ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (t) { addEventListener(t, load, { passive: true, once: true }); });
+      function afterLoad() {
+        if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 4000 });
+        else setTimeout(load, 2500);
+      }
+      if (document.readyState === 'complete') afterLoad();
+      else addEventListener('load', afterLoad);
+    })();
   </script>
 
   <!-- Sets data-theme on <html> before first paint - must run before CSS-driven paint,

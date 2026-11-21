@@ -11,8 +11,8 @@
 #
 # HSTS: raised in steps so a mistake expires quickly. 300 (5 min) on
 # 2026-10-03, then 86400 (1 day) the same night after the live CSP sweep found
-# nothing wrong over HTTPS. Next: 604800 (1 week), then 31536000 (1 year), a few
-# days apart. No includeSubDomains or preload:
+# nothing wrong over HTTPS, then 604800 (1 week) on 2026-11-21. Next: 31536000 (1 year)
+# once a week at 604800 has passed with no HTTPS problems. No includeSubDomains or preload:
 # admin.dougrosenbergdev.com is a separate app, and preload is hard to undo.
 #
 # CSP is Report-Only: violations show in the browser console and block nothing.
@@ -36,7 +36,7 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
-  Strict-Transport-Security: max-age=86400
+  Strict-Transport-Security: max-age=604800
   Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'sha256-6x/HJgdn7Qlu/rRrcpL95ztBriDJVCSLdpCdoOmoJ8s=' 'sha256-7I3jS0XopVNC9LP8YCKW0Z+SWacVhielbdKgP80Ukw0=' 'sha256-9G8GE6SZKJxg6OTxHwd7+6PtbjCZr+LNo1gR4fM8+Ls=' 'sha256-AFxgBwe73E12bug/Z5cl8ktxCjt6PQxxmibZho3ZUkw=' 'sha256-DuHvhuCyN37BfqrESQApZFD4TObLcxSq/k6MS5ispIc=' 'sha256-MtP13hwB4rdezzccWjOmlObfOpeQvRvTQUfYfiKOMUI=' 'sha256-QBkoE/oBtlEZT0d1d/qEm7Mj86gHQWVs+SdJWs8N43Y=' 'sha256-YZKjyppgwTW4BJUiGIxog4PRh/a/6OGHnaO1EP49Z1E=' 'sha256-lf4cHCGz0BIWeyf63qO0QqZDqo2MLMNreWLkVNni2yc=' 'sha256-tjYfCaiyri0ziO0ZvxwPLdGiWfjDHW+ZF0IOfx3mPho=' 'sha256-vPDxpEShOPBcQEvJC33RKDkEPmhVXozSiG7xm60Npwk=' 'sha256-zca4Zf87YHVizANpDAY0vA7lIejTqUUazY60xfrUiRQ=' https://static.cloudflareinsights.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
 # Astro's own content-hashed build output (/_astro/*.css, *.js, images processed

@@ -165,13 +165,20 @@ test.describe('homepage', () => {
   test('steel extras (dial, progress ring, etched titles) exist only under steel and tear down', async ({ page }) => {
     await page.goto('/?theme=steel');
     await expect(page.locator('.steel-dial')).toHaveCount(1);
-    await expect(page.locator('.steel-progress')).toHaveCount(1);
+    // The ring and the scroll-driven needle are fine-pointer only: on a touch screen the :root write
+    // on every scroll frame was part of a twitchy phone scroll (2026-11-21).
+    const fine = await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches);
+    await expect(page.locator('.steel-progress')).toHaveCount(fine ? 1 : 0);
     // Titles are only etched in with motion (the WebKit projects run with reduced motion; see playwright.config.ts).
     const motion = await page.evaluate(() => !matchMedia('(prefers-reduced-motion: reduce)').matches);
     if (motion) await expect(page.locator('.steel-etch').first()).toBeAttached();
-    // Scrolling moves the needle's input and the ring's readout off zero.
+    // Scrolling moves the needle's input and the ring's readout off zero; a touch screen writes nothing.
     await page.evaluate(() => window.scrollTo(0, 1500));
-    await expect(page.locator('.steel-progress__label')).not.toHaveText('0');
+    if (fine) await expect(page.locator('.steel-progress__label')).not.toHaveText('0');
+    else {
+      await page.waitForTimeout(300);
+      expect(await page.evaluate(() => document.documentElement.style.getPropertyValue('--steel-p'))).toBe('');
+    }
     await page.locator('.theme-toggle').click();
     await expect(page.locator('.steel-dial')).toHaveCount(0);
     await expect(page.locator('.steel-progress')).toHaveCount(0);

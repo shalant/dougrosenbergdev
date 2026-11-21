@@ -60,28 +60,38 @@ window.DrSteel = (function () {
         const motion = !reduceMotion();
         const hero = document.querySelector('.hero-section');
 
+        // Fine pointers only (a mouse or trackpad). A touch screen gets no scroll-driven needle
+        // and no progress ring: --steel-p is written on :root, so every scroll frame restyled the
+        // whole document, and nav.js then read every section's rect in the same frame. On a
+        // Galaxy S21 in Firefox that was part of a twitchy scroll (2026-11-21, see PORT_TODO.md);
+        // the ring is also display:none under 821px, so a phone saw only the needle, on a dial at
+        // 40% opacity. The needle stays at its start angle there.
+        const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
         // Scroll progress: drives the dial needle and the ring.
-        const progress = buildProgress();
-        document.body.appendChild(progress.wrap);
-        cleanup.push(() => progress.wrap.remove());
-        let scrollFrame = 0;
-        function readScroll() {
-            scrollFrame = 0;
-            const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-            const p = Math.min(1, Math.max(0, window.scrollY / max));
-            root.style.setProperty('--steel-p', p.toFixed(4));
-            progress.label.textContent = Math.round(p * 100);
+        if (fine) {
+            const progress = buildProgress();
+            document.body.appendChild(progress.wrap);
+            cleanup.push(() => progress.wrap.remove());
+            let scrollFrame = 0;
+            const readScroll = () => {
+                scrollFrame = 0;
+                const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+                const p = Math.min(1, Math.max(0, window.scrollY / max));
+                root.style.setProperty('--steel-p', p.toFixed(4));
+                progress.label.textContent = Math.round(p * 100);
+            };
+            const onScroll = () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(readScroll); };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            readScroll();
+            cleanup.push(() => {
+                window.removeEventListener('scroll', onScroll);
+                window.removeEventListener('resize', onScroll);
+                cancelAnimationFrame(scrollFrame);
+                root.style.removeProperty('--steel-p');
+            });
         }
-        function onScroll() { if (!scrollFrame) scrollFrame = requestAnimationFrame(readScroll); }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
-        readScroll();
-        cleanup.push(() => {
-            window.removeEventListener('scroll', onScroll);
-            window.removeEventListener('resize', onScroll);
-            cancelAnimationFrame(scrollFrame);
-            root.style.removeProperty('--steel-p');
-        });
 
         if (hero) {
             const dial = buildDial();
@@ -156,9 +166,9 @@ window.DrSteel = (function () {
 
             // Only a fine pointer gets the moving light; a phone has no pointer to follow, and
             // its idle drift was the whole cost.
-            const loops = motion && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+            const loops = motion && fine;
             const onScrollPos = () => { scrollX = window.scrollX; scrollY = window.scrollY; };
-            window.addEventListener('scroll', onScrollPos, { passive: true });
+            if (loops) window.addEventListener('scroll', onScrollPos, { passive: true });
             let ro = null;
             let io = null;
             const move = (e) => { pointer = { x: e.clientX, y: e.clientY }; };

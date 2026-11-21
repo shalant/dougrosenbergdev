@@ -41,6 +41,8 @@ for (const { path, h1, schema, caseStudy } of pages) {
 test('/services/ links to both landing pages', async ({ page }) => {
   await page.goto('/services/');
   for (const { path } of pages) {
-    await expect(page.locator(`a[href="${path}"]`)).toHaveCount(1);
+    // The footer (and the nav's "more" menu) link both pages on every page, so count the
+    // link in the page body only.
+    await expect(page.locator(`a[href="${path}"]:not(.navbar-wrapper a):not(.site-footer a)`)).toHaveCount(1);
   }
 });

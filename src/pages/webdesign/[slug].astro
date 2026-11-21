@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import webDesign from '../../data/webdesign.json';
+import { publicImageSize } from '../../lib/imageSize';
 
 export function getStaticPaths() {
   return webDesign.projects.map((project) => ({
@@ -12,6 +13,8 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+const heroSize = project.images.length > 0 ? await publicImageSize(project.images[0]) : null;
+const beforeSize = project.beforeImage ? await publicImageSize(project.beforeImage) : null;
 ---
 
 <BaseLayout
@@ -45,7 +48,7 @@ const { project } = Astro.props;
 
       {project.images.length > 0 && (
         <figure class="wd-case__hero-shot">
-          <img src={project.images[0]} alt={`${project.name} — primary screenshot`} loading="lazy" />
+          <img src={project.images[0]} alt={`${project.name} — primary screenshot`} width={heroSize?.width} height={heroSize?.height} loading="lazy" />
           {project.imageCaptions?.[0] && <figcaption>{project.imageCaptions[0]}</figcaption>}
         </figure>
       )}
@@ -54,11 +57,11 @@ const { project } = Astro.props;
         <div class="wd-case__before-after">
           <div class="wd-case__ba-shot wd-case__ba-shot--before">
             <span class="wd-case__ba-badge">Before</span>
-            <img src={project.beforeImage} alt={`${project.name} before`} loading="lazy" />
+            <img src={project.beforeImage} alt={`${project.name} before`} width={beforeSize?.width} height={beforeSize?.height} loading="lazy" />
           </div>
           <div class="wd-case__ba-shot wd-case__ba-shot--after">
             <span class="wd-case__ba-badge">After</span>
-            <img src={project.images[0]} alt={`${project.name} after`} loading="lazy" />
+            <img src={project.images[0]} alt={`${project.name} after`} width={heroSize?.width} height={heroSize?.height} loading="lazy" />
           </div>
           {project.beforeCaption && (
             <p class="wd-case__ba-caption">

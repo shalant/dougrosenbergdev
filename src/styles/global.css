@@ -5746,3 +5746,26 @@ html[data-theme="steel"] .hero-section::after {
   opacity: 0.07;
 }
 
+
+/* ============================================================================
+   LITE MODE (experiment, 2026-11-21). html[data-lite] is set by public/js/steel.js from
+   ?lite=1|2|3 (remembered; ?lite=0 clears). Levels are cumulative so a phone can bisect:
+   1 = steel.js work off (JS only, no CSS here), 2 = no blend layers, 3 = no navbar/footer blur.
+   ============================================================================ */
+html[data-lite="2"] *,
+html[data-lite="2"] *::before,
+html[data-lite="2"] *::after,
+html[data-lite="3"] *,
+html[data-lite="3"] *::before,
+html[data-lite="3"] *::after {
+  mix-blend-mode: normal !important;
+}
+
+html[data-lite="3"] .navbar-wrapper,
+html[data-lite="3"] .navbar-wrapper.scrolled,
+html[data-lite="3"] .site-footer {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(var(--surface-nav-rgb), 0.97) !important;
+  transition: none !important;
+}

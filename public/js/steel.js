@@ -12,6 +12,21 @@ window.DrSteel = (function () {
 
     let live = null; // teardown for the running theme, or null
 
+    // EXPERIMENT (2026-11-21, branch lite-mode-experiment-2026-11-21): ?lite=1|2|3 turns on
+    // cumulative "lite" levels for testing scroll smoothness on a phone; ?lite=0 turns it off.
+    // The level is remembered in localStorage and written to <html data-lite>. Level 1 skips this
+    // file's scroll/dial/light work, 2 also drops the mix-blend-mode layers, 3 also drops the
+    // navbar blur (CSS in global.css, "Lite mode"). Throwaway: not for merging as is.
+    try {
+        const asked = new URLSearchParams(location.search).get('lite');
+        if (asked !== null) {
+            if (['1', '2', '3'].indexOf(asked) !== -1) localStorage.setItem('dr-lite', asked);
+            else localStorage.removeItem('dr-lite');
+        }
+        const lvl = localStorage.getItem('dr-lite');
+        if (lvl === '1' || lvl === '2' || lvl === '3') root.setAttribute('data-lite', lvl);
+    } catch (e) { /* storage unavailable: no lite mode */ }
+
     function el(name, attrs, parent) {
         const node = document.createElementNS(SVG, name);
         for (const k in attrs) node.setAttribute(k, attrs[k]);
@@ -247,7 +262,7 @@ window.DrSteel = (function () {
     }
 
     function sync() {
-        if (root.getAttribute('data-theme') === 'steel') start();
+        if (root.getAttribute('data-theme') === 'steel' && !root.hasAttribute('data-lite')) start();
         else if (live) live();
     }
 

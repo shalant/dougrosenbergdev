@@ -50,7 +50,8 @@ const cornerNames = ['tl', 'tr', 'br', 'bl'];
         {images.map((img, i) => (
           <img
             class="wd-project__frame-img"
-            src={img}
+            src={i === 0 || images.length === 1 ? img : undefined}
+            data-src={i > 0 && images.length > 1 ? img : undefined}
             alt={alt}
             style={images.length > 1 ? `animation-name:${keyframeName(images.length, i)}` : undefined}
             loading="lazy"
@@ -72,3 +73,30 @@ const cornerNames = ['tl', 'tr', 'br', 'bl'];
     </>
   )}
 </div>
+
+<script>
+  // Only the first screenshot of a crossfade loads with the page. The rest are fetched when
+  // the card is within half a screen of the viewport, and the crossfade starts (the
+  // .is-loaded class, see global.css) only once they have all arrived, so it never fades to a
+  // blank frame. Before, every frame of every card downloaded as soon as the card got close
+  // (about 150-200 KB per card), which cost bytes and decode time while a phone was scrolling.
+  // Without JS the card simply stays on its first image.
+  const stages = document.querySelectorAll<HTMLElement>('.wd-project__frame-stage');
+  const pending = Array.from(stages).filter((s) => s.querySelector('img[data-src]'));
+  if (pending.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const stage = entry.target as HTMLElement;
+        io.unobserve(stage);
+        const rest = Array.from(stage.querySelectorAll<HTMLImageElement>('img[data-src]'));
+        Promise.all(rest.map((img) => new Promise<void>((done) => {
+          img.addEventListener('load', () => done(), { once: true });
+          img.addEventListener('error', () => done(), { once: true });
+          img.src = img.dataset.src!;
+        }))).then(() => stage.classList.add('is-loaded'));
+      }
+    }, { rootMargin: '50% 0px' });
+    pending.forEach((s) => io.observe(s));
+  }
+</script>

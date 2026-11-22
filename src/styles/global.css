@@ -3337,7 +3337,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   animation-play-state: paused;
 }
 
-.wd-project__frame-stage.is-active .wd-project__frame-img {
+.wd-project__frame-stage.is-active.is-loaded .wd-project__frame-img {
   animation-play-state: running;
 }
 
@@ -3350,7 +3350,7 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
    pointer capable of hovering", so just auto-play there instead of waiting
    for an interaction that will never come. */
 @media (hover: none) {
-  .wd-project__frame-img {
+  .wd-project__frame-stage.is-loaded .wd-project__frame-img {
     animation-play-state: running;
   }
 }

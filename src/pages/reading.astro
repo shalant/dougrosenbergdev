@@ -1,0 +1,392 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import papers from '../data/papers.json';
+import { jsUrl } from '../lib/jsUrl';
+
+// Subject order is the spectrum order, left to right (violet, blue, teal, lime). The data file
+// lists the books in shelf order, so the spectrum falls out of the order of `subjects`.
+const subjectIndex: Record<string, number> = Object.fromEntries(papers.subjects.map((s, i) => [s.id, i]));
+// Sorted by subject (stable), so the spines, their groups and the panels all share one order.
+const books = papers.books
+  .map((b) => ({ ...b, c: subjectIndex[b.subject] ?? 0 }))
+  .sort((a, b) => a.c - b.c)
+  .map((b, i) => ({ ...b, i }));
+const firstReal = Math.max(0, books.findIndex((b) => !b.empty));
+---
+
+<BaseLayout title={`${papers.title} — Doug Rosenberg`} description={papers.description}>
+  <Fragment slot="head">
+    {/* Without JavaScript every paper's panel shows, stacked, and the spines are plain links to them. */}
+    <noscript><style>.paper{display:block !important}</style></noscript>
+  </Fragment>
+
+  <Header />
+
+  <section class="reading-head" id="reading-head">
+    <div class="reading-head__grid" aria-hidden="true"></div>
+    <div class="reading-container">
+      <h1 class="reading-head__title">{papers.title}</h1>
+      <p class="reading-head__sub">{papers.subtitle}</p>
+    </div>
+  </section>
+
+  <section class="reading-shelf" id="shelf" data-shelf>
+    <div class="reading-container">
+      <div class="shelf" role="group" aria-label="Papers on the shelf">
+        {papers.subjects.map((_, si) => (
+          <div class="shelf__group">
+            {books.filter((b) => b.c === si).map((b) => (
+              <a
+                class={`spine c${b.c}${b.empty ? ' is-empty' : ''}`}
+                href={`#paper-${b.i}`}
+                aria-controls={`paper-${b.i}`}
+                aria-current={b.i === firstReal ? 'true' : undefined}
+              >
+                {b.spine}
+              </a>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <div class="shelf-axis" aria-hidden="true">
+        <span>{papers.axis.left}</span>
+        <span>{papers.axis.right}</span>
+      </div>
+
+      <ul class="shelf-legend" aria-label="Subjects, left to right">
+        {papers.subjects.map((s, i) => (
+          <li class={`c${i}`}><span class="dot" aria-hidden="true"></span>{s.name}</li>
+        ))}
+      </ul>
+
+      <div class="papers" aria-live="polite">
+        {books.map((b) => (
+          <article class={`paper c${b.c}${b.i === firstReal ? ' is-current' : ''}`} id={`paper-${b.i}`}>
+            {b.empty ? (
+              <>
+                <p class="paper__subject"><span class="dot" aria-hidden="true"></span>{papers.subjects[b.c].name}</p>
+                <h2 class="paper__title">An empty slot</h2>
+                <p class="paper__text">{b.note}</p>
+              </>
+            ) : (
+              <>
+                <p class="paper__subject"><span class="dot" aria-hidden="true"></span>{papers.subjects[b.c].name}</p>
+                <h2 class="paper__title">{b.title}</h2>
+                <p class="paper__meta">{b.authors}. {b.edition}. <span class="paper__status">{b.status}.</span></p>
+                {b.why && <p class="paper__text">{b.why}</p>}
+                <p class="paper__text">{b.summary}</p>
+                {b.inMyWork && <p class="paper__text"><strong>Where it shows in my work.</strong> {b.inMyWork}</p>}
+                {b.posts && b.posts.length > 0 && (
+                  <ul class="paper__posts">
+                    {b.posts.map((p) => (
+                      <li><a href={`/blog/${p.slug}/`}>{p.title}</a></li>
+                    ))}
+                  </ul>
+                )}
+                {b.source && (
+                  <p class="paper__text"><a class="paper__source" href={b.source.url} target="_blank" rel="noopener">{b.source.label}</a></p>
+                )}
+              </>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+
+  <script is:inline src={jsUrl('reading.js')}></script>
+</BaseLayout>
+
+<style>
+  .reading-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header band: the same quiet dotted grid the other subpages use, but compact, because the
+     shelf is the point of the page and should be on the first screen. */
+  .reading-head {
+    background: var(--bg-hero);
+    color: var(--text);
+    padding: clamp(7rem, 13vw, 9.5rem) 0 clamp(2rem, 5vw, 3.25rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reading-head__grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(var(--accent-rgb), 0.1) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+
+  .reading-head__title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 7.5vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin: 0 0 1rem 0;
+    /* The global h1 is the steel-metal gradient text; subpages use a solid heading color so it
+       reads in every theme (it washed out to near white on the light theme). */
+    background-image: none;
+    color: var(--heading);
+    -webkit-text-fill-color: var(--heading);
+    text-shadow: none;
+  }
+
+  .reading-head__sub {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    font-weight: 300;
+    margin: 0;
+    color: rgba(var(--text-rgb), 0.75);
+  }
+
+  .reading-shelf {
+    background: var(--bg);
+    color: var(--text);
+    padding: 2.5rem 0 5rem;
+  }
+
+  /* The shelf. Subject color is a mark (the base of each spine, the dashed edge of an empty
+     slot, a soft wash behind the shelf), never the text color, so contrast does not depend on it. */
+  .shelf {
+    --spine-h: 12.5rem;
+    --spine-w: 54px;
+    /* Four equal columns, one per subject, so a book's place along the shelf is its place on the
+       spectrum (pure theory on the left, hands-on craft on the right) however few books there are. */
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: end;
+    column-gap: 1.25rem;
+    padding: 2rem 1rem 0;
+    min-height: calc(var(--spine-h) + 3rem);
+    border-bottom: 6px solid rgba(var(--text-rgb), 0.28);
+    overflow-x: auto;
+    background: linear-gradient(
+      90deg,
+      rgba(var(--spec-0-rgb), 0.2),
+      rgba(var(--spec-1-rgb), 0.18),
+      rgba(var(--spec-2-rgb), 0.18),
+      rgba(var(--spec-3-rgb), 0.2)
+    );
+  }
+
+  .c0 { --c: var(--spec-0); }
+  .c1 { --c: var(--spec-1); }
+  .c2 { --c: var(--spec-2); }
+  .c3 { --c: var(--spec-3); }
+
+  .spine {
+    flex: none;
+    width: var(--spine-w);
+    height: var(--spine-h);
+    writing-mode: vertical-rl;
+    padding: 14px 8px;
+    display: flex;
+    align-items: flex-start;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: rgba(var(--text-rgb), 0.85);
+    background: rgba(var(--text-rgb), 0.07);
+    border: 1px solid rgba(var(--text-rgb), 0.2);
+    border-bottom: 0;
+    box-shadow: inset 0 -5px 0 var(--c);
+    /* Every state uses the same function list (perspective, translate3d, rotate), so the browser
+       interpolates it cleanly. perspective() is per spine, with its origin at the bottom left, so
+       a book pulled toward the viewer grows from its own baseline and never drifts sideways. */
+    transform: perspective(700px) translate3d(0, 0, 0) rotate(0deg);
+    transform-origin: 0 100%;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease, color 0.2s ease;
+  }
+
+  .shelf__group {
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
+  }
+
+  .spine.is-empty {
+    background: transparent;
+    border: 1px dashed var(--c);
+    border-bottom: 0;
+    box-shadow: none;
+    color: rgba(var(--text-rgb), 0.7);
+    font-weight: 500;
+    font-size: 0.92rem;
+  }
+
+  @media (hover: hover) {
+    .spine:not([aria-current='true']):hover {
+      transform: perspective(700px) translate3d(0, -8px, 0) rotate(0deg);
+      color: var(--text);
+    }
+  }
+
+  .spine:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* The selected book leans at 30 degrees, the logo hexagon's angle, and slides 60px toward the
+     viewer on the Z axis, with a shadow cast back onto the shelf. Its margin makes room for the
+     lean (half its height, a little more for the Z scale), so the books on either side stay
+     upright and aligned. */
+  .spine[aria-current='true'] {
+    transform: perspective(700px) translate3d(0, 0, 60px) rotate(30deg);
+    margin-right: calc(var(--spine-h) * 0.5 + 16px);
+    color: var(--text);
+    box-shadow:
+      0 0 0 2px var(--accent),
+      10px 16px 24px -10px rgba(var(--shadow-rgb), 0.6),
+      inset 0 -5px 0 var(--c);
+    position: relative;
+    z-index: 1;
+  }
+
+  .spine.is-empty[aria-current='true'] {
+    box-shadow: 0 0 0 2px var(--accent), 10px 16px 24px -10px rgba(var(--shadow-rgb), 0.6);
+  }
+
+  .shelf-axis {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: rgba(var(--text-rgb), 0.7);
+  }
+
+  .shelf-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    font-size: 0.85rem;
+    color: rgba(var(--text-rgb), 0.8);
+  }
+
+  .shelf-legend li,
+  .paper__subject {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--c);
+    display: inline-block;
+    flex: none;
+  }
+
+  .papers {
+    margin-top: 1.75rem;
+  }
+
+  .paper {
+    display: none;
+    border: 1px solid rgba(var(--text-rgb), 0.2);
+    background: rgba(var(--surface-rgb), 0.35);
+    padding: 1.5rem clamp(1rem, 3vw, 1.9rem);
+    margin-bottom: 1.25rem;
+  }
+
+  .paper.is-current {
+    display: block;
+  }
+
+  .paper__subject {
+    margin: 0 0 0.6rem;
+    font-size: 0.82rem;
+    color: rgba(var(--text-rgb), 0.75);
+  }
+
+  .paper__title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.7rem, 3.6vw, 2.3rem);
+    line-height: 1.1;
+    margin: 0 0 0.4rem;
+    padding-bottom: 0;
+    text-align: left;
+    color: var(--heading);
+    animation: none;
+  }
+
+  /* The global h2 draws a centered underline bar; this is a panel title, left-aligned. */
+  .paper__title::after {
+    display: none;
+  }
+
+  .paper__meta {
+    margin: 0 0 1rem;
+    font-size: 0.88rem;
+    color: rgba(var(--text-rgb), 0.75);
+  }
+
+  .paper__status {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .paper__text {
+    margin: 0 0 0.85rem;
+    max-width: 66ch;
+    font-size: 0.97rem;
+    line-height: 1.7;
+    color: rgba(var(--text-rgb), 0.88);
+  }
+
+  .paper__posts {
+    margin: 0 0 1rem;
+    padding-left: 1.1rem;
+    font-size: 0.92rem;
+  }
+
+  .paper__posts li { margin-bottom: 0.3rem; }
+
+  .paper a {
+    color: var(--text);
+    text-decoration-color: var(--accent);
+    text-underline-offset: 4px;
+  }
+
+  .paper__source {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 700px) {
+    .shelf {
+      --spine-h: 10.5rem;
+      --spine-w: 46px;
+      grid-template-columns: repeat(4, max-content);
+      column-gap: 0.9rem;
+      padding-inline: 0.5rem;
+    }
+    .shelf__group { gap: 5px; }
+    .spine { padding: 12px 6px; font-size: 0.95rem; }
+  }
+
+  /* Reduced motion keeps the end state (lean, depth, shadow) and drops the slide. */
+  @media (prefers-reduced-motion: reduce) {
+    .spine { transition: none; }
+  }
+</style>

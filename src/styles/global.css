@@ -101,6 +101,19 @@
   --orange-dark: #d97706;
   --orange-ink: #16120c;
 
+  /* Subject spectrum for the /reading shelf (2026-11-23): four marks, left to right, one
+     per subject. They are marks (spine base, dashed edge, a soft wash), never text colors, and
+     orange stays the single signal color. The -deep values are the light theme's, darker so a
+     mark still clears 3:1 on cream (checked in src/palette.test.js). */
+  --spec-violet: #9a8cf2;
+  --spec-blue: #62a4f2;
+  --spec-teal: #45c2a8;
+  --spec-lime: #b9d160;
+  --spec-violet-deep: #6a5bd6;
+  --spec-blue-deep: #2f6fd0;
+  --spec-teal-deep: #0f8a73;
+  --spec-lime-deep: #6a8316;
+
   /* Tier 2, fixed roles: the same in every theme (components that stay dark on
      the cream page, shadows, text on photos). */
   --canvas-dark: #060e1a;       /* page ground, dark theme and every non-homepage page */
@@ -162,10 +175,27 @@
   --art-deco-1: url('/images/artDecoBackground1.webp');
   --art-deco-2: url('/images/artDecoBackground2.webp');
   --art-deco-blend: screen;
+  /* Subject spectrum roles (see the palette note): dark and steel use the lighter values. */
+  --spec-0: var(--spec-violet);
+  --spec-0-rgb: 154, 140, 242;
+  --spec-1: var(--spec-blue);
+  --spec-1-rgb: 98, 164, 242;
+  --spec-2: var(--spec-teal);
+  --spec-2-rgb: 69, 194, 168;
+  --spec-3: var(--spec-lime);
+  --spec-3-rgb: 185, 209, 96;
 }
 
 html[data-theme="light"] .dr-theme-scope {
   --bg: var(--canvas-light);
+  --spec-0: var(--spec-violet-deep);
+  --spec-0-rgb: 106, 91, 214;
+  --spec-1: var(--spec-blue-deep);
+  --spec-1-rgb: 47, 111, 208;
+  --spec-2: var(--spec-teal-deep);
+  --spec-2-rgb: 15, 138, 115;
+  --spec-3: var(--spec-lime-deep);
+  --spec-3-rgb: 106, 131, 22;
   --bg-hero: linear-gradient(135deg, #f8f3e8 0%, #efe6d4 50%, #f8f3e8 100%);
   --surface-rgb: 255, 255, 255;
   --surface-nav-rgb: 255, 255, 255;

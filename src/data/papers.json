@@ -1,0 +1,71 @@
+{
+  "title": "What I'm Reading",
+  "subtitle": "Yes, I read 😂",
+  "description": "Papers I am reading on systems, security and .NET, and the shelves I keep open for AI math, UX and C# fundamentals, with where each one shows up in my own work.",
+  "axis": { "left": "pure theory", "right": "hands-on craft" },
+  "subjects": [
+    { "id": "ai", "name": "AI math and theory" },
+    { "id": "systems", "name": "Systems and security" },
+    { "id": "ux", "name": "UX/UI concepts" },
+    { "id": "dotnet", "name": "C# and .NET" }
+  ],
+  "books": [
+    {
+      "subject": "ai",
+      "spine": "GRT",
+      "title": "GRT: A Purely Rotational Transformer Architecture",
+      "authors": "Anonymous",
+      "edition": "Preprint, under review",
+      "status": "Up next",
+      "summary": "A transformer in which every learnable parameter is a rotation angle or scale factor. Dense weight matrices are replaced by sequences of Givens rotations, and token embeddings are stored as phase angles on a unit hypersphere."
+    },
+    {
+      "subject": "ai",
+      "empty": true,
+      "spine": "next: AI math",
+      "note": "Nothing on this shelf yet. A paper on AI math or theory goes here once I have read it."
+    },
+    {
+      "subject": "systems",
+      "spine": "Protection",
+      "title": "The Protection of Information in Computer Systems",
+      "authors": "J. H. Saltzer and M. D. Schroeder",
+      "edition": "Presented 1973, revised 1974 and 1975",
+      "status": "Up next",
+      "source": { "label": "Read the paper", "url": "https://www.cs.virginia.edu/~evans/cs551/saltzer/" },
+      "summary": "A tutorial on the mechanisms that protect stored information, ending in eight design principles: economy of mechanism, fail-safe defaults, complete mediation, open design, separation of privilege, least privilege, least common mechanism and psychological acceptability.",
+      "inMyWork": "Several of the principles are already in my Azure SQL pipeline: a custom role that can touch firewall rules and nothing else, and a separate identity for migrations.",
+      "posts": [
+        { "slug": "approval-gated-database-migration-pipeline", "title": "My Database Migration Pipeline Went Green While Hiding a Bug" },
+        { "slug": "security-review-own-deployed-app-key-vault", "title": "I Security-Reviewed My Own Deployed App" }
+      ]
+    },
+    {
+      "subject": "ux",
+      "empty": true,
+      "spine": "next: UX/UI",
+      "note": "Nothing on this shelf yet. A paper on UX or UI concepts goes here once I have read it."
+    },
+    {
+      "subject": "dotnet",
+      "spine": "Monad Manifesto",
+      "title": "Monad Manifesto",
+      "authors": "Jeffrey P. Snover",
+      "edition": "Version 1.2, August 8, 2002",
+      "status": "Reading",
+      "source": { "label": "Read the paper", "url": "https://github.com/MicrosoftDocs/PowerShell-Docs/blob/main/assets/MonadManifesto.pdf" },
+      "why": "Stumbled on it while working.",
+      "summary": "The design paper behind PowerShell. Its argument is that shell pipelines should pass structured .NET objects, not text, so each stage reads properties directly instead of re-parsing what the last one printed.",
+      "inMyWork": "A loose parallel in my migration pipeline: the plan step hands the next stage a file of SQL and the apply step runs a migration bundle, instead of anyone pasting a script.",
+      "posts": [
+        { "slug": "approval-gated-database-migration-pipeline", "title": "My Database Migration Pipeline Went Green While Hiding a Bug" }
+      ]
+    },
+    {
+      "subject": "dotnet",
+      "empty": true,
+      "spine": "next: C# basics",
+      "note": "Nothing on this shelf yet. A paper on C# or .NET fundamentals goes here once I have read it."
+    }
+  ]
+}

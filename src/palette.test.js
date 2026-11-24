@@ -68,6 +68,13 @@ const PAIRS = [
   ['--text', '--bg', 7],
   ['--heading', '--bg', 7],
   ['--accent', '--bg', 4.5],
+  // The /reading subject spectrum (2026-11-23). These are marks, not text, so the floor is
+  // the 3:1 for graphical objects. The shelf also names every subject in a legend, so color is
+  // never the only cue.
+  ['--spec-0', '--bg', 3],
+  ['--spec-1', '--bg', 3],
+  ['--spec-2', '--bg', 3],
+  ['--spec-3', '--bg', 3],
 ];
 
 for (const theme of Object.keys(THEMES)) {

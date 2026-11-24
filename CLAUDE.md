@@ -34,7 +34,7 @@ src/
 ├── layouts/
 │   └── BaseLayout.astro   # Shared <head> — meta, JSON-LD, font preloads
 ├── pages/            # File-based routing
-│   ├── index.astro, services.astro, consulting.astro, archive.astro, 404.astro
+│   ├── index.astro, services.astro, consulting.astro, archive.astro, reading.astro, 404.astro
 │   ├── blog/         # index, archive, [slug]
 │   └── webdesign/     # index, [slug]
 ├── data/             # JSON content — edit these, not hardcoded copy in components

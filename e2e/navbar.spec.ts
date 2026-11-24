@@ -8,8 +8,10 @@ import { test, expect, type Page } from '@playwright/test';
 // Chromium only: it is about layout, not about browser engines.
 
 const THEMES = ['dark', 'light', 'steel'] as const;
-const DESKTOP_WIDTHS = [1440, 1280, 1100, 1000, 961];
-const MOBILE_WIDTHS = [960, 830, 600, 390];
+// The breakpoint moved from 960 to 1080 on 2026-11-23 when the fifth link ("reading") was
+// added: five links need about 1040px, so the row now holds from 1081 up.
+const DESKTOP_WIDTHS = [1440, 1280, 1160, 1100, 1081];
+const MOBILE_WIDTHS = [1080, 1000, 960, 830, 600, 390];
 
 type Box = { x: number; y: number; width: number; height: number };
 
@@ -64,12 +66,12 @@ test.describe('navbar layout', () => {
         expect(toggle.x + toggle.width, `${where}: toggle past the edge`).toBeLessThanOrEqual(width);
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${where}: horizontal scroll`).toBe(true);
 
-        // Each of the four top-level links has one 14px glyph (added 2026-11-17), and they share one size and weight.
-        await expect(page.locator('.nav-items > li > .nav-link:not(.nav-link--cta) .nav-glyph'), `${where}: glyphs`).toHaveCount(4);
+        // Each of the five top-level links has one 14px glyph (added 2026-11-17; "reading" made it five on 2026-11-23), and they share one size and weight.
+        await expect(page.locator('.nav-items > li > .nav-link:not(.nav-link--cta) .nav-glyph'), `${where}: glyphs`).toHaveCount(5);
         const glyphSizes = await page.evaluate(() =>
           [...document.querySelectorAll('.nav-items .nav-glyph')].map((g) => `${g.getBoundingClientRect().width}x${g.getBoundingClientRect().height}`),
         );
-        expect(glyphSizes, `${where}: glyphs are not all 14x14`).toEqual(['14x14', '14x14', '14x14', '14x14']);
+        expect(glyphSizes, `${where}: glyphs are not all 14x14`).toEqual(['14x14', '14x14', '14x14', '14x14', '14x14']);
         const looks = await page.evaluate(() =>
           [...document.querySelectorAll('.nav-items > li > .nav-link:not(.nav-link--cta)')].map((a) => {
             const c = getComputedStyle(a);
@@ -102,10 +104,10 @@ test.describe('navbar layout', () => {
         expect(logo.x + logo.width, `${where}: logo runs into the ball`).toBeLessThan(toggle.x);
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${where}: horizontal scroll`).toBe(true);
 
-        // The sheet opens with the three links and a CTA, and closes again.
+        // The sheet opens with the four links and a CTA, and closes again.
         await page.locator('#navToggle').click();
         await expect(page.locator('.nav-items'), `${where}: sheet opens`).toBeVisible();
-        await expect(page.locator('.nav-items > li > .nav-link:not(.nav-link--cta):visible')).toHaveCount(3);
+        await expect(page.locator('.nav-items > li > .nav-link:not(.nav-link--cta):visible')).toHaveCount(4);
         await expect(page.locator('.nav-link--cta')).toBeVisible();
         await page.locator('#navToggle').click();
         await expect(page.locator('.nav-items'), `${where}: sheet closes`).toBeHidden();

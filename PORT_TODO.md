@@ -2,6 +2,16 @@
 
 Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the visual-differentiation pass, and `../PortfolioNov25/.claude/plans/jiggly-hugging-kernighan.md`-derived plan for the original phased roadmap this follows.
 
+## `/reading` page added (2026-11-23, branch `fundamentals-page-2026-11-23`)
+
+Added the "What I'm Reading" shelf at `/reading` and a fifth navbar link (design record in `DESIGN_NOTES.md`). Open items:
+- **Not committed yet** when written: a weekday commit window applies (8:30am to 5pm CT). Merging deploys; merge only on Doug's word.
+- **Doug to write:** why he picked up each paper and what he did not follow. The page ships only facts he gave or that come from the papers and his posts; none of those fields are invented.
+- **Check before relying on them:** the Saltzer and Schroeder page names the 1973 symposium and the 1974 CACM revision but not the 1975 venue; the Monad Manifesto's author, date and version come from the PDF's first page.
+- **Empty slots** (AI math next to GRT, UX/UI, C# basics) are placeholders for papers Doug has not named.
+- **Not updated:** `public/llms.txt` does not list the page yet, and the homepage does not link to it beyond the navbar.
+- **Shipped as a decision, not a gap:** the navbar hamburger breakpoint is now 1080px, not 960px.
+
 ## Open decisions and where work stopped (2026-10-31)
 
 State when the 2026-10-30 session ended:

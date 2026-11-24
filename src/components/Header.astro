@@ -76,6 +76,16 @@ import ContactDialog from './ContactDialog.astro';
           </a>
         </li>
 
+        <li>
+          <a class="nav-link nav-link--page" href="/reading">
+            <svg class="nav-glyph" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+              <path class="base" d="M2.6 3 V12 M6.2 3 V12"/>
+              <path class="lit" d="M8.8 12 L13 4.7"/>
+            </svg>
+            reading
+          </a>
+        </li>
+
         <li class="nav-has-dropdown">
           <button class="nav-link nav-link--page" type="button">
             <svg class="nav-glyph" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
@@ -165,7 +175,7 @@ import ContactDialog from './ContactDialog.astro';
    Layout: one three-column grid, logo | links | actions. The links sit in the middle
    column and the actions (CTA, theme ball, hamburger) in the right one, so nothing is
    pushed around with auto margins and there is no per-breakpoint nudging. Link size and
-   spacing are fluid (clamp), so a single breakpoint (960px, where the menu collapses into
+   spacing are fluid (clamp), so a single breakpoint (1080px, where the menu collapses into
    the hamburger sheet) is all the layout needs.
 
    Links share one rule for hover, keyboard focus and the current section: an accent hairline
@@ -406,7 +416,7 @@ nav {
   .nav-link:focus-visible .nav-glyph .blink { animation: none; }
 }
 
-/* ---- "more" dropdown: desktop only (the hamburger sheet replaces it below 960px) ---- */
+/* ---- "more" dropdown: desktop only (the hamburger sheet replaces it at 1080px and below) ---- */
 .nav-has-dropdown {
   position: relative;
 }
@@ -678,11 +688,14 @@ nav {
   transform: rotate(var(--ball-roll, 0deg));
 }
 
-/* ---- below 960px the row collapses into the hamburger sheet ----
-   960 matches the hero's own row-to-stacked breakpoint, so the two never disagree (at the old
-   820px there was a dead zone where the hero had stacked but the nav still tried to fit its
-   full row and clipped the CTA off the edge). */
-@media (max-width: 960px) {
+/* ---- at 1080px and below the row collapses into the hamburger sheet ----
+   Raised from 960 on 2026-11-23, when "reading" became the fifth link: measured in
+   Chromium, five links plus the CTA and theme ball only clear the logo, with 16px to spare on
+   each side, from about 1040px up, so 1080 leaves a margin. The hero still stacks at 960 on its
+   own; the nav collapsing earlier than the hero is harmless, while the reverse (a hero that has
+   stacked but a nav still trying to fit its full row) was the clipped-CTA bug of the old 820px
+   breakpoint. */
+@media (max-width: 1080px) {
   .navbar-content {
     grid-template-columns: 1fr auto;
     padding: 0 1.25rem;

@@ -2,6 +2,22 @@
 
 Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the visual-differentiation pass, and `../PortfolioNov25/.claude/plans/jiggly-hugging-kernighan.md`-derived plan for the original phased roadmap this follows.
 
+## PageSpeed Insights on the live site (2026-11-25, 1:41 PM CST)
+
+Run by Doug against `https://dougrosenbergdev.com/` (Lighthouse 13.6.0, one run; no real-user field data yet).
+
+| | Performance | Accessibility | Best practices | SEO | FCP | LCP | TBT | CLS | Speed Index |
+|---|---|---|---|---|---|---|---|---|---|
+| Mobile | 94 | 99 | 100 | 100 | 1.1 s | 2.9 s | 40 ms | 0 | 3.1 s |
+| Desktop | 100 | 99 | 100 | 100 | 0.3 s | 0.6 s | 0 ms | 0 | 0.6 s |
+
+Agentic browsing passed 3 of 3. Open items:
+- **Fixed 2026-11-25 (branch `main-landmark-2026-11-25`): no main landmark** (the accessibility point). Every page now wraps its content in `<main>`, with the header and footer outside it. Covered by `e2e/landmarks.spec.ts`, which failed on all 11 pages checked before the fix. PageSpeed not yet re-run.
+- **Flaky, found while testing that fix:** the Firefox spec "experience tabs switch the detail panel" fails on its own, 4 of 40 runs without the change and 2 of 40 with it. Cause not investigated.
+- **Image delivery:** 216 KiB estimated savings on mobile, 271 KiB on desktop. The affected files were not captured; expand the audit to get them.
+- **Image width and height:** flagged. CLS is 0, so this is tidiness, not a measured shift.
+- **Render-blocking requests:** 400 ms estimated on mobile, 160 ms on desktop.
+
 ## Casual header overlap fixed (2026-11-24, branch `casual-phone-overlap-2026-11-24`)
 
 Fixed the "When I'm Not Coding" aside sitting directly on the intro paragraph at 1100px and narrower: the one-column grid had no row gap. Found in the 2026-11-24 UX/UI re-score. Covered by the "casual header at one column" specs in `e2e/home.spec.ts`, which measured a 0px gap before the fix. Not checked on a real phone.

@@ -276,6 +276,16 @@ test.describe('homepage', () => {
     await expect(items.first()).toHaveAttribute('aria-selected', 'true');
   });
 
+  test('the Friars bullets are grouped by topic, ERP work first', async ({ page }) => {
+    await page.goto('/#experience');
+    await expect(page.locator('#exp-panel-0 .experience-detail__group')).toHaveText([
+      'Internal ERP',
+      'Email platform replacement',
+      'Tracking and the public website',
+    ]);
+    await expect(page.locator('#exp-bullets-0 li')).toHaveCount(9);
+  });
+
   test('experience bullets collapse behind "Read more" on mobile only', async ({ page, isMobile }) => {
     await page.goto('/#experience');
     const panel = page.locator('.experience-detail:not([hidden])');

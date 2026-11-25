@@ -12,17 +12,21 @@
       { "value": "~$100k", "label": "projected annual savings from the email platform replacement, net of year-one costs" },
       { "value": "~90%", "label": "observed Meta conversion coverage, up from none" }
     ],
-    "secondaryFrom": 5,
+    "bulletGroups": [
+      { "from": 0, "title": "Internal ERP" },
+      { "from": 4, "title": "Email platform replacement" },
+      { "from": 6, "title": "Tracking and the public website" }
+    ],
     "bulletpoints": [
+      "Built the ERP-to-Salesforce integration that syncs and reconciles records, working alone.",
+      "Built 50 reports for every department.",
+      "Replaced separate per-department list-view grids with one shared data grid used across 50+ tables.",
+      "Built 10 features, including a staff directory with cascading filters and a two-mode prayer wall.",
       "Led the evaluation to replace the email marketing platform.",
       "Narrowed 10 email vendors to 2 finalists. Gathered requirements from Communications and the Salesforce admin, ran sales demos, and scored each vendor on 10 weighted requirements.",
       "Found and fixed Meta server-side conversion tracking that had been failing silently for about 18 months. Server events now carry the click ID.",
       "Made five embedded third-party forms visible to GA4. Each form now sends its own event, checked end to end in production with no personal data reaching GA4.",
-      "Product owner for the new public website (in progress). Work with stakeholders to gather requirements.",
-      "Built the ERP-to-Salesforce integration that syncs and reconciles records, working alone.",
-      "Built 50 reports for every department.",
-      "Replaced separate per-department list-view grids with one shared data grid used across 50+ tables.",
-      "Built 10 features, including a staff directory with cascading filters and a two-mode prayer wall."
+      "Product owner for the new public website (in progress). Work with stakeholders to gather requirements."
     ]
   },
   {

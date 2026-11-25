@@ -77,7 +77,13 @@ function span(exp: { startDate?: string; endDate?: string }): string {
 
             <ul class="experience-detail__bullets" id={`exp-bullets-${idx}`}>
               {exp.bulletpoints.map((bullet: string, i: number) => (
-                <li class:list={{ 'is-secondary': exp.secondaryFrom != null && i >= exp.secondaryFrom, 'is-secondary-start': i === exp.secondaryFrom }}>{bullet}</li>
+                <li>
+                  {/* The heading lives inside its first bullet so the list stays one list, which the mobile "Read more" clamp relies on. */}
+                  {exp.bulletGroups?.filter((g: { from: number }) => g.from === i).map((g: { title: string }) => (
+                    <h4 class="experience-detail__group">{g.title}</h4>
+                  ))}
+                  {bullet}
+                </li>
               ))}
             </ul>
             <button type="button" class="experience-detail__more" aria-expanded="false" aria-controls={`exp-bullets-${idx}`}>Read more</button>

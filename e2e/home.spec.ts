@@ -345,3 +345,19 @@ test.describe('github stats count-up', () => {
     expect(await values.allTextContents()).toEqual(finals);
   });
 });
+
+test.describe('casual header at one column', () => {
+  for (const width of [390, 900]) {
+    test(`the aside is spaced off the intro paragraph at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto('/');
+      // Layout offsets, not bounding boxes: the section's reveal transform would skew the latter.
+      const gap = await page.evaluate(() => {
+        const header = document.querySelector<HTMLElement>('.casual-header')!;
+        const body = document.querySelector<HTMLElement>('.casual-body')!;
+        return body.offsetTop - (header.offsetTop + header.offsetHeight);
+      });
+      expect(gap).toBeGreaterThanOrEqual(32);
+    });
+  }
+});

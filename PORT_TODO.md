@@ -2,6 +2,10 @@
 
 Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the visual-differentiation pass, and `../PortfolioNov25/.claude/plans/jiggly-hugging-kernighan.md`-derived plan for the original phased roadmap this follows.
 
+## Casual header overlap fixed (2026-11-24, branch `casual-phone-overlap-2026-11-24`)
+
+Fixed the "When I'm Not Coding" aside sitting directly on the intro paragraph at 1100px and narrower: the one-column grid had no row gap. Found in the 2026-11-24 UX/UI re-score. Covered by the "casual header at one column" specs in `e2e/home.spec.ts`, which measured a 0px gap before the fix. Not checked on a real phone.
+
 ## `/reading` page added (2026-11-23, branch `fundamentals-page-2026-11-23`)
 
 Added the "What I'm Reading" shelf at `/reading` and a fifth navbar link (design record in `DESIGN_NOTES.md`). Open items:

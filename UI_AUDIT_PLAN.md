@@ -170,6 +170,17 @@ Process note for future audits: re-score the whole page after each merge rather 
 | 2026-11-19 | bad cop, same build (my judgment) | 82 | Up from 78 to 79: steel as the first view mostly lifts the stock-palette cost, and the dial, lit grid and metal name are memorable. Still costing: Skills chip wall, the small Music strip, Friars still dense (nine bullets in a 1,180px panel). Dark and light keep the navy and teal look, so the palette gain applies to the steel first view |
 | 2026-11-19 | good cop, live site after #93 (skills layers) (my judgment; viewport screenshots at 1440 and 390, all three themes, reduced motion, Chromium emulation) | 91 | Layout 12 to 13 (the chip wall is gone); hero 19, typography 14, color 14, showing work 13, motion 9 (carried over, not re-seen), polish 9. Same model that built part of it scored it: allow about three points either way. Live first-visit default checked: a light OS gets steel, a dark OS gets dark |
 | 2026-11-19 | bad cop, same build (my judgment) | 84 | Up from 82: the Skills chip wall, a top cost, is now a layered ledger with the brand logos. New small cost: About, Casual, Skills and Contact are all ruled lists, so the page leans on one device. Still costing: Friars panel (nine bullets in 1,180px), small Music strip, Casual intro as a long italic block, navy and teal palette on dark and light (steel is the first view for most visitors) |
+| 2026-11-24 | good cop, live site after #104 (my judgment; home viewport screenshots at 1440 and 390, all three themes, reduced motion, Chromium emulation) | 90 | Hero 19, typography 14, color 14, layout 13, showing work 13, motion 9 (carried over, not re-seen), polish 8 (was 9): on a phone the "kids" aside in When I'm Not Coding sits directly on the intro paragraph, with two offset rules. Not checked whether this predates 11-19. Same model that built part of the site scored it: allow about three points either way |
+| 2026-11-24 | bad cop, same build (my judgment) | 83 | Down from 84, within noise: the phone Casual collision above. Still costing: Friars panel density on desktop, small Music strip, long italic Casual intro, ruled lists as the one device, navy and teal on dark and light |
+
+`/reading` (new in #104), reviewed the same day and **not included in either number**, which stay homepage scores. Desktop 1440 and phone 390, all three themes:
+1. On a phone the shelf scrolls sideways and the C# column, with the Monad Manifesto, is off screen with only a sliver to hint at it.
+2. Three dashed "next:" slots against three books reads as unfinished to a stranger.
+3. No notes yet on why each paper was picked (Doug plans to write them the week of 2026-11-23).
+4. "Yes, I read" ends in an emoji; branch 1 removed emoji from About as a template tell.
+5. Keep: the shelf is not a stock pattern, subject color is used as a mark and holds up in all three themes.
+
+Not viewed in this pass: a real device, motion, interaction (shelf selection, menus, form), blog and web design pages, widths between 390 and 1440.
 
 ## Live re-audit (2026-11-01) and follow-up polish
 

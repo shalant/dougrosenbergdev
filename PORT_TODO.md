@@ -2,6 +2,12 @@
 
 Working tracker for what's left on the Astro port. See `DESIGN_NOTES.md` for the visual-differentiation pass, and `../PortfolioNov25/.claude/plans/jiggly-hugging-kernighan.md`-derived plan for the original phased roadmap this follows.
 
+## `/reading` shelf fits a phone, and `llms.txt` lists it (2026-11-26, branch `reading-phone-llms-2026-11-26`)
+
+Fixed the shelf scrolling sideways on phones, which left the C# column off screen (87px of overflow at 390px wide, 117px at 360px). At 700px and narrower the spines now scale with the screen and sit directly in one flex row, with a wider gap between subjects. Wider screens are unchanged. The per-subject boxes are dropped on phones because WebKit did not resize them when a different book started leaning. Added `e2e/reading.spec.ts` "the whole shelf fits" at 360px and 390px, which failed before the fix. Added `/reading` to `public/llms.txt`. Not checked on a real phone; below 360px not checked.
+
+Noticed, not changed: `llms.txt` does not list the 2026-11-08 database migration pipeline post.
+
 ## PageSpeed Insights on the live site (2026-11-25, 1:41 PM CST)
 
 Run by Doug against `https://dougrosenbergdev.com/` (Lighthouse 13.6.0, one run; no real-user field data yet).

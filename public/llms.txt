@@ -16,6 +16,7 @@ Brings enterprise-grade engineering discipline (security, performance, accessibi
 - [Consulting](https://dougrosenbergdev.com/consulting/): IT support and web/app development for small businesses — affordable support, cloud setup and backup, custom sites, ongoing maintenance.
 - [Web Design](https://dougrosenbergdev.com/webdesign/): Portfolio and case studies.
 - [Blog](https://dougrosenbergdev.com/blog/): Technical writing on Blazor, .NET, and software architecture.
+- [What I'm Reading](https://dougrosenbergdev.com/reading/): A shelf of papers on systems, security and .NET, with open slots for AI math, UX and C# fundamentals.
 - [Résumé (PDF)](https://dougrosenbergdev.com/resume/DouglasRosenbergResumeAugust26.pdf)
 
 ## Blog posts

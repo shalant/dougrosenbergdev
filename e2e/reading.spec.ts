@@ -91,7 +91,33 @@ test.describe('/reading', () => {
     }
   });
 
-  test('links inside a panel resolve (posts and the source)', async ({ page, request }) => {
+  // The C# column used to sit off screen on a phone, behind a sideways scroll (UX review, 2026-11-24).
+  for (const width of [360, 390]) {
+    test(`the whole shelf fits at ${width}px, whichever book is leaning`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto('/reading');
+      await page.evaluate(() => document.fonts.ready);
+      const shelf = page.locator('.shelf');
+      for (let i = 0; i < 6; i++) {
+        await page.locator('.spine').nth(i).dispatchEvent('click');
+        const { overflow, outside } = await shelf.evaluate((el) => {
+          const box = el.getBoundingClientRect();
+          return {
+            overflow: el.scrollWidth - el.clientWidth,
+            outside: [...el.querySelectorAll('.spine')].filter((s) => {
+              const r = s.getBoundingClientRect();
+              return r.left < box.left - 1 || r.right > box.right + 1;
+            }).length,
+          };
+        });
+        expect(overflow, `book ${i} selected: shelf scrolls sideways`).toBeLessThanOrEqual(0);
+        expect(outside, `book ${i} selected: spines cut off`).toBe(0);
+      }
+    });
+  }
+
+  test('links inside a panel resolve (posts and the source)',async ({ page, request }) => {
     await page.goto('/reading');
     const hrefs = await page.locator('.paper a[href^="/blog/"]').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).getAttribute('href')));
     expect(hrefs.length).toBeGreaterThan(0);

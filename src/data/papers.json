@@ -16,7 +16,8 @@
       "title": "GRT: A Purely Rotational Transformer Architecture",
       "authors": "Anonymous",
       "edition": "Preprint, under review",
-      "status": "Up next",
+      "status": "Reading",
+      "why": "A former colleague who has gone fully into AI theory sent this to me. I love the idea of knowing more about the inner workings and complex theory behind some of these amazing tools. Granted, I honestly understand a tiny fraction. But knowing this research even exists and getting my hands dirty in the details is very exciting.",
       "summary": "A transformer in which every learnable parameter is a rotation angle or scale factor. Dense weight matrices are replaced by sequences of Givens rotations, and token embeddings are stored as phase angles on a unit hypersphere."
     },
     {
@@ -31,8 +32,9 @@
       "title": "The Protection of Information in Computer Systems",
       "authors": "J. H. Saltzer and M. D. Schroeder",
       "edition": "Presented 1973, revised 1974 and 1975",
-      "status": "Up next",
+      "status": "Reading",
       "source": { "label": "Read the paper", "url": "https://www.cs.virginia.edu/~evans/cs551/saltzer/" },
+      "why": "I was tasked with managing a detailed RBAC app at work, and had to run through various scenarios where there were about 10 roles and multiple complex, multi-user workflows. I have found that you have to think these things through, but through deep diving, I wondered if there were white papers that discussed original theory. This article was recommended by Claude. Yes, most of it seemed familiar, but I love reading the original documents that stress CS fundamentals. I have not read many of them and want to continue this habit.",
       "summary": "A tutorial on the mechanisms that protect stored information, ending in eight design principles: economy of mechanism, fail-safe defaults, complete mediation, open design, separation of privilege, least privilege, least common mechanism and psychological acceptability.",
       "inMyWork": "Several of the principles are already in my Azure SQL pipeline: a custom role that can touch firewall rules and nothing else, and a separate identity for migrations.",
       "posts": [
@@ -54,7 +56,7 @@
       "edition": "Version 1.2, August 8, 2002",
       "status": "Reading",
       "source": { "label": "Read the paper", "url": "https://github.com/MicrosoftDocs/PowerShell-Docs/blob/main/assets/MonadManifesto.pdf" },
-      "why": "Stumbled on it while working.",
+      "why": "I have found myself using PowerShell a ton over the last year, from quickly spinning up projects, to running Azure commands, to doing all sorts of tasks within Claude, and even running custom scripts. My introduction to coding was at a bootcamp, and everyone always said developers that use the terminal were hardcore. Does this mean that I pass muster lol? But the real question is how does someone learn this PS language? Just by doing it over and over?",
       "summary": "The design paper behind PowerShell. Its argument is that shell pipelines should pass structured .NET objects, not text, so each stage reads properties directly instead of re-parsing what the last one printed.",
       "inMyWork": "A loose parallel in my migration pipeline: the plan step hands the next stage a file of SQL and the apply step runs a migration bundle, instead of anyone pasting a script.",
       "posts": [

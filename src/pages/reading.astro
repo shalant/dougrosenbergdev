@@ -376,15 +376,23 @@ const firstReal = Math.max(0, books.findIndex((b) => !b.empty));
   }
 
   @media (max-width: 700px) {
+    /* The whole shelf has to fit: all four subjects visible with no sideways scroll. Six spines
+       plus the leaning one's margin set the budget, so width follows the screen and the lean
+       takes a little less room than on a desktop. */
     .shelf {
-      --spine-h: 10.5rem;
-      --spine-w: 46px;
-      grid-template-columns: repeat(4, max-content);
-      column-gap: 0.9rem;
-      padding-inline: 0.5rem;
+      --spine-h: 10rem;
+      --spine-w: clamp(30px, 9.2vw, 46px);
+      display: flex;
+      justify-content: center;
+      column-gap: 3px;
+      padding-inline: 2px;
     }
-    .shelf__group { gap: 5px; }
-    .spine { padding: 12px 6px; font-size: 0.95rem; }
+    /* The spines sit directly in the shelf's flex row. With a box per subject, WebKit kept each
+       box's old width when another book started leaning, and the row spilled past the screen. */
+    .shelf__group { display: contents; }
+    .shelf__group + .shelf__group > .spine:first-child { margin-left: 6px; }
+    .spine { padding: 10px 4px; font-size: 0.9rem; }
+    .spine[aria-current='true'] { margin-right: calc(var(--spine-h) * 0.5 + 4px); }
   }
 
   /* Reduced motion keeps the end state (lean, depth, shadow) and drops the slide. */

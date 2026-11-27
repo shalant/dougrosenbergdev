@@ -16,7 +16,8 @@
       "title": "GRT: A Purely Rotational Transformer Architecture",
       "authors": "Anonymous",
       "edition": "Preprint, under review",
-      "status": "Up next",
+      "status": "Reading",
+      "why": "A former colleague who has gone fully into AI theory sent this to me. I love the idea of knowing more about the inner workings and complex theory behind some of these amazing tools. Granted, I honestly understand a tiny fraction. But knowing this research even exists and getting my hands dirty in the details is very exciting.",
       "summary": "A transformer in which every learnable parameter is a rotation angle or scale factor. Dense weight matrices are replaced by sequences of Givens rotations, and token embeddings are stored as phase angles on a unit hypersphere."
     },
     {

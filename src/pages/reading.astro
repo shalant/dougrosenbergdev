@@ -23,6 +23,7 @@ const firstReal = Math.max(0, books.findIndex((b) => !b.empty));
   </Fragment>
 
   <Header />
+  <main>
 
   <section class="reading-head" id="reading-head">
     <div class="reading-head__grid" aria-hidden="true"></div>
@@ -97,6 +98,7 @@ const firstReal = Math.max(0, books.findIndex((b) => !b.empty));
     </div>
   </section>
 
+  </main>
   <Footer />
 
   <script is:inline src={jsUrl('reading.js')}></script>

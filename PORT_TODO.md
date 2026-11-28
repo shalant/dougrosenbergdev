@@ -14,6 +14,8 @@ Doug reported on 2026-11-27 that `/reading` looks great on mobile.
 
 ## Phone-sized screenshots; no auto-crossfade on touch (2026-11-27, branch `phone-screenshots-2026-11-27`)
 
+**Merged 2026-11-27** as PR #112 and confirmed live. Mobile PageSpeed at 10:58 PM CST, one run: performance 95 (was 90), accessibility, best practices and SEO 100, FCP 1.1 s, LCP 2.9 s (was 3.1), TBT 30 ms, CLS 0, Speed Index 1.8 s (was 5.0). Image delivery estimate 27 KiB (was 304), render-blocking requests 390 ms. Desktop not re-run.
+
 - Fixed project screenshots cycling nonstop and too fast on phones (Doug's report). Touch screens now stay on the first screenshot, never download the others, and no longer show the "1/5" badge. Pointer devices still crossfade on hover.
 - Added phone-sized first screenshots on `/` and `/webdesign`. `/webdesign` copies are 800px wide, generated at build by `src/pages/images/sm/[...path].webp.ts` from `webdesign.json`. At 412px wide and 1.75 DPR, every card picked its small file. Denser screens still get the large one.
 - CSP hash in `public/_headers` regenerated (the frame script changed).

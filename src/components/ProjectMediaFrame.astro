@@ -1,11 +1,17 @@
 ---
+import { smallSrcset } from '../lib/smallImage';
+
 interface Props {
   images: string[];
   alt: string;
   videoUrl?: string;
+  /** srcset for the first image, when the caller already has one (astro:assets). */
+  leadSrcset?: string;
+  sizes: string;
 }
 
-const { images, alt, videoUrl } = Astro.props;
+const { images, alt, videoUrl, leadSrcset, sizes } = Astro.props;
+const firstSrcset = leadSrcset ?? (images[0] ? await smallSrcset(images[0]) : undefined);
 
 // Each image owns a complete keyframe rule spanning the full shared cycle - no
 // animation-delay involved. Ported 1:1 from ProjectMediaFrame.razor's C# keyframe
@@ -52,6 +58,8 @@ const cornerNames = ['tl', 'tr', 'br', 'bl'];
             class="wd-project__frame-img"
             src={i === 0 || images.length === 1 ? img : undefined}
             data-src={i > 0 && images.length > 1 ? img : undefined}
+            srcset={i === 0 ? firstSrcset : undefined}
+            sizes={i === 0 && firstSrcset ? sizes : undefined}
             alt={alt}
             style={images.length > 1 ? `animation-name:${keyframeName(images.length, i)}` : undefined}
             loading="lazy"
@@ -80,10 +88,12 @@ const cornerNames = ['tl', 'tr', 'br', 'bl'];
   // .is-loaded class, see global.css) only once they have all arrived, so it never fades to a
   // blank frame. Before, every frame of every card downloaded as soon as the card got close
   // (about 150-200 KB per card), which cost bytes and decode time while a phone was scrolling.
-  // Without JS the card simply stays on its first image.
+  // Without JS the card simply stays on its first image. Touch screens never crossfade
+  // (global.css), so they never fetch the rest.
   const stages = document.querySelectorAll<HTMLElement>('.wd-project__frame-stage');
   const pending = Array.from(stages).filter((s) => s.querySelector('img[data-src]'));
-  if (pending.length && 'IntersectionObserver' in window) {
+  const canHover = window.matchMedia('(hover: hover)').matches;
+  if (canHover && pending.length && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;

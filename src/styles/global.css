@@ -3292,18 +3292,10 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
     display: none;
   }
 
-  /* Touch has no hover to fade the count badge on, and the crossfade is
-     already autoplaying there — so instead of leaving the badge up
-     permanently (it'd just become a fixture on top of the now-larger mobile
-     screenshot), let it announce itself once and fade out on its own after
-     the visitor has had a moment to read it. */
+  /* Touch stays on the first screenshot, so a "1/5" badge would promise nothing. */
   .wd-project__count-chip {
-    animation: wd-count-fade-touch 0.6s ease 3.2s forwards;
+    display: none;
   }
-}
-
-@keyframes wd-count-fade-touch {
-  to { opacity: 0; }
 }
 
 .wd-project__frame-stage {
@@ -3364,20 +3356,11 @@ html[data-theme="light"] .dr-theme-scope .wd2-hero__card-orbit img {
   animation-play-state: paused;
 }
 
-.wd-project__frame-stage.is-active.is-loaded .wd-project__frame-img {
-  animation-play-state: running;
-}
-
-/* Touch devices have no hover to wait for - .is-active only ever becomes
-   true from a mouseenter event in ProjectMediaFrame.razor, which touch
-   input doesn't reliably fire. Without this, every multi-image crossfade
-   added this session (Hardware Etc, Sonus, dougrosenberg.com, Haxbyte)
-   would just never play on a phone - visitors would only ever see the
-   first image. (hover: none) is the standard media feature for "no real
-   pointer capable of hovering", so just auto-play there instead of waiting
-   for an interaction that will never come. */
-@media (hover: none) {
-  .wd-project__frame-stage.is-loaded .wd-project__frame-img {
+/* Pointer devices only. Touch screens used to autoplay the crossfade; on a phone it cycled
+   nonstop and too fast (removed 2026-11-27). The hover query also stops a tap, which fires
+   mouseover, from starting it. */
+@media (hover: hover) {
+  .wd-project__frame-stage.is-active.is-loaded .wd-project__frame-img {
     animation-play-state: running;
   }
 }

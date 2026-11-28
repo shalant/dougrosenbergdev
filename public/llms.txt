@@ -20,6 +20,7 @@ Brings enterprise-grade engineering discipline (security, performance, accessibi
 - [Résumé (PDF)](https://dougrosenbergdev.com/resume/DouglasRosenbergResumeAugust26.pdf)
 
 ## Blog posts
+- [My Database Migration Pipeline Went Green While Hiding a Bug: Building an Approval-Gated Azure SQL Deploy](https://dougrosenbergdev.com/blog/approval-gated-database-migration-pipeline/) (2026-11-08): A two-run GitHub Actions pipeline for EF Core migrations on Azure SQL (plan with no credentials, read the SQL, then apply), and the green run that left a firewall rule open.
 - [What Security Headers Do Musician Website Builders Actually Ship?](https://dougrosenbergdev.com/blog/security-headers-musician-platforms/) (2026-09-29): Checks the security headers (CSP, HSTS, X-Frame-Options and more) that Bandzoogle, Squarespace, Wix and WordPress.com actually return, with the caveats on what that does and doesn't show.
 - [I Security-Reviewed My Own Deployed App: Cheap Wins, a Key Vault Migration, and What I Chose Not to Fix](https://dougrosenbergdev.com/blog/security-review-own-deployed-app-key-vault/) (2026-09-28): Auditing a live .NET app on Azure: dependency alerts, secret scanning, testing a login lockout, and moving secrets into Key Vault via Managed Identity.
 - [One App, Two Audiences: Building a Customer Intake Backend with a Personal ERP Inside It](https://dougrosenbergdev.com/blog/customer-intake-backend-personal-erp/) (2026-09-24): A public lead-intake system and a private personal ERP in one app, and how the data boundary between them is enforced and tested.

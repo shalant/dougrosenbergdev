@@ -8,7 +8,25 @@ Fixed the shelf scrolling sideways on phones, which left the C# column off scree
 
 Added Doug's own notes on why he picked up the Monad Manifesto and the protection paper (`why` in `src/data/papers.json`, typo fixes only), and the GRT preprint; the protection paper and GRT moved to "Reading". All three papers now have his notes.
 
-Noticed, not changed: `llms.txt` does not list the 2026-11-08 database migration pipeline post.
+Noticed then, fixed 2026-11-27: `llms.txt` did not list the 2026-11-08 database migration pipeline post (below).
+
+Doug reported on 2026-11-27 that `/reading` looks great on mobile.
+
+## `llms.txt` lists the migration pipeline post; PageSpeed re-run (2026-11-27, branch `llms-migration-post-2026-11-27`)
+
+Added the 2026-11-08 database migration pipeline post to `public/llms.txt`.
+
+PageSpeed Insights on `https://dougrosenbergdev.com/`, 9:25 PM CST, Lighthouse 13.6.0, one run each, no real-user data. Run before this branch was deployed.
+
+| | Performance | Accessibility | Best practices | SEO | FCP | LCP | TBT | CLS | Speed Index |
+|---|---|---|---|---|---|---|---|---|---|
+| Mobile | 90 | 100 | 100 | 100 | 1.1 s | 3.1 s | 10 ms | 0 | 5.0 s |
+| Desktop | 100 | 100 | 100 | 100 | 0.3 s | 0.6 s | 40 ms | 0 | 0.5 s |
+
+- Accessibility went from 99 to 100, confirming the `<main>` landmark fix. Agentic browsing 3 of 3.
+- Mobile performance was 94 on 2026-11-25 (LCP 2.9 s, Speed Index 3.1 s). One run each, so not yet known whether this is variance or a regression.
+- Image delivery: 304 KiB estimated on mobile (was 216), 271 KiB on desktop. The largest items seen on mobile: the hero portrait `DrCorporateHacker` (630x945 served for 255x383 displayed, 45 KiB) and `/images/arborkin/familytree-hero__dark.webp` (1512x846 for 346x289, 44 KiB). The rest of the list was not captured.
+- Render-blocking requests: 490 ms estimated on mobile, 80 ms on desktop.
 
 ## PageSpeed Insights on the live site (2026-11-25, 1:41 PM CST)
 

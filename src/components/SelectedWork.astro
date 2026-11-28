@@ -21,8 +21,9 @@ const projects = await Promise.all(siteProperties.featuredWork.map(async ({ slug
   if (!screenshot) throw new Error(`featuredWork: no src/assets/images/webdesign/${image}`);
   // The curated strip image leads the crossfade, so the resting state is unchanged;
   // the case study's own screenshots follow it on hover. Same ProjectMediaFrame as /webdesign.
-  const lead = await getImage({ src: screenshot.default, width: i === 0 ? 1140 : 840, format: 'webp' });
-  return { ...project, frameImages: [lead.src, ...project.images] };
+  const width = i === 0 ? 1140 : 840;
+  const lead = await getImage({ src: screenshot.default, width, widths: [i === 0 ? 800 : 640, width], format: 'webp' });
+  return { ...project, frameImages: [lead.src, ...project.images], leadSrcset: lead.srcSet.attribute };
 }));
 ---
 
@@ -38,7 +39,7 @@ const projects = await Promise.all(siteProperties.featuredWork.map(async ({ slug
         <li class={i === 0 ? 'work-item work-item--lead' : 'work-item'}>
           <a href={`/webdesign/${project.slug}`} class="work-item__link">
             <div class="work-item__frame">
-              <ProjectMediaFrame alt={`${project.name} website`} images={project.frameImages} />
+              <ProjectMediaFrame alt={`${project.name} website`} images={project.frameImages} leadSrcset={project.leadSrcset} sizes="(max-width: 900px) calc(100vw - 4rem), 640px" />
             </div>
             <h3 class="work-item__name vt-title" style={`view-transition-name: vt-wd-${project.slug}`}>{project.name}</h3>
             <p class="work-item__industry">{project.industry}</p>
@@ -54,7 +55,7 @@ const projects = await Promise.all(siteProperties.featuredWork.map(async ({ slug
 <script>
   // Same hover-intent crossfade trigger as the /webdesign grid: the screenshots only
   // start cycling once the pointer rests on a card for a beat, so skimming across the
-  // strip doesn't set all three animating. Touch devices autoplay via CSS instead.
+  // strip doesn't set all three animating. Touch devices stay on the first image.
   let hoverTimer: ReturnType<typeof setTimeout> | null = null;
   const grid = document.querySelector('.work-grid');
 

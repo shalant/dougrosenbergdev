@@ -91,7 +91,7 @@ const ringImages = selectRingImages(RING_CARD_COUNT);
 
         {webDesign.projects.map((project) => (
           <a href={`/webdesign/${project.slug}`} class="wd-project" data-spotlight>
-            <ProjectMediaFrame alt={`${project.name} website`} images={project.images} />
+            <ProjectMediaFrame alt={`${project.name} website`} images={project.images} sizes="(max-width: 820px) calc(100vw - 4rem), 600px" />
             <div class="wd-project__meta">
               <span class="wd-project__num">{project.number}</span>
               <span class="about-skill-chip">{project.platform}</span>

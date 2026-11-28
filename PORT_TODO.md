@@ -12,6 +12,14 @@ Noticed then, fixed 2026-11-27: `llms.txt` did not list the 2026-11-08 database 
 
 Doug reported on 2026-11-27 that `/reading` looks great on mobile.
 
+## Phone-sized screenshots; no auto-crossfade on touch (2026-11-27, branch `phone-screenshots-2026-11-27`)
+
+- Fixed project screenshots cycling nonstop and too fast on phones (Doug's report). Touch screens now stay on the first screenshot, never download the others, and no longer show the "1/5" badge. Pointer devices still crossfade on hover.
+- Added phone-sized first screenshots on `/` and `/webdesign`. `/webdesign` copies are 800px wide, generated at build by `src/pages/images/sm/[...path].webp.ts` from `webdesign.json`. At 412px wide and 1.75 DPR, every card picked its small file. Denser screens still get the large one.
+- CSP hash in `public/_headers` regenerated (the frame script changed).
+- Not done: the hero portrait, and case study pages (`/webdesign/[slug]`). PageSpeed not re-run (not deployed). Not checked on a real phone.
+- Flaky, found while testing: the Firefox spec "inline homepage submit scrolls to top and shows the toast" failed 6 of 40 runs without this change. Cause not investigated.
+
 ## `llms.txt` lists the migration pipeline post; PageSpeed re-run (2026-11-27, branch `llms-migration-post-2026-11-27`)
 
 Added the 2026-11-08 database migration pipeline post to `public/llms.txt`.
